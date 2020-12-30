@@ -1,9 +1,11 @@
 import React, { memo } from 'react'
 
-export default memo(function Discover() {
+import { renderRoutes } from 'react-router-config'
+
+export default memo(function Discover(props) {
   return (
     <div>
-      <h2>Discover</h2>
+      {renderRoutes(props.route.routes)}
     </div>
   )
 })

@@ -4,6 +4,14 @@ import Discover from '@/pages/discover'
 import Mine from '@/pages/mine'
 import Friend from '@/pages/friend'
 
+import Recommendation from '@/pages/discover/c-pages/recommendation'
+import Toplist from '@/pages/discover/c-pages/toplist'
+import Playlist from '@/pages/discover/c-pages/playlist'
+import Djradio from '@/pages/discover/c-pages/djradio'
+import Artist from '@/pages/discover/c-pages/artist'
+import Album from '@/pages/discover/c-pages/album'
+
+
 const routes = [
   {
     path: "/",
@@ -14,7 +22,40 @@ const routes = [
   },
   {
     path: "/discover",
-    component: Discover
+    component: Discover,
+    routes: [
+      {
+        path: "/discover",
+        exact: true,
+        render: () => (
+          <Redirect to="/discover/toplist" />
+        )
+      },
+      {
+        path: "/discover/recommendation",
+        component: Recommendation
+      },
+      {
+        path: "/discover/toplist",
+        component: Toplist
+      },
+      {
+        path: "/discover/playlist",
+        component: Playlist
+      },
+      {
+        path: "/discover/djradio",
+        component: Djradio
+      },
+      {
+        path: "/discover/artist",
+        component: Artist
+      },
+      {
+        path: "/discover/album",
+        component: Album
+      }
+    ]
   },
   {
     path: "/mine",

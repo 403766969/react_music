@@ -2,6 +2,7 @@ import { Redirect } from 'react-router-dom'
 
 import Discover from '@/pages/discover'
 import Mine from '@/pages/mine'
+import Friend from '@/pages/friend'
 
 const routes = [
   {
@@ -18,6 +19,10 @@ const routes = [
   {
     path: "/mine",
     component: Mine
+  },
+  {
+    path: "/friend",
+    component: Friend
   }
 ]
 

@@ -55,7 +55,7 @@ export const FooterRight = styled.ul`
       display: block;
       width: 50px;
       height: 45px;
-      background-image: url(${require("@/assets/img/sprite_footer_02.png").default});
+      background-image: url(${require('@/assets/img/sprite_footer_02.png').default});
       background-size: 110px 450px;
     }
 
@@ -65,10 +65,10 @@ export const FooterRight = styled.ul`
     :nth-child(2) .link {
       background-position: 0 0;
     }
-    :nth-child(2) .link {
+    :nth-child(3) .link {
       background-position: -60px -50px;
     }
-    :nth-child(2) .link {
+    :nth-child(4) .link {
       background-position: 0 -101px;
     }
 
@@ -77,22 +77,21 @@ export const FooterRight = styled.ul`
       display: block;
       width: 52px;
       height: 10px;
-      background-image: url(${require("@/assets/img/sprite_footer_01.png").default}});
+      background-image: url(${require('@/assets/img/sprite_footer_01.png').default});
       background-size: 180px 100px;
     }
 
     :nth-child(1) .title {
-      background-position: -1px -90px;
+      background-position: -0px -90px;
     }
     :nth-child(2) .title {
       background-position: 0 0;
       margin-top: 7px;
     }
     :nth-child(3) .title {
-      background-position: 0 -54px;
+      background-position: 1px -54px;
       margin-top: 6px;
     }
-
     :nth-child(4) .title {
       background-position: -1px -72px;
       margin-top: 6px;

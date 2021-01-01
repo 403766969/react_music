@@ -6,7 +6,8 @@ import { getBannersAction } from './store/actionCreators'
 export default memo(function Recommendation(props) {
 
   const { banners } = useSelector(state => ({
-    banners: state.recommendation.banners
+    // banners: state.get('recommendation').get('banners')
+    banners: state.getIn(['recommendation', 'banners'])
   }), shallowEqual)
 
   const dispatch = useDispatch()

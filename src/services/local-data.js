@@ -72,7 +72,7 @@ export const footerImages = [
 export const dicoverNavLinks = [
   {
     title: '推荐',
-    link: '/discover/recommendation'
+    link: '/discover/recomd'
   },
   {
     title: '排行榜',

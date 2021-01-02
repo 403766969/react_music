@@ -43,8 +43,8 @@ export default memo(function TopBanner() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const { banners } = useSelector(state => ({
-    // banners: state.get('recommendation').get('banners')
-    banners: state.getIn(['recommendation', 'banners'])
+    // banners: state.get('recomd').get('banners')
+    banners: state.getIn(['recomd', 'banners'])
   }), shallowEqual)
 
   const dispatch = useDispatch()

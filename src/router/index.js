@@ -4,7 +4,7 @@ import Discover from '@/pages/discover'
 import Mine from '@/pages/mine'
 import Friend from '@/pages/friend'
 
-import Recommendation from '@/pages/discover/c-pages/recommendation'
+import Recomd from '@/pages/discover/c-pages/recomd'
 import Toplist from '@/pages/discover/c-pages/toplist'
 import Playlist from '@/pages/discover/c-pages/playlist'
 import Djradio from '@/pages/discover/c-pages/djradio'
@@ -28,12 +28,12 @@ const routes = [
         path: "/discover",
         exact: true,
         render: () => (
-          <Redirect to="/discover/recommendation" />
+          <Redirect to="/discover/recomd" />
         )
       },
       {
-        path: "/discover/recommendation",
-        component: Recommendation
+        path: "/discover/recomd",
+        component: Recomd
       },
       {
         path: "/discover/toplist",

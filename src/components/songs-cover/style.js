@@ -8,6 +8,7 @@ export const SongsCoverWrapper = styled.div`
 export const SongsCoverImage = styled.div`
   position: relative;
   margin-bottom: 8px;
+  cursor: pointer;
 
   .image {
     width: 140px;

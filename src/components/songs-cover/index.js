@@ -5,7 +5,7 @@ import {
   getCount
 } from '@/utils/format-utils'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 
 import {
   SongsCoverWrapper,
@@ -16,9 +16,11 @@ import {
 export default memo(function SongsCover(props) {
   const { songsInfo, isShowAuthor = false } = props
 
+  const history = useHistory()
+
   return (
     <SongsCoverWrapper>
-      <SongsCoverImage>
+      <SongsCoverImage onClick={() => { history.push(`/discover/playlist?id=${songsInfo.id}`) }}>
         <img className="image" src={getUrlWithSize(songsInfo.picUrl || songsInfo.coverImgUrl, 140)} alt="" />
         <div className="mask sprite_covor"></div>
         <div className="heat sprite_covor">

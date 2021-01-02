@@ -5,7 +5,7 @@ import { hotRecomdKeywords } from '@/services/local-data'
 
 import { getPersonalizedAction } from '../../store/actionCreators'
 
-import ThemeHeaderRecomd from '@/components/theme-header-recomd'
+import HeaderRecomd from '@/components/header-recomd'
 import SongsCover from '@/components/songs-cover'
 
 import {
@@ -34,7 +34,7 @@ export default memo(function HotRecomd() {
 
   return (
     <HotRecomdWrapper>
-      <ThemeHeaderRecomd title={title} keywords={keywords} more={more} />
+      <HeaderRecomd title={title} keywords={keywords} more={more} />
       <HotRecomdContent>
         {
           storeState.personalized.map(item => {

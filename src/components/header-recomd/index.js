@@ -4,18 +4,18 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 import {
-  ThemeHeaderWrapper,
-  ThemeHeaderLeft,
-  ThemeHeaderRight
+  HeaderRecomdWrapper,
+  HeaderRecomdLeft,
+  HeaderRecomdRight
 } from './style'
 
-const ThemeHeaderRecomdMemo = memo(function ThemeHeaderRecomd(props) {
+const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
 
   const { title, keywords, more } = props
 
   return (
-    <ThemeHeaderWrapper className="sprite_02">
-      <ThemeHeaderLeft>
+    <HeaderRecomdWrapper className="sprite_02">
+      <HeaderRecomdLeft>
         <h3 className="title">{title}</h3>
         <ul className="keyword">
           {
@@ -29,17 +29,17 @@ const ThemeHeaderRecomdMemo = memo(function ThemeHeaderRecomd(props) {
             })
           }
         </ul>
-      </ThemeHeaderLeft>
-      <ThemeHeaderRight>
+      </HeaderRecomdLeft>
+      <HeaderRecomdRight>
         <NavLink to={more.link}>{more.title}</NavLink>
         <i className="icon sprite_02"></i>
-      </ThemeHeaderRight>
-    </ThemeHeaderWrapper>
+      </HeaderRecomdRight>
+    </HeaderRecomdWrapper>
   )
 
 })
 
-ThemeHeaderRecomdMemo.defaultProps = {
+HeaderRecomdMemo.defaultProps = {
   title: '标题',
   keywords: [],
   more: {
@@ -48,7 +48,7 @@ ThemeHeaderRecomdMemo.defaultProps = {
   }
 }
 
-ThemeHeaderRecomdMemo.propTypes = {
+HeaderRecomdMemo.propTypes = {
   title: PropTypes.string,
   keywords: PropTypes.arrayOf(
     PropTypes.shape({
@@ -62,4 +62,4 @@ ThemeHeaderRecomdMemo.propTypes = {
   })
 }
 
-export default ThemeHeaderRecomdMemo
+export default HeaderRecomdMemo

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const ThemeHeaderWrapper = styled.div`
+export const HeaderRecomdWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,7 +10,7 @@ export const ThemeHeaderWrapper = styled.div`
   border-bottom: 2px solid #C10D0C;
 `
 
-export const ThemeHeaderLeft = styled.div`
+export const HeaderRecomdLeft = styled.div`
   display: flex;
   align-items: center;
 
@@ -34,7 +34,7 @@ export const ThemeHeaderLeft = styled.div`
   }
 
 `
-export const ThemeHeaderRight = styled.div`
+export const HeaderRecomdRight = styled.div`
   display: flex;
   align-items: center;
 

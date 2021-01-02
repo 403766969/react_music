@@ -50,7 +50,7 @@ export const footerLinks = [
   },
   {
     title: '意见反馈',
-    link: '#'
+    link: '#/'
   }
 ]
 
@@ -94,4 +94,27 @@ export const dicoverNavLinks = [
     title: '新碟上架',
     link: '/discover/album'
   },
+]
+
+export const hotRecomdKeywords = [
+  {
+    title: '华语',
+    link: '/discover/playlist/?cat=华语'
+  },
+  {
+    title: '流行',
+    link: '/discover/playlist/?cat=流行'
+  },
+  {
+    title: '摇滚',
+    link: '/discover/playlist/?cat=摇滚'
+  },
+  {
+    title: '民谣',
+    link: '/discover/playlist/?cat=民谣'
+  },
+  {
+    title: '电子',
+    link: '/discover/playlist/?cat=电子'
+  }
 ]

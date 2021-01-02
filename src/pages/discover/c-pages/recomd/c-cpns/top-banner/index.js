@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { getBannersAction } from '../../store/actionCreators'
+import { getBannerAction } from '../../store/actionCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ import {
   TopBannerShow,
   TopBannerDownload,
   TopBannerControl
-} from './style';
+} from './style'
 
 const renderCarouselItem = item => {
   if (!item) return null
@@ -42,9 +42,9 @@ export default memo(function TopBanner() {
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const { banners } = useSelector(state => ({
-    // banners: state.get('recomd').get('banners')
-    banners: state.getIn(['recomd', 'banners'])
+  const storeState = useSelector(state => ({
+    // banner: state.get('recomd').get('banner')
+    banner: state.getIn(['recomd', 'banner'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -52,14 +52,14 @@ export default memo(function TopBanner() {
   const carouselRef = useRef()
 
   useEffect(() => {
-    dispatch(getBannersAction())
+    dispatch(getBannerAction())
   }, [dispatch])
 
   const handleChange = useCallback((from, to) => {
     setCurrentIndex(to)
   }, [])
 
-  const bgImage = banners[currentIndex] && (banners[currentIndex].imageUrl + '?imageView&blur=40x20')
+  const bgImage = storeState.banner[currentIndex] && (storeState.banner[currentIndex].imageUrl + '?imageView&blur=40x20')
 
   return (
     <TopBannerWrapper bgImage={bgImage}>
@@ -72,7 +72,7 @@ export default memo(function TopBanner() {
             ref={carouselRef}
             beforeChange={handleChange}>
             {
-              banners.map(item => (
+              storeState.banner.map(item => (
                 <div className="item" key={item.scm}>
                   {renderCarouselItem(item)}
                 </div>

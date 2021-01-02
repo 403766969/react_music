@@ -1,1 +1,2 @@
-export const CHANGE_BNNAERS = 'recommendation/CHANGE_BNNAERS'
+export const SET_BANNER = 'recomd/SET_BANNER'
+export const SET_PERSONALIZED = 'recomd/SET_PERSONALIZED'

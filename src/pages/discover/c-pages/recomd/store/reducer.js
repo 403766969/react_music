@@ -3,13 +3,16 @@ import { Map } from 'immutable'
 import * as actionTypes from './constants'
 
 const initialState = Map({
-  banners: []
+  banner: [],
+  personalized: []
 })
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.CHANGE_BNNAERS:
-      return state.set('banners', action.banners)
+    case actionTypes.SET_BANNER:
+      return state.set('banner', action.banner)
+    case actionTypes.SET_PERSONALIZED:
+      return state.set('personalized', action.personalized)
     default:
       return state
   }

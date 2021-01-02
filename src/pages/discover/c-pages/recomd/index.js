@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
 import TopBanner from './c-cpns/top-banner'
-import HotReco from './c-cpns/hot-reco'
+import HotRecomd from './c-cpns/hot-recomd'
 
 import {
   RecomdWrapper,
@@ -16,7 +16,7 @@ export default memo(function Recomd(props) {
       <TopBanner />
       <RecomdContent className="wrap-v2">
         <RecomdLeft>
-          <HotReco />
+          <HotRecomd />
         </RecomdLeft>
         <RecomdRight>
 

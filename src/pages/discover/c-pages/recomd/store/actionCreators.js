@@ -1,15 +1,27 @@
 import * as actionTypes from './constants'
 
-import * as recommendationApi from '@/services/recommendationApi'
+import * as recomdApi from '@/services/recomdApi'
 
-export const changeBannersAction = banners => ({
-  type: actionTypes.CHANGE_BNNAERS,
-  banners: banners
+export const setBannerAction = banner => ({
+  type: actionTypes.SET_BANNER,
+  banner: banner
 })
 
-export const getBannersAction = () => {
+export const setPersonalizedAction = personalized => ({
+  type: actionTypes.SET_PERSONALIZED,
+  personalized: personalized
+})
+
+export const getBannerAction = () => {
   return async dispatch => {
-    const res = await recommendationApi.getBannersApi()
-    dispatch(changeBannersAction(res.banners))
+    const res = await recomdApi.getBannerApi()
+    dispatch(setBannerAction(res.banners))
+  }
+}
+
+export const getPersonalizedAction = limit => {
+  return async dispatch => {
+    const res = await recomdApi.getPersonalizedApi(limit)
+    dispatch(setPersonalizedAction(res.result))
   }
 }

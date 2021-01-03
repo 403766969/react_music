@@ -18,13 +18,13 @@ export default memo(function RankList(props) {
       <RankListHeader>
         <div className="image">
           <img src={getUrlWithSize(info.coverImgUrl, 80)} alt="" />
-          <a href={`#/discover/toplist?id=${info.id}`} className="image_cover">ranking</a>
+          <a href={`#/discover/toplist?id=${info.id}`} className="image_cover" title={info.name}>ranking</a>
         </div>
         <div className="info">
-          <a href={`#/discover/toplist?id=${info.id}`}>{info.name}</a>
+          <a href={`#/discover/toplist?id=${info.id}`} title={info.name}>{info.name}</a>
           <div>
-            <button className="btn play sprite_02"></button>
-            <button className="btn favor sprite_02"></button>
+            <button className="btn play sprite_02" title="播放"></button>
+            <button className="btn favor sprite_02" title="收藏"></button>
           </div>
         </div>
       </RankListHeader>
@@ -35,11 +35,11 @@ export default memo(function RankList(props) {
               <div key={item.id} className="list-item">
                 <div className="rank">{index + 1}</div>
                 <div className="info">
-                  <a href={`#/song?id=${item.id}`} className="name text-nowrap">{item.name}</a>
+                  <a href={`#/song?id=${item.id}`} className="name text-nowrap" title={item.name}>{item.name}</a>
                   <div className="operate">
-                    <button className="btn sprite_02 play"></button>
-                    <button className="btn sprite_icon2 addto"></button>
-                    <button className="btn sprite_02 favor"></button>
+                    <button className="btn sprite_02 play" title="播放"></button>
+                    <button className="btn sprite_icon2 addto" title="添加到播放列表"></button>
+                    <button className="btn sprite_02 favor" title="收藏"></button>
                   </div>
                 </div>
               </div>

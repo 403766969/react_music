@@ -38,11 +38,11 @@ export default memo(function AlbumCover(props) {
         imgW={imgW} imgH={imgH} coverW={coverW} coverH={coverH} bgPos={bgPos}
         onClick={pushRoute_album}>
         <img src={getUrlWithSize(albumInfo.picUrl, 150)} alt="" />
-        <div className="mask sprite_covor"></div>
+        <div className="mask sprite_covor" title={albumInfo.name}></div>
       </AlbumCoverImage>
       <AlbumCoverDec imgW={imgW}>
-        <div className="name text-nowrap" onClick={pushRoute_album}>{albumInfo.name}</div>
-        <div className="artist text-nowrap" onClick={pushRoute_artist}>{albumInfo.artist.name}</div>
+        <div className="name text-nowrap" onClick={pushRoute_album} title={albumInfo.name}>{albumInfo.name}</div>
+        <div className="artist text-nowrap" onClick={pushRoute_artist} title={albumInfo.artist.name}>{albumInfo.artist.name}</div>
       </AlbumCoverDec>
     </AlbumCoverWrapper>
   )

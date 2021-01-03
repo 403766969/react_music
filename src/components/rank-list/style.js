@@ -40,10 +40,16 @@ export const RankListHeader = styled.div`
 
     .play {
       background-position: -267px -205px;
+      &:hover {
+        background-position: -267px -235px;
+      }
     }
 
     .favor {
       background-position: -300px -205px;
+      &:hover {
+        background-position: -300px -235px;
+      }
     }
   }
   
@@ -87,24 +93,32 @@ export const RankListContent = styled.div`
         width: 82px;
 
         .btn {
-          margin-left: 8px;
+          margin-left: 7px;
           width: 17px;
           height: 17px;
+          vertical-align: middle;
           cursor: pointer;
         }
 
         .play {
           background-position: -267px -268px;
+          &:hover {
+            background-position: -267px -288px;
+          }
         }
 
         .addto {
-          position: relative;
-          top: 2px;
-          background-position: 0 -700px;
+          background-position: 2px -698px;
+          &:hover {
+            background-position: -20px -698px;
+          }
         }
 
         .favor {
           background-position: -297px -268px;
+          &:hover {
+            background-position: -297px -288px;
+          }
         }
       }
     }
@@ -112,6 +126,7 @@ export const RankListContent = styled.div`
     &:hover {
       .operate {
         display: flex;
+        justify-content: flex-end;
         align-items: center;
       }
     }

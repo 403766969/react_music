@@ -17,6 +17,21 @@ export const setTopAlbumAction = topAlbum => ({
   topAlbum: topAlbum
 })
 
+export const setTopListUpAction = topListUp => ({
+  type: actionTypes.SET_TOP_LIST_UP,
+  topListUp: topListUp
+})
+
+export const setTopListNewAction = topListNew => ({
+  type: actionTypes.SET_TOP_LIST_NEW,
+  topListNew: topListNew
+})
+
+export const setTopListOrgAction = topListOrg => ({
+  type: actionTypes.SET_TOP_LIST_ORG,
+  topListOrg: topListOrg
+})
+
 export const getBannerAction = () => {
   return async dispatch => {
     const res = await recomdApi.getBannerApi()
@@ -35,5 +50,24 @@ export const getTopAlbumAction = (limit, offset) => {
   return async dispatch => {
     const res = await recomdApi.getTopAlbumApi(limit, offset)
     dispatch(setTopAlbumAction(res.albums))
+  }
+}
+
+export const getTopListAction = idx => {
+  return async dispatch => {
+    const res = await recomdApi.getTopListApi(idx)
+    switch (idx) {
+      case 0:
+        dispatch(setTopListNewAction(res.playlist))
+        break
+      case 2:
+        dispatch(setTopListOrgAction(res.playlist))
+        break
+      case 3:
+        dispatch(setTopListUpAction(res.playlist))
+        break
+      default:
+        console.log('其他榜单', res.playlist)
+    }
   }
 }

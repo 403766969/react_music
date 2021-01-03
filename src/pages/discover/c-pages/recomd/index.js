@@ -3,6 +3,7 @@ import React, { memo } from 'react'
 import TopBanner from './c-cpns/top-banner'
 import HotRecomd from './c-cpns/hot-recomd'
 import NewAlbum from './c-cpns/new-album'
+import RankMulti from './c-cpns/rank-multi'
 
 import {
   RecomdWrapper,
@@ -19,6 +20,7 @@ export default memo(function Recomd(props) {
         <RecomdLeft>
           <HotRecomd />
           <NewAlbum />
+          <RankMulti />
         </RecomdLeft>
         <RecomdRight>
 

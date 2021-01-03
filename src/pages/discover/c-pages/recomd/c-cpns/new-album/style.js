@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const NewAlbumWrapper = styled.div`
+  margin-bottom: 35px;
 
   .content {
     display: flex;

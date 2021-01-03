@@ -9,7 +9,7 @@ import store from '@/store'
 
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
-import BackTopMain from '@/components/back-top-main'
+import AppBackTop from '@/components/app-back-top'
 
 export default memo(function App() {
   return (
@@ -18,7 +18,7 @@ export default memo(function App() {
         <AppHeader />
         {renderRoutes(routes)}
         <AppFooter />
-        <BackTopMain />
+        <AppBackTop />
       </HashRouter>
     </Provider>
   )

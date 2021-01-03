@@ -2,6 +2,9 @@ import * as actionTypes from './constants'
 
 import * as recomdApi from '@/services/recomdApi'
 
+/**
+ * 设置state
+ */
 export const setBannerAction = banner => ({
   type: actionTypes.SET_BANNER,
   banner: banner
@@ -32,6 +35,14 @@ export const setTopListOrgAction = topListOrg => ({
   topListOrg: topListOrg
 })
 
+export const setArtistListAction = artistList => ({
+  type: actionTypes.SET_ARTIST_LIST,
+  artistList: artistList
+})
+
+/**
+ * 异步请求
+ */
 export const getBannerAction = () => {
   return async dispatch => {
     const res = await recomdApi.getBannerApi()
@@ -69,5 +80,12 @@ export const getTopListAction = idx => {
       default:
         console.log('其他榜单', res.playlist)
     }
+  }
+}
+
+export const getArtistListAction = (cat, limit) => {
+  return async dispatch => {
+    const res = await recomdApi.getArtistListApi(cat, limit)
+    dispatch(setArtistListAction(res.artists))
   }
 }

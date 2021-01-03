@@ -8,7 +8,8 @@ const initialState = Map({
   topAlbum: [],
   topListUp: [],
   topListNew: [],
-  topListOrg: []
+  topListOrg: [],
+  artistList: []
 })
 
 function reducer(state = initialState, action) {
@@ -25,6 +26,8 @@ function reducer(state = initialState, action) {
       return state.set('topListNew', action.topListNew)
     case actionTypes.SET_TOP_LIST_ORG:
       return state.set('topListOrg', action.topListOrg)
+    case actionTypes.SET_ARTIST_LIST:
+      return state.set('artistList', action.artistList)
     default:
       return state
   }

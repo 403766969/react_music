@@ -12,6 +12,11 @@ export const setPersonalizedAction = personalized => ({
   personalized: personalized
 })
 
+export const setTopAlbumAction = topAlbum => ({
+  type: actionTypes.SET_TOP_ALBUM,
+  topAlbum: topAlbum
+})
+
 export const getBannerAction = () => {
   return async dispatch => {
     const res = await recomdApi.getBannerApi()
@@ -23,5 +28,12 @@ export const getPersonalizedAction = limit => {
   return async dispatch => {
     const res = await recomdApi.getPersonalizedApi(limit)
     dispatch(setPersonalizedAction(res.result))
+  }
+}
+
+export const getTopAlbumAction = (limit, offset) => {
+  return async dispatch => {
+    const res = await recomdApi.getTopAlbumApi(limit, offset)
+    dispatch(setTopAlbumAction(res.albums))
   }
 }

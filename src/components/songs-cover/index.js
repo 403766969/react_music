@@ -14,13 +14,17 @@ import {
 } from './style'
 
 export default memo(function SongsCover(props) {
-  const { songsInfo, isShowAuthor = false } = props
+  const { songsInfo = {}, isShowAuthor = false } = props
 
   const history = useHistory()
 
+  const pushRoute = () => {
+    history.push(`/discover/playlist?id=${songsInfo.id}`)
+  }
+
   return (
     <SongsCoverWrapper>
-      <SongsCoverImage onClick={() => { history.push(`/discover/playlist?id=${songsInfo.id}`) }}>
+      <SongsCoverImage onClick={pushRoute}>
         <img className="image" src={getUrlWithSize(songsInfo.picUrl || songsInfo.coverImgUrl, 140)} alt="" />
         <div className="mask sprite_covor"></div>
         <div className="heat sprite_covor">
@@ -41,7 +45,7 @@ export default memo(function SongsCover(props) {
           isShowAuthor && (
             <p className="cover-author text-nowrap">
               <span>by</span>
-              <NavLink to={`/discover/playlist?id=${songsInfo.id}`}>{songsInfo.copywriter || songsInfo.creator.nickname}</NavLink>
+              <NavLink to={`/user/home?id=${songsInfo.id}`}>{songsInfo.copywriter || songsInfo.creator.nickname}</NavLink>
             </p>
           )
         }

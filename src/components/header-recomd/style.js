@@ -4,6 +4,7 @@ export const HeaderRecomdWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
   padding: 0 10px 4px 34px;
   height: 33px;
   background-position: -225px -156px;

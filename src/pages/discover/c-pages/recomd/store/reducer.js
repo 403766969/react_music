@@ -4,7 +4,8 @@ import * as actionTypes from './constants'
 
 const initialState = Map({
   banner: [],
-  personalized: []
+  personalized: [],
+  topAlbum: []
 })
 
 function reducer(state = initialState, action) {
@@ -13,6 +14,8 @@ function reducer(state = initialState, action) {
       return state.set('banner', action.banner)
     case actionTypes.SET_PERSONALIZED:
       return state.set('personalized', action.personalized)
+    case actionTypes.SET_TOP_ALBUM:
+      return state.set('topAlbum', action.topAlbum)
     default:
       return state
   }

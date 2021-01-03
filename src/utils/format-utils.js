@@ -1,5 +1,5 @@
-export function getUrlWithSize(url, size) {
-  return `${url}?param=${size}x${size}`
+export function getUrlWithSize(url, width = 0, height = width) {
+  return `${url}?param=${width}x${height}`
 }
 
 export function getCount(count) {

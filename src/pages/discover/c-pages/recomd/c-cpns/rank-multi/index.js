@@ -14,7 +14,7 @@ import {
 export default memo(function RankMulti() {
   const title = '榜单'
   const more = {
-    title: '更多',
+    text: '更多',
     link: '/discover/toplist'
   }
 

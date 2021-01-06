@@ -31,8 +31,16 @@ const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
         </ul>
       </HeaderRecomdLeft>
       <HeaderRecomdRight>
-        <NavLink to={more.link}>{more.title}</NavLink>
-        <i className="icon sprite_02"></i>
+        {
+          more.link && more.text
+            ? <NavLink to={more.link}>{more.text}</NavLink>
+            : null
+        }
+        {
+          more.link && more.text
+            ? <i className="icon sprite_02"></i>
+            : null
+        }
       </HeaderRecomdRight>
     </HeaderRecomdWrapper>
   )
@@ -40,16 +48,13 @@ const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
 })
 
 HeaderRecomdMemo.defaultProps = {
-  title: '标题',
+  title: '',
   keywords: [],
-  more: {
-    title: '更多',
-    link: '/'
-  }
+  more: {}
 }
 
 HeaderRecomdMemo.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   keywords: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -57,8 +62,8 @@ HeaderRecomdMemo.propTypes = {
     })
   ),
   more: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired
+    text: PropTypes.string,
+    link: PropTypes.string
   })
 }
 

@@ -19,7 +19,7 @@ import {
 export default memo(function NewAlbum() {
   const title = '新碟上架'
   const more = {
-    title: '更多',
+    text: '更多',
     link: '/discover/album'
   }
 

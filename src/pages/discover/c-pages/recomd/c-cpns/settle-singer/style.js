@@ -5,20 +5,6 @@ export const SettleSingerWrapper = styled.div`
   padding: 20px 20px 0 20px;
 `
 
-export const SettleSingerHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #ccc;
-
-  h3 {
-    font-size: 12px;
-    font-weight: bold;
-    color: #333;
-  }
-`
-
 export const SettleSingerContent = styled.div`
   .item {
     display: flex;

@@ -7,9 +7,10 @@ import {
 
 import { getArtistListAction } from '../../store/actionCreators'
 
+import HeaderSmall from '@/components/header-small'
+
 import {
   SettleSingerWrapper,
-  SettleSingerHeader,
   SettleSingerContent,
   SettleSingerFooter
 } from './style'
@@ -28,10 +29,7 @@ export default memo(function SettleSinger() {
 
   return (
     <SettleSingerWrapper>
-      <SettleSingerHeader>
-        <h3>入驻歌手</h3>
-        <a href="#/discover/artist/signed/">查看全部 &gt;</a>
-      </SettleSingerHeader>
+      <HeaderSmall title={'入驻歌手'} more={{ text: '查看全部', link: '/discover/artist/signed' }} />
       <SettleSingerContent>
         {
           storeState.artistList.map(item => {

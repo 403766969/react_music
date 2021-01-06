@@ -17,7 +17,7 @@ export default memo(function HotRecomd() {
 
   const title = '热门推荐'
   const more = {
-    title: '更多',
+    text: '更多',
     link: '/discover/playlist'
   }
   const keywords = hotRecomdKeywords

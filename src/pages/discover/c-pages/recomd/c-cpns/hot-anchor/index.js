@@ -4,18 +4,17 @@ import {
   hotAnchors
 } from '@/services/local-data'
 
+import HeaderSmall from '@/components/header-small'
+
 import {
   HotAnchorWrapper,
-  HotAnchorHeader,
   HotAnchorContent
 } from './style'
 
 export default memo(function HotAnchor() {
   return (
     <HotAnchorWrapper>
-      <HotAnchorHeader>
-        <h3>热门主播</h3>
-      </HotAnchorHeader>
+      <HeaderSmall title={'热门主播'} />
       <HotAnchorContent>
         {
           hotAnchors.map(item => {

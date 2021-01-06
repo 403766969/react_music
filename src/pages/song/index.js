@@ -5,7 +5,10 @@ import {
 } from './style'
 
 export default memo(function Song(props) {
-  console.log(props)
+
+  const params = new URLSearchParams(props.location.search)
+
+  console.log(params.get('id'))
 
   return (
     <StyleWrapper>

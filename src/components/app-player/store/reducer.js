@@ -2,7 +2,7 @@ import { Map } from 'immutable'
 
 import * as actionTypes from './constants'
 
-export const initialState = Map({
+const initialState = Map({
   currentSong: {}
 })
 

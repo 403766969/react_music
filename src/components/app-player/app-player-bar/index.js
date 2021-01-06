@@ -72,13 +72,16 @@ export default memo(function AppPlayerBar() {
   }, [dispatch])
 
   useEffect(() => {
-    audioRef.current.src = `https://music.163.com/song/media/outer/url?id=${storeState.currentSong.id}.mp3`
-    audioRef.current.play().catch(() => { audioRef.current.pause() })
-    setDuration(storeState.currentSong.dt)
-    setCurrentTime(0)
-    setProgessValue(0)
-    setIsPlaying(!audioRef.current.paused)
-    setIsChaning(false)
+    async function playMusic() {
+      audioRef.current.src = `https://music.163.com/song/media/outer/url?id=${storeState.currentSong.id}.mp3`
+      await audioRef.current.play().catch(() => { audioRef.current.pause() })
+      setDuration(storeState.currentSong.dt)
+      setCurrentTime(0)
+      setProgessValue(0)
+      setIsPlaying(!audioRef.current.paused)
+      setIsChaning(false)
+    }
+    playMusic()
   }, [storeState.currentSong])
 
   const handlePlayPause = () => {

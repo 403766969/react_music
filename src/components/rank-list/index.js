@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { getUrlWithSize } from '@/utils/format-utils'
 
-import { getCurrentSongAction } from '@/pages/player/store/acitonCreators'
+import { getCurrentSongAction } from '@/components/app-player/store/acitonCreators'
 
 import {
   RankListWrapper,

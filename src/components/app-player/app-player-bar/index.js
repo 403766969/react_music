@@ -115,8 +115,6 @@ export default memo(function AppPlayerBar() {
     setIsChaning(false)
   }, [duration])
 
-  console.log(currentTime, progessValue)
-
   return (
     <StyleWrapper className="sprite_playbar">
       <StyleContent>

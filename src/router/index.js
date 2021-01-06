@@ -1,6 +1,7 @@
 import { Redirect } from 'react-router-dom'
 
 import Discover from '@/pages/discover'
+import Song from '@/pages/song'
 import Mine from '@/pages/mine'
 import Friend from '@/pages/friend'
 
@@ -14,55 +15,59 @@ import Album from '@/pages/discover/c-pages/album'
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     exact: true,
     render: () => (
-      <Redirect to="/discover" />
+      <Redirect to='/discover' />
     )
   },
   {
-    path: "/discover",
+    path: '/discover',
     component: Discover,
     routes: [
       {
-        path: "/discover",
+        path: '/discover',
         exact: true,
         render: () => (
-          <Redirect to="/discover/recomd" />
+          <Redirect to='/discover/recomd' />
         )
       },
       {
-        path: "/discover/recomd",
+        path: '/discover/recomd',
         component: Recomd
       },
       {
-        path: "/discover/toplist",
+        path: '/discover/toplist',
         component: Toplist
       },
       {
-        path: "/discover/playlist",
+        path: '/discover/playlist',
         component: Playlist
       },
       {
-        path: "/discover/djradio",
+        path: '/discover/djradio',
         component: Djradio
       },
       {
-        path: "/discover/artist",
+        path: '/discover/artist',
         component: Artist
       },
       {
-        path: "/discover/album",
+        path: '/discover/album',
         component: Album
       }
     ]
   },
   {
-    path: "/mine",
+    path: '/song',
+    component: Song
+  },
+  {
+    path: '/mine',
     component: Mine
   },
   {
-    path: "/friend",
+    path: '/friend',
     component: Friend
   }
 ]

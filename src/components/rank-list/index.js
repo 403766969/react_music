@@ -5,6 +5,8 @@ import { getUrlWithSize } from '@/utils/format-utils'
 
 import { getCurrentSongAction } from '@/components/app-player/store/acitonCreators'
 
+import { NavLink } from 'react-router-dom'
+
 import {
   RankListWrapper,
   RankListHeader,
@@ -27,10 +29,10 @@ export default memo(function RankList(props) {
       <RankListHeader>
         <div className="image">
           <img src={getUrlWithSize(info.coverImgUrl, 80)} alt="" />
-          <a href={`#/discover/toplist?id=${info.id}`} className="image_cover" title={info.name}>ranking</a>
+          <NavLink to={`/discover/toplist?id=${info.id}`} className="image_cover" title={info.name}>ranking</NavLink>
         </div>
         <div className="info">
-          <a href={`#/discover/toplist?id=${info.id}`} title={info.name}>{info.name}</a>
+          <NavLink to={`/discover/toplist?id=${info.id}`} title={info.name}>{info.name}</NavLink>
           <div>
             <button className="btn play sprite_02" title="播放"></button>
             <button className="btn favor sprite_02" title="收藏"></button>
@@ -44,7 +46,7 @@ export default memo(function RankList(props) {
               <div key={item.id} className="list-item">
                 <div className="rank">{index + 1}</div>
                 <div className="info">
-                  <a href={`#/song?id=${item.id}`} className="name text-nowrap" title={item.name}>{item.name}</a>
+                  <NavLink to={`/song?id=${item.id}`} className="name text-nowrap" title={item.name}>{item.name}</NavLink>
                   <div className="operate">
                     <button className="btn sprite_02 play" title="播放" onClick={e => handlePlay(item.id)}></button>
                     <button className="btn sprite_icon2 addto" title="添加到播放列表"></button>
@@ -57,7 +59,7 @@ export default memo(function RankList(props) {
         }
       </RankListContent>
       <RankListFooter>
-        <a href={`#/discover/toplist?id=${info.id}`}>查看全部 &gt;</a>
+        <NavLink to={`/discover/toplist?id=${info.id}`}>查看全部 &gt;</NavLink>
       </RankListFooter>
     </RankListWrapper>
   )

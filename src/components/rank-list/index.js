@@ -1,6 +1,9 @@
 import React, { memo } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { getUrlWithSize } from '@/utils/format-utils'
+
+import { getCurrentSongAction } from '@/pages/player/store/acitonCreators'
 
 import {
   RankListWrapper,
@@ -12,6 +15,12 @@ import {
 export default memo(function RankList(props) {
   const { info } = props
   const { tracks = [] } = info
+
+  const dispatch = useDispatch()
+
+  const handlePlay = id => {
+    dispatch(getCurrentSongAction(id))
+  }
 
   return (
     <RankListWrapper>
@@ -37,7 +46,7 @@ export default memo(function RankList(props) {
                 <div className="info">
                   <a href={`#/song?id=${item.id}`} className="name text-nowrap" title={item.name}>{item.name}</a>
                   <div className="operate">
-                    <button className="btn sprite_02 play" title="播放"></button>
+                    <button className="btn sprite_02 play" title="播放" onClick={e => handlePlay(item.id)}></button>
                     <button className="btn sprite_icon2 addto" title="添加到播放列表"></button>
                     <button className="btn sprite_02 favor" title="收藏"></button>
                   </div>

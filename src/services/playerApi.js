@@ -1,3 +1,3 @@
 import http from './http'
 
-export const getSongDetailApi = ids => http.get('/song/detail', { params: { ids } })
+export const api_get_songDetail = ids => http.get('/song/detail', { params: { ids } })

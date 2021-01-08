@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const AppHeaderWrapper = styled.div`
+export const StyledWrapper = styled.div`
   height: 75px;
   font-size: 14px;
   background-color: #242424;
@@ -17,11 +17,12 @@ export const AppHeaderWrapper = styled.div`
   }
 `
 
-export const HeaderLeft = styled.div`
+export const StyledLeft = styled.div`
   display: flex;
 
   .logo {
     background-position: 0 0;
+
     a {
       display: block;
       width: 176px;
@@ -32,6 +33,7 @@ export const HeaderLeft = styled.div`
 
   .channel-menu {
     display: flex;
+
     .channel-item a{
       position: relative;
       display: block;
@@ -40,10 +42,12 @@ export const HeaderLeft = styled.div`
       line-height: 70px;
       color: #ccc;
       text-decoration: none;
+
       &:hover, &.active {
         background: #000;
         color: #fff;
       }
+
       &.active::after {
         content: "";
         position: absolute;
@@ -58,6 +62,7 @@ export const HeaderLeft = styled.div`
         transform: translateX(-50%);
       }
     }
+
     .channel-item:last-of-type a::after {
       content: "";
       position: absolute;
@@ -70,7 +75,7 @@ export const HeaderLeft = styled.div`
     }
   }
 `
-export const HeaderRight = styled.div`
+export const StyledRight = styled.div`
   display: flex;
   align-items: center;
 
@@ -79,9 +84,11 @@ export const HeaderRight = styled.div`
     height: 32px;
     border: none;
     border-radius: 16px;
+
     input {
       font-size: 12px;
       color: #333;
+
       &::placeholder {
         font-size: 12px;
         color: #9b9b9b;
@@ -103,9 +110,11 @@ export const HeaderRight = styled.div`
     border: 1px solid #4F4F4F;
     border-radius: 16px;
     cursor: pointer;
+
     &:hover{
       border-color: #ccc;
     }
+
     a {
       color: #ccc;
     }
@@ -113,9 +122,11 @@ export const HeaderRight = styled.div`
 
   .login{
     margin-right: 26px;
+
     a {
       color: #787878;
     }
+    
     a:hover {
       color: #999;
     }

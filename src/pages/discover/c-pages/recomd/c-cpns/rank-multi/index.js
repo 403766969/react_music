@@ -1,45 +1,50 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { getTopListAction } from '../../store/actionCreators'
+import { action_get_rankMulti } from '../../store/actionCreators'
 
 import HeaderRecomd from '@/components/header-recomd'
-import RankList from '@/components/rank-list'
+import RankSimple from '@/components/rank-simple'
 
 import {
-  RankMultiWrapper,
-  RankMultiContent
+  StyledWrapper,
+  StyledContent
 } from './style'
 
 export default memo(function RankMulti() {
-  const title = '榜单'
-  const more = {
-    text: '更多',
-    link: '/discover/toplist'
-  }
 
-  const storeState = useSelector(state => ({
-    topListUp: state.getIn(['recomd', 'topListUp']),
-    topListNew: state.getIn(['recomd', 'topListNew']),
-    topListOrg: state.getIn(['recomd', 'topListOrg'])
+  /**
+   * redux hooks
+   */
+  const {
+    rankMultiUp: r_rankMultiUp,
+    rankMultiNew: r_rankMultiNew,
+    rankMultiOrg: r_rankMultiOrg
+  } = useSelector(state => ({
+    rankMultiUp: state.getIn(['recomd', 'rankMultiUp']),
+    rankMultiNew: state.getIn(['recomd', 'rankMultiNew']),
+    rankMultiOrg: state.getIn(['recomd', 'rankMultiOrg'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
 
+  /**
+   * other hooks
+   */
   useEffect(() => {
-    dispatch(getTopListAction(0))
-    dispatch(getTopListAction(2))
-    dispatch(getTopListAction(3))
+    dispatch(action_get_rankMulti(0))
+    dispatch(action_get_rankMulti(2))
+    dispatch(action_get_rankMulti(3))
   }, [dispatch])
 
   return (
-    <RankMultiWrapper>
-      <HeaderRecomd title={title} more={more} />
-      <RankMultiContent>
-        <RankList info={storeState.topListUp} />
-        <RankList info={storeState.topListNew} />
-        <RankList info={storeState.topListOrg} />
-      </RankMultiContent>
-    </RankMultiWrapper>
+    <StyledWrapper>
+      <HeaderRecomd title="榜单" more={{ text: '更多', link: '/discover/toplist' }} />
+      <StyledContent>
+        <RankSimple rankSimpleInfo={r_rankMultiUp} />
+        <RankSimple rankSimpleInfo={r_rankMultiNew} />
+        <RankSimple rankSimpleInfo={r_rankMultiOrg} />
+      </StyledContent>
+    </StyledWrapper>
   )
 })

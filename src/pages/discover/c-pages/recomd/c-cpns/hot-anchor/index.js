@@ -1,37 +1,37 @@
 import React, { memo } from 'react'
 
-import {
-  hotAnchors
-} from '@/services/local-data'
+import { hotAnchorLinks } from '@/services/local-data'
+
+import { NavLink } from 'react-router-dom'
 
 import HeaderSmall from '@/components/header-small'
 
 import {
-  HotAnchorWrapper,
-  HotAnchorContent
+  StyledWrapper,
+  StyledContent
 } from './style'
 
 export default memo(function HotAnchor() {
   return (
-    <HotAnchorWrapper>
+    <StyledWrapper>
       <HeaderSmall title={'热门主播'} />
-      <HotAnchorContent>
+      <StyledContent>
         {
-          hotAnchors.map(item => {
+          hotAnchorLinks.map(item => {
             return (
               <div className="item" key={item.id}>
-                <a href={`#/user/home?id=${item.id}`} className="image">
+                <NavLink to={`/user/home?id=${item.id}`} className="image">
                   <img src={item.picUrl} alt="" />
-                </a>
+                </NavLink>
                 <div className="info">
-                  <a href={`#/user/home?id=${item.id}`} className="name">{item.name}</a>
+                  <NavLink to={`/user/home?id=${item.id}`} className="name">{item.name}</NavLink>
                   <div className="position text-nowrap">{item.position}</div>
                 </div>
               </div>
             )
           })
         }
-      </HotAnchorContent>
-    </HotAnchorWrapper>
+      </StyledContent>
+    </StyledWrapper>
   )
 })

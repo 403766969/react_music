@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-export const RankMultiWrapper = styled.div`
+export const StyledWrapper = styled.div`
 `
 
-export const RankMultiContent = styled.div`
+export const StyledContent = styled.div`
   display: flex;
   margin-bottom: 30px;
   height: 472px;

@@ -2,10 +2,10 @@ import React, { memo } from 'react'
 
 import { StyledWrapper } from './style'
 
-export default memo(function Friend() {
+export default memo(function My() {
   return (
     <StyledWrapper>
-      <h2>Friend</h2>
+      <h2>My</h2>
     </StyledWrapper>
   )
 })

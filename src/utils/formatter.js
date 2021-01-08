@@ -1,8 +1,8 @@
-export function getUrlWithSize(url, width = 0, height = width) {
+export function formatUrlWithSize(url, width = 0, height = width) {
   return `${url}?param=${width}x${height}`
 }
 
-export function getCount(count) {
+export function formatCount(count) {
   if (count < 0) return
   if (count < 10000) {
     return count

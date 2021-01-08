@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const NewAlbumWrapper = styled.div`
+export const StyledWrapper = styled.div`
   margin-bottom: 35px;
 
   .content {
@@ -42,24 +42,24 @@ export const NewAlbumWrapper = styled.div`
     }
   }
 `
-export const NewAlbumPanel = styled.div`
+export const StyledPanel = styled.div`
   position: relative;
   height: 186px;
   background-color: #f5f5f5;
   border: 1px solid #d3d3d3;
 `
 
-export const NewAlbumContent = styled.div`
+export const StyledContent = styled.div`
   margin: 29px auto 0 auto;
   width: 645px;
 `
 
-export const NewAlbumPage = styled.div`
+export const StyledPage = styled.div`
   display: flex !important;
   justify-content: space-around;
 `
 
-export const NewAlbumControl = styled.div`
+export const StyledControl = styled.div`
   .arrow {
     display: block;
     position: absolute;

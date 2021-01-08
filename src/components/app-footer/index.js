@@ -1,27 +1,27 @@
 import React, { Fragment, memo } from 'react'
 
 import {
-  footerLinks,
-  footerImages
+  appFooterLinks,
+  appFooterImages
 } from '@/services/local-data'
 
 import {
-  AppFooterWrapper,
-  FooterLeft,
-  FooterRight
+  StyledWrapper,
+  StyledLeft,
+  StyledRight
 } from './style'
 
 export default memo(function AppFooter() {
   return (
-    <AppFooterWrapper>
+    <StyledWrapper>
       <div className="wrap-v2 content">
-        <FooterLeft className="left">
+        <StyledLeft className="left">
           <div className="link">
             {
-              footerLinks.map(item => {
+              appFooterLinks.map(item => {
                 return (
                   <Fragment key={item.title}>
-                    <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+                    <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
                     <span className="line">|</span>
                   </Fragment>
                 )
@@ -32,39 +32,39 @@ export default memo(function AppFooter() {
             <span>网易公司版权所有©1997-2020</span>
             <span>
               杭州乐读科技有限公司运营：
-              <a href="https://p1.music.126.net/Mos9LTpl6kYt6YTutA6gjg==/109951164248627501.png" rel="noopener noreferrer" target="_blank">浙网文[2018]3506-263号</a>
+              <a href="https://p1.music.126.net/Mos9LTpl6kYt6YTutA6gjg==/109951164248627501.png" rel="noreferrer" target="_blank">浙网文[2018]3506-263号</a>
             </span>
           </div>
           <div className="report">
             <span>违法和不良信息举报电话：0571-89853516</span>
             <span>
               举报邮箱：
-              <a href="mailto:ncm5990@163.com" target="_blank" rel="noopener noreferrer">ncm5990@163.com</a>
+              <a href="mailto:ncm5990@163.com" target="_blank" rel="noreferrer">ncm5990@163.com</a>
             </span>
           </div>
           <div className="info">
             <span>粤B2-20090191-18&nbsp;</span>
-            <a href="http://www.beian.miit.gov.cn/publish/query/indexFirst.action" rel="noopener noreferrer" target="_blank">
+            <a href="http://www.beian.miit.gov.cn/publish/query/indexFirst.action" rel="noreferrer" target="_blank">
               工业和信息化部备案管理系统网站&nbsp;
             </a>
-            <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010902002564" rel="noopener noreferrer" target="_blank">
+            <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33010902002564" rel="noreferrer" target="_blank">
               浙公网安备 33010902002564号
             </a>
           </div>
-        </FooterLeft>
-        <FooterRight className="right">
+        </StyledLeft>
+        <StyledRight className="right">
           {
-            footerImages.map((item, index) => {
+            appFooterImages.map(item => {
               return (
                 <li className="item" key={item.link}>
-                  <a className="link" href={item.link} rel="noopener noreferrer" target="_blank"> </a>
+                  <a className="link" href={item.link} rel="noreferrer" target="_blank"> </a>
                   <span className="title">{item.title}</span>
                 </li>
               )
             })
           }
-        </FooterRight>
+        </StyledRight>
       </div>
-    </AppFooterWrapper>
+    </StyledWrapper>
   )
 })

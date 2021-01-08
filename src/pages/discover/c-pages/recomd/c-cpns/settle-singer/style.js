@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-export const SettleSingerWrapper = styled.div`
+export const StyledWrapper = styled.div`
   margin-bottom: 5px;
   padding: 20px 20px 0 20px;
 `
 
-export const SettleSingerContent = styled.div`
+export const StyledContent = styled.div`
   .item {
     display: flex;
     margin-top: 14px;
@@ -39,7 +39,7 @@ export const SettleSingerContent = styled.div`
   }
 `
 
-export const SettleSingerFooter = styled.div`
+export const StyledFooter = styled.div`
   margin-top: 12px;
 
   a {

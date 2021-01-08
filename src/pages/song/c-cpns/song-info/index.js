@@ -1,15 +1,13 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import {
-  getUrlWithSize
-} from '@/utils/format-utils'
+import { formatUrlWithSize } from '@/utils/formatter'
 
-import { getShowSongAction } from '../../store/actionCreators'
+import { action_get_songInfo } from '../../store/actionCreators'
 
 import { NavLink } from 'react-router-dom'
 
-import Operation from './c-cpns/operation-bar'
+import OperationBar from './c-cpns/operation-bar'
 
 import {
   StyleWrapper,
@@ -19,45 +17,52 @@ import {
 } from './style'
 
 export default memo(function SongInfo(props) {
+
+  /**
+   * props and state
+   */
   const { songId } = props
 
-  const storeState = useSelector(state => ({
-    showSong: state.getIn(['song', 'showSong'])
+  /**
+   * redux hooks
+   */
+  const { songInfo: r_songInfo } = useSelector(state => ({
+    songInfo: state.getIn(['song', 'songInfo'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
 
+  /** other hooks */
   useEffect(() => {
-    dispatch(getShowSongAction(songId))
+    dispatch(action_get_songInfo(songId))
   }, [dispatch, songId])
-
 
   return (
     <StyleWrapper>
       {
-        Object.keys(storeState.showSong).length > 0
-        && songId + '' === storeState.showSong.id + ''
+        Object.keys(r_songInfo).length > 0
+        && songId + '' === r_songInfo.id + ''
         &&
         <StyleContent>
           <StyleLeft>
             <div className="image">
-              <img src={getUrlWithSize(storeState.showSong.al.picUrl, 130)} alt="" />
+              <img src={formatUrlWithSize(r_songInfo.al.picUrl, 130)} alt="" />
               <span className="cover image_cover"></span>
             </div>
             <div className="link">
               <i className="sprite_icon2"></i>
-              <NavLink to={`/outchain/2/${storeState.showSong.id}`} title="生成外联播放器">生成外联播放器</NavLink>
+              <NavLink to={`/outchain/2/${r_songInfo.id}`} title="生成外联播放器">生成外联播放器</NavLink>
             </div>
           </StyleLeft>
           <StyleRight>
             <div className="header">
               <i className="sprite_icon2"></i>
-              <h3 className="title">{storeState.showSong.name}</h3>
+              <h3 className="title">{r_songInfo.name}</h3>
             </div>
             <div className="singer">
               <span className="label">歌手：</span>
               {
-                storeState.showSong.ar.map(item => {
+                r_songInfo.ar.map(item => {
                   return (
                     <NavLink key={item.id}
                       to={`/artist?id=${item.id}`}
@@ -71,13 +76,13 @@ export default memo(function SongInfo(props) {
             </div>
             <div className="album">
               <span className="label">所属专辑：</span>
-              <NavLink to={`/album?id=${storeState.showSong.al.id}`}
-                title={storeState.showSong.al.name}
+              <NavLink to={`/album?id=${r_songInfo.al.id}`}
+                title={r_songInfo.al.name}
                 className="name">
-                {storeState.showSong.al.name}
+                {r_songInfo.al.name}
               </NavLink>
             </div>
-            <Operation showSong={storeState.showSong} />
+            <OperationBar songInfo={r_songInfo} />
           </StyleRight>
         </StyleContent>
       }

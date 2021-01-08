@@ -38,6 +38,7 @@ export const StyleControl = styled.div`
 
   .prev {
     background-position: 0 -130px;
+
     &:hover {
       background-position: -30px -130px;
     }
@@ -45,6 +46,7 @@ export const StyleControl = styled.div`
 
   .next {
     background-position: -80px -130px;
+
     &:hover {
       background-position: -110px -130px;
     }
@@ -56,6 +58,7 @@ export const StyleControl = styled.div`
     margin: 0 8px;
     margin-top: 2px;
     background-position: 0 ${props => props.isPlaying ? '-165px' : '-204px'};
+
     &:hover {
       background-position: -40px ${props => props.isPlaying ? '-165px' : '-204px'};
     }
@@ -74,6 +77,7 @@ export const StyleDetail = styled.div`
     width: 34px;
     height: 34px;
     border-radius: 5px;
+
     img {
       width: 34px;
       height: 34px;
@@ -104,9 +108,11 @@ export const StyleDetail = styled.div`
 
       .singer-name {
         color: #9b9b9b;
+
         &::after {
           content: "/"
         }
+
         &:last-of-type::after {
           content: ""
         }
@@ -183,6 +189,7 @@ export const StyleOperator = styled.div`
 
     .favor {
       background-position: -88px -163px;
+
       &:hover {
         background-position: -88px -189px;
       }
@@ -190,6 +197,7 @@ export const StyleOperator = styled.div`
 
     .share {
       background-position: -114px -163px;
+
       &:hover {
         background-position: -114px -189px;
       }
@@ -205,6 +213,7 @@ export const StyleOperator = styled.div`
 
     .volume {
       background-position: -2px -247px;
+
       &:hover {
         background-position: -31px -247px;
       }
@@ -212,6 +221,7 @@ export const StyleOperator = styled.div`
 
     .loop {
       background-position: ${props => props.pos};
+
       &:hover {
         background-position: ${props => props.hoverPos};
       }
@@ -223,6 +233,7 @@ export const StyleOperator = styled.div`
       text-align: center;
       color: #ccc;
       background-position: -42px -68px;
+      
       &:hover {
         background-position: -42px -98px;
       }

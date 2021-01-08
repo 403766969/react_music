@@ -1,53 +1,59 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import {
-  getUrlWithSize
-} from '@/utils/format-utils'
+import { formatUrlWithSize } from '@/utils/formatter'
 
-import { getArtistListAction } from '../../store/actionCreators'
+import { action_get_settleSingerList } from '../../store/actionCreators'
+
+import { NavLink } from 'react-router-dom'
 
 import HeaderSmall from '@/components/header-small'
 
 import {
-  SettleSingerWrapper,
-  SettleSingerContent,
-  SettleSingerFooter
+  StyledWrapper,
+  StyledContent,
+  StyledFooter
 } from './style'
 
 export default memo(function SettleSinger() {
 
-  const storeState = useSelector(state => ({
-    artistList: state.getIn(['recomd', 'artistList'])
+  /**
+   * redux hooks
+   */
+  const { settleSingerList: r_settleSingerList } = useSelector(state => ({
+    settleSingerList: state.getIn(['recomd', 'settleSingerList'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
 
+  /**
+   * other hooks
+   */
   useEffect(() => {
-    dispatch(getArtistListAction(5001, 5))
+    dispatch(action_get_settleSingerList(5001, 5))
   }, [dispatch])
 
   return (
-    <SettleSingerWrapper>
+    <StyledWrapper>
       <HeaderSmall title={'入驻歌手'} more={{ text: '查看全部', link: '/discover/artist/signed' }} />
-      <SettleSingerContent>
+      <StyledContent>
         {
-          storeState.artistList.map(item => {
+          r_settleSingerList.map(item => {
             return (
-              <a href={`#/user/home?id=${item.id}`} key={item.id} className="item">
-                <img src={getUrlWithSize(item.img1v1Url, 62)} alt="" />
+              <NavLink to={`/user/home?id=${item.id}`} key={item.id} className="item">
+                <img src={formatUrlWithSize(item.img1v1Url, 62)} alt="" />
                 <div className="info">
                   <div className="title">{item.alias.join('') || item.name}</div>
                   <div className="name">{item.name}</div>
                 </div>
-              </a>
+              </NavLink>
             )
           })
         }
-      </SettleSingerContent>
-      <SettleSingerFooter>
+      </StyledContent>
+      <StyledFooter>
         <a href="https://music.163.com/st/musician" target="_blank" rel="noreferrer">申请成为网易音乐人</a>
-      </SettleSingerFooter>
-    </SettleSingerWrapper>
+      </StyledFooter>
+    </StyledWrapper>
   )
 })

@@ -1,9 +1,9 @@
 import { Redirect } from 'react-router-dom'
 
 import Discover from '@/pages/discover'
-import Song from '@/pages/song'
-import Mine from '@/pages/mine'
+import My from '@/pages/my'
 import Friend from '@/pages/friend'
+import Song from '@/pages/song'
 
 import Recomd from '@/pages/discover/c-pages/recomd'
 import Toplist from '@/pages/discover/c-pages/toplist'
@@ -59,16 +59,16 @@ const routes = [
     ]
   },
   {
-    path: '/song',
-    component: Song
-  },
-  {
-    path: '/mine',
-    component: Mine
+    path: '/my',
+    component: My
   },
   {
     path: '/friend',
     component: Friend
+  },
+  {
+    path: '/song',
+    component: Song
   }
 ]
 

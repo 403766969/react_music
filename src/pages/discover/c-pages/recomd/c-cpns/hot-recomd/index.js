@@ -1,49 +1,48 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { hotRecomdKeywords } from '@/services/local-data'
+import { hotRecomdLinks } from '@/services/local-data'
 
-import { getPersonalizedAction } from '../../store/actionCreators'
+import { action_get_hotRecomdList } from '../../store/actionCreators'
 
 import HeaderRecomd from '@/components/header-recomd'
-import SongsCover from '@/components/songs-cover'
+import PlaylistCover from '@/components/playlist-cover'
 
 import {
-  HotRecomdWrapper,
-  HotRecomdContent
+  StyledWrapper,
+  StyledContent
 } from './style'
 
 export default memo(function HotRecomd() {
 
-  const title = '热门推荐'
-  const more = {
-    text: '更多',
-    link: '/discover/playlist'
-  }
-  const keywords = hotRecomdKeywords
-
-  const storeState = useSelector(state => ({
-    personalized: state.getIn(['recomd', 'personalized'])
+  /**
+   * redux hooks
+   */
+  const { hotRecomdList: r_hotRecomdList } = useSelector(state => ({
+    hotRecomdList: state.getIn(['recomd', 'hotRecomdList'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
 
+  /**
+   * other hooks
+   */
   useEffect(() => {
-    dispatch(getPersonalizedAction(8))
+    dispatch(action_get_hotRecomdList(8))
   }, [dispatch])
 
   return (
-    <HotRecomdWrapper>
-      <HeaderRecomd title={title} keywords={keywords} more={more} />
-      <HotRecomdContent>
+    <StyledWrapper>
+      <HeaderRecomd title="热门推荐" links={hotRecomdLinks} more={{ text: '更多', link: '/discover/playlist' }} />
+      <StyledContent>
         {
-          storeState.personalized.map(item => {
+          r_hotRecomdList.map(item => {
             return (
-              <SongsCover songsInfo={item} key={item.id} />
+              <PlaylistCover playlistInfo={item} key={item.id} />
             )
           })
         }
-      </HotRecomdContent>
-    </HotRecomdWrapper>
+      </StyledContent>
+    </StyledWrapper>
   )
 })

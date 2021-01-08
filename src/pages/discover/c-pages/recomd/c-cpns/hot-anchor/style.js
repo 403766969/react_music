@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-export const HotAnchorWrapper = styled.div`
+export const StyledWrapper = styled.div`
   margin-bottom: 5px;
   padding: 20px 20px 0 20px;
 `
 
-export const HotAnchorContent = styled.div`
+export const StyledContent = styled.div`
   margin-top: 20px;
 
   .item {
@@ -35,6 +35,6 @@ export const HotAnchorContent = styled.div`
   }
 `
 
-export const HotAnchorFooter = styled.div`
+export const StyledFooter = styled.div`
 
 `

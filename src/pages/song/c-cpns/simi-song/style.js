@@ -23,6 +23,7 @@ export const StyleContent = styled.div`
       .artist {
         a {
           color: #999;
+          
           &::after {
             content: "/"
           }

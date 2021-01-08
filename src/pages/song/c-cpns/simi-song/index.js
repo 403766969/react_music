@@ -1,8 +1,8 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { getSimiSongAction } from '../../store/actionCreators'
-import { getCurrentSongAction } from '@/components/app-player/store/acitonCreators'
+import { action_get_simiSong } from '../../store/actionCreators'
+import { action_get_currentSong } from '@/components/app-player/store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -14,20 +14,33 @@ import {
 } from './style'
 
 export default memo(function SimiSong(props) {
+
+  /**
+   * props and state
+   */
   const { songId } = props
 
-  const storeState = useSelector(state => ({
+  /**
+   * redux hooks
+   */
+  const { simiSong: r_simiSong } = useSelector(state => ({
     simiSong: state.getIn(['song', 'simiSong'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
 
+  /**
+   * other hooks
+   */
   useEffect(() => {
-    dispatch(getSimiSongAction(songId))
+    dispatch(action_get_simiSong(songId))
   }, [dispatch, songId])
 
+  /**
+   * other logic
+   */
   const handlePlay = id => {
-    dispatch(getCurrentSongAction(id))
+    dispatch(action_get_currentSong(id))
   }
 
   return (
@@ -35,7 +48,7 @@ export default memo(function SimiSong(props) {
       <HeaderSmall title="相似歌曲" />
       <StyleContent>
         {
-          storeState.simiSong.map(item => {
+          r_simiSong.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">

@@ -9,28 +9,28 @@ import SettleSinger from './c-cpns/settle-singer'
 import HotAnchor from './c-cpns/hot-anchor'
 
 import {
-  RecomdWrapper,
-  RecomdContent,
-  RecomdLeft,
-  RecomdRight
+  StyledWrapper,
+  StyledContent,
+  StyledLeft,
+  StyledRight
 } from './style'
 
 export default memo(function Recomd(props) {
   return (
-    <RecomdWrapper>
+    <StyledWrapper>
       <TopBanner />
-      <RecomdContent className="wrap-v2">
-        <RecomdLeft>
+      <StyledContent className="wrap-v2">
+        <StyledLeft>
           <HotRecomd />
           <NewAlbum />
           <RankMulti />
-        </RecomdLeft>
-        <RecomdRight>
+        </StyledLeft>
+        <StyledRight>
           <UserLogin />
           <SettleSinger />
           <HotAnchor />
-        </RecomdRight>
-      </RecomdContent>
-    </RecomdWrapper>
+        </StyledRight>
+      </StyledContent>
+    </StyledWrapper>
   )
 })

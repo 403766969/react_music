@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export const HotRecomdWrapper = styled.div`
+export const StyledWrapper = styled.div`
   margin-bottom: 35px;
 `
 
-export const HotRecomdContent = styled.div`
+export const StyledContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

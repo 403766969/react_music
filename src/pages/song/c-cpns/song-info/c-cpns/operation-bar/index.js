@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setCurrentSongAction } from '@/components/app-player/store/acitonCreators'
+import { action_set_currentSong } from '@/components/app-player/store/acitonCreators'
 
 import {
   StyleWrapper,
@@ -10,12 +10,12 @@ import {
 } from './style'
 
 export default memo(function OperationBar(props) {
-  const { showSong } = props
+  const { songInfo } = props
 
   const dispatch = useDispatch()
 
   const handlePlay = () => {
-    dispatch(setCurrentSongAction(showSong))
+    dispatch(action_set_currentSong(songInfo))
   }
 
   return (

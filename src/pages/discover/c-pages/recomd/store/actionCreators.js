@@ -3,79 +3,79 @@ import * as actionTypes from './constants'
 import * as recomdApi from '@/services/recomdApi'
 
 /**
- * 设置state
+ * 操作state
  */
-export const setBannerAction = banner => ({
-  type: actionTypes.SET_BANNER,
-  banner: banner
+export const action_set_carouselImages = carouselImages => ({
+  type: actionTypes.SET_CAROUSEL_IMAGES,
+  carouselImages: carouselImages
 })
 
-export const setPersonalizedAction = personalized => ({
-  type: actionTypes.SET_PERSONALIZED,
-  personalized: personalized
+export const action_set_hotRecomdList = hotRecomdList => ({
+  type: actionTypes.SET_HOT_RECOMD_LIST,
+  hotRecomdList: hotRecomdList
 })
 
-export const setTopAlbumAction = topAlbum => ({
-  type: actionTypes.SET_TOP_ALBUM,
-  topAlbum: topAlbum
+export const action_set_newAlbumList = newAlbumList => ({
+  type: actionTypes.SET_NEW_ALBUM_LIST,
+  newAlbumList: newAlbumList
 })
 
-export const setTopListUpAction = topListUp => ({
-  type: actionTypes.SET_TOP_LIST_UP,
-  topListUp: topListUp
+export const action_set_rankMultiUp = rankMultiUp => ({
+  type: actionTypes.SET_RANK_MULTI_UP,
+  rankMultiUp: rankMultiUp
 })
 
-export const setTopListNewAction = topListNew => ({
-  type: actionTypes.SET_TOP_LIST_NEW,
-  topListNew: topListNew
+export const action_set_rankMultiNew = rankMultiNew => ({
+  type: actionTypes.SET_RANK_MULTI_NEW,
+  rankMultiNew: rankMultiNew
 })
 
-export const setTopListOrgAction = topListOrg => ({
-  type: actionTypes.SET_TOP_LIST_ORG,
-  topListOrg: topListOrg
+export const action_set_rankMultiOrg = rankMultiOrg => ({
+  type: actionTypes.SET_RANK_MULTI_ORG,
+  rankMultiOrg: rankMultiOrg
 })
 
-export const setArtistListAction = artistList => ({
-  type: actionTypes.SET_ARTIST_LIST,
-  artistList: artistList
+export const action_set_settleSingerList = settleSingerList => ({
+  type: actionTypes.SET_SETTLE_SINGER_LIST,
+  settleSingerList: settleSingerList
 })
 
 /**
  * 异步请求
  */
-export const getBannerAction = () => {
+export const action_get_carouselImages = () => {
   return async dispatch => {
-    const res = await recomdApi.getBannerApi()
-    dispatch(setBannerAction(res.banners))
+    const res = await recomdApi.api_get_banner()
+    dispatch(action_set_carouselImages(res.banners))
   }
 }
 
-export const getPersonalizedAction = limit => {
+export const action_get_hotRecomdList = limit => {
   return async dispatch => {
-    const res = await recomdApi.getPersonalizedApi(limit)
-    dispatch(setPersonalizedAction(res.result))
+    const res = await recomdApi.api_get_personalized(limit)
+    dispatch(action_set_hotRecomdList(res.result))
   }
 }
 
-export const getTopAlbumAction = (limit, offset) => {
+export const action_get_newAlbumList = (limit, offset) => {
   return async dispatch => {
-    const res = await recomdApi.getTopAlbumApi(limit, offset)
-    dispatch(setTopAlbumAction(res.albums))
+    const res = await recomdApi.api_get_topAlbum(limit, offset)
+    dispatch(action_set_newAlbumList(res.albums))
   }
 }
 
-export const getTopListAction = idx => {
+export const action_get_rankMulti = idx => {
   return async dispatch => {
-    const res = await recomdApi.getTopListApi(idx)
+    const res = await recomdApi.api_get_topList(idx)
     switch (idx) {
       case 0:
-        dispatch(setTopListNewAction(res.playlist))
+        dispatch(action_set_rankMultiNew(res.playlist))
         break
       case 2:
-        dispatch(setTopListOrgAction(res.playlist))
+        dispatch(action_set_rankMultiOrg(res.playlist))
         break
       case 3:
-        dispatch(setTopListUpAction(res.playlist))
+        dispatch(action_set_rankMultiUp(res.playlist))
         break
       default:
         console.log('其他榜单', res.playlist)
@@ -83,9 +83,9 @@ export const getTopListAction = idx => {
   }
 }
 
-export const getArtistListAction = (cat, limit) => {
+export const action_get_settleSingerList = (cat, limit) => {
   return async dispatch => {
-    const res = await recomdApi.getArtistListApi(cat, limit)
-    dispatch(setArtistListAction(res.artists))
+    const res = await recomdApi.api_get_artistList(cat, limit)
+    dispatch(action_set_settleSingerList(res.artists))
   }
 }

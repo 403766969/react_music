@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const HeaderRecomdWrapper = styled.div`
+export const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,7 +11,7 @@ export const HeaderRecomdWrapper = styled.div`
   border-bottom: 2px solid #C10D0C;
 `
 
-export const HeaderRecomdLeft = styled.div`
+export const StyledLeft = styled.div`
   display: flex;
   align-items: center;
 
@@ -23,11 +23,13 @@ export const HeaderRecomdLeft = styled.div`
 
   .keyword {
     display: flex;
+
     .item {
       .divider {
         margin: 0 13px;
         color: #ccc;
       }
+      
       &:last-of-type .divider {
         display: none;
       }
@@ -35,7 +37,7 @@ export const HeaderRecomdLeft = styled.div`
   }
 
 `
-export const HeaderRecomdRight = styled.div`
+export const StyledRight = styled.div`
   display: flex;
   align-items: center;
 

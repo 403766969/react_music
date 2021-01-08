@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export const AlbumCoverWrapper = styled.div`
+export const StyledWrapper = styled.div`
 
 `
 
-export const AlbumCoverImage = styled.div`
+export const StyledImage = styled.div`
   position: relative;
   margin-bottom: 7px;
   width: ${props => props.coverW};
@@ -27,7 +27,7 @@ export const AlbumCoverImage = styled.div`
   }
 `
 
-export const AlbumCoverDec = styled.div`
+export const StyledDec = styled.div`
   width: ${props => props.imgW};
   font-size: 12px;
 

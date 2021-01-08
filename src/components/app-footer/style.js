@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
-export const AppFooterWrapper = styled.div`
+export const StyledWrapper = styled.div`
+  padding-bottom: 45px;
   color: #666;
   background-color: #f2f2f2;
   border-top: 1px solid #d3d3d3;
@@ -13,7 +14,7 @@ export const AppFooterWrapper = styled.div`
   }
 `
 
-export const FooterLeft = styled.div`
+export const StyledLeft = styled.div`
   line-height: 24px;
   font-size: 12px;
 
@@ -42,7 +43,7 @@ export const FooterLeft = styled.div`
   }
 `
 
-export const FooterRight = styled.ul`
+export const StyledRight = styled.ul`
   display: flex;
 
   .item {
@@ -62,12 +63,15 @@ export const FooterRight = styled.ul`
     :nth-child(1) .link {
       background-position: -60px -101px;
     }
+
     :nth-child(2) .link {
       background-position: 0 0;
     }
+
     :nth-child(3) .link {
       background-position: -60px -50px;
     }
+
     :nth-child(4) .link {
       background-position: 0 -101px;
     }
@@ -84,14 +88,17 @@ export const FooterRight = styled.ul`
     :nth-child(1) .title {
       background-position: -0px -90px;
     }
+
     :nth-child(2) .title {
       background-position: 0 0;
       margin-top: 7px;
     }
+
     :nth-child(3) .title {
       background-position: 1px -54px;
       margin-top: 6px;
     }
+    
     :nth-child(4) .title {
       background-position: -1px -72px;
       margin-top: 6px;

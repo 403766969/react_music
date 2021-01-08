@@ -1,4 +1,4 @@
-export const headNavLinks = [
+export const appheaderLinks = [
   {
     title: '发现音乐',
     link: '/discover',
@@ -6,7 +6,7 @@ export const headNavLinks = [
   },
   {
     title: '我的音乐',
-    link: '/mine',
+    link: '/my',
     isNav: true
   },
   {
@@ -31,7 +31,7 @@ export const headNavLinks = [
   }
 ]
 
-export const footerLinks = [
+export const appFooterLinks = [
   {
     title: '服务条款',
     link: 'https://st.music.163.com/official-terms/service'
@@ -54,7 +54,7 @@ export const footerLinks = [
   }
 ]
 
-export const footerImages = [
+export const appFooterImages = [
   {
     link: 'https://music.163.com/st/userbasic#/auth'
   },
@@ -69,7 +69,7 @@ export const footerImages = [
   }
 ]
 
-export const dicoverNavLinks = [
+export const dicoverPartLinks = [
   {
     title: '推荐',
     link: '/discover/recomd'
@@ -96,7 +96,7 @@ export const dicoverNavLinks = [
   },
 ]
 
-export const hotRecomdKeywords = [
+export const hotRecomdLinks = [
   {
     title: '华语',
     link: '/discover/playlist/?cat=华语'
@@ -119,7 +119,7 @@ export const hotRecomdKeywords = [
   }
 ]
 
-export const hotAnchors = [
+export const hotAnchorLinks = [
   {
     picUrl: 'http://p1.music.126.net/H3QxWdf0eUiwmhJvA4vrMQ==/1407374893913311.jpg',
     name: '陈立',

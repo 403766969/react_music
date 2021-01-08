@@ -1,16 +1,16 @@
 import styled from 'styled-components'
 
-export const TopBannerWrapper = styled.div`
+export const StyledWrapper = styled.div`
   background: url(${props => props.bgImage}) center/6000px no-repeat;
 `
 
-export const TopBannerContent = styled.div`
+export const StyledContent = styled.div`
   display: flex;
   position: relative;
   height: 285px;
 `
 
-export const TopBannerShow = styled.div`
+export const StyledShow = styled.div`
   width: 726px;
 
   .item {
@@ -21,7 +21,7 @@ export const TopBannerShow = styled.div`
   }
 `
 
-export const TopBannerDownload = styled.div`
+export const StyledDownload = styled.div`
   position: relative;
   width: 254px;
   height: 285px;
@@ -35,6 +35,7 @@ export const TopBannerDownload = styled.div`
     text-indent: -9999px;
     background: url(${require('@/assets/img/download.png').default}) no-repeat;
     background-position: 0 9999px;
+
     &:hover {
       background-position: 0 -290px;
     }
@@ -46,11 +47,13 @@ export const TopBannerDownload = styled.div`
     width: 20px;
     height: 285px;
     background: url(${require("@/assets/img/banner_sprite.png").default}) no-repeat;
+
     &:nth-of-type(1) {
       top: 0;
       left: -20px;
       background-position: 0 0;
     }
+    
     &:nth-of-type(2) {
       top: 0;
       right: -20px;
@@ -59,7 +62,7 @@ export const TopBannerDownload = styled.div`
   }
 `
 
-export const TopBannerControl = styled.div`
+export const StyledControl = styled.div`
   .btn {
     position: absolute;
     top: 50%;

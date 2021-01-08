@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 
 import { NavLink } from 'react-router-dom'
 
-import {
-  StyleWrapper
-} from './style'
+import { StyleWrapper } from './style'
 
 const HeaderSmallMemo = memo(function HeaderSmall(props) {
+
+  /**
+   * props and state
+   */
   const { title, more } = props
+
   return (
     <StyleWrapper>
       <h3>{title}</h3>

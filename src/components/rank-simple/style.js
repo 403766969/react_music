@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-export const RankListWrapper = styled.div`
+export const StyledWrapper = styled.div`
   flex: 1;
 `
 
-export const RankListHeader = styled.div`
+export const StyledHeader = styled.div`
   display: flex;
   margin: 20px 0 0 20px;
   height: 100px;
@@ -55,7 +55,7 @@ export const RankListHeader = styled.div`
   
 `
 
-export const RankListContent = styled.div`
+export const StyledContent = styled.div`
   .list-item {
     display: flex;
     align-items: center;
@@ -133,7 +133,7 @@ export const RankListContent = styled.div`
   }
 `
 
-export const RankListFooter = styled.div`
+export const StyledFooter = styled.div`
   height: 32px;
   display: flex;
   align-items: center;

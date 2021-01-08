@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const DiscoverWrapper = styled.div`
+export const StyledWrapper = styled.div`
   .partition {
     display: flex;
     align-items: center;

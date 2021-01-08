@@ -4,22 +4,25 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
 import {
-  HeaderRecomdWrapper,
-  HeaderRecomdLeft,
-  HeaderRecomdRight
+  StyledWrapper,
+  StyledLeft,
+  StyledRight
 } from './style'
 
 const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
 
-  const { title, keywords, more } = props
+  /**
+   * props and state
+   */
+  const { title, links, more } = props
 
   return (
-    <HeaderRecomdWrapper className="sprite_02">
-      <HeaderRecomdLeft>
+    <StyledWrapper className="sprite_02">
+      <StyledLeft>
         <h3 className="title">{title}</h3>
         <ul className="keyword">
           {
-            keywords.map(item => {
+            links.map(item => {
               return (
                 <li className="item" key={item.title}>
                   <NavLink to={item.link}>{item.title}</NavLink>
@@ -29,8 +32,8 @@ const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
             })
           }
         </ul>
-      </HeaderRecomdLeft>
-      <HeaderRecomdRight>
+      </StyledLeft>
+      <StyledRight>
         {
           more.link && more.text
             ? <NavLink to={more.link}>{more.text}</NavLink>
@@ -41,21 +44,21 @@ const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
             ? <i className="icon sprite_02"></i>
             : null
         }
-      </HeaderRecomdRight>
-    </HeaderRecomdWrapper>
+      </StyledRight>
+    </StyledWrapper>
   )
 
 })
 
 HeaderRecomdMemo.defaultProps = {
   title: '',
-  keywords: [],
+  links: [],
   more: {}
 }
 
 HeaderRecomdMemo.propTypes = {
   title: PropTypes.string.isRequired,
-  keywords: PropTypes.arrayOf(
+  links: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       link: PropTypes.string.isRequired

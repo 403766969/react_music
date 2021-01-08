@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-export const SongsCoverWrapper = styled.div`
+export const StyledWrapper = styled.div`
   width: 140px;
   margin-bottom: 30px;
 `
 
-export const SongsCoverImage = styled.div`
+export const StyledImage = styled.div`
   position: relative;
   margin-bottom: 8px;
   cursor: pointer;
@@ -63,7 +63,7 @@ export const SongsCoverImage = styled.div`
   }
 `
 
-export const SongsCoverDec = styled.div`
+export const StyledDec = styled.div`
   line-height: 1.4;
   
   .cover-name {

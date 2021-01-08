@@ -3,31 +3,31 @@ import { Map } from 'immutable'
 import * as actionTypes from './constants'
 
 const initialState = Map({
-  banner: [],
-  personalized: [],
-  topAlbum: [],
-  topListUp: [],
-  topListNew: [],
-  topListOrg: [],
-  artistList: []
+  carouselImages: [],
+  hotRecomdList: [],
+  newAlbumList: [],
+  rankMultiUp: [],
+  rankMultiNew: [],
+  rankMultiOrg: [],
+  settleSingerList: []
 })
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.SET_BANNER:
-      return state.set('banner', action.banner)
-    case actionTypes.SET_PERSONALIZED:
-      return state.set('personalized', action.personalized)
-    case actionTypes.SET_TOP_ALBUM:
-      return state.set('topAlbum', action.topAlbum)
-    case actionTypes.SET_TOP_LIST_UP:
-      return state.set('topListUp', action.topListUp)
-    case actionTypes.SET_TOP_LIST_NEW:
-      return state.set('topListNew', action.topListNew)
-    case actionTypes.SET_TOP_LIST_ORG:
-      return state.set('topListOrg', action.topListOrg)
-    case actionTypes.SET_ARTIST_LIST:
-      return state.set('artistList', action.artistList)
+    case actionTypes.SET_CAROUSEL_IMAGES:
+      return state.set('carouselImages', action.carouselImages)
+    case actionTypes.SET_HOT_RECOMD_LIST:
+      return state.set('hotRecomdList', action.hotRecomdList)
+    case actionTypes.SET_NEW_ALBUM_LIST:
+      return state.set('newAlbumList', action.newAlbumList)
+    case actionTypes.SET_RANK_MULTI_UP:
+      return state.set('rankMultiUp', action.rankMultiUp)
+    case actionTypes.SET_RANK_MULTI_NEW:
+      return state.set('rankMultiNew', action.rankMultiNew)
+    case actionTypes.SET_RANK_MULTI_ORG:
+      return state.set('rankMultiOrg', action.rankMultiOrg)
+    case actionTypes.SET_SETTLE_SINGER_LIST:
+      return state.set('settleSingerList', action.settleSingerList)
     default:
       return state
   }

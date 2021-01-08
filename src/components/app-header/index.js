@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 
-import { headNavLinks } from '@/services/local-data'
+import { appheaderLinks } from '@/services/local-data'
 
 import { NavLink } from 'react-router-dom'
 
@@ -8,46 +8,46 @@ import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
 import {
-  AppHeaderWrapper,
-  HeaderLeft,
-  HeaderRight
+  StyledWrapper,
+  StyledLeft,
+  StyledRight
 } from './style'
-
-const showItem = item => (
-  <li className="channel-item" key={item.title}>
-    {
-      item.isNav
-        ? <NavLink to={item.link}>{item.title}</NavLink>
-        : <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
-    }
-  </li>
-)
 
 export default memo(function AppHeader() {
   return (
-    <AppHeaderWrapper>
+    <StyledWrapper>
       <div className="wrap-v1 content">
-        <HeaderLeft>
+        <StyledLeft>
           <h1 className="logo sprite_01">
             <NavLink to="/">网易云音乐</NavLink>
           </h1>
           <ul className="channel-menu">
             {
-              headNavLinks.map(item => showItem(item))
+              appheaderLinks.map(item => {
+                return (
+                  <li className="channel-item" key={item.title}>
+                    {
+                      item.isNav
+                        ? <NavLink to={item.link}>{item.title}</NavLink>
+                        : <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
+                    }
+                  </li>
+                )
+              })
             }
           </ul>
-        </HeaderLeft>
-        <HeaderRight>
+        </StyledLeft>
+        <StyledRight>
           <Input className="search" placeholder="音乐/视频/电台/用户" prefix={<SearchOutlined />} />
           <div className="creator-center">
-            <a href="#/">创作者中心</a>
+            <NavLink to="/">创作者中心</NavLink>
           </div>
           <div className="login">
-            <a href="#/">登录</a>
+            <NavLink to="/">登录</NavLink>
           </div>
-        </HeaderRight>
+        </StyledRight>
       </div>
       <div className="divider"></div>
-    </AppHeaderWrapper>
+    </StyledWrapper>
   )
 })

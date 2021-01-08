@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-export const AppBackTopWrapper = styled.div`
-  .app-back-top {
+export const StyledWrapper = styled.div`
+  .app-backtop {
     position: fixed;
     left: 50%;
     bottom: 160px;

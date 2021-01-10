@@ -219,11 +219,27 @@ export const StyleOperator = styled.div`
       }
     }
 
-    .loop {
-      background-position: ${props => props.pos};
+    .list-loop {
+      background-position: -3px -344px;
 
       &:hover {
-        background-position: ${props => props.hoverPos};
+        background-position: -33px -344px;
+      }
+    }
+
+    .single-loop {
+      background-position: -66px -344px;
+
+      &:hover {
+        background-position: -93px -344px;
+      }
+    }
+
+    .random-play {
+      background-position: -66px -248px;
+
+      &:hover {
+        background-position: -93px -248px;
       }
     }
 

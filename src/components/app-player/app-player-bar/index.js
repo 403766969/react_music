@@ -1,12 +1,19 @@
 import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
+import { playModeConst } from './constants'
+
 import {
   formatUrlWithSize,
   formatDate
 } from '@/utils/formatter'
 
-import { action_get_currentSong } from '../store/acitonCreators'
+import {
+  action_init_songList,
+  action_set_currentIndex,
+  action_set_currentSong,
+  action_set_playMode
+} from '../store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -20,33 +27,6 @@ import {
   StyleOperator
 } from './style'
 
-const getPlayMode = mode => {
-  const playMode = {
-    pos: '',
-    hoverPos: '',
-    title: ''
-  }
-  switch (mode) {
-    case 0:
-      playMode.pos = '-66px -248px'
-      playMode.hoverPos = '-93px -248px'
-      playMode.title = '随机'
-      break
-    case 1:
-      playMode.pos = '-66px -344px'
-      playMode.hoverPos = '-93px -344px'
-      playMode.title = '单曲循环'
-      break
-    default:
-      playMode.pos = '-3px -344px'
-      playMode.hoverPos = '-33px -344px'
-      playMode.title = '循环'
-  }
-  return playMode
-}
-
-const playMode = getPlayMode(3)
-
 export default memo(function AppPlayerBar() {
 
   /**
@@ -58,11 +38,24 @@ export default memo(function AppPlayerBar() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isChanging, setIsChaning] = useState(false)
 
+  const [playModeClass, setPlayModeClass] = useState('list-loop')
+  const [playModeTitle, setPlayModeTitle] = useState('列表循环')
+
   /**
    * redux hooks
    */
-  const { currentSong: r_currentSong } = useSelector(state => ({
-    currentSong: state.getIn(['player', 'currentSong'])
+  const {
+    songList: r_songList,
+    currentSong: r_currentSong,
+    currentIndex: r_currentIndex,
+    playMode: r_playMode,
+    isInited: r_isInited
+  } = useSelector(state => ({
+    songList: state.getIn(['player', 'songList']),
+    currentSong: state.getIn(['player', 'currentSong']),
+    currentIndex: state.getIn(['player', 'currentIndex']),
+    playMode: state.getIn(['player', 'playMode']),
+    isInited: state.getIn(['player', 'isInited'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -73,32 +66,98 @@ export default memo(function AppPlayerBar() {
   const audioRef = useRef()
 
   useEffect(() => {
-    dispatch(action_get_currentSong(1443714479))
+    dispatch(action_init_songList())
   }, [dispatch])
 
   useEffect(() => {
-    async function playMusic() {
+    if (Object.keys(r_currentSong).length > 0) {
       audioRef.current.src = `https://music.163.com/song/media/outer/url?id=${r_currentSong.id}.mp3`
-      await audioRef.current.play().catch(() => { audioRef.current.pause() })
+      audioRef.current.play().catch(() => {
+        audioRef.current.pause()
+        setIsPlaying(!audioRef.current.paused)
+      })
       setDuration(r_currentSong.dt)
       setCurrentTime(0)
       setProgessValue(0)
       setIsPlaying(!audioRef.current.paused)
       setIsChaning(false)
     }
-    playMusic()
   }, [r_currentSong])
+
+  useEffect(() => {
+    if (r_isInited) {
+      audioRef.current.pause()
+      setCurrentTime(0)
+      setProgessValue(0)
+      setIsPlaying(!audioRef.current.paused)
+      setIsChaning(false)
+    }
+  }, [r_isInited])
 
   /**
    * other logic
    */
-  const handlePlayPause = () => {
+  const handlePlayPauseSong = () => {
     if (audioRef.current.paused) {
-      audioRef.current.play()
+      audioRef.current.play().catch(() => {
+        audioRef.current.pause()
+        setIsPlaying(!audioRef.current.paused)
+      })
     } else {
       audioRef.current.pause()
     }
     setIsPlaying(!audioRef.current.paused)
+  }
+
+  const handleChangeCurrentSong = offset => {
+    const length = r_songList.length
+    if (length < 0) {
+      return
+    }
+    let index = r_currentIndex
+    switch (r_playMode) {
+      case playModeConst.SINGLE_LOOP:
+        index = r_currentIndex
+        break
+      case playModeConst.RANDOM_PLAY:
+        while (index === r_currentIndex) {
+          index = Math.floor(Math.random() * length)
+        }
+        break
+      default:
+        index = index + offset
+        if (index < 0) {
+          index = length - 1
+        } else if (index > length - 1) {
+          index = 0
+        }
+    }
+    dispatch(action_set_currentIndex(index))
+    dispatch(action_set_currentSong(r_songList[index]))
+  }
+
+  const handleChangePlayMode = () => {
+    switch (r_playMode) {
+      case playModeConst.LIST_LOOP:
+        setPlayModeClass('single-loop')
+        setPlayModeTitle('单曲循环')
+        dispatch(action_set_playMode(playModeConst.SINGLE_LOOP))
+        break
+      case playModeConst.SINGLE_LOOP:
+        setPlayModeClass('random-play')
+        setPlayModeTitle('随机播放')
+        dispatch(action_set_playMode(playModeConst.RANDOM_PLAY))
+        break
+      case playModeConst.RANDOM_PLAY:
+        setPlayModeClass('list-loop')
+        setPlayModeTitle('列表循环')
+        dispatch(action_set_playMode(playModeConst.LIST_LOOP))
+        break
+      default:
+        setPlayModeClass('list-loop')
+        setPlayModeTitle('列表循环')
+        dispatch(action_set_playMode(playModeConst.LIST_LOOP))
+    }
   }
 
   const handleTimeUpdate = e => {
@@ -126,20 +185,27 @@ export default memo(function AppPlayerBar() {
     <StyleWrapper className="sprite_playbar">
       <StyleContent>
         <StyleControl isPlaying={isPlaying}>
-          <button className="sprite_playbar btn prev" title="上一首(ctrl+←)"></button>
-          <button className="sprite_playbar btn play" title="播放/暂停(p)" onClick={handlePlayPause}></button>
-          <button className="sprite_playbar btn next" title="下一首(ctrl+→)"></button>
+          <button className="sprite_playbar btn prev" title="上一首(ctrl+←)" onClick={e => handleChangeCurrentSong(-1)}></button>
+          <button className="sprite_playbar btn play" title="播放/暂停(p)" onClick={handlePlayPauseSong}></button>
+          <button className="sprite_playbar btn next" title="下一首(ctrl+→)" onClick={e => handleChangeCurrentSong(1)}></button>
         </StyleControl>
         <StyleDetail>
           <div className="image">
-            <NavLink to={`/song?id=${r_currentSong.id}`}>
-              {
-                Object.keys(r_currentSong).length > 0 && r_currentSong.al
-                  ? <img src={formatUrlWithSize(r_currentSong.al.picUrl, 34)} alt="" />
-                  : <img src={require('@/assets/img/default_album.jpg').default} alt="" />
-              }
-              <div className="sprite_playbar mask"></div>
-            </NavLink>
+            {
+              Object.keys(r_currentSong).length > 0
+                ? (
+                  <NavLink to={`/song?id=${r_currentSong.id}`}>
+                    <img src={formatUrlWithSize(r_currentSong.al.picUrl, 34)} alt="" />
+                    <div className="sprite_playbar mask"></div>
+                  </NavLink>
+                )
+                : (
+                  <div>
+                    <img src={require('@/assets/img/default_album.jpg').default} alt="" />
+                    <div className="sprite_playbar mask"></div>
+                  </div>
+                )
+            }
           </div>
           <div className="info">
             <div className="text">
@@ -152,7 +218,7 @@ export default memo(function AppPlayerBar() {
                   : null
               }
               {
-                Object.keys(r_currentSong).length > 0 && r_currentSong.ar.length > 0
+                Object.keys(r_currentSong).length > 0
                   ? r_currentSong.ar.map(item => {
                     return (
                       <NavLink key={item.id}
@@ -169,7 +235,8 @@ export default memo(function AppPlayerBar() {
                 tipFormatter={null}
                 value={progessValue}
                 onChange={handleSliderChange}
-                onAfterChange={handleAfterSliderChange} />
+                onAfterChange={handleAfterSliderChange}
+                disabled={!Object.keys(r_currentSong).length > 0} />
               <div className="time">
                 <span className="now-time">{formatDate(currentTime, 'mm:ss')}</span>
                 <span className="divider">/</span>
@@ -178,14 +245,17 @@ export default memo(function AppPlayerBar() {
             </div>
           </div>
         </StyleDetail>
-        <StyleOperator pos={playMode.pos} hoverPos={playMode.hoverPos}>
+        <StyleOperator>
           <div className="left">
             <button className="sprite_playbar btn favor" title="收藏"></button>
             <button className="sprite_playbar btn share" title="分享"></button>
           </div>
           <div className="right sprite_playbar">
             <button className="sprite_playbar btn volume"></button>
-            <button className="sprite_playbar btn loop" title={playMode.title}></button>
+            <button
+              className={`sprite_playbar btn ${playModeClass}`}
+              title={playModeTitle}
+              onClick={handleChangePlayMode}></button>
             <button className="sprite_playbar btn playlist" title="播放列表">11</button>
           </div>
         </StyleOperator>

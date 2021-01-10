@@ -2,7 +2,10 @@ import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import { action_get_simiSong } from '../../store/actionCreators'
-import { action_get_currentSong } from '@/components/app-player/store/acitonCreators'
+import {
+  action_play_song,
+  action_increase_song
+} from '@/components/app-player/store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -40,7 +43,11 @@ export default memo(function SimiSong(props) {
    * other logic
    */
   const handlePlay = id => {
-    dispatch(action_get_currentSong(id))
+    dispatch(action_play_song(id))
+  }
+
+  const handleAdd = id => {
+    dispatch(action_increase_song(id))
   }
 
   return (
@@ -71,7 +78,7 @@ export default memo(function SimiSong(props) {
                 </div>
                 <div className="operate">
                   <button className="item sprite_icon3 play" title="播放" onClick={e => handlePlay(item.id)}></button>
-                  <button className="item sprite_icon3 add" title="添加到播放列表"></button>
+                  <button className="item sprite_icon3 add" title="添加到播放列表" onClick={e => handleAdd(item.id)}></button>
                 </div>
               </div>
             )

@@ -82,7 +82,7 @@ export default memo(function SongInfo(props) {
                 {r_songInfo.al.name}
               </NavLink>
             </div>
-            <OperationBar songInfo={r_songInfo} />
+            <OperationBar songId={r_songInfo.id} />
           </StyleRight>
         </StyleContent>
       }

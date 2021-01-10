@@ -1,7 +1,10 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { action_set_currentSong } from '@/components/app-player/store/acitonCreators'
+import {
+  action_play_song,
+  action_increase_song
+} from '@/components/app-player/store/acitonCreators'
 
 import {
   StyleWrapper,
@@ -10,12 +13,16 @@ import {
 } from './style'
 
 export default memo(function OperationBar(props) {
-  const { songInfo } = props
+  const { songId } = props
 
   const dispatch = useDispatch()
 
   const handlePlay = () => {
-    dispatch(action_set_currentSong(songInfo))
+    dispatch(action_play_song(songId))
+  }
+
+  const handleAdd = () => {
+    dispatch(action_increase_song(songId))
   }
 
   return (
@@ -25,7 +32,7 @@ export default memo(function OperationBar(props) {
           <i className="sprite_button"></i>
           <span>播放</span>
         </button>
-        <button className="add sprite_button" title="添加到播放列表">
+        <button className="add sprite_button" title="添加到播放列表" onClick={handleAdd}>
           <i className="sprite_button"></i>
         </button>
       </StyleLeft>

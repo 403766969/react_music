@@ -1,4 +1,4 @@
-import * as actionTypes from './constants'
+import { actionTypes } from './constants'
 import { playModeConst } from '../app-player-bar/constants'
 
 import * as songApi from '@/services/songApi'

@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
 
-import * as actionTypes from './constants'
+import { actionTypes } from './constants'
 
 const initialState = Map({
   songInfo: {},

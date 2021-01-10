@@ -15,6 +15,8 @@ export const StyleContent = styled.div`
 
     .info {
       .title {
+        width: 156px;
+        
         a {
           color: #333;
         }

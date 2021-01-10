@@ -59,7 +59,7 @@ export default memo(function SimiSong(props) {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">
-                  <div className="title">
+                  <div className="title text-nowrap">
                     <NavLink to={`/song?id=${item.id}`} title={item.name}>{item.name}</NavLink>
                   </div>
                   <div className="artist">

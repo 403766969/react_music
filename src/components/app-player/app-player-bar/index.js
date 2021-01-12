@@ -115,6 +115,9 @@ export default memo(function AppPlayerBar() {
 
   // 播放/暂停
   const handlePlayPauseSong = () => {
+    if (Object.keys(r_currentSong) <= 0) {
+      return
+    }
     if (audioRef.current.paused) {
       audioRef.current.play().catch(() => {
         audioRef.current.pause()
@@ -129,7 +132,7 @@ export default memo(function AppPlayerBar() {
   // 上一首/下一首
   const handleChangeCurrentSong = offset => {
     const length = r_songList.length
-    if (length < 0) {
+    if (length <= 0) {
       return
     }
     let index = r_currentIndex
@@ -151,7 +154,7 @@ export default memo(function AppPlayerBar() {
         }
     }
     dispatch(action_set_currentIndex(index))
-    dispatch(action_set_currentSong(r_songList[index]))
+    dispatch(action_set_currentSong(r_songList[index] || {}))
   }
 
   // 显示音量
@@ -299,7 +302,7 @@ export default memo(function AppPlayerBar() {
           </div>
           <div className="right sprite_playbar">
             <button className="sprite_playbar btn volume" onClick={handleVolumeClick}>
-              <div className={`sprite_playbar volume-bar ${isShowVolume ? '' : 'hidden'}`}>
+              <div className={`sprite_playbar volume-bar ${isShowVolume ? '' : 'hidden'}`} onClick={e => e.stopPropagation()}>
                 <Slider value={volume} onChange={handleVolumeChange} onAfterChange={handleAfterVolumeChange} vertical />
               </div>
             </button>

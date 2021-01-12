@@ -1,5 +1,4 @@
 import { actionTypes } from './constants'
-import { playModeConst } from '../app-player-bar/constants'
 
 import * as songApi from '@/services/songApi'
 
@@ -21,11 +20,6 @@ export const action_set_currentIndex = currentIndex => ({
   currentIndex: currentIndex
 })
 
-export const action_set_playMode = playMode => ({
-  type: actionTypes.SET_PLAY_MODE,
-  playMode: playMode
-})
-
 export const action_set_isInited = isInited => ({
   type: actionTypes.SET_IS_INITED,
   isInited: isInited
@@ -41,7 +35,6 @@ export const action_init_songList = () => {
     dispatch(action_set_songList([res1.songs[0], res2.songs[0]]))
     dispatch(action_set_currentIndex(0))
     dispatch(action_set_currentSong(res1.songs[0]))
-    dispatch(action_set_playMode(playModeConst.LIST_LOOP))
     dispatch(action_set_isInited(true))
   }
 }
@@ -66,7 +59,11 @@ export const action_play_song = songId => {
   return async (dispatch, getState) => {
     const index = await action_increase_song(songId)(dispatch, getState)
     const songList = getState().getIn(['player', 'songList'])
+    const currentSong = getState().getIn(['player', 'currentSong'])
     const song = songList[index]
+    if (currentSong.id === song.id) {
+      dispatch(action_set_currentSong({}))
+    }
     dispatch(action_set_currentIndex(index))
     dispatch(action_set_currentSong(song))
   }

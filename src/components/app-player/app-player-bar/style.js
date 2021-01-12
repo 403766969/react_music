@@ -146,6 +146,14 @@ export const StyleDetail = styled.div`
           height: 24px;
           background: url(${require('@/assets/img/sprite_icon.png').default}) 0 -250px;
           border: none;
+
+          &:hover {
+            background-position: 0 -280px;
+          }
+
+          &:focus {
+            box-shadow: none;
+          }
         }
       }
     }
@@ -212,10 +220,59 @@ export const StyleOperator = styled.div`
     background-position: -147px -248px;
 
     .volume {
+      position: relative;
       background-position: -2px -247px;
 
       &:hover {
         background-position: -31px -247px;
+      }
+
+      .volume-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 50%;
+        top: -124px;
+        width: 32px;
+        height: 113px;
+        background-position: 0 -503px;
+        transform: translateX(-50%);
+
+        .ant-slider {
+          margin: 0;
+          padding: 0;
+          width: 4px;
+          height: 93px;
+
+          .ant-slider-rail {
+            background: none;
+          }
+
+          .ant-slider-track {
+            background: url(${require('@/assets/img/playbar_sprite.png').default}) -40px bottom;
+          }
+
+          .ant-slider-handle {
+            margin-left: -7.5px;
+            width: 18px;
+            height: 18px;
+            background: url(${require('@/assets/img/sprite_icon.png').default}) -40px -250px;
+            border: none;
+
+            &:hover {
+              background-position: -40px -280px;
+            }
+
+            &:focus {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+
+      .hidden {
+        display: none;
       }
     }
 

@@ -81,6 +81,8 @@ export default memo(function AppPlayerBar() {
 
   // 当前歌曲改变时
   useEffect(() => {
+    console.log('useEffect', r_currentSong)
+
     if (Object.keys(r_currentSong).length > 0) {
       audioRef.current.src = `https://music.163.com/song/media/outer/url?id=${r_currentSong.id}.mp3`
       audioRef.current.play().catch(() => {
@@ -91,6 +93,13 @@ export default memo(function AppPlayerBar() {
       setCurrentTime(0)
       setProgessValue(0)
       setIsPlaying(!audioRef.current.paused)
+    } else {
+      audioRef.current.src = ''
+      audioRef.current.pause()
+      setDuration(0)
+      setCurrentTime(0)
+      setProgessValue(0)
+      setIsPlaying(false)
     }
   }, [r_currentSong])
 
@@ -138,8 +147,15 @@ export default memo(function AppPlayerBar() {
     let index = r_currentIndex
     switch (playMode.type) {
       case playModeTypes.SINGLE_LOOP:
-        index = r_currentIndex
-        break
+        audioRef.current.play().catch(() => {
+          audioRef.current.pause()
+          setIsPlaying(!audioRef.current.paused)
+        })
+        audioRef.current.currentTime = 0
+        setCurrentTime(0)
+        setProgessValue(0)
+        setIsPlaying(!audioRef.current.paused)
+        return
       case playModeTypes.RANDOM_PLAY:
         while (index === r_currentIndex) {
           index = Math.floor(Math.random() * length)
@@ -216,14 +232,21 @@ export default memo(function AppPlayerBar() {
     }
   }
 
-  // 修改进度条
+  // 播放结束
+  const handleEnded = () => {
+    audioRef.current.pause()
+    setIsPlaying(!audioRef.current.paused)
+    handleChangeCurrentSong(1)
+  }
+
+  // 调节进度条
   const handleSliderChange = useCallback(value => {
     setIsChaning(true)
     setCurrentTime(duration * value / 100)
     setProgessValue(value)
   }, [duration])
 
-  // 修改进度条完成
+  // 调节进度条完成
   const handleAfterSliderChange = useCallback(value => {
     audioRef.current.currentTime = duration * value / 100 / 1000
     setCurrentTime(duration * value / 100)
@@ -314,7 +337,7 @@ export default memo(function AppPlayerBar() {
           </div>
         </StyleOperator>
       </StyleContent>
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} />
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnded} />
     </StyleWrapper>
   )
 })

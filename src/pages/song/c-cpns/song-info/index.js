@@ -8,6 +8,7 @@ import { action_get_songInfo } from '../../store/actionCreators'
 import { NavLink } from 'react-router-dom'
 
 import OperationBar from './c-cpns/operation-bar'
+import SongLyric from './c-cpns/song-lyric'
 
 import {
   StyleWrapper,
@@ -83,6 +84,7 @@ export default memo(function SongInfo(props) {
               </NavLink>
             </div>
             <OperationBar songId={r_songInfo.id} />
+            <SongLyric songId={r_songInfo.id} />
           </StyleRight>
         </StyleContent>
       }

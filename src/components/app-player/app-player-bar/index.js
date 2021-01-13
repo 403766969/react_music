@@ -23,7 +23,8 @@ import {
   StyleContent,
   StyleControl,
   StyleDetail,
-  StyleOperator
+  StyleOperator,
+  StyleLock
 } from './style'
 
 export default memo(function AppPlayerBar() {
@@ -38,7 +39,7 @@ export default memo(function AppPlayerBar() {
   const [isChanging, setIsChaning] = useState(false)
 
   const s_volume = window.localStorage.getItem('volume')
-    ? parseInt(window.localStorage.getItem('volume'))
+    ? Number(window.localStorage.getItem('volume'))
     : 50
   const [volume, setVolume] = useState(s_volume)
   const [isShowVolume, setIsShowVolume] = useState(false)
@@ -51,6 +52,11 @@ export default memo(function AppPlayerBar() {
       title: '列表循环'
     }
   const [playMode, setPlayMode] = useState(s_playMode)
+
+  const s_lock = window.localStorage.getItem('lock')
+    ? Number(window.localStorage.getItem('lock'))
+    : 0
+  const [isLocked, setIsLocked] = useState(s_lock ? true : false)
 
   /**
    * redux hooks
@@ -81,8 +87,6 @@ export default memo(function AppPlayerBar() {
 
   // 当前歌曲改变时
   useEffect(() => {
-    console.log('useEffect', r_currentSong)
-
     if (Object.keys(r_currentSong).length > 0) {
       audioRef.current.src = `https://music.163.com/song/media/outer/url?id=${r_currentSong.id}.mp3`
       audioRef.current.play().catch(() => {
@@ -253,8 +257,18 @@ export default memo(function AppPlayerBar() {
     setIsChaning(false)
   }, [duration])
 
+  // 锁定播放器
+  const handleLockClick = () => {
+    if (!isLocked) {
+      window.localStorage.setItem('lock', 1)
+    } else {
+      window.localStorage.setItem('lock', 0)
+    }
+    setIsLocked(!isLocked)
+  }
+
   return (
-    <StyleWrapper className="sprite_playbar">
+    <StyleWrapper className={`sprite_playbar ${!isLocked ? 'hidden' : ''}`}>
       <StyleContent>
         <StyleControl isPlaying={isPlaying}>
           <button className="sprite_playbar btn prev" title="上一首(ctrl+←)" onClick={e => handleChangeCurrentSong(-1)}></button>
@@ -337,6 +351,12 @@ export default memo(function AppPlayerBar() {
           </div>
         </StyleOperator>
       </StyleContent>
+      <StyleLock className="sprite_playbar">
+        <div
+          className={`sprite_playbar ${isLocked ? 'locked' : ''}`}
+          onClick={handleLockClick}
+        ></div>
+      </StyleLock>
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnded} />
     </StyleWrapper>
   )

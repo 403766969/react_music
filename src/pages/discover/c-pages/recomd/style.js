@@ -7,6 +7,8 @@ export const StyledWrapper = styled.div`
 export const StyledContent = styled.div`
   display: flex;
   background-color: #fff;
+  border: 1px solid #d3d3d3;
+  border-width: 0 1px;
 `
 
 export const StyledLeft = styled.div`
@@ -16,6 +18,5 @@ export const StyledLeft = styled.div`
 
 export const StyledRight = styled.div`
   width: 250px;
-  border: 1px solid #d3d3d3;
-  border-width: 0 1px;
+  border-left: 1px solid #d3d3d3;
 `

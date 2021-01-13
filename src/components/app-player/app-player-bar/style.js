@@ -12,6 +12,16 @@ export const StyleWrapper = styled.div`
   height: 53px;
   background-position: 0 0;
   background-repeat: repeat;
+  transition: all .5s ease-in;
+
+  &.hidden {
+    bottom: -40px;
+
+    &:hover {
+      bottom: 0;
+      transition: all .2s ease-in;
+    }
+  }
 `
 
 export const StyleContent = styled.div`
@@ -309,6 +319,37 @@ export const StyleOperator = styled.div`
       
       &:hover {
         background-position: -42px -98px;
+      }
+    }
+  }
+`
+
+export const StyleLock = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: absolute;
+  right: 2px;
+  bottom: 43px;
+  width: 52px;
+  height: 24px;
+  background-position: 1px -380px;
+
+  div {
+    width: 18px;
+    height: 18px;
+    background-position: -79px -380px;
+    cursor: pointer;
+
+    &:hover {
+      background-position: -79px -400px;
+    }
+
+    &.locked {
+      background-position: -99px -380px;
+
+      &:hover {
+        background-position: -99px -400px;
       }
     }
   }

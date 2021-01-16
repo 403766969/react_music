@@ -4,18 +4,17 @@ export const StyleWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  position: fixed;
-  z-index: 99;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   height: 53px;
   background-position: 0 0;
   background-repeat: repeat;
-  transition: all .5s ease-in;
 
   &.hidden {
     bottom: -40px;
+    transition: all .4s ease-in;
 
     &:hover {
       bottom: 0;
@@ -335,7 +334,8 @@ export const StyleLock = styled.div`
   height: 24px;
   background-position: 1px -380px;
 
-  div {
+  i {
+    display: block;
     width: 18px;
     height: 18px;
     background-position: -79px -380px;

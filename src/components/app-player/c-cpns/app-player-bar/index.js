@@ -12,11 +12,13 @@ import {
   action_init_songList,
   action_set_currentIndex,
   action_set_currentSong
-} from '../store/acitonCreators'
+} from '../../store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 
 import { Slider } from 'antd'
+
+import AppPlayerPanel from '../app-player-panel'
 
 import {
   StyleWrapper,
@@ -57,6 +59,8 @@ export default memo(function AppPlayerBar() {
     ? Number(window.localStorage.getItem('lock'))
     : 0
   const [isLocked, setIsLocked] = useState(s_lock ? true : false)
+
+  const [isShowPanel, setIsShowPanel] = useState(false)
 
   /**
    * redux hooks
@@ -177,6 +181,35 @@ export default memo(function AppPlayerBar() {
     dispatch(action_set_currentSong(r_songList[index] || {}))
   }
 
+  // 播放时间
+  const handleTimeUpdate = e => {
+    if (!isChanging) {
+      setCurrentTime(e.target.currentTime * 1000)
+      setProgessValue(e.target.currentTime * 1000 / duration * 100)
+    }
+  }
+
+  // 播放结束
+  const handleEnded = () => {
+    audioRef.current.pause()
+    setIsPlaying(!audioRef.current.paused)
+    handleChangeCurrentSong(1)
+  }
+
+  // 调节进度条
+  const handleSliderChange = useCallback(value => {
+    setIsChaning(true)
+    setCurrentTime(duration * value / 100)
+    setProgessValue(value)
+  }, [duration])
+
+  // 调节进度条完成
+  const handleAfterSliderChange = useCallback(value => {
+    audioRef.current.currentTime = duration * value / 100 / 1000
+    setCurrentTime(duration * value / 100)
+    setIsChaning(false)
+  }, [duration])
+
   // 显示音量
   const handleVolumeClick = () => {
     setIsShowVolume(!isShowVolume)
@@ -228,35 +261,6 @@ export default memo(function AppPlayerBar() {
     window.localStorage.setItem('playMode', JSON.stringify(newPlayMode))
   }
 
-  // 播放时间
-  const handleTimeUpdate = e => {
-    if (!isChanging) {
-      setCurrentTime(e.target.currentTime * 1000)
-      setProgessValue(e.target.currentTime * 1000 / duration * 100)
-    }
-  }
-
-  // 播放结束
-  const handleEnded = () => {
-    audioRef.current.pause()
-    setIsPlaying(!audioRef.current.paused)
-    handleChangeCurrentSong(1)
-  }
-
-  // 调节进度条
-  const handleSliderChange = useCallback(value => {
-    setIsChaning(true)
-    setCurrentTime(duration * value / 100)
-    setProgessValue(value)
-  }, [duration])
-
-  // 调节进度条完成
-  const handleAfterSliderChange = useCallback(value => {
-    audioRef.current.currentTime = duration * value / 100 / 1000
-    setCurrentTime(duration * value / 100)
-    setIsChaning(false)
-  }, [duration])
-
   // 锁定播放器
   const handleLockClick = () => {
     if (!isLocked) {
@@ -267,8 +271,13 @@ export default memo(function AppPlayerBar() {
     setIsLocked(!isLocked)
   }
 
+  // 关闭歌曲列表
+  const handleCloseClick = useCallback(() => {
+    setIsShowPanel(false)
+  }, [])
+
   return (
-    <StyleWrapper className={`sprite_playbar ${!isLocked ? 'hidden' : ''}`}>
+    <StyleWrapper className={`sprite_playbar ${(isLocked || isShowPanel) ? '' : 'hidden'}`}>
       <StyleContent>
         <StyleControl isPlaying={isPlaying}>
           <button className="sprite_playbar btn prev" title="上一首(ctrl+←)" onClick={e => handleChangeCurrentSong(-1)}></button>
@@ -338,7 +347,7 @@ export default memo(function AppPlayerBar() {
             <button className="sprite_playbar btn share" title="分享"></button>
           </div>
           <div className="right sprite_playbar">
-            <button className="sprite_playbar btn volume" onClick={handleVolumeClick}>
+            <button className="sprite_playbar btn volume" title="音量" onClick={handleVolumeClick}>
               <div className={`sprite_playbar volume-bar ${isShowVolume ? '' : 'hidden'}`} onClick={e => e.stopPropagation()}>
                 <Slider value={volume} onChange={handleVolumeChange} onAfterChange={handleAfterVolumeChange} vertical />
               </div>
@@ -347,16 +356,18 @@ export default memo(function AppPlayerBar() {
               className={`sprite_playbar btn ${playMode.class}`}
               title={playMode.title}
               onClick={handleChangePlayMode}></button>
-            <button className="sprite_playbar btn playlist" title="播放列表">{r_songList.length}</button>
+            <button className="sprite_playbar btn playlist" title="播放列表" onClick={e => setIsShowPanel(!isShowPanel)}>{r_songList.length}</button>
           </div>
         </StyleOperator>
       </StyleContent>
       <StyleLock className="sprite_playbar">
-        <div
+        <i
           className={`sprite_playbar ${isLocked ? 'locked' : ''}`}
+          title={isLocked ? '解锁' : '锁定'}
           onClick={handleLockClick}
-        ></div>
+        ></i>
       </StyleLock>
+      <AppPlayerPanel isShowPanel={isShowPanel} handleCloseClick={handleCloseClick} />
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnded} />
     </StyleWrapper>
   )

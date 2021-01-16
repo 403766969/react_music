@@ -81,3 +81,13 @@ export const action_play_song = songId => {
     dispatch(action_set_currentSong(song))
   }
 }
+
+export const action_clear_state = () => {
+  return dispatch => {
+    dispatch(action_set_songList([]))
+    dispatch(action_set_currentIndex(-1))
+    dispatch(action_set_currentSong({}))
+    window.localStorage.removeItem('songList')
+    window.localStorage.removeItem('currentIndex')
+  }
+}

@@ -13,7 +13,7 @@ import { renderRoutes } from 'react-router-config'
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
 import AppBacktop from '@/components/app-backtop'
-import AppPlayerBar from '@/components/app-player/app-player-bar'
+import AppPlayer from '@/components/app-player'
 
 export default memo(function App() {
   return (
@@ -23,7 +23,7 @@ export default memo(function App() {
         {renderRoutes(routes)}
         <AppFooter />
         <AppBacktop />
-        <AppPlayerBar />
+        <AppPlayer />
       </HashRouter>
     </Provider>
   )

@@ -24,7 +24,7 @@ export default memo(function ArtistsDivide(props) {
       {
         artists.map(item => {
           return (
-            <NavLink key={item.id}
+            <NavLink key={item.id + item.name}
               to={`/artist?id=${item.id}`}>
               {item.name}
             </NavLink>

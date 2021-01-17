@@ -1,9 +1,12 @@
 import React, { memo } from 'react'
+import { useDispatch } from 'react-redux'
 
 import {
   formatUrlWithSize,
   formatCount
 } from '@/utils/formatter'
+
+import { action_increase_songList_with_playlistId } from '@/components/app-player/store/acitonCreators'
 
 import { NavLink, useHistory } from 'react-router-dom'
 
@@ -21,6 +24,11 @@ export default memo(function PlaylistCover(props) {
   const { playlistInfo = {}, isShowAuthor = false } = props
 
   /**
+   * redux hooks
+   */
+  const dispatch = useDispatch()
+
+  /**
    * other hooks
    */
   const history = useHistory()
@@ -30,6 +38,11 @@ export default memo(function PlaylistCover(props) {
    */
   const pushRoute = () => {
     history.push(`/discover/playlist?id=${playlistInfo.id}`)
+  }
+
+  const handleAddList = e => {
+    e.stopPropagation()
+    dispatch(action_increase_songList_with_playlistId(playlistInfo.id))
   }
 
   return (
@@ -43,7 +56,7 @@ export default memo(function PlaylistCover(props) {
             {formatCount(playlistInfo.playCount)}
           </span>
           <span>
-            <i className="sprite_icon play"></i>
+            <i className="sprite_icon play" onClick={e => handleAddList(e)}></i>
           </span>
         </div>
       </StyledImage>

@@ -1,6 +1,7 @@
 import { actionTypes } from './constants'
 
 import * as songApi from '@/services/songApi'
+import * as playlistApi from '@/services/playlistApi'
 
 /**
  * 操作state
@@ -111,5 +112,30 @@ export const action_clear_state = () => {
     dispatch(action_set_songList([]))
     dispatch(action_set_currentSong({}))
     dispatch(action_set_currentIndex(-1))
+  }
+}
+
+export const action_increase_songList_with_trackIds = trackIds => {
+  return async dispatch => {
+    const ids = []
+    for (let item of trackIds) {
+      ids.push(item.id)
+    }
+    const songIds = ids.join(',')
+    const res = await songApi.api_get_songDetail(songIds)
+    const newSongList = res.songs
+    if (newSongList.length > 0) {
+      dispatch(action_set_songList(newSongList))
+      dispatch(action_set_currentSong(newSongList[0]))
+      dispatch(action_set_currentIndex(0))
+    }
+  }
+}
+
+export const action_increase_songList_with_playlistId = playlistId => {
+  return async dispatch => {
+    const res = await playlistApi.api_get_playlistDetail(playlistId)
+    const trackIds = res.playlist.trackIds
+    dispatch(action_increase_songList_with_trackIds(trackIds))
   }
 }

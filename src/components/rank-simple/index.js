@@ -5,7 +5,8 @@ import { formatUrlWithSize } from '@/utils/formatter'
 
 import {
   action_play_song,
-  action_increase_song
+  action_increase_song,
+  action_increase_songList_with_trackIds
 } from '@/components/app-player/store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
@@ -23,7 +24,7 @@ export default memo(function RankSimple(props) {
    * props and state
    */
   const { rankSimpleInfo } = props
-  const { tracks = [] } = rankSimpleInfo
+  const { tracks = [], trackIds = [] } = rankSimpleInfo
 
   /**
    * redux hooks
@@ -41,6 +42,10 @@ export default memo(function RankSimple(props) {
     dispatch(action_increase_song(id))
   }
 
+  const handleAddList = () => {
+    dispatch(action_increase_songList_with_trackIds(trackIds))
+  }
+
   return (
     <StyledWrapper>
       <StyledHeader>
@@ -51,7 +56,7 @@ export default memo(function RankSimple(props) {
         <div className="info">
           <NavLink to={`/discover/toplist?id=${rankSimpleInfo.id}`} title={rankSimpleInfo.name}>{rankSimpleInfo.name}</NavLink>
           <div>
-            <button className="btn play sprite_02" title="播放"></button>
+            <button className="btn play sprite_02" title="播放" onClick={handleAddList}></button>
             <button className="btn favor sprite_02" title="收藏"></button>
           </div>
         </div>

@@ -38,6 +38,9 @@ export const action_get_songInfo = id => {
 export const action_get_songLyric = id => {
   return async dispatch => {
     const res = await songApi.api_get_songLyric(id)
+    if (res.nolyric) {
+      return
+    }
     const lyric = parseLyric(res.lrc.lyric)
     dispatch(action_set_songLyric(lyric))
   }

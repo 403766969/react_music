@@ -77,17 +77,37 @@ export const action_play_song = songId => {
     if (currentSong.id === song.id) {
       dispatch(action_set_currentSong({}))
     }
-    dispatch(action_set_currentIndex(index))
     dispatch(action_set_currentSong(song))
+    dispatch(action_set_currentIndex(index))
+  }
+}
+
+export const action_remove_song = index => {
+  return (dispatch, getState) => {
+    const songList = getState().getIn(['player', 'songList'])
+    const currentIndex = getState().getIn(['player', 'currentIndex'])
+    const newSongList = [...songList]
+    newSongList.splice(index, 1)
+    dispatch(action_set_songList(newSongList))
+    if (index === currentIndex) {
+      const nextSong = newSongList[index] || null
+      const prevSong = newSongList[index - 1] || null
+      const targetSong = nextSong || prevSong || {}
+      const targetIndex = nextSong
+        ? index
+        : prevSong
+          ? index - 1
+          : -1
+      dispatch(action_set_currentSong(targetSong))
+      dispatch(action_set_currentIndex(targetIndex))
+    }
   }
 }
 
 export const action_clear_state = () => {
   return dispatch => {
     dispatch(action_set_songList([]))
-    dispatch(action_set_currentIndex(-1))
     dispatch(action_set_currentSong({}))
-    window.localStorage.removeItem('songList')
-    window.localStorage.removeItem('currentIndex')
+    dispatch(action_set_currentIndex(-1))
   }
 }

@@ -10,8 +10,8 @@ import {
 
 import {
   action_init_songList,
-  action_set_currentIndex,
-  action_set_currentSong
+  action_set_currentSong,
+  action_set_currentIndex
 } from '../../store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
@@ -177,8 +177,8 @@ export default memo(function AppPlayerBar() {
           index = 0
         }
     }
-    dispatch(action_set_currentIndex(index))
     dispatch(action_set_currentSong(r_songList[index] || {}))
+    dispatch(action_set_currentIndex(index))
   }
 
   // 播放时间

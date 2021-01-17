@@ -48,6 +48,9 @@ export default memo(function SongLyric(props) {
             )
           })
         }
+        {
+          r_songLyric.length === 0 && <p>纯音乐，无歌词</p>
+        }
       </div>
       {
         r_songLyric.length > 13

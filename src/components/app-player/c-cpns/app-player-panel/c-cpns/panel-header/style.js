@@ -2,8 +2,9 @@ import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   height: 41px;
-  line-height: 41px;
   background: url(${require('@/assets/img/playpanel_bg.png').default}) no-repeat;
   background-position: -2px 0;
 `

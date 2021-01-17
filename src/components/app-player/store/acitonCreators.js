@@ -100,6 +100,8 @@ export const action_remove_song = index => {
           : -1
       dispatch(action_set_currentSong(targetSong))
       dispatch(action_set_currentIndex(targetIndex))
+    } else if (index < currentIndex) {
+      dispatch(action_set_currentIndex(currentIndex - 1))
     }
   }
 }

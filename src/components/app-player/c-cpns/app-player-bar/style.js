@@ -106,25 +106,26 @@ export const StyleDetail = styled.div`
     width: 608px;
 
     .text {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
       height: 28px;
       line-height: 28px;
       font-size: 12px;
 
-      .song-name {
+      .song {
         margin-right: 15px;
+        max-width: 300px;
         color: #e8e8e8;
+
+        a {
+          color: inherit;
+        }
       }
 
-      .singer-name {
+      .artists {
+        max-width: 220px;
         color: #9b9b9b;
-
-        &::after {
-          content: "/"
-        }
-
-        &:last-of-type::after {
-          content: ""
-        }
       }
     }
 

@@ -7,6 +7,8 @@ import { action_get_songInfo } from '../../store/actionCreators'
 
 import { NavLink } from 'react-router-dom'
 
+import ArtistsDivide from '@/components/artists-divide'
+
 import OperationBar from './c-cpns/operation-bar'
 import SongLyric from './c-cpns/song-lyric'
 
@@ -62,18 +64,7 @@ export default memo(function SongInfo(props) {
             </div>
             <div className="singer">
               <span className="label">歌手：</span>
-              {
-                r_songInfo.ar.map(item => {
-                  return (
-                    <NavLink key={item.id}
-                      to={`/artist?id=${item.id}`}
-                      title={item.name}
-                      className="name">
-                      {item.name}
-                    </NavLink>
-                  )
-                })
-              }
+              <ArtistsDivide artists={r_songInfo.ar} />
             </div>
             <div className="album">
               <span className="label">所属专辑：</span>

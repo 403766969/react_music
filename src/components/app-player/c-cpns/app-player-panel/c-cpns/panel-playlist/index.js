@@ -9,7 +9,7 @@ import {
   action_remove_song
 } from '../../../../store/acitonCreators'
 
-import { NavLink } from 'react-router-dom'
+import ArtistsDivide from '@/components/artists-divide'
 
 import {
   StyledWrapper
@@ -52,7 +52,11 @@ export default memo(function PanelPlaylist() {
               key={item.id}
               className={`play-item ${r_currentIndex === index ? 'active' : ''}`}
               onClick={e => handleItemClick(index)}>
-              <div className="left text-nowrap">{item.name}</div>
+              <div className="left">
+                <div className="song text-nowrap">
+                  {item.name}
+                </div>
+              </div>
               <div className="right">
                 <div className="operation">
                   <i className="sprite_playlist favor" title="收藏"></i>
@@ -60,16 +64,8 @@ export default memo(function PanelPlaylist() {
                   <i className="sprite_playlist download" title="下载"></i>
                   <i className="sprite_playlist remove" title="删除" onClick={e => hadleRemoveClick(index, e)}></i>
                 </div>
-                <div className="singer text-nowrap" onClick={e => e.stopPropagation()}>
-                  {
-                    item.ar.map(arItem => {
-                      return (
-                        <NavLink key={arItem.id}
-                          to={`/artist?id=${arItem.id}`}
-                          title={arItem.name}>{arItem.name}</NavLink>
-                      )
-                    })
-                  }
+                <div className="artists text-nowrap" onClick={e => e.stopPropagation()}>
+                  <ArtistsDivide artists={item.ar} />
                 </div>
                 <div className="duration">{formatDate(item.dt, 'mm:ss')}</div>
                 <div className="sprite_playlist link" title="来自榜单"></div>

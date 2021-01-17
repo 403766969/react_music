@@ -10,6 +10,7 @@ import {
 import { NavLink } from 'react-router-dom'
 
 import HeaderSmall from '@/components/header-small'
+import ArtistsDivide from '@/components/artists-divide'
 
 import {
   StyleWrapper,
@@ -59,21 +60,11 @@ export default memo(function SimiSong(props) {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">
-                  <div className="title text-nowrap">
+                  <div className="song text-nowrap">
                     <NavLink to={`/song?id=${item.id}`} title={item.name}>{item.name}</NavLink>
                   </div>
-                  <div className="artist">
-                    {
-                      item.artists.map(art => {
-                        return (
-                          <NavLink key={art.id}
-                            to={`/artist?id=${art.id}`}
-                            title={art.name}>
-                            {art.name}
-                          </NavLink>
-                        )
-                      })
-                    }
+                  <div className="artists text-nowrap">
+                    <ArtistsDivide artists={item.artists} />
                   </div>
                 </div>
                 <div className="operate">

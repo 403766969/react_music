@@ -73,19 +73,25 @@ export const StyleRight = styled.div`
     margin: 10px;
     margin-left: 0px;
     color: #999;
+  }
 
+  .singer {
     a {
       color: #0c73c2;
+
+      &::after {
+        content: " / "
+      }
+
+      &:last-of-type::after {
+        content: ""
+      }
     }
   }
 
-  .singer .name{
-    &::after {
-      content: "/"
-    }
-    
-    &:last-of-type::after {
-      content: ""
+  .album {
+    a {
+      color: #0c73c2;
     }
   }
 `

@@ -18,6 +18,8 @@ import { NavLink } from 'react-router-dom'
 
 import { Slider } from 'antd'
 
+import ArtistsDivide from '@/components/artists-divide'
+
 import AppPlayerPanel from '../app-player-panel'
 
 import {
@@ -306,22 +308,22 @@ export default memo(function AppPlayerBar() {
             <div className="text">
               {
                 Object.keys(r_currentSong).length > 0
-                  ? <NavLink
-                    to={`/song?id=${r_currentSong.id}`}
-                    title={r_currentSong.name}
-                    className="song-name">{r_currentSong.name}</NavLink>
+                  ? (
+                    <div className="song text-nowrap">
+                      <NavLink
+                        to={`/song?id=${r_currentSong.id}`}
+                        title={r_currentSong.name}>{r_currentSong.name}</NavLink>
+                    </div>
+                  )
                   : null
               }
               {
                 Object.keys(r_currentSong).length > 0
-                  ? r_currentSong.ar.map(item => {
-                    return (
-                      <NavLink key={item.id}
-                        to={`/artist?id=${item.id}`}
-                        title={item.name}
-                        className="singer-name">{item.name}</NavLink>
-                    )
-                  })
+                  ? (
+                    <div className="artists text-nowrap">
+                      <ArtistsDivide artists={r_currentSong.ar} />
+                    </div>
+                  )
                   : null
               }
             </div>

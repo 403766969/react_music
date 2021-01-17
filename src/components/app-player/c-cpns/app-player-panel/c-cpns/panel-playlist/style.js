@@ -16,7 +16,11 @@ export const StyledWrapper = styled.ul`
     
     .left {
       flex: 1;
-      color: #ccc;
+      width: 0;
+      
+      .song {
+        color: #ccc;
+      }
     }
 
     .right {
@@ -70,21 +74,10 @@ export const StyledWrapper = styled.ul`
         }
       }
 
-      .singer {
+      .artists {
         margin-left: 10px;
         width: 80px;
-
-        a {
-          color: #9b9b9b;
-
-          &::after {
-            content: "/"
-          }
-
-          &:last-of-type::after {
-            content: ""
-          }
-        }
+        color: #9b9b9b;
       }
 
       .duration {
@@ -111,8 +104,8 @@ export const StyledWrapper = styled.ul`
         align-items: center;
       }
 
-      .left,
-      .right .singer a,
+      .left .song,
+      .right .artists,
       .right .duration,
       .right .link {
         color: #fff;
@@ -122,8 +115,8 @@ export const StyledWrapper = styled.ul`
     &.active {
       background-color: #000;
 
-      .left,
-      .right .singer a,
+      .left .song,
+      .right .artists,
       .right .duration,
       .right .link {
         color: #fff;

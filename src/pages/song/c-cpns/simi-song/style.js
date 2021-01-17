@@ -14,7 +14,7 @@ export const StyleContent = styled.div`
     margin-bottom: 12px;
 
     .info {
-      .title {
+      .song {
         width: 156px;
         
         a {
@@ -22,18 +22,9 @@ export const StyleContent = styled.div`
         }
       }
 
-      .artist {
-        a {
-          color: #999;
-          
-          &::after {
-            content: "/"
-          }
-          
-          &:last-of-type::after {
-            content: ""
-          }
-        }
+      .artists {
+        width: 156px;
+        color: #999;
       }
     }
 

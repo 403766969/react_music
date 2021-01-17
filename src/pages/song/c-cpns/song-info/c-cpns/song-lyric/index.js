@@ -1,7 +1,10 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { action_get_songLyric } from '../../../../store/actionCreators'
+import {
+  action_get_songLyric,
+  action_set_songLyric
+} from '../../../../store/actionCreators'
 
 import {
   StyledWrapper
@@ -30,6 +33,9 @@ export default memo(function SongLyric(props) {
    */
   useEffect(() => {
     dispatch(action_get_songLyric(songId))
+    return () => {
+      dispatch(action_set_songLyric([]))
+    }
   }, [dispatch, songId])
 
   /**

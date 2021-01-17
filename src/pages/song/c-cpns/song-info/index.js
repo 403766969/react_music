@@ -3,7 +3,10 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
-import { action_get_songInfo } from '../../store/actionCreators'
+import {
+  action_get_songInfo,
+  action_set_songInfo
+} from '../../store/actionCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -38,13 +41,15 @@ export default memo(function SongInfo(props) {
   /** other hooks */
   useEffect(() => {
     dispatch(action_get_songInfo(songId))
+    return () => {
+      dispatch(action_set_songInfo({}))
+    }
   }, [dispatch, songId])
 
   return (
     <StyleWrapper>
       {
         Object.keys(r_songInfo).length > 0
-        && songId + '' === r_songInfo.id + ''
         &&
         <StyleContent>
           <StyleLeft>

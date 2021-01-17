@@ -1,7 +1,10 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { action_get_simiSong } from '../../store/actionCreators'
+import {
+  action_get_simiSong,
+  action_set_simiSong
+} from '../../store/actionCreators'
 import {
   action_play_song,
   action_increase_song
@@ -38,6 +41,9 @@ export default memo(function SimiSong(props) {
    */
   useEffect(() => {
     dispatch(action_get_simiSong(songId))
+    return () => {
+      dispatch(action_set_simiSong([]))
+    }
   }, [dispatch, songId])
 
   /**

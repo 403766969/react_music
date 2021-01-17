@@ -3,7 +3,10 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
-import { action_get_simiPlaylist } from '../../store/actionCreators'
+import {
+  action_get_simiPlaylist,
+  action_set_simiPlaylist
+} from '../../store/actionCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -35,6 +38,9 @@ export default memo(function SimiPlaylist(props) {
    */
   useEffect(() => {
     dispatch(action_get_simiPlaylist(songId))
+    return () => {
+      dispatch(action_set_simiPlaylist([]))
+    }
   }, [dispatch, songId])
 
   return (

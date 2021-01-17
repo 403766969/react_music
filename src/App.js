@@ -14,6 +14,7 @@ import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
 import AppBacktop from '@/components/app-backtop'
 import AppPlayer from '@/components/app-player'
+// import DocuTitle from '@/components/docu-title'
 
 export default memo(function App() {
   return (
@@ -24,6 +25,7 @@ export default memo(function App() {
         <AppFooter />
         <AppBacktop />
         <AppPlayer />
+        {/* <DocuTitle /> */}
       </HashRouter>
     </Provider>
   )

@@ -10,7 +10,8 @@ import {
 
 import {
   action_init_songList,
-  action_toggle_song
+  action_toggle_song,
+  action_set_currentLyricIndex
 } from '../../store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
@@ -70,11 +71,15 @@ export default memo(function AppPlayerBar() {
     songList: r_songList,
     currentSong: r_currentSong,
     currentSongIndex: r_currentSongIndex,
+    currentLyric: r_currentLyric,
+    currentLyricIndex: r_currentLyricIndex,
     isInited: r_isInited
   } = useSelector(state => ({
     songList: state.getIn(['player', 'songList']),
     currentSong: state.getIn(['player', 'currentSong']),
     currentSongIndex: state.getIn(['player', 'currentSongIndex']),
+    currentLyric: state.getIn(['player', 'currentLyric']),
+    currentLyricIndex: state.getIn(['player', 'currentLyricIndex']),
     isInited: state.getIn(['player', 'isInited'])
   }), shallowEqual)
 
@@ -183,9 +188,21 @@ export default memo(function AppPlayerBar() {
 
   // 播放时间
   const handleTimeUpdate = e => {
+    const audio_currentTime = e.target.currentTime * 1000
     if (!isChanging) {
-      setCurrentTime(e.target.currentTime * 1000)
-      setProgessValue(e.target.currentTime * 1000 / duration * 100)
+      setCurrentTime(audio_currentTime)
+      setProgessValue(audio_currentTime / duration * 100)
+    }
+    let lyricIndex = -1;
+    for (let i = 0; i < r_currentLyric.length; i++) {
+      if (audio_currentTime <= r_currentLyric[i].time) {
+        lyricIndex = i - 1;
+        break;
+      }
+    }
+    if (lyricIndex !== r_currentLyricIndex) {
+      console.log(r_currentLyric[lyricIndex])
+      dispatch(action_set_currentLyricIndex(lyricIndex))
     }
   }
 

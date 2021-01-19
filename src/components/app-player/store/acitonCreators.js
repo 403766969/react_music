@@ -61,8 +61,11 @@ export const action_init_songList = () => {
     }
     const songList = getState().getIn(['player', 'songList'])
     const currentSongIndex = getState().getIn(['player', 'currentSongIndex'])
-    const currentSong = songList[currentSongIndex] || {}
-    dispatch(action_set_currentSong(currentSong))
+    const currentSong = songList[currentSongIndex]
+    if (currentSong) {
+      dispatch(action_set_currentSong(currentSong))
+      dispatch(action_get_currentLyric(currentSong.id))
+    }
     dispatch(action_set_isInited(true))
   }
 }

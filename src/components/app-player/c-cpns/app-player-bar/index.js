@@ -11,7 +11,7 @@ import {
 import {
   action_init_songList,
   action_set_currentSong,
-  action_set_currentIndex
+  action_set_currentSongIndex
 } from '../../store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
@@ -70,12 +70,12 @@ export default memo(function AppPlayerBar() {
   const {
     songList: r_songList,
     currentSong: r_currentSong,
-    currentIndex: r_currentIndex,
+    currentSongIndex: r_currentSongIndex,
     isInited: r_isInited
   } = useSelector(state => ({
     songList: state.getIn(['player', 'songList']),
     currentSong: state.getIn(['player', 'currentSong']),
-    currentIndex: state.getIn(['player', 'currentIndex']),
+    currentSongIndex: state.getIn(['player', 'currentSongIndex']),
     isInited: state.getIn(['player', 'isInited'])
   }), shallowEqual)
 
@@ -154,7 +154,7 @@ export default memo(function AppPlayerBar() {
     if (length <= 0) {
       return
     }
-    let index = r_currentIndex
+    let index = r_currentSongIndex
     switch (playMode.type) {
       case playModeTypes.SINGLE_LOOP:
         audioRef.current.play().catch(() => {
@@ -167,7 +167,7 @@ export default memo(function AppPlayerBar() {
         setIsPlaying(!audioRef.current.paused)
         return
       case playModeTypes.RANDOM_PLAY:
-        while (index === r_currentIndex) {
+        while (index === r_currentSongIndex) {
           index = Math.floor(Math.random() * length)
         }
         break
@@ -180,7 +180,7 @@ export default memo(function AppPlayerBar() {
         }
     }
     dispatch(action_set_currentSong(r_songList[index] || {}))
-    dispatch(action_set_currentIndex(index))
+    dispatch(action_set_currentSongIndex(index))
   }
 
   // 播放时间

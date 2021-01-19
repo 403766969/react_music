@@ -1,5 +1,7 @@
 import { actionTypes } from './constants'
 
+import { parseLyric } from '@/utils/parser'
+
 import * as songApi from '@/services/songApi'
 import * as playlistApi from '@/services/playlistApi'
 
@@ -19,11 +21,23 @@ export const action_set_currentSong = currentSong => ({
   currentSong: currentSong
 })
 
-export const action_set_currentIndex = currentIndex => {
-  window.localStorage.setItem('currentIndex', currentIndex)
+export const action_set_currentSongIndex = currentSongIndex => {
+  window.localStorage.setItem('currentSongIndex', currentSongIndex)
   return {
-    type: actionTypes.SET_CURRENT_INDEX,
-    currentIndex: currentIndex
+    type: actionTypes.SET_CURRENT_SONG_INDEX,
+    currentSongIndex: currentSongIndex
+  }
+}
+
+export const action_set_currentLyric = currentLyric => ({
+  type: actionTypes.SET_CURRENT_LYRIC,
+  currentLyric: currentLyric
+})
+
+export const action_set_currentLyricIndex = currentLyricIndex => {
+  return {
+    type: actionTypes.SET_CURRENT_LYRIC_INDEX,
+    currentLyricIndex: currentLyricIndex
   }
 }
 
@@ -41,13 +55,13 @@ export const action_init_songList = () => {
     if (s_songList) {
       dispatch(action_set_songList(JSON.parse(s_songList)))
     }
-    const s_currentIndex = window.localStorage.getItem('currentIndex')
-    if (s_currentIndex) {
-      dispatch(action_set_currentIndex(parseInt(JSON.parse(s_currentIndex))))
+    const s_currentSongIndex = window.localStorage.getItem('currentSongIndex')
+    if (s_currentSongIndex) {
+      dispatch(action_set_currentSongIndex(parseInt(JSON.parse(s_currentSongIndex))))
     }
     const songList = getState().getIn(['player', 'songList'])
-    const currentIndex = getState().getIn(['player', 'currentIndex'])
-    const currentSong = songList[currentIndex] || {}
+    const currentSongIndex = getState().getIn(['player', 'currentSongIndex'])
+    const currentSong = songList[currentSongIndex] || {}
     dispatch(action_set_currentSong(currentSong))
     dispatch(action_set_isInited(true))
   }
@@ -79,18 +93,20 @@ export const action_play_song = songId => {
       dispatch(action_set_currentSong({}))
     }
     dispatch(action_set_currentSong(song))
-    dispatch(action_set_currentIndex(index))
+    dispatch(action_set_currentSongIndex(index))
+    dispatch(action_get_currentLyric(songId))
+    dispatch(action_set_currentLyricIndex(-1))
   }
 }
 
 export const action_remove_song = index => {
   return (dispatch, getState) => {
     const songList = getState().getIn(['player', 'songList'])
-    const currentIndex = getState().getIn(['player', 'currentIndex'])
+    const currentSongIndex = getState().getIn(['player', 'currentSongIndex'])
     const newSongList = [...songList]
     newSongList.splice(index, 1)
     dispatch(action_set_songList(newSongList))
-    if (index === currentIndex) {
+    if (index === currentSongIndex) {
       const nextSong = newSongList[index] || null
       const prevSong = newSongList[index - 1] || null
       const targetSong = nextSong || prevSong || {}
@@ -100,9 +116,9 @@ export const action_remove_song = index => {
           ? index - 1
           : -1
       dispatch(action_set_currentSong(targetSong))
-      dispatch(action_set_currentIndex(targetIndex))
-    } else if (index < currentIndex) {
-      dispatch(action_set_currentIndex(currentIndex - 1))
+      dispatch(action_set_currentSongIndex(targetIndex))
+    } else if (index < currentSongIndex) {
+      dispatch(action_set_currentSongIndex(currentSongIndex - 1))
     }
   }
 }
@@ -111,7 +127,7 @@ export const action_clear_state = () => {
   return dispatch => {
     dispatch(action_set_songList([]))
     dispatch(action_set_currentSong({}))
-    dispatch(action_set_currentIndex(-1))
+    dispatch(action_set_currentSongIndex(-1))
   }
 }
 
@@ -127,7 +143,7 @@ export const action_increase_songList_with_trackIds = trackIds => {
     if (newSongList.length > 0) {
       dispatch(action_set_songList(newSongList))
       dispatch(action_set_currentSong(newSongList[0]))
-      dispatch(action_set_currentIndex(0))
+      dispatch(action_set_currentSongIndex(0))
     }
   }
 }
@@ -137,5 +153,16 @@ export const action_increase_songList_with_playlistId = playlistId => {
     const res = await playlistApi.api_get_playlistDetail(playlistId)
     const trackIds = res.playlist.trackIds
     dispatch(action_increase_songList_with_trackIds(trackIds))
+  }
+}
+
+export const action_get_currentLyric = songId => {
+  return async dispatch => {
+    const res = await songApi.api_get_songLyric(songId)
+    if (res.nolyric) {
+      return
+    }
+    const lyric = parseLyric(res.lrc.lyric)
+    dispatch(action_set_currentLyric(lyric))
   }
 }

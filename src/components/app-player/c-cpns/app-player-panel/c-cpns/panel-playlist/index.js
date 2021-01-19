@@ -5,7 +5,7 @@ import { formatDate } from '@/utils/formatter'
 
 import {
   action_set_currentSong,
-  action_set_currentIndex,
+  action_set_currentSongIndex,
   action_remove_song
 } from '../../../../store/acitonCreators'
 
@@ -22,10 +22,10 @@ export default memo(function PanelPlaylist() {
    */
   const {
     songList: r_songList,
-    currentIndex: r_currentIndex
+    currentSongIndex: r_currentSongIndex
   } = useSelector(state => ({
     songList: state.getIn(['player', 'songList']),
-    currentIndex: state.getIn(['player', 'currentIndex'])
+    currentSongIndex: state.getIn(['player', 'currentSongIndex'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -34,8 +34,8 @@ export default memo(function PanelPlaylist() {
    * other logic
    */
   const handleItemClick = index => {
-    dispatch(action_set_currentIndex(index))
     dispatch(action_set_currentSong(r_songList[index]))
+    dispatch(action_set_currentSongIndex(index))
   }
 
   const hadleRemoveClick = (index, e) => {
@@ -50,7 +50,7 @@ export default memo(function PanelPlaylist() {
           return (
             <li
               key={item.id}
-              className={`play-item ${r_currentIndex === index ? 'active' : ''}`}
+              className={`play-item ${r_currentSongIndex === index ? 'active' : ''}`}
               onClick={e => handleItemClick(index)}>
               <div className="left">
                 <div className="song text-nowrap">

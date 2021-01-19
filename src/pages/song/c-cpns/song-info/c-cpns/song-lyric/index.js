@@ -50,7 +50,7 @@ export default memo(function SongLyric(props) {
         {
           r_songLyric.slice(0, lyricRows).map(item => {
             return (
-              <p key={item.time}>{item.content}</p>
+              <p key={item.time + item.content}>{item.content}</p>
             )
           })
         }

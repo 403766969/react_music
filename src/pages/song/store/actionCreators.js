@@ -1,5 +1,7 @@
 import { actionTypes } from './constants'
+
 import { parseLyric } from '@/utils/parser'
+
 import * as songApi from '@/services/songApi'
 
 /**
@@ -28,16 +30,16 @@ export const action_set_simiSong = simiSong => ({
 /**
  * 异步请求
  */
-export const action_get_songInfo = id => {
+export const action_get_songInfo = songId => {
   return async dispatch => {
-    const res = await songApi.api_get_songDetail(id)
+    const res = await songApi.api_get_songDetail(songId)
     dispatch(action_set_songInfo(res.songs[0]))
   }
 }
 
-export const action_get_songLyric = id => {
+export const action_get_songLyric = songId => {
   return async dispatch => {
-    const res = await songApi.api_get_songLyric(id)
+    const res = await songApi.api_get_songLyric(songId)
     if (res.nolyric) {
       return
     }
@@ -46,16 +48,16 @@ export const action_get_songLyric = id => {
   }
 }
 
-export const action_get_simiPlaylist = id => {
+export const action_get_simiPlaylist = songId => {
   return async dispatch => {
-    const res = await songApi.api_get_simiPlaylist(id)
+    const res = await songApi.api_get_simiPlaylist(songId)
     dispatch(action_set_simiPlaylist(res.playlists))
   }
 }
 
-export const action_get_simiSong = id => {
+export const action_get_simiSong = songId => {
   return async dispatch => {
-    const res = await songApi.api_get_simiSong(id)
+    const res = await songApi.api_get_simiSong(songId)
     dispatch(action_set_simiSong(res.songs))
   }
 }

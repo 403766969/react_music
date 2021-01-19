@@ -4,8 +4,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { formatDate } from '@/utils/formatter'
 
 import {
-  action_set_currentSong,
-  action_set_currentSongIndex,
+  action_toggle_song,
   action_remove_song
 } from '../../../../store/acitonCreators'
 
@@ -34,8 +33,7 @@ export default memo(function PanelPlaylist() {
    * other logic
    */
   const handleItemClick = index => {
-    dispatch(action_set_currentSong(r_songList[index]))
-    dispatch(action_set_currentSongIndex(index))
+    dispatch(action_toggle_song(index))
   }
 
   const hadleRemoveClick = (index, e) => {

@@ -70,54 +70,65 @@ export const action_init_songList = () => {
 export const action_increase_song = songId => {
   return async (dispatch, getState) => {
     const songList = getState().getIn(['player', 'songList'])
-    let index = songList.findIndex(item => item.id === songId)
-    if (index === -1) {
+    let songIndex = songList.findIndex(item => item.id === songId)
+    if (songIndex === -1) {
       const res = await songApi.api_get_songDetail(songId)
       const newSong = res.songs[0]
       const newSongList = [...songList]
       newSongList.push(newSong)
-      index = newSongList.length - 1
+      songIndex = newSongList.length - 1
       dispatch(action_set_songList(newSongList))
     }
-    return index
+    return songIndex
   }
 }
 
 export const action_play_song = songId => {
   return async (dispatch, getState) => {
-    const index = await action_increase_song(songId)(dispatch, getState)
+    const songIndex = await action_increase_song(songId)(dispatch, getState)
     const songList = getState().getIn(['player', 'songList'])
-    const currentSong = getState().getIn(['player', 'currentSong'])
-    const song = songList[index] || {}
-    if (currentSong.id === song.id) {
-      dispatch(action_set_currentSong({}))
+    const song = songList[songIndex]
+    if (song) {
+      dispatch(action_set_currentSong(song))
+      dispatch(action_set_currentSongIndex(songIndex))
+      dispatch(action_get_currentLyric(songId))
+      dispatch(action_set_currentLyricIndex(-1))
     }
-    dispatch(action_set_currentSong(song))
-    dispatch(action_set_currentSongIndex(index))
-    dispatch(action_get_currentLyric(songId))
-    dispatch(action_set_currentLyricIndex(-1))
   }
 }
 
-export const action_remove_song = index => {
+export const action_toggle_song = songIndex => {
+  return (dispatch, getState) => {
+    const songList = getState().getIn(['player', 'songList'])
+    const song = songList[songIndex]
+    if (song) {
+      dispatch(action_set_currentSong(song))
+      dispatch(action_set_currentSongIndex(songIndex))
+      dispatch(action_get_currentLyric(song.id))
+      dispatch(action_set_currentLyricIndex(-1))
+    }
+  }
+}
+
+export const action_remove_song = songIndex => {
   return (dispatch, getState) => {
     const songList = getState().getIn(['player', 'songList'])
     const currentSongIndex = getState().getIn(['player', 'currentSongIndex'])
     const newSongList = [...songList]
-    newSongList.splice(index, 1)
+    newSongList.splice(songIndex, 1)
     dispatch(action_set_songList(newSongList))
-    if (index === currentSongIndex) {
-      const nextSong = newSongList[index] || null
-      const prevSong = newSongList[index - 1] || null
+    if (songIndex === currentSongIndex) {
+      const nextSong = newSongList[songIndex] || null
+      const prevSong = newSongList[songIndex - 1] || null
       const targetSong = nextSong || prevSong || {}
       const targetIndex = nextSong
-        ? index
+        ? songIndex
         : prevSong
-          ? index - 1
+          ? songIndex - 1
           : -1
       dispatch(action_set_currentSong(targetSong))
       dispatch(action_set_currentSongIndex(targetIndex))
-    } else if (index < currentSongIndex) {
+    } else if (songIndex < currentSongIndex) {
       dispatch(action_set_currentSongIndex(currentSongIndex - 1))
     }
   }

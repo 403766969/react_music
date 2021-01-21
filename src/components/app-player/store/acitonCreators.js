@@ -72,6 +72,11 @@ export const action_init_songList = () => {
 
 export const action_increase_song = songId => {
   return async (dispatch, getState) => {
+    const checkRes = await songApi.api_check_music(songId)
+    if (checkRes.success === false) {
+      alert(checkRes.message)
+      return -1
+    }
     const songList = getState().getIn(['player', 'songList'])
     let songIndex = songList.findIndex(item => item.id === songId)
     if (songIndex === -1) {
@@ -92,7 +97,12 @@ export const action_play_song = songId => {
     const songList = getState().getIn(['player', 'songList'])
     const song = songList[songIndex]
     if (song) {
-      dispatch(action_set_currentSong(song))
+      const currentSong = getState().getIn(['player', 'currentSong'])
+      if (song === currentSong) {
+        dispatch(action_set_currentSong(Object.assign({}, song)))
+      } else {
+        dispatch(action_set_currentSong(song))
+      }
       dispatch(action_set_currentSongIndex(songIndex))
       dispatch(action_get_currentLyric(songId))
       dispatch(action_set_currentLyricIndex(-1))
@@ -105,7 +115,12 @@ export const action_toggle_song = songIndex => {
     const songList = getState().getIn(['player', 'songList'])
     const song = songList[songIndex]
     if (song) {
-      dispatch(action_set_currentSong(song))
+      const currentSong = getState().getIn(['player', 'currentSong'])
+      if (song === currentSong) {
+        dispatch(action_set_currentSong(Object.assign({}, song)))
+      } else {
+        dispatch(action_set_currentSong(song))
+      }
       dispatch(action_set_currentSongIndex(songIndex))
       dispatch(action_get_currentLyric(song.id))
       dispatch(action_set_currentLyricIndex(-1))
@@ -153,7 +168,7 @@ export const action_increase_songList_with_trackIds = trackIds => {
     }
     const songIds = ids.join(',')
     const res = await songApi.api_get_songDetail(songIds)
-    const newSongList = res.songs
+    const newSongList = res.songs.filter(item => item.fee !== 4)
     if (newSongList.length > 0) {
       dispatch(action_set_songList(newSongList))
       dispatch(action_set_currentSong(newSongList[0]))

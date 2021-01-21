@@ -160,16 +160,6 @@ export default memo(function AppPlayerBar() {
     }
     let index = r_currentSongIndex
     switch (playMode.type) {
-      case playModeTypes.SINGLE_LOOP:
-        audioRef.current.play().catch(() => {
-          audioRef.current.pause()
-          setIsPlaying(!audioRef.current.paused)
-        })
-        audioRef.current.currentTime = 0
-        setCurrentTime(0)
-        setProgessValue(0)
-        setIsPlaying(!audioRef.current.paused)
-        return
       case playModeTypes.RANDOM_PLAY:
         while (index === r_currentSongIndex) {
           index = Math.floor(Math.random() * length)
@@ -210,7 +200,18 @@ export default memo(function AppPlayerBar() {
   const handleEnded = () => {
     audioRef.current.pause()
     setIsPlaying(!audioRef.current.paused)
-    handleChangeCurrentSong(1)
+    if (playMode.type === playModeTypes.SINGLE_LOOP) {
+      audioRef.current.play().catch(() => {
+        audioRef.current.pause()
+        setIsPlaying(!audioRef.current.paused)
+      })
+      audioRef.current.currentTime = 0
+      setCurrentTime(0)
+      setProgessValue(0)
+      setIsPlaying(!audioRef.current.paused)
+    } else {
+      handleChangeCurrentSong(1)
+    }
   }
 
   // 调节进度条

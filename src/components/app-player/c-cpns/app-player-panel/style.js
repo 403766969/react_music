@@ -13,6 +13,7 @@ export const StyledContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 260px;
   background: url(${require('@/assets/img/playpanel_bg.png').default}) repeat-y;
   background-position: -1016px 0;
@@ -21,21 +22,9 @@ export const StyledContent = styled.div`
 export const StyledLeft = styled.div`
   width: 556px;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `
 
 export const StyledRight = styled.div`
   flex: 1;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `

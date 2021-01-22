@@ -1,14 +1,24 @@
 import styled from 'styled-components'
 
-export const StyledWrapper = styled.ul`
-  padding: 2px;
+export const StyledWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`
+
+export const StyledContent = styled.ul`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
 
   .play-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 0 8px 0 25px;
+    padding: 0 8px 0 30px;
     height: 28px;
     line-height: 28px;
     font-size: 12px;
@@ -125,7 +135,7 @@ export const StyledWrapper = styled.ul`
       ::before {
         content: "";
         position: absolute;
-        left: 8px;
+        left: 10px;
         width: 10px;
         height: 13px;
         background: url(${require('@/assets/img/playlist_sprite.png').default}) -182px .5px;

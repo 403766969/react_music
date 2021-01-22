@@ -1,7 +1,7 @@
 import React, { memo, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import useScroll from '@/hooks/useScroll'
+import useWheel from '@/hooks/useWheel'
 
 import { formatDate } from '@/utils/formatter'
 
@@ -41,7 +41,7 @@ export default memo(function PanelPlaylist() {
   /**
    * custom hooks
    */
-  useScroll(wrapperRef.current, contentRef.current, 55)
+  useWheel(wrapperRef.current, contentRef.current, 55)
 
   /**
    * other logic

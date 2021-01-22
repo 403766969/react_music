@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-function useScroll(wrapperEl, contentEl, delta = 55) {
+function useWheel(wrapperEl, contentEl, delta = 55) {
   useEffect(() => {
     if (!wrapperEl || !contentEl) {
       return
@@ -30,5 +30,5 @@ function useScroll(wrapperEl, contentEl, delta = 55) {
   }, [wrapperEl, contentEl, delta])
 }
 
-export default useScroll
+export default useWheel
 

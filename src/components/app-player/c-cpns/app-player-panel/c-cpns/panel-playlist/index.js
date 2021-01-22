@@ -1,5 +1,7 @@
-import React, { memo, useRef, useEffect } from 'react'
+import React, { memo, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+
+import useScroll from '@/hooks/useScroll'
 
 import { formatDate } from '@/utils/formatter'
 
@@ -36,32 +38,10 @@ export default memo(function PanelPlaylist() {
   const wrapperRef = useRef()
   const contentRef = useRef()
 
-  useEffect(() => {
-    const wrapperEl = wrapperRef.current
-    const contentEl = contentRef.current
-    const wheelCallback = e => {
-      e.preventDefault()
-      e.stopPropagation()
-      const wrapperEl_clientHeight = wrapperEl.clientHeight
-      const contentEl_clientHeight = contentEl.clientHeight
-      if (wrapperEl_clientHeight >= contentEl_clientHeight) {
-        return
-      }
-      const contentEl_minTop = wrapperEl.clientHeight - contentEl.clientHeight
-      const contentEl_offsetTop = contentEl.offsetTop
-      let targetTop = contentEl_offsetTop + 55 * (e.deltaY > 0 ? -1 : 1)
-      if (targetTop > 0) {
-        targetTop = 0
-      } else if (targetTop < contentEl_minTop) {
-        targetTop = contentEl_minTop
-      }
-      contentEl.style.top = targetTop + 'px'
-    }
-    contentEl.addEventListener('wheel', wheelCallback, { passive: false })
-    return () => {
-      contentEl.removeEventListener('wheel', wheelCallback)
-    }
-  }, [])
+  /**
+   * custom hooks
+   */
+  useScroll(wrapperRef.current, contentRef.current, 55)
 
   /**
    * other logic

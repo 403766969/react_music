@@ -16,5 +16,8 @@ export function parseLyric(lyricString) {
       lyrics.push(rowObj)
     }
   }
+  lyrics.sort((prev, next) => {
+    return prev.time - next.time
+  })
   return lyrics
 }

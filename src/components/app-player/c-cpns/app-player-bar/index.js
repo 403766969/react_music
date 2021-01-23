@@ -42,25 +42,32 @@ export default memo(function AppPlayerBar() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isChanging, setIsChaning] = useState(false)
 
-  const s_volume = window.localStorage.getItem('volume')
-    ? Number(window.localStorage.getItem('volume'))
-    : 50
-  const [volume, setVolume] = useState(s_volume)
+  const [volume, setVolume] = useState(() => {
+    const s_volume = window.localStorage.getItem('volume')
+      ? Number(window.localStorage.getItem('volume'))
+      : 50
+    return s_volume
+  })
+
   const [isShowVolume, setIsShowVolume] = useState(false)
 
-  const s_playMode = window.localStorage.getItem('playMode')
-    ? JSON.parse(window.localStorage.getItem('playMode'))
-    : {
-      type: playModeTypes.LIST_LOOP,
-      class: 'list-loop',
-      title: '列表循环'
-    }
-  const [playMode, setPlayMode] = useState(s_playMode)
+  const [playMode, setPlayMode] = useState(() => {
+    const s_playMode = window.localStorage.getItem('playMode')
+      ? JSON.parse(window.localStorage.getItem('playMode'))
+      : {
+        type: playModeTypes.LIST_LOOP,
+        class: 'list-loop',
+        title: '列表循环'
+      }
+    return s_playMode
+  })
 
-  const s_lock = window.localStorage.getItem('lock')
-    ? Number(window.localStorage.getItem('lock'))
-    : 0
-  const [isLocked, setIsLocked] = useState(s_lock ? true : false)
+  const [isLocked, setIsLocked] = useState(() => {
+    const s_lock = window.localStorage.getItem('lock')
+      ? Number(window.localStorage.getItem('lock'))
+      : 0
+    return s_lock ? true : false
+  })
 
   const [isShowPanel, setIsShowPanel] = useState(false)
 
@@ -209,6 +216,7 @@ export default memo(function AppPlayerBar() {
       setCurrentTime(0)
       setProgessValue(0)
       setIsPlaying(!audioRef.current.paused)
+      dispatch(action_set_currentLyricIndex(-1))
     } else {
       handleChangeCurrentSong(1)
     }

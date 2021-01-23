@@ -157,6 +157,8 @@ export const action_clear_state = () => {
     dispatch(action_set_songList([]))
     dispatch(action_set_currentSong({}))
     dispatch(action_set_currentSongIndex(-1))
+    dispatch(action_set_currentLyric([]))
+    dispatch(action_set_currentLyricIndex(-1))
   }
 }
 
@@ -189,6 +191,7 @@ export const action_get_currentLyric = songId => {
   return async dispatch => {
     const res = await songApi.api_get_songLyric(songId)
     if (res.nolyric) {
+      dispatch(action_set_currentLyric([]))
       return
     }
     const lyric = parseLyric(res.lrc.lyric)

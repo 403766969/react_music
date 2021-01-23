@@ -1,7 +1,26 @@
-import { useEffect } from 'react'
+import React, { memo, useRef, useEffect } from 'react'
 
-function useWheel(wrapperEl, contentEl, delta = 55) {
+import {
+  StyledWrapper,
+  StyledContent
+} from './style'
+
+export default memo(function ScrollPanel(props) {
+
+  /**
+   * props and state
+   */
+  const { children, delta = 55 } = props
+
+  /**
+   * other hooks
+   */
+  const wrapperRef = useRef()
+  const contentRef = useRef()
+
   useEffect(() => {
+    const wrapperEl = wrapperRef.current
+    const contentEl = contentRef.current
     if (!wrapperEl || !contentEl) {
       return
     }
@@ -11,6 +30,7 @@ function useWheel(wrapperEl, contentEl, delta = 55) {
       const wrapperEl_clientHeight = wrapperEl.clientHeight
       const contentEl_clientHeight = contentEl.clientHeight
       if (wrapperEl_clientHeight >= contentEl_clientHeight) {
+        contentEl.style.top = '0px'
         return
       }
       const contentEl_minTop = wrapperEl.clientHeight - contentEl.clientHeight
@@ -23,12 +43,17 @@ function useWheel(wrapperEl, contentEl, delta = 55) {
       }
       contentEl.style.top = targetTop + 'px'
     }
-    contentEl.addEventListener('wheel', wheelCallback, { passive: false })
+    wrapperEl.addEventListener('wheel', wheelCallback, { passive: false })
     return () => {
-      contentEl.removeEventListener('wheel', wheelCallback)
+      wrapperEl.removeEventListener('wheel', wheelCallback)
     }
-  }, [wrapperEl, contentEl, delta])
-}
+  }, [delta])
 
-export default useWheel
-
+  return (
+    <StyledWrapper ref={wrapperRef}>
+      <StyledContent ref={contentRef}>
+        {children}
+      </StyledContent>
+    </StyledWrapper>
+  )
+})

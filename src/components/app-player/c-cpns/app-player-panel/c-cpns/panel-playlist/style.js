@@ -1,16 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-`
-
-export const StyledContent = styled.ul`
-  position: absolute;
-  left: 0;
-  top: 0;
+export const StyledWrapper = styled.ul`
   width: 100%;
 
   .play-item {

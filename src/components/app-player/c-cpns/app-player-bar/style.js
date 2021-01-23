@@ -244,6 +244,7 @@ export const StyleOperator = styled.div`
         position: absolute;
         left: 50%;
         top: -124px;
+        z-index: 99;
         width: 32px;
         height: 113px;
         background-position: 0 -503px;

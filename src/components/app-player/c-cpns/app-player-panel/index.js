@@ -1,5 +1,7 @@
 import React, { memo } from 'react'
 
+import ScrollPanel from '@/components/scroll-panel'
+
 import PanelHeader from './c-cpns/panel-header'
 import PanelPlaylist from './c-cpns/panel-playlist'
 
@@ -22,7 +24,9 @@ export default memo(function AppPlayerPanel(props) {
       <PanelHeader handleCloseClick={handleCloseClick} />
       <StyledContent>
         <StyledLeft>
-          <PanelPlaylist />
+          <ScrollPanel>
+            <PanelPlaylist />
+          </ScrollPanel>
         </StyledLeft>
         <StyledRight>
 

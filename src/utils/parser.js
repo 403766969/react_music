@@ -2,7 +2,7 @@ const parseExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/
 
 export function parseLyric(lyricString) {
   const rowArr = lyricString.split('\n')
-  const lyrics = []
+  const lyric = []
   for (let row of rowArr) {
     if (row) {
       const result = parseExp.exec(row)
@@ -13,11 +13,11 @@ export function parseLyric(lyricString) {
       const time = time1 + time2 + time3
       const content = row.replace(parseExp, '').trim()
       const rowObj = { time, content }
-      lyrics.push(rowObj)
+      lyric.push(rowObj)
     }
   }
-  lyrics.sort((prev, next) => {
+  lyric.sort((prev, next) => {
     return prev.time - next.time
   })
-  return lyrics
+  return lyric
 }

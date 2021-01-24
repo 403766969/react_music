@@ -1,12 +1,6 @@
-import React, { memo, useEffect } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import React, { memo } from 'react'
 
 import { formatUrlWithSize } from '@/utils/formatter'
-
-import {
-  action_get_simiPlaylist,
-  action_set_simiPlaylist
-} from '../../store/actionCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -17,38 +11,19 @@ import {
   StyleContent
 } from './style'
 
-export default memo(function SimiPlaylist(props) {
+export default memo(function SimiSongsheet(props) {
 
   /**
    * props and state
    */
-  const { songId } = props
-
-  /**
-   * redux hooks
-   */
-  const { simiPlaylist: r_simiPlaylist } = useSelector(state => ({
-    simiPlaylist: state.getIn(['song', 'simiPlaylist'])
-  }), shallowEqual)
-
-  const dispatch = useDispatch()
-
-  /**
-   * other hooks
-   */
-  useEffect(() => {
-    dispatch(action_get_simiPlaylist(songId))
-    return () => {
-      dispatch(action_set_simiPlaylist([]))
-    }
-  }, [dispatch, songId])
+  const { simiSongsheet = [] } = props
 
   return (
     <StyleWrapper>
       <HeaderSmall title="包含这首歌的歌单" />
       <StyleContent>
         {
-          r_simiPlaylist.map(item => {
+          simiSongsheet.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <NavLink className="image" to={`/playlist?id=${item.id}`} title={item.name}>

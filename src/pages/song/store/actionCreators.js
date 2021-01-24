@@ -17,9 +17,9 @@ export const action_set_songLyric = songLyric => ({
   songLyric: songLyric
 })
 
-export const action_set_simiPlaylist = simiPlaylist => ({
-  type: actionTypes.SET_SIMI_PLAYLIST,
-  simiPlaylist: simiPlaylist
+export const action_set_simiSongsheet = simiSongsheet => ({
+  type: actionTypes.SET_SIMI_SONGSHEET,
+  simiSongsheet: simiSongsheet
 })
 
 export const action_set_simiSong = simiSong => ({
@@ -52,10 +52,10 @@ export const action_get_songLyric = songId => {
   }
 }
 
-export const action_get_simiPlaylist = songId => {
+export const action_get_simiSongsheet = songId => {
   return async dispatch => {
     const res = await songApi.api_get_simiPlaylist(songId)
-    dispatch(action_set_simiPlaylist(res.playlists))
+    dispatch(action_set_simiSongsheet(res.playlists))
   }
 }
 

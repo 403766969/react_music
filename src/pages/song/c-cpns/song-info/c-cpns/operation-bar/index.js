@@ -13,10 +13,20 @@ import {
 } from './style'
 
 export default memo(function OperationBar(props) {
+
+  /**
+   * props and state
+   */
   const { songId } = props
 
+  /**
+   * redux hooks
+   */
   const dispatch = useDispatch()
 
+  /**
+   * other logic
+   */
   const handlePlay = () => {
     dispatch(action_play_song(songId))
   }

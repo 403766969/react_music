@@ -1,10 +1,6 @@
-import React, { memo, useEffect } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import React, { memo } from 'react'
+import { useDispatch } from 'react-redux'
 
-import {
-  action_get_simiSong,
-  action_set_simiSong
-} from '../../store/actionCreators'
 import {
   action_play_song,
   action_increase_song
@@ -25,26 +21,12 @@ export default memo(function SimiSong(props) {
   /**
    * props and state
    */
-  const { songId } = props
+  const { simiSong = [] } = props
 
   /**
    * redux hooks
    */
-  const { simiSong: r_simiSong } = useSelector(state => ({
-    simiSong: state.getIn(['song', 'simiSong'])
-  }), shallowEqual)
-
   const dispatch = useDispatch()
-
-  /**
-   * other hooks
-   */
-  useEffect(() => {
-    dispatch(action_get_simiSong(songId))
-    return () => {
-      dispatch(action_set_simiSong([]))
-    }
-  }, [dispatch, songId])
 
   /**
    * other logic
@@ -62,7 +44,7 @@ export default memo(function SimiSong(props) {
       <HeaderSmall title="相似歌曲" />
       <StyleContent>
         {
-          r_simiSong.map(item => {
+          simiSong.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">

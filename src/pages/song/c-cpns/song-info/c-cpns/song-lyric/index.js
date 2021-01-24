@@ -1,10 +1,4 @@
-import React, { memo, useState, useEffect } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-
-import {
-  action_get_songLyric,
-  action_set_songLyric
-} from '../../../../store/actionCreators'
+import React, { memo, useState } from 'react'
 
 import {
   StyledWrapper
@@ -15,40 +9,20 @@ export default memo(function SongLyric(props) {
   /**
    * props and state
    */
-  const { songId } = props
+  const { songLyric } = props
 
   const [isFold, setIsFold] = useState(true)
 
   /**
-   * redux hooks
-   */
-  const { songLyric: r_songLyric } = useSelector(state => ({
-    songLyric: state.getIn(['song', 'songLyric'])
-  }), shallowEqual)
-
-  const dispatch = useDispatch()
-
-  /**
-   * other hooks
-   */
-  useEffect(() => {
-    dispatch(action_get_songLyric(songId))
-    return () => {
-      dispatch(action_set_songLyric([]))
-    }
-  }, [dispatch, songId])
-
-  /**
    * other logic
    */
-
-  const lyricRows = isFold ? 13 : r_songLyric.length
+  const lyricRows = isFold ? 13 : songLyric.length
 
   return (
     <StyledWrapper isFold={isFold}>
       <div className="content">
         {
-          r_songLyric.slice(0, lyricRows).map(item => {
+          songLyric.slice(0, lyricRows).map(item => {
             return (
               <p key={item.time + item.content}>{item.content}</p>
             )
@@ -56,7 +30,7 @@ export default memo(function SongLyric(props) {
         }
       </div>
       {
-        r_songLyric.length > 13
+        songLyric.length > 13
         &&
         (
           <div className="control">

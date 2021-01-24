@@ -175,6 +175,8 @@ export const action_increase_songList_with_trackIds = trackIds => {
       dispatch(action_set_songList(newSongList))
       dispatch(action_set_currentSong(newSongList[0]))
       dispatch(action_set_currentSongIndex(0))
+      dispatch(action_get_currentLyric(newSongList[0].id))
+      dispatch(action_set_currentLyricIndex(-1))
     }
   }
 }

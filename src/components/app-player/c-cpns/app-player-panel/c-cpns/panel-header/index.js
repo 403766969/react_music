@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { action_clear_state } from '../../../../store/acitonCreators'
 
@@ -14,18 +14,13 @@ export default memo(function PanelHeader(props) {
   /**
    * props and state
    */
+  const { songList = [], currentSong = {} } = props
+
   const { handleCloseClick: hccCallback } = props
 
   /**
    * redux hooks
    */
-  const {
-    songList: r_songList,
-    currentSong: r_currentSong
-  } = useSelector(state => ({
-    songList: state.getIn(['player', 'songList']),
-    currentSong: state.getIn(['player', 'currentSong'])
-  }), shallowEqual)
 
   const dispatch = useDispatch()
 
@@ -45,7 +40,7 @@ export default memo(function PanelHeader(props) {
   return (
     <StyledWrapper>
       <StyledLeft>
-        <h3 className="title">播放列表({r_songList.length})</h3>
+        <h3 className="title">播放列表({songList.length})</h3>
         <div className="operator">
           <button title="收藏全部">
             <i className="sprite_playlist icon favor"></i>
@@ -59,7 +54,7 @@ export default memo(function PanelHeader(props) {
         </div>
       </StyledLeft>
       <StyledRight>
-        <p className="song-name">{r_currentSong.name}</p>
+        <p className="song-name">{currentSong.name}</p>
         <i className="sprite_playlist close" title="关闭" onClick={handleCloseClick}></i>
       </StyledRight>
     </StyledWrapper>

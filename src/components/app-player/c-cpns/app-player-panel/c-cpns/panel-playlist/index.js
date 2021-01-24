@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { formatDate } from '@/utils/formatter'
 
@@ -14,19 +14,16 @@ import {
   StyledWrapper
 } from './style'
 
-export default memo(function PanelPlaylist() {
+export default memo(function PanelPlaylist(props) {
+
+  /**
+   * props and state
+   */
+  const { songList = [], currentSongIndex = -1 } = props
 
   /**
    * redux hooks
    */
-  const {
-    songList: r_songList,
-    currentSongIndex: r_currentSongIndex
-  } = useSelector(state => ({
-    songList: state.getIn(['player', 'songList']),
-    currentSongIndex: state.getIn(['player', 'currentSongIndex'])
-  }), shallowEqual)
-
   const dispatch = useDispatch()
 
   /**
@@ -44,11 +41,11 @@ export default memo(function PanelPlaylist() {
   return (
     <StyledWrapper>
       {
-        r_songList.map((item, index) => {
+        songList.map((item, index) => {
           return (
             <li
               key={item.id}
-              className={`play-item ${r_currentSongIndex === index ? 'active' : ''}`}
+              className={`play-item ${currentSongIndex === index ? 'active' : ''}`}
               onClick={e => handleItemClick(index)}>
               <div className="left">
                 <div className="song text-nowrap">

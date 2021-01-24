@@ -1,4 +1,5 @@
-import React, { memo } from 'react'
+import React, { memo, useRef, useEffect } from 'react'
+import { useSelector, shallowEqual } from 'react-redux'
 
 import ScrollPanel from '@/components/scroll-panel'
 
@@ -19,13 +20,35 @@ export default memo(function AppPlayerPanel(props) {
    */
   const { isShowPanel, handleCloseClick } = props
 
+  /**
+   * redux hooks
+   */
+  const {
+    songList: r_songList,
+    currentSong: r_currentSong,
+    currentSongIndex: r_currentSongIndex
+  } = useSelector(state => ({
+    songList: state.getIn(['player', 'songList']),
+    currentSong: state.getIn(['player', 'currentSong']),
+    currentSongIndex: state.getIn(['player', 'currentSongIndex'])
+  }), shallowEqual)
+
+  /**
+   * other hooks
+   */
+  const scrollPanelRef = useRef()
+
+  useEffect(() => {
+    scrollPanelRef.current && scrollPanelRef.current.scrollUpdate && scrollPanelRef.current.scrollUpdate()
+  }, [r_songList])
+
   return (
     <StyledWrapper style={{ display: isShowPanel ? 'block' : 'none' }}>
-      <PanelHeader handleCloseClick={handleCloseClick} />
+      <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
       <StyledContent>
         <StyledLeft>
-          <ScrollPanel>
-            <PanelPlaylist />
+          <ScrollPanel delta={55} ref={scrollPanelRef}>
+            <PanelPlaylist songList={r_songList} currentSongIndex={r_currentSongIndex} />
           </ScrollPanel>
         </StyledLeft>
         <StyledRight>

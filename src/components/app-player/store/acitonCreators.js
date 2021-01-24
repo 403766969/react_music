@@ -190,11 +190,14 @@ export const action_increase_songList_with_playlistId = playlistId => {
 export const action_get_currentLyric = songId => {
   return async dispatch => {
     const res = await songApi.api_get_songLyric(songId)
+    const lyric = []
     if (res.nolyric) {
-      dispatch(action_set_currentLyric([]))
-      return
+      lyric.push({ time: 0, content: '纯音乐，无歌词' })
+    } else if (res.uncollected) {
+      lyric.push({ time: 0, content: '暂时没有歌词' })
+    } else if (res.lrc && res.lrc.lyric) {
+      lyric.push(...parseLyric(res.lrc.lyric))
     }
-    const lyric = parseLyric(res.lrc.lyric)
     dispatch(action_set_currentLyric(lyric))
   }
 }

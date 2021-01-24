@@ -1,7 +1,4 @@
-import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-
-import { action_get_carouselImages } from '../../store/actionCreators'
+import React, { memo, useState, useRef, useCallback } from 'react'
 
 import { NavLink } from 'react-router-dom'
 
@@ -38,31 +35,19 @@ const renderCarouselItem = item => {
   }
 }
 
-export default memo(function TopBanner() {
+export default memo(function TopBanner(props) {
 
   /**
    * props and state
    */
+  const { carouselImages = [] } = props
+
   const [currentIndex, setCurrentIndex] = useState(0)
-
-  /**
-   * redux hooks
-   */
-  const { carouselImages: r_carouselImages } = useSelector(state => ({
-    // banner: state.get('recomd').get('carouselImages')
-    carouselImages: state.getIn(['recomd', 'carouselImages'])
-  }), shallowEqual)
-
-  const dispatch = useDispatch()
 
   /**
    * other hooks
    */
   const carouselRef = useRef()
-
-  useEffect(() => {
-    dispatch(action_get_carouselImages())
-  }, [dispatch])
 
   /**
    * other logic
@@ -71,7 +56,7 @@ export default memo(function TopBanner() {
     setCurrentIndex(to)
   }, [])
 
-  const bgImage = r_carouselImages[currentIndex] && (r_carouselImages[currentIndex].imageUrl + '?imageView&blur=40x20')
+  const bgImage = carouselImages[currentIndex] && (carouselImages[currentIndex].imageUrl + '?imageView&blur=40x20')
 
   return (
     <StyledWrapper bgImage={bgImage}>
@@ -84,7 +69,7 @@ export default memo(function TopBanner() {
             ref={carouselRef}
             beforeChange={handleChange}>
             {
-              r_carouselImages.map(item => (
+              carouselImages.map(item => (
                 <div className="item" key={item.scm}>
                   {renderCarouselItem(item)}
                 </div>
@@ -104,5 +89,4 @@ export default memo(function TopBanner() {
       </StyledContent>
     </StyledWrapper>
   )
-
 })

@@ -1,7 +1,4 @@
-import React, { memo, useEffect, useRef } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-
-import { action_get_newAlbumList } from '../../store/actionCreators'
+import React, { memo, useRef } from 'react'
 
 import { Carousel } from 'antd'
 
@@ -16,25 +13,17 @@ import {
   StyledControl
 } from './style'
 
-export default memo(function NewAlbum() {
+export default memo(function NewAlbum(props) {
 
   /**
-   * redux hooks
+   * props and state
    */
-  const { newAlbumList: r_newAlbumList } = useSelector(state => ({
-    newAlbumList: state.getIn(['recomd', 'newAlbumList'])
-  }), shallowEqual)
-
-  const dispatch = useDispatch()
+  const { newAlbumList = [] } = props
 
   /**
    * other hooks
    */
   const carouselRef = useRef()
-
-  useEffect(() => {
-    dispatch(action_get_newAlbumList(10, 0))
-  }, [dispatch])
 
   return (
     <StyledWrapper>
@@ -47,7 +36,7 @@ export default memo(function NewAlbum() {
                 return (
                   <StyledPage key={page}>
                     {
-                      r_newAlbumList.slice(page * 5, (page + 1) * 5).map(item => {
+                      newAlbumList.slice(page * 5, (page + 1) * 5).map(item => {
                         return (
                           <AlbumCover key={item.id} albumInfo={item} />
                         )

@@ -1,4 +1,13 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+
+import {
+  action_get_carouselImages,
+  action_get_hotRecomdList,
+  action_get_newAlbumList,
+  action_get_rankMulti,
+  action_get_settleSingerList
+} from './store/actionCreators'
 
 import TopBanner from './c-cpns/top-banner'
 import HotRecomd from './c-cpns/hot-recomd'
@@ -15,19 +24,56 @@ import {
   StyledRight
 } from './style'
 
-export default memo(function Recomd(props) {
+export default memo(function Recomd() {
+
+  /**
+ * redux hooks
+ */
+  const {
+    carouselImages: r_carouselImages,
+    hotRecomdList: r_hotRecomdList,
+    newAlbumList: r_newAlbumList,
+    rankMultiUp: r_rankMultiUp,
+    rankMultiNew: r_rankMultiNew,
+    rankMultiOrg: r_rankMultiOrg,
+    settleSingerList: r_settleSingerList
+  } = useSelector(state => ({
+    carouselImages: state.getIn(['recomd', 'carouselImages']),
+    hotRecomdList: state.getIn(['recomd', 'hotRecomdList']),
+    newAlbumList: state.getIn(['recomd', 'newAlbumList']),
+    rankMultiUp: state.getIn(['recomd', 'rankMultiUp']),
+    rankMultiNew: state.getIn(['recomd', 'rankMultiNew']),
+    rankMultiOrg: state.getIn(['recomd', 'rankMultiOrg']),
+    settleSingerList: state.getIn(['recomd', 'settleSingerList'])
+  }), shallowEqual)
+
+  const dispatch = useDispatch()
+
+  /**
+   * other hooks
+   */
+  useEffect(() => {
+    dispatch(action_get_carouselImages())
+    dispatch(action_get_hotRecomdList(8))
+    dispatch(action_get_newAlbumList(10, 0))
+    dispatch(action_get_rankMulti(0))
+    dispatch(action_get_rankMulti(2))
+    dispatch(action_get_rankMulti(3))
+    dispatch(action_get_settleSingerList(5001, 5))
+  }, [dispatch])
+
   return (
     <StyledWrapper>
-      <TopBanner />
+      <TopBanner carouselImages={r_carouselImages} />
       <StyledContent className="wrap-v2">
         <StyledLeft>
-          <HotRecomd />
-          <NewAlbum />
-          <RankMulti />
+          <HotRecomd hotRecomdList={r_hotRecomdList} />
+          <NewAlbum newAlbumList={r_newAlbumList} />
+          <RankMulti rankMultiUp={r_rankMultiUp} rankMultiNew={r_rankMultiNew} rankMultiOrg={r_rankMultiOrg} />
         </StyledLeft>
         <StyledRight>
           <UserLogin />
-          <SettleSinger />
+          <SettleSinger settleSingerList={r_settleSingerList} />
           <HotAnchor />
         </StyledRight>
       </StyledContent>

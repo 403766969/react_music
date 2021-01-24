@@ -16,12 +16,12 @@ import {
   StyledDec
 } from './style'
 
-export default memo(function PlaylistCover(props) {
+export default memo(function SongsheetCover(props) {
 
   /**
    * props and state
    */
-  const { playlistInfo = {}, isShowAuthor = false } = props
+  const { songsheetInfo = {}, isShowAuthor = false } = props
 
   /**
    * redux hooks
@@ -37,23 +37,23 @@ export default memo(function PlaylistCover(props) {
    * other logic
    */
   const pushRoute = () => {
-    history.push(`/discover/playlist?id=${playlistInfo.id}`)
+    history.push(`/discover/playlist?id=${songsheetInfo.id}`)
   }
 
   const handleAddList = e => {
     e.stopPropagation()
-    dispatch(action_increase_songList_with_playlistId(playlistInfo.id))
+    dispatch(action_increase_songList_with_playlistId(songsheetInfo.id))
   }
 
   return (
     <StyledWrapper>
       <StyledImage onClick={pushRoute}>
-        <img className="image" src={formatUrlWithSize(playlistInfo.picUrl || playlistInfo.coverImgUrl, 140)} alt="" />
-        <div className="mask sprite_covor" title={playlistInfo.name}></div>
+        <img className="image" src={formatUrlWithSize(songsheetInfo.picUrl || songsheetInfo.coverImgUrl, 140)} alt="" />
+        <div className="mask sprite_covor" title={songsheetInfo.name}></div>
         <div className="heat sprite_covor">
           <span>
             <i className="sprite_icon count"></i>
-            {formatCount(playlistInfo.playCount)}
+            {formatCount(songsheetInfo.playCount)}
           </span>
           <span>
             <i className="sprite_icon play" onClick={e => handleAddList(e)}></i>
@@ -62,15 +62,15 @@ export default memo(function PlaylistCover(props) {
       </StyledImage>
       <StyledDec>
         <p className={'cover-name' + (isShowAuthor ? ' text-nowrap' : '')}>
-          <NavLink to={`/discover/playlist?id=${playlistInfo.id}`} title={playlistInfo.name}>{playlistInfo.name}</NavLink>
+          <NavLink to={`/discover/playlist?id=${songsheetInfo.id}`} title={songsheetInfo.name}>{songsheetInfo.name}</NavLink>
         </p>
         {
           isShowAuthor && (
             <p className="cover-author text-nowrap">
               <span>by</span>
-              <NavLink to={`/user/home?id=${playlistInfo.id}`}
-                title={playlistInfo.copywriter || playlistInfo.creator.nickname}>
-                {playlistInfo.copywriter || playlistInfo.creator.nickname}
+              <NavLink to={`/user/home?id=${songsheetInfo.id}`}
+                title={songsheetInfo.copywriter || songsheetInfo.creator.nickname}>
+                {songsheetInfo.copywriter || songsheetInfo.creator.nickname}
               </NavLink>
             </p>
           )

@@ -26,5 +26,6 @@ export const StyledLeft = styled.div`
 
 export const StyledRight = styled.div`
   flex: 1;
+  padding: 21px 35px;
   height: 100%;
 `

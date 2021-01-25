@@ -10,7 +10,7 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
   /**
    * props and state
    */
-  const { children, delta = 55 } = props
+  const { children, delta = 55, wheelDelay = 1000 } = props
 
   /**
    * other hooks
@@ -18,12 +18,23 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
   const wrapperRef = useRef()
   const contentRef = useRef()
 
+  const wheel_timerRef = useRef(null)
+  const to_timerRef = useRef(null)
+
   useEffect(() => {
     const wrapperEl = wrapperRef.current
     const contentEl = contentRef.current
     const wheelCallback = e => {
       e.preventDefault()
       e.stopPropagation()
+      if (wheel_timerRef.current) {
+        clearTimeout(wheel_timerRef.current)
+        wheel_timerRef.current = null
+      }
+      wheel_timerRef.current = setTimeout(() => {
+        clearTimeout(wheel_timerRef.current)
+        wheel_timerRef.current = null
+      }, wheelDelay)
       const wrapperEl_Height = wrapperEl.clientHeight
       const contentEl_Height = contentEl.offsetHeight
       if (wrapperEl_Height >= contentEl_Height) {
@@ -44,7 +55,7 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
     return () => {
       wrapperEl.removeEventListener('wheel', wheelCallback)
     }
-  }, [delta])
+  }, [delta, wheelDelay])
 
   useImperativeHandle(ref, () => ({
     scrollUpdate,
@@ -74,7 +85,10 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
     contentEl.style.top = targetTop + 'px'
   }
 
-  const scrollTo = (to = 0, duration = 300, steps = 30) => {
+  const scrollTo = (to = 0, duration = 600, steps = 30) => {
+    if (wheel_timerRef.current) {
+      return
+    }
     const contentEl = contentRef.current
     const targetTop = to * -1
     if (duration <= 0 || steps <= 0) {
@@ -83,15 +97,19 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
     }
     const distance = Math.abs(targetTop - contentEl.offsetTop)
     const isDown = targetTop < contentEl.offsetTop
+    let delay = duration / steps
     let step = distance / steps
     step = isDown ? step * -1 : step
-    let delay = duration / steps
-    let timer = setInterval(() => {
+    if (to_timerRef.current) {
+      clearTimeout(to_timerRef.current)
+      to_timerRef.current = null
+    }
+    to_timerRef.current = setInterval(() => {
       let perTop = contentEl.offsetTop + step
       if ((isDown && (perTop <= targetTop)) || (!isDown && (perTop >= targetTop))) {
         contentEl.style.top = targetTop + 'px'
-        clearTimeout(timer)
-        timer = null
+        clearTimeout(to_timerRef.current)
+        to_timerRef.current = null
       } else {
         contentEl.style.top = perTop + 'px'
       }

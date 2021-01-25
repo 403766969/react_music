@@ -190,15 +190,19 @@ export default memo(function PlayerBar() {
       setCurrentTime(audio_currentTime)
       setProgessValue(audio_currentTime / duration * 100)
     }
-    let lyricIndex = -1;
-    for (let i = 0; i < r_currentLyric.length; i++) {
-      if (audio_currentTime <= r_currentLyric[i].time) {
-        lyricIndex = i - 1;
-        break;
+    let lyricIndex = -1
+    const lastLyric = r_currentLyric[r_currentLyric.length - 1]
+    if (lastLyric && audio_currentTime >= lastLyric.time) {
+      lyricIndex = r_currentLyric.length - 1
+    } else {
+      for (let i = 0; i < r_currentLyric.length; i++) {
+        if (audio_currentTime <= r_currentLyric[i].time) {
+          lyricIndex = i - 1
+          break
+        }
       }
     }
     if (lyricIndex !== r_currentLyricIndex) {
-      console.log(r_currentLyric[lyricIndex])
       dispatch(action_set_currentLyricIndex(lyricIndex))
     }
   }

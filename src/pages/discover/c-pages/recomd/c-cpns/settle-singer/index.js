@@ -4,7 +4,7 @@ import { formatUrlWithSize } from '@/utils/formatter'
 
 import { NavLink } from 'react-router-dom'
 
-import HeaderSmall from '@/components/header-small'
+import HeaderShort from '@/components/header-short'
 
 import {
   StyledWrapper,
@@ -21,7 +21,7 @@ export default memo(function SettleSinger(props) {
 
   return (
     <StyledWrapper>
-      <HeaderSmall title={'入驻歌手'} more={{ text: '查看全部', link: '/discover/artist/signed' }} />
+      <HeaderShort title={'入驻歌手'} more={{ text: '查看全部', link: '/discover/artist/signed' }} />
       <StyledContent>
         {
           settleSingerList.map(item => {

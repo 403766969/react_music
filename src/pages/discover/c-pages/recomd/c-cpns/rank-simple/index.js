@@ -7,7 +7,7 @@ import {
   action_play_song,
   action_increase_song,
   action_increase_songList_with_trackIds
-} from '@/components/app-player/store/acitonCreators'
+} from '@/pages/player/store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 

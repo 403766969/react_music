@@ -12,9 +12,10 @@ import { renderRoutes } from 'react-router-config'
 
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
-import AppBacktop from '@/components/app-backtop'
-import AppPlayer from '@/components/app-player'
+import BackTop from '@/components/back-top'
 // import DocuTitle from '@/components/docu-title'
+
+import Player from '@/pages/player'
 
 export default memo(function App() {
   return (
@@ -23,9 +24,9 @@ export default memo(function App() {
         <AppHeader />
         {renderRoutes(routes)}
         <AppFooter />
-        <AppBacktop />
-        <AppPlayer />
+        <BackTop />
         {/* <DocuTitle /> */}
+        <Player />
       </HashRouter>
     </Provider>
   )

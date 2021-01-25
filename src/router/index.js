@@ -7,7 +7,7 @@ import Song from '@/pages/song'
 
 import Recomd from '@/pages/discover/c-pages/recomd'
 import Toplist from '@/pages/discover/c-pages/toplist'
-import Playlist from '@/pages/discover/c-pages/playlist'
+import Songsheet from '@/pages/discover/c-pages/songsheet'
 import Djradio from '@/pages/discover/c-pages/djradio'
 import Artist from '@/pages/discover/c-pages/artist'
 import Album from '@/pages/discover/c-pages/album'
@@ -41,8 +41,8 @@ const routes = [
         component: Toplist
       },
       {
-        path: '/discover/playlist',
-        component: Playlist
+        path: '/discover/songsheet',
+        component: Songsheet
       },
       {
         path: '/discover/djradio',

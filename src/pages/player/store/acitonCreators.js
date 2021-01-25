@@ -3,7 +3,7 @@ import { actionTypes } from './constants'
 import { parseLyric } from '@/utils/parser'
 
 import * as songApi from '@/services/songApi'
-import * as playlistApi from '@/services/playlistApi'
+import * as songsheetApi from '@/services/songsheetApi'
 
 /**
  * 操作state
@@ -181,9 +181,9 @@ export const action_increase_songList_with_trackIds = trackIds => {
   }
 }
 
-export const action_increase_songList_with_playlistId = playlistId => {
+export const action_increase_songList_with_songsheetId = songsheetId => {
   return async dispatch => {
-    const res = await playlistApi.api_get_playlistDetail(playlistId)
+    const res = await songsheetApi.api_get_playlistDetail(songsheetId)
     const trackIds = res.playlist.trackIds
     dispatch(action_increase_songList_with_trackIds(trackIds))
   }

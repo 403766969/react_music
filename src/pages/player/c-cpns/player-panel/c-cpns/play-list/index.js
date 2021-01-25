@@ -14,7 +14,7 @@ import {
   StyledWrapper
 } from './style'
 
-export default memo(function PanelPlaylist(props) {
+export default memo(function PlayList(props) {
 
   /**
    * props and state

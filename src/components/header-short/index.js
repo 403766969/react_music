@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import { StyleWrapper } from './style'
 
-const HeaderSmallMemo = memo(function HeaderSmall(props) {
+const HeaderShortMemo = memo(function HeaderShort(props) {
 
   /**
    * props and state
@@ -24,12 +24,12 @@ const HeaderSmallMemo = memo(function HeaderSmall(props) {
   )
 })
 
-HeaderSmallMemo.defaultProps = {
+HeaderShortMemo.defaultProps = {
   title: '',
   more: {}
 }
 
-HeaderSmallMemo.propTypes = {
+HeaderShortMemo.propTypes = {
   title: PropTypes.string.isRequired,
   more: PropTypes.shape({
     text: PropTypes.string,
@@ -37,4 +37,4 @@ HeaderSmallMemo.propTypes = {
   })
 }
 
-export default HeaderSmallMemo
+export default HeaderShortMemo

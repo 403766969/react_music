@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import {
   action_play_song,
   action_increase_song
-} from '@/components/app-player/store/acitonCreators'
+} from '@/pages/player/store/acitonCreators'
 
 import {
   StyleWrapper,

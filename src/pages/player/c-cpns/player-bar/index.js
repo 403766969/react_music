@@ -20,7 +20,7 @@ import { Slider } from 'antd'
 
 import ArtistsDivide from '@/components/artists-divide'
 
-import AppPlayerPanel from '../app-player-panel'
+import PlayerPanel from '../player-panel'
 
 import {
   StyleWrapper,
@@ -31,7 +31,7 @@ import {
   StyleLock
 } from './style'
 
-export default memo(function AppPlayerBar() {
+export default memo(function PlayerBar() {
 
   /**
    * props and state
@@ -393,7 +393,7 @@ export default memo(function AppPlayerBar() {
           onClick={handleLockClick}
         ></i>
       </StyleLock>
-      <AppPlayerPanel isShowPanel={isShowPanel} handleCloseClick={handleCloseClick} />
+      <PlayerPanel isShowPanel={isShowPanel} handleCloseClick={handleCloseClick} />
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnded} />
     </StyleWrapper>
   )

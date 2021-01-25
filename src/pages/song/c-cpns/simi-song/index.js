@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux'
 import {
   action_play_song,
   action_increase_song
-} from '@/components/app-player/store/acitonCreators'
+} from '@/pages/player/store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 
-import HeaderSmall from '@/components/header-small'
+import HeaderShort from '@/components/header-short'
 import ArtistsDivide from '@/components/artists-divide'
 
 import {
@@ -41,7 +41,7 @@ export default memo(function SimiSong(props) {
 
   return (
     <StyleWrapper>
-      <HeaderSmall title="相似歌曲" />
+      <HeaderShort title="相似歌曲" />
       <StyleContent>
         {
           simiSong.map(item => {

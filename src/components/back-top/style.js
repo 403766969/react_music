@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  .app-backtop {
+  .back-top {
     position: fixed;
     left: 50%;
     bottom: 160px;

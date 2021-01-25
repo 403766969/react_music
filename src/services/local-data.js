@@ -80,7 +80,7 @@ export const dicoverPartLinks = [
   },
   {
     title: '歌单',
-    link: '/discover/playlist'
+    link: '/discover/songsheet'
   },
   {
     title: '主播电台',
@@ -99,23 +99,23 @@ export const dicoverPartLinks = [
 export const hotRecomdLinks = [
   {
     title: '华语',
-    link: '/discover/playlist/?cat=华语'
+    link: '/discover/songsheet/?cat=华语'
   },
   {
     title: '流行',
-    link: '/discover/playlist/?cat=流行'
+    link: '/discover/songsheet/?cat=流行'
   },
   {
     title: '摇滚',
-    link: '/discover/playlist/?cat=摇滚'
+    link: '/discover/songsheet/?cat=摇滚'
   },
   {
     title: '民谣',
-    link: '/discover/playlist/?cat=民谣'
+    link: '/discover/songsheet/?cat=民谣'
   },
   {
     title: '电子',
-    link: '/discover/playlist/?cat=电子'
+    link: '/discover/songsheet/?cat=电子'
   }
 ]
 

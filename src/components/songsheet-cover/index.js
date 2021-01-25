@@ -6,7 +6,7 @@ import {
   formatCount
 } from '@/utils/formatter'
 
-import { action_increase_songList_with_playlistId } from '@/components/app-player/store/acitonCreators'
+import { action_increase_songList_with_songsheetId } from '@/pages/player/store/acitonCreators'
 
 import { NavLink, useHistory } from 'react-router-dom'
 
@@ -37,12 +37,12 @@ export default memo(function SongsheetCover(props) {
    * other logic
    */
   const pushRoute = () => {
-    history.push(`/discover/playlist?id=${songsheetInfo.id}`)
+    history.push(`/songsheet?id=${songsheetInfo.id}`)
   }
 
   const handleAddList = e => {
     e.stopPropagation()
-    dispatch(action_increase_songList_with_playlistId(songsheetInfo.id))
+    dispatch(action_increase_songList_with_songsheetId(songsheetInfo.id))
   }
 
   return (
@@ -62,7 +62,7 @@ export default memo(function SongsheetCover(props) {
       </StyledImage>
       <StyledDec>
         <p className={'cover-name' + (isShowAuthor ? ' text-nowrap' : '')}>
-          <NavLink to={`/discover/playlist?id=${songsheetInfo.id}`} title={songsheetInfo.name}>{songsheetInfo.name}</NavLink>
+          <NavLink to={`/songsheet?id=${songsheetInfo.id}`} title={songsheetInfo.name}>{songsheetInfo.name}</NavLink>
         </p>
         {
           isShowAuthor && (

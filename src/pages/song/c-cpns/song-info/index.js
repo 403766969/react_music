@@ -5,9 +5,9 @@ import { formatUrlWithSize } from '@/utils/formatter'
 import { NavLink } from 'react-router-dom'
 
 import ArtistsDivide from '@/components/artists-divide'
+import OperationBar from '@/components/operation-bar'
 
-import OperationBar from './c-cpns/operation-bar'
-import SongLyric from './c-cpns/song-lyric'
+import SongLyric from '../song-lyric'
 
 import {
   StyleWrapper,

@@ -1,10 +1,10 @@
 import React, { memo, useRef, useEffect } from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
 
-import ScrollPanel from '@/components/scroll-panel'
+import ScrollContainer from '@/components/scroll-container'
 
 import PanelHeader from './c-cpns/panel-header'
-import PanelPlaylist from './c-cpns/panel-playlist'
+import PlayList from './c-cpns/play-list'
 
 import {
   StyledWrapper,
@@ -13,7 +13,7 @@ import {
   StyledRight
 } from './style'
 
-export default memo(function AppPlayerPanel(props) {
+export default memo(function PlayerPanel(props) {
 
   /**
    * props and state
@@ -36,10 +36,10 @@ export default memo(function AppPlayerPanel(props) {
   /**
    * other hooks
    */
-  const scrollPanelRef = useRef()
+  const scrollContainerRef = useRef()
 
   useEffect(() => {
-    scrollPanelRef.current && scrollPanelRef.current.scrollUpdate && scrollPanelRef.current.scrollUpdate()
+    scrollContainerRef.current && scrollContainerRef.current.scrollUpdate && scrollContainerRef.current.scrollUpdate()
   }, [r_songList])
 
   return (
@@ -47,9 +47,9 @@ export default memo(function AppPlayerPanel(props) {
       <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
       <StyledContent>
         <StyledLeft>
-          <ScrollPanel delta={55} ref={scrollPanelRef}>
-            <PanelPlaylist songList={r_songList} currentSongIndex={r_currentSongIndex} />
-          </ScrollPanel>
+          <ScrollContainer delta={55} ref={scrollContainerRef}>
+            <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
+          </ScrollContainer>
         </StyledLeft>
         <StyledRight>
 

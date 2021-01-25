@@ -1,15 +1,15 @@
 import React, { memo } from 'react'
 
-import AppPlayerBar from './c-cpns/app-player-bar'
+import PlayerBar from './c-cpns/player-bar'
 
 import {
   StyledWrapper
 } from './style'
 
-export default memo(function AppPlayer() {
+export default memo(function Player() {
   return (
     <StyledWrapper>
-      <AppPlayerBar />
+      <PlayerBar />
     </StyledWrapper>
   )
 })

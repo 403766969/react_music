@@ -4,7 +4,7 @@ import { hotAnchorLinks } from '@/services/local-data'
 
 import { NavLink } from 'react-router-dom'
 
-import HeaderSmall from '@/components/header-small'
+import HeaderShort from '@/components/header-short'
 
 import {
   StyledWrapper,
@@ -14,7 +14,7 @@ import {
 export default memo(function HotAnchor() {
   return (
     <StyledWrapper>
-      <HeaderSmall title={'热门主播'} />
+      <HeaderShort title={'热门主播'} />
       <StyledContent>
         {
           hotAnchorLinks.map(item => {

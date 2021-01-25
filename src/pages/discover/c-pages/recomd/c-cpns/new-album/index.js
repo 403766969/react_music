@@ -2,7 +2,7 @@ import React, { memo, useRef } from 'react'
 
 import { Carousel } from 'antd'
 
-import HeaderRecomd from '@/components/header-recomd'
+import HeaderLong from '@/components/header-long'
 import AlbumCover from '@/components/album-cover'
 
 import {
@@ -27,7 +27,7 @@ export default memo(function NewAlbum(props) {
 
   return (
     <StyledWrapper>
-      <HeaderRecomd title="新碟上架" more={{ text: '更多', link: '/discover/album' }} />
+      <HeaderLong title="新碟上架" more={{ text: '更多', link: '/discover/album' }} />
       <StyledPanel>
         <StyledContent>
           <Carousel ref={carouselRef} dots={false}>

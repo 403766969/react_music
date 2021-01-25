@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 
-export default memo(function Playlist() {
+export default memo(function Songsheet() {
   return (
     <div>
-      <h3>Playlist</h3>
+      <h3>Songsheet</h3>
     </div>
   )
 })

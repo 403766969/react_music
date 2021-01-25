@@ -1,7 +1,8 @@
 import React, { memo } from 'react'
 
-import HeaderRecomd from '@/components/header-recomd'
-import RankSimple from '@/components/rank-simple'
+import HeaderLong from '@/components/header-long'
+
+import RankSimple from '../rank-simple'
 
 import {
   StyledWrapper,
@@ -17,7 +18,7 @@ export default memo(function RankMulti(props) {
 
   return (
     <StyledWrapper>
-      <HeaderRecomd title="榜单" more={{ text: '更多', link: '/discover/toplist' }} />
+      <HeaderLong title="榜单" more={{ text: '更多', link: '/discover/toplist' }} />
       <StyledContent>
         <RankSimple rankSimpleInfo={rankMultiUp} />
         <RankSimple rankSimpleInfo={rankMultiNew} />

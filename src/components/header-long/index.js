@@ -9,7 +9,7 @@ import {
   StyledRight
 } from './style'
 
-const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
+const HeaderLongMemo = memo(function HeaderLong(props) {
 
   /**
    * props and state
@@ -50,13 +50,13 @@ const HeaderRecomdMemo = memo(function HeaderRecomd(props) {
 
 })
 
-HeaderRecomdMemo.defaultProps = {
+HeaderLongMemo.defaultProps = {
   title: '',
   links: [],
   more: {}
 }
 
-HeaderRecomdMemo.propTypes = {
+HeaderLongMemo.propTypes = {
   title: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(
     PropTypes.shape({
@@ -70,4 +70,4 @@ HeaderRecomdMemo.propTypes = {
   })
 }
 
-export default HeaderRecomdMemo
+export default HeaderLongMemo

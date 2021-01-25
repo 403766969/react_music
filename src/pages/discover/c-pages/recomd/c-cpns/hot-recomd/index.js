@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 
 import { hotRecomdLinks } from '@/services/local-data'
 
-import HeaderRecomd from '@/components/header-recomd'
+import HeaderLong from '@/components/header-long'
 import SongsheetCover from '@/components/songsheet-cover'
 
 import {
@@ -19,7 +19,7 @@ export default memo(function HotRecomd(props) {
 
   return (
     <StyledWrapper>
-      <HeaderRecomd title="热门推荐" links={hotRecomdLinks} more={{ text: '更多', link: '/discover/playlist' }} />
+      <HeaderLong title="热门推荐" links={hotRecomdLinks} more={{ text: '更多', link: '/discover/songsheet' }} />
       <StyledContent>
         {
           hotRecomdList.map(item => {

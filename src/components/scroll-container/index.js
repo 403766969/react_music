@@ -21,25 +21,22 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
   useEffect(() => {
     const wrapperEl = wrapperRef.current
     const contentEl = contentRef.current
-    if (!wrapperEl || !contentEl) {
-      return
-    }
     const wheelCallback = e => {
       e.preventDefault()
       e.stopPropagation()
-      const wrapperEl_clientHeight = wrapperEl.clientHeight
-      const contentEl_clientHeight = contentEl.clientHeight
-      if (wrapperEl_clientHeight >= contentEl_clientHeight) {
+      const wrapperEl_Height = wrapperEl.clientHeight
+      const contentEl_Height = contentEl.offsetHeight
+      if (wrapperEl_Height >= contentEl_Height) {
         contentEl.style.top = '0px'
         return
       }
-      const contentEl_minTop = wrapperEl.clientHeight - contentEl.clientHeight
-      const contentEl_offsetTop = contentEl.offsetTop
-      let targetTop = contentEl_offsetTop + delta * (e.deltaY > 0 ? -1 : 1)
-      if (targetTop > 0) {
-        targetTop = 0
-      } else if (targetTop < contentEl_minTop) {
-        targetTop = contentEl_minTop
+      const minTop = wrapperEl_Height - contentEl_Height
+      const maxTop = 0
+      let targetTop = contentEl.offsetTop + delta * (e.deltaY > 0 ? -1 : 1)
+      if (targetTop < minTop) {
+        targetTop = minTop
+      } else if (targetTop > maxTop) {
+        targetTop = maxTop
       }
       contentEl.style.top = targetTop + 'px'
     }
@@ -50,7 +47,8 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
   }, [delta])
 
   useImperativeHandle(ref, () => ({
-    scrollUpdate
+    scrollUpdate,
+    scrollTo
   }), [])
 
   /**
@@ -59,24 +57,45 @@ export default memo(forwardRef(function ScrollPanel(props, ref) {
   const scrollUpdate = () => {
     const wrapperEl = wrapperRef.current
     const contentEl = contentRef.current
-    if (!wrapperEl || !contentEl) {
-      return
-    }
-    const wrapperEl_clientHeight = wrapperEl.clientHeight
-    const contentEl_clientHeight = contentEl.clientHeight
-    if (wrapperEl_clientHeight >= contentEl_clientHeight) {
+    const wrapperEl_Height = wrapperEl.clientHeight
+    const contentEl_Height = contentEl.offsetHeight
+    if (wrapperEl_Height >= contentEl_Height) {
       contentEl.style.top = '0px'
       return
     }
-    const contentEl_minTop = wrapperEl.clientHeight - contentEl.clientHeight
-    const contentEl_offsetTop = contentEl.offsetTop
-    let targetTop = contentEl_offsetTop
-    if (targetTop > 0) {
-      targetTop = 0
-    } else if (targetTop < contentEl_minTop) {
-      targetTop = contentEl_minTop
+    const minTop = wrapperEl_Height - contentEl_Height
+    const maxTop = 0
+    let targetTop = contentEl.offsetTop
+    if (targetTop < minTop) {
+      targetTop = minTop
+    } else if (targetTop > maxTop) {
+      targetTop = maxTop
     }
     contentEl.style.top = targetTop + 'px'
+  }
+
+  const scrollTo = (to = 0, duration = 300, steps = 30) => {
+    const contentEl = contentRef.current
+    const targetTop = to * -1
+    if (duration <= 0 || steps <= 0) {
+      contentEl.style.top = targetTop + 'px'
+      return
+    }
+    const distance = Math.abs(targetTop - contentEl.offsetTop)
+    const isDown = targetTop < contentEl.offsetTop
+    let step = distance / steps
+    step = isDown ? step * -1 : step
+    let delay = duration / steps
+    let timer = setInterval(() => {
+      let perTop = contentEl.offsetTop + step
+      if ((isDown && (perTop <= targetTop)) || (!isDown && (perTop >= targetTop))) {
+        contentEl.style.top = targetTop + 'px'
+        clearTimeout(timer)
+        timer = null
+      } else {
+        contentEl.style.top = perTop + 'px'
+      }
+    }, delay)
   }
 
   return (

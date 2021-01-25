@@ -39,7 +39,7 @@ export default memo(function PlayerPanel(props) {
   const scrollContainerRef = useRef()
 
   useEffect(() => {
-    scrollContainerRef.current && scrollContainerRef.current.scrollUpdate && scrollContainerRef.current.scrollUpdate()
+    scrollContainerRef.current.scrollUpdate()
   }, [r_songList])
 
   return (

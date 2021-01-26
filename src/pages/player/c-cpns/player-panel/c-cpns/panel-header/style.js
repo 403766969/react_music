@@ -74,7 +74,7 @@ export const StyledRight = styled.div`
   width: 0;
 
   .song-name {
-    padding-right: 50px;
+    padding: 0 50px;
     height: 14px;
     line-height: 14px;
     font-size: 14px;

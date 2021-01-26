@@ -8,7 +8,7 @@ export const StyledWrapper = styled.ul`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 0 8px 0 30px;
+    padding-left: 30px;
     height: 28px;
     line-height: 28px;
     font-size: 12px;
@@ -82,13 +82,13 @@ export const StyledWrapper = styled.ul`
 
       .duration {
         margin-left: 10px;
-        width: 45px;
+        width: 35px;
         color: #666;
       }
 
       .link {
         margin-left: 20px;
-        margin-right: 5px;
+        margin-right: 10px;
         width: 14px;
         height: 16px;
         background-position: -80px 0px;

@@ -43,21 +43,27 @@ export default memo(function PlayerPanel(props) {
    */
   const plScrollRef = useRef()
   const ldScrollRef = useRef()
+  const lyricRef = useRef()
 
   useEffect(() => {
     plScrollRef.current.scrollUpdate()
   }, [r_songList])
 
   useEffect(() => {
-    if (r_currentLyricIndex < 3) {
+    if (r_currentLyricIndex < 0) {
       ldScrollRef.current.scrollTo(0, 600, 30)
     } else {
-      ldScrollRef.current.scrollTo((r_currentLyricIndex - 3) * 32, 600, 30)
+      const height = lyricRef.current.children[r_currentLyricIndex].offsetHeight
+      let to = lyricRef.current.children[r_currentLyricIndex].offsetTop + height / 2 - 109
+      if (to < 0) {
+        to = 0
+      }
+      ldScrollRef.current.scrollTo(to, 600, 30)
     }
   }, [r_currentLyricIndex])
 
   return (
-    <StyledWrapper style={{ display: isShowPanel ? 'block' : 'none' }}>
+    <StyledWrapper style={{ visibility: isShowPanel ? 'visible' : 'hidden' }}>
       <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
       <StyledContent>
         <StyledLeft>
@@ -67,7 +73,7 @@ export default memo(function PlayerPanel(props) {
         </StyledLeft>
         <StyledRight>
           <ScrollContainer delta={45} ref={ldScrollRef}>
-            <LyricDisplay currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} />
+            <LyricDisplay currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} ref={lyricRef} />
           </ScrollContainer>
         </StyledRight>
       </StyledContent>

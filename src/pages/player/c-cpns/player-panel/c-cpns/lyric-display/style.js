@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
+  position: relative;
+
   .lyric-item {
     width: 100%;
-    height: 32px;
+    min-height: 32px;
     line-height: 32px;
     font-size: 12px;
     color: #989898;

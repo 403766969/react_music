@@ -71,8 +71,12 @@ export const StyledRight = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  width: 0;
 
   .song-name {
+    padding-right: 50px;
+    height: 14px;
+    line-height: 14px;
     font-size: 14px;
     color: #fff;
   }

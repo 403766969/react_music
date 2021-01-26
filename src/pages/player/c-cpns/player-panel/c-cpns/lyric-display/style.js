@@ -8,7 +8,6 @@ export const StyledWrapper = styled.div`
     font-size: 12px;
     color: #989898;
     text-align: center;
-    overflow: hidden;
     transition: color 0.7s linear;
 
     &.active {

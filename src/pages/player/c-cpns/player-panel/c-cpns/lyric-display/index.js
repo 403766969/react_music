@@ -18,7 +18,7 @@ export default memo(function LyricDisplay(props) {
           return (
             <p
               key={item.time + item.content}
-              className={`lyric-item ${currentLyricIndex === index ? 'active' : ''}`}>
+              className={`lyric-item text-nowrap ${currentLyricIndex === index ? 'active' : ''}`}>
               {item.content}
             </p>
           )

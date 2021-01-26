@@ -5,7 +5,7 @@ import {
   StyledContent
 } from './style'
 
-export default memo(forwardRef(function ScrollPanel(props, ref) {
+export default memo(forwardRef(function ScrollContainer(props, ref) {
 
   /**
    * props and state

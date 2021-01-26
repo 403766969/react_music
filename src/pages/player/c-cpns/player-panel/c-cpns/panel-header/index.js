@@ -54,7 +54,7 @@ export default memo(function PanelHeader(props) {
         </div>
       </StyledLeft>
       <StyledRight>
-        <p className="song-name">{currentSong.name}</p>
+        <p className="song-name text-nowrap">{currentSong.name}</p>
         <i className="sprite_playlist close" title="关闭" onClick={handleCloseClick}></i>
       </StyledRight>
     </StyledWrapper>

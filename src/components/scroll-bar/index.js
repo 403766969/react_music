@@ -1,15 +1,17 @@
-import React, { memo, useRef, useEffect } from 'react'
+import React, { memo, forwardRef, useState, useRef, useEffect, useCallback, useImperativeHandle } from 'react'
 
 import {
   StyledWrapper
 } from './style'
 
-export default memo(function ScrollBar(props) {
+export default memo(forwardRef(function ScrollBar(props, ref) {
 
   /**
    * props and state
    */
-  const { value = 0, onChange, horizontal } = props
+  const { gripSize = 0, moveEffectTime = 1000, onDrag } = props
+
+  const [top, setTop] = useState(0)
 
   /**
    * other hooks
@@ -17,49 +19,42 @@ export default memo(function ScrollBar(props) {
   const trackRef = useRef()
   const gripRef = useRef()
 
-  const startPosRef = useRef(0)
-  const endPosRef = useRef(0)
-
   const isDownRef = useRef(false)
 
-  useEffect(() => {
-    const trackEl = trackRef.current
-    const gripEl = gripRef.current
-    if (horizontal) {
-      startPosRef.current = gripEl.offsetWidth / 2
-      endPosRef.current = trackEl.clientWidth - gripEl.offsetWidth / 2
-    } else {
-      startPosRef.current = gripEl.offsetHeight / 2
-      endPosRef.current = trackEl.clientHeight - gripEl.offsetHeight / 2
-    }
-  }, [horizontal])
+  const moveTimerRef = useRef(null)
+  const toTimerRef = useRef(null)
 
   useEffect(() => {
     const handleMouseMove = e => {
       if (!isDownRef.current) {
         return
       }
-      window.getSelection().removeAllRanges()
+      if (moveTimerRef.current) {
+        clearTimeout(moveTimerRef.current)
+      }
+      moveTimerRef.current = setTimeout(() => {
+        clearTimeout(moveTimerRef.current)
+        moveTimerRef.current = null
+      }, moveEffectTime)
       const trackEl = trackRef.current
-      let movePos = 0
-      if (horizontal) {
-        movePos = e.clientX - trackEl.getBoundingClientRect().left
-      } else {
-        movePos = e.clientY - trackEl.getBoundingClientRect().top
+      const gripEl = gripRef.current
+      const minTop = 0
+      const maxTop = trackEl.clientHeight - gripEl.offsetHeight
+      let targetTop = e.clientY - trackEl.getBoundingClientRect().top - gripEl.offsetHeight / 2
+      if (targetTop < minTop) {
+        targetTop = minTop
+      } else if (targetTop > maxTop) {
+        targetTop = maxTop
       }
-      if (movePos < startPosRef.current) {
-        movePos = startPosRef.current
-      } else if (movePos > endPosRef.current) {
-        movePos = endPosRef.current
-      }
-      const value = (movePos - startPosRef.current) / (endPosRef.current - startPosRef.current)
-      onChange && onChange(value)
+      window.getSelection && window.getSelection().removeAllRanges()
+      onDrag && onDrag(targetTop, targetTop / maxTop)
+      setTop(targetTop)
     }
     document.addEventListener('mousemove', handleMouseMove)
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [horizontal, onChange])
+  }, [moveEffectTime, onDrag])
 
   useEffect(() => {
     const handleMouseUp = e => {
@@ -77,41 +72,78 @@ export default memo(function ScrollBar(props) {
   const handleMouseDown = e => {
     isDownRef.current = true
     const trackEl = trackRef.current
-    let movePos = 0
-    if (horizontal) {
-      movePos = e.clientX - trackEl.getBoundingClientRect().left
-    } else {
-      movePos = e.clientY - trackEl.getBoundingClientRect().top
+    const gripEl = gripRef.current
+    const minTop = 0
+    const maxTop = trackEl.clientHeight - gripEl.offsetHeight
+    let targetTop = e.clientY - trackEl.getBoundingClientRect().top - gripEl.offsetHeight / 2
+    if (targetTop < minTop) {
+      targetTop = minTop
+    } else if (targetTop > maxTop) {
+      targetTop = maxTop
     }
-    if (movePos < startPosRef.current) {
-      movePos = startPosRef.current
-    } else if (movePos > endPosRef.current) {
-      movePos = endPosRef.current
-    }
-    const value = (movePos - startPosRef.current) / (endPosRef.current - startPosRef.current)
-    onChange && onChange(value)
+    onDrag && onDrag(targetTop, targetTop / maxTop)
+    setTop(targetTop)
   }
 
-  const posStyle = horizontal
-    ? {
-      left: value * (endPosRef.current - startPosRef.current)
+  const scrollToByTop = useCallback((targetTop = 0, duration = 0, steps = 0) => {
+    if (moveTimerRef.current) {
+      return
     }
-    : {
-      top: value * (endPosRef.current - startPosRef.current)
+    const trackEl = trackRef.current
+    const gripEl = gripRef.current
+    const minTop = 0
+    const maxTop = trackEl.clientHeight - gripEl.offsetHeight
+    if (targetTop < minTop) {
+      targetTop = minTop
+    } else if (targetTop > maxTop) {
+      targetTop = maxTop
     }
+    if (duration <= 0 || steps <= 0) {
+      setTop(targetTop)
+      return
+    }
+    const currentTop = gripEl.offsetTop
+    const distance = Math.abs(targetTop - currentTop)
+    const direction = targetTop > currentTop ? 1 : -1
+    const delay = duration / steps
+    const step = distance / steps
+    if (toTimerRef.current) {
+      clearInterval(toTimerRef.current)
+    }
+    toTimerRef.current = setInterval(() => {
+      const prevTop = gripEl.offsetTop
+      const nextTop = prevTop + step * direction
+      if ((direction > 0 && nextTop >= targetTop) || (direction < 0 && nextTop <= targetTop)) {
+        clearInterval(toTimerRef.current)
+        toTimerRef.current = null
+        setTop(targetTop)
+      } else {
+        setTop(nextTop)
+      }
+    }, delay)
+  }, [])
+
+  const scrollToByPercent = useCallback((percent = 0, duration = 0, steps = 0) => {
+    const trackEl = trackRef.current
+    const gripEl = gripRef.current
+    const maxTop = trackEl.clientHeight - gripEl.offsetHeight
+    let targetTop = percent * maxTop
+    scrollToByTop(targetTop, duration, steps)
+  }, [scrollToByTop])
+
+  /**
+   * useImperativeHandle
+   */
+  useImperativeHandle(ref, () => ({
+    scrollToByTop,
+    scrollToByPercent
+  }), [scrollToByTop, scrollToByPercent])
 
   return (
-    <StyledWrapper className={`scroll-bar ${horizontal ? 'horizontal' : 'vertical'}`}>
-      <div
-        className={`scroll-track ${horizontal ? 'horizontal' : 'vertical'}`}
-        onMouseDown={handleMouseDown}
-        ref={trackRef}>
-        <span
-          className={`scroll-grip ${horizontal ? 'horizontal' : 'vertical'}`}
-          style={posStyle}
-          ref={gripRef}>
-        </span>
+    <StyledWrapper className="scroll-bar" gripSize={parseInt(gripSize)}>
+      <div className="scroll-track" onMouseDown={handleMouseDown} ref={trackRef}>
+        <span className="scroll-grip" style={{ top: top + 'px' }} ref={gripRef}></span>
       </div>
     </StyledWrapper>
   )
-})
+}))

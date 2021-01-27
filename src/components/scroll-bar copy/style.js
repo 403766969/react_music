@@ -1,8 +1,15 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  width: 6px;
-  height: 100%;
+  &.horizontal {
+    width: 100%;
+    height: 6px;
+  }
+
+  &.vertical {
+    width: 6px;
+    height: 100%;
+  }
 
   .scroll-track {
     position: relative;
@@ -17,12 +24,20 @@ export const StyledWrapper = styled.div`
     position: absolute;
     left: 0;
     top: 0;
-    width: 100%;
-    height: ${props => props.gripSize + 'px'};
     background-color: #868686;
     border: 1px solid #a6a6a6;
     border-radius: 5px;
     opacity: .8;
     cursor: pointer;
+
+    &.horizontal {
+      width: ${props => props.gripSize + 'px'};
+      height: 100%;
+    }
+
+    &.vertical {
+      width: 100%;
+      height: ${props => props.gripSize + 'px'};
+    }
   }
 `

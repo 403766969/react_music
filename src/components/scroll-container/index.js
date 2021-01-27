@@ -1,4 +1,4 @@
-import React, { memo, forwardRef, useRef, useEffect, useImperativeHandle } from 'react'
+import React, { memo, forwardRef, useState, useRef, useEffect, useCallback, useImperativeHandle } from 'react'
 
 import {
   StyledWrapper,
@@ -10,7 +10,9 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
   /**
    * props and state
    */
-  const { children, delta = 55, wheelDelay = 1000 } = props
+  const { children, onWheel, delta = 50, wheelDuration = 1000 } = props
+
+  const [top, setTop] = useState(0)
 
   /**
    * other hooks
@@ -18,63 +20,60 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
   const wrapperRef = useRef()
   const contentRef = useRef()
 
-  const wheel_timerRef = useRef(null)
-  const to_timerRef = useRef(null)
+  const wheelTimerRef = useRef(null)
+  const toTimerRef = useRef(null)
 
   useEffect(() => {
     const wrapperEl = wrapperRef.current
     const contentEl = contentRef.current
     const wheelCallback = e => {
       e.preventDefault()
-      e.stopPropagation()
-      if (wheel_timerRef.current) {
-        clearTimeout(wheel_timerRef.current)
-        wheel_timerRef.current = null
+      if (wheelTimerRef.current) {
+        clearTimeout(wheelTimerRef.current)
       }
-      wheel_timerRef.current = setTimeout(() => {
-        clearTimeout(wheel_timerRef.current)
-        wheel_timerRef.current = null
-      }, wheelDelay)
-      const wrapperEl_Height = wrapperEl.clientHeight
-      const contentEl_Height = contentEl.offsetHeight
-      if (wrapperEl_Height >= contentEl_Height) {
-        contentEl.style.top = '0px'
+      wheelTimerRef.current = setTimeout(() => {
+        clearTimeout(wheelTimerRef.current)
+        wheelTimerRef.current = null
+      }, wheelDuration)
+      const wrapperHeight = wrapperEl.clientHeight
+      const contentHeight = contentEl.offsetHeight
+      if (wrapperHeight >= contentHeight) {
+        setTop(0)
+        onWheel && onWheel(0, 0)
         return
       }
-      const minTop = wrapperEl_Height - contentEl_Height
+      const minTop = wrapperHeight - contentHeight
       const maxTop = 0
-      let targetTop = contentEl.offsetTop + delta * (e.deltaY > 0 ? -1 : 1)
+      const currentTop = contentEl.offsetTop
+      let targetTop = currentTop + delta * (e.deltaY > 0 ? -1 : 1)
       if (targetTop < minTop) {
         targetTop = minTop
       } else if (targetTop > maxTop) {
         targetTop = maxTop
       }
-      contentEl.style.top = targetTop + 'px'
+      setTop(targetTop)
+      onWheel && onWheel(Math.abs(targetTop), Math.abs(targetTop / minTop))
     }
     wrapperEl.addEventListener('wheel', wheelCallback, { passive: false })
     return () => {
       wrapperEl.removeEventListener('wheel', wheelCallback)
     }
-  }, [delta, wheelDelay])
-
-  useImperativeHandle(ref, () => ({
-    scrollUpdate,
-    scrollTo
-  }), [])
+  }, [onWheel, delta, wheelDuration])
 
   /**
    * other logic
    */
-  const scrollUpdate = () => {
+  const scrollUpdate = useCallback(() => {
     const wrapperEl = wrapperRef.current
     const contentEl = contentRef.current
-    const wrapperEl_Height = wrapperEl.clientHeight
-    const contentEl_Height = contentEl.offsetHeight
-    if (wrapperEl_Height >= contentEl_Height) {
-      contentEl.style.top = '0px'
+    const wrapperHeight = wrapperEl.clientHeight
+    const contentHeight = contentEl.offsetHeight
+    if (wrapperHeight >= contentHeight) {
+      setTop(0)
+      onWheel && onWheel(0, 0)
       return
     }
-    const minTop = wrapperEl_Height - contentEl_Height
+    const minTop = wrapperHeight - contentHeight
     const maxTop = 0
     let targetTop = contentEl.offsetTop
     if (targetTop < minTop) {
@@ -82,43 +81,54 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
     } else if (targetTop > maxTop) {
       targetTop = maxTop
     }
-    contentEl.style.top = targetTop + 'px'
-  }
+    setTop(targetTop)
+    onWheel && onWheel(Math.abs(targetTop), Math.abs(targetTop / minTop))
+  }, [onWheel])
 
-  const scrollTo = (to = 0, duration = 600, steps = 30) => {
-    if (wheel_timerRef.current) {
+  const scrollTo = useCallback((to = 0, duration = 0, steps = 0) => {
+    if (wheelTimerRef.current) {
       return
     }
-    const contentEl = contentRef.current
     const targetTop = to * -1
     if (duration <= 0 || steps <= 0) {
-      contentEl.style.top = targetTop + 'px'
+      setTop(targetTop)
       return
     }
-    const distance = Math.abs(targetTop - contentEl.offsetTop)
-    const isDown = targetTop < contentEl.offsetTop
-    let delay = duration / steps
-    let step = distance / steps
-    step = isDown ? step * -1 : step
-    if (to_timerRef.current) {
-      clearTimeout(to_timerRef.current)
-      to_timerRef.current = null
+    const currentTop = contentRef.current.offsetTop
+    const distance = Math.abs(targetTop - currentTop)
+    const isUp = targetTop < currentTop
+    const step = (distance / steps) * (isUp ? -1 : 1)
+    const delay = duration / steps
+    if (toTimerRef.current) {
+      clearInterval(toTimerRef.current)
     }
-    to_timerRef.current = setInterval(() => {
-      let perTop = contentEl.offsetTop + step
-      if ((isDown && (perTop <= targetTop)) || (!isDown && (perTop >= targetTop))) {
-        contentEl.style.top = targetTop + 'px'
-        clearTimeout(to_timerRef.current)
-        to_timerRef.current = null
+    toTimerRef.current = setInterval(() => {
+      const prevTop = contentRef.current.offsetTop
+      const nextTop = prevTop + step
+      if ((isUp && (nextTop <= targetTop)) || (!isUp && (nextTop >= targetTop))) {
+        clearInterval(toTimerRef.current)
+        toTimerRef.current = null
+        setTop(targetTop)
       } else {
-        contentEl.style.top = perTop + 'px'
+        setTop(nextTop)
       }
     }, delay)
-  }
+  }, [])
+
+  /**
+   * useImperativeHandle
+   */
+  useImperativeHandle(ref, () => ({
+    wrapperEl: wrapperRef.current,
+    contentEl: contentRef.current,
+    to: Math.abs(contentRef.current.offsetTop),
+    scrollUpdate,
+    scrollTo
+  }), [scrollUpdate, scrollTo])
 
   return (
     <StyledWrapper ref={wrapperRef}>
-      <StyledContent ref={contentRef}>
+      <StyledContent ref={contentRef} style={{ top: top + 'px' }}>
         {children}
       </StyledContent>
     </StyledWrapper>

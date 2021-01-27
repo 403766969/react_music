@@ -20,12 +20,27 @@ export const StyledContent = styled.div`
 `
 
 export const StyledLeft = styled.div`
+  position: relative;
+  padding-right: 6px;
   width: 556px;
   height: 100%;
+
+  .scroll-bar {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 `
 
 export const StyledRight = styled.div`
+  position: relative;
   flex: 1;
-  padding: 21px 35px;
+  padding: 21px 41px 21px 35px;
   height: 100%;
+
+  .scroll-bar {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 `

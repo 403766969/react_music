@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  &.slider-horizontal {
+  &.horizontal {
     width: 100%;
     height: 6px;
   }
 
-  &.slider-vertical {
+  &.vertical {
     width: 6px;
     height: 100%;
   }
 
-  .track {
+  .scroll-track {
     position: relative;
     width: 100%;
     height: 100%;
@@ -19,7 +19,7 @@ export const StyledWrapper = styled.div`
     opacity: .5;
   }
 
-  .grip {
+  .scroll-grip {
     display: block;
     position: absolute;
     left: 0;
@@ -29,12 +29,15 @@ export const StyledWrapper = styled.div`
     border-radius: 5px;
     opacity: .8;
     cursor: pointer;
-  }
 
-  .slider-vertical {
-    &.grip {
+    &.horizontal {
+      width: 26px;
+      height: 100%;
+    }
+
+    &.vertical {
       width: 100%;
-      height: ${props => props.gripLength + 'px'};
+      height: 26px;
     }
   }
 `

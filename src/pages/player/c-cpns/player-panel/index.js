@@ -1,7 +1,8 @@
-import React, { memo, useRef, useEffect } from 'react'
+import React, { memo, useState, useRef, useEffect, useCallback } from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
 
 import ScrollContainer from '@/components/scroll-container'
+import ScrollBar from '@/components/scroll-bar'
 
 import PanelHeader from './c-cpns/panel-header'
 import PlayList from './c-cpns/play-list'
@@ -20,6 +21,9 @@ export default memo(function PlayerPanel(props) {
    * props and state
    */
   const { isShowPanel, handleCloseClick } = props
+
+  const [plSbValue, setPlSbValue] = useState(0)
+  const [ldSbValue, setLdSbValue] = useState(0)
 
   /**
    * redux hooks
@@ -62,6 +66,19 @@ export default memo(function PlayerPanel(props) {
     }
   }, [r_currentLyricIndex])
 
+  /**
+   * other logic
+   */
+  const handlePlChange = useCallback(value => {
+    plScrollRef.current.scrollTo(2484 * value, 0, 0)
+    setPlSbValue(value)
+  }, [])
+
+  const handleLdChange = useCallback(value => {
+    ldScrollRef.current.scrollTo(1888 * value, 0, 0)
+    setLdSbValue(value)
+  }, [])
+
   return (
     <StyledWrapper style={{ visibility: isShowPanel ? 'visible' : 'hidden' }}>
       <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
@@ -70,11 +87,13 @@ export default memo(function PlayerPanel(props) {
           <ScrollContainer delta={55} ref={plScrollRef}>
             <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
           </ScrollContainer>
+          <ScrollBar value={plSbValue} onChange={handlePlChange} />
         </StyledLeft>
         <StyledRight>
           <ScrollContainer delta={45} ref={ldScrollRef}>
             <LyricDisplay currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} ref={lyricRef} />
           </ScrollContainer>
+          <ScrollBar value={ldSbValue} onChange={handleLdChange} />
         </StyledRight>
       </StyledContent>
     </StyledWrapper>

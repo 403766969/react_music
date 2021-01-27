@@ -66,6 +66,22 @@ export default memo(forwardRef(function ScrollBar(props, ref) {
     }
   }, [])
 
+  useEffect(() => {
+    if (gripSize > 0) {
+      const trackEl = trackRef.current
+      const gripEl = gripRef.current
+      const minTop = 0
+      const maxTop = trackEl.clientHeight - gripSize
+      let targetTop = gripEl.offsetTop
+      if (targetTop < minTop) {
+        targetTop = minTop
+      } else if (targetTop > maxTop) {
+        targetTop = maxTop
+      }
+      setTop(targetTop)
+    }
+  }, [gripSize])
+
   /**
    * other logic
    */

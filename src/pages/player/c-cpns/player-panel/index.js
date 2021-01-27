@@ -22,7 +22,6 @@ export default memo(function PlayerPanel(props) {
    */
   const { isShowPanel, handleCloseClick } = props
 
-  const [ldSbValue, setLdSbValue] = useState(0)
   const [plSbSize, setPlSbSize] = useState(0)
   const [ldSbsize, setLdSbsize] = useState(0)
 
@@ -49,71 +48,60 @@ export default memo(function PlayerPanel(props) {
   const plScrollRef = useRef()
   const ldScrollRef = useRef()
   const plScrollBarRef = useRef()
+  const ldScrollBarRef = useRef()
   const lyricRef = useRef()
 
   useEffect(() => {
     const wrapperHeight = plScrollRef.current.wrapperEl.clientHeight
     const contentHeight = plScrollRef.current.contentEl.offsetHeight
-    plScrollRef.current.scrollUpdate()
     if (wrapperHeight >= contentHeight) {
       setPlSbSize(0)
     } else {
       setPlSbSize((wrapperHeight / contentHeight * wrapperHeight))
     }
+    plScrollRef.current.scrollUpdate()
   }, [r_songList])
 
   useEffect(() => {
     const wrapperHeight = ldScrollRef.current.wrapperEl.clientHeight
     const contentHeight = ldScrollRef.current.contentEl.offsetHeight
-    ldScrollRef.current.scrollUpdate()
     if (wrapperHeight >= contentHeight) {
       setLdSbsize(0)
     } else {
       setLdSbsize((wrapperHeight / contentHeight * wrapperHeight))
     }
+    ldScrollRef.current.scrollUpdate()
   }, [r_currentLyric])
 
   useEffect(() => {
     if (r_currentLyricIndex < 0) {
-      ldScrollRef.current.scrollTo(0, 0, 0)
-      setLdSbValue(0)
+      ldScrollRef.current.scrollToByTop(0, 0, 0)
     } else {
-      const height = lyricRef.current.children[r_currentLyricIndex].offsetHeight
-      let to = lyricRef.current.children[r_currentLyricIndex].offsetTop + height / 2 - 109
-      if (to < 0) {
-        to = 0
-      }
-      ldScrollRef.current.scrollTo(to, 600, 30)
-      const value1 = lyricRef.current.children[r_currentLyricIndex].offsetTop + height
-      const value2 = lyricRef.current.offsetHeight
-      setLdSbValue(value1 / value2)
+      const wrapperHeight = ldScrollRef.current.wrapperEl.clientHeight
+      const perHeight = lyricRef.current.children[r_currentLyricIndex].offsetHeight
+      const perTop = lyricRef.current.children[r_currentLyricIndex].offsetTop
+      const targetTop = perTop * -1 + wrapperHeight / 2 - perHeight / 2
+      ldScrollRef.current.scrollToByTop(targetTop, 600, 30)
     }
   }, [r_currentLyricIndex])
 
   /**
    * other logic
    */
-  const handlePlChange = useCallback((to, percent) => {
-    const wrapperHeight = plScrollRef.current.wrapperEl.clientHeight
-    const contentHeight = plScrollRef.current.contentEl.offsetHeight
-    const scrollHeight = contentHeight - wrapperHeight
-    plScrollRef.current.scrollTo(scrollHeight * percent, 0, 0)
+  const handlePlDrag = useCallback((top, percent) => {
+    plScrollRef.current.scrollToByPercent(percent, 0, 0)
   }, [])
 
-  const handleLdChange = useCallback((to, percent) => {
-    const wrapperHeight = ldScrollRef.current.wrapperEl.clientHeight
-    const contentHeight = ldScrollRef.current.contentEl.offsetHeight
-    const scrollHeight = contentHeight - wrapperHeight
-    ldScrollRef.current.scrollTo(scrollHeight * percent, 0, 0)
-    setLdSbValue(percent)
+  const handleLdDrag = useCallback((top, percent) => {
+    ldScrollRef.current.scrollToByPercent(percent, 0, 0)
   }, [])
 
-  const handlePlWheel = useCallback((to, percent) => {
+  const handlePlWheel = useCallback((top, percent) => {
     plScrollBarRef.current.scrollToByPercent(percent, 0, 0)
   }, [])
 
-  const handleLdWheel = useCallback((to, percent) => {
-    setLdSbValue(percent)
+  const handleLdWheel = useCallback((top, percent) => {
+    ldScrollBarRef.current.scrollToByPercent(percent, 0, 0)
   }, [])
 
   return (
@@ -124,13 +112,13 @@ export default memo(function PlayerPanel(props) {
           <ScrollContainer ref={plScrollRef} delta={55} onWheel={handlePlWheel}>
             <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
           </ScrollContainer>
-          <ScrollBar ref={plScrollBarRef} gripSize={plSbSize} onDrag={handlePlChange} />
+          <ScrollBar ref={plScrollBarRef} gripSize={plSbSize} onDrag={handlePlDrag} />
         </StyledLeft>
         <StyledRight>
           <ScrollContainer ref={ldScrollRef} delta={45} onWheel={handleLdWheel}>
             <LyricDisplay ref={lyricRef} currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} />
           </ScrollContainer>
-          <ScrollBar value={ldSbValue} gripSize={ldSbsize} onDrag={handleLdChange} />
+          <ScrollBar ref={ldScrollBarRef} gripSize={ldSbsize} onDrag={handleLdDrag} />
         </StyledRight>
       </StyledContent>
     </StyledWrapper>

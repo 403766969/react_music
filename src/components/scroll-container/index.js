@@ -10,7 +10,7 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
   /**
    * props and state
    */
-  const { children, onWheel, delta = 50, wheelDuration = 1000 } = props
+  const { children, delta = 50, moveEffectTime = 1000, onWheel } = props
 
   const [top, setTop] = useState(0)
 
@@ -34,15 +34,14 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
       wheelTimerRef.current = setTimeout(() => {
         clearTimeout(wheelTimerRef.current)
         wheelTimerRef.current = null
-      }, wheelDuration)
-      const wrapperHeight = wrapperEl.clientHeight
-      const contentHeight = contentEl.offsetHeight
-      if (wrapperHeight >= contentHeight) {
-        setTop(0)
+      }, moveEffectTime)
+
+      if (wrapperEl.clientHeight >= contentEl.offsetHeight) {
         onWheel && onWheel(0, 0)
+        setTop(0)
         return
       }
-      const minTop = wrapperHeight - contentHeight
+      const minTop = wrapperEl.clientHeight - contentEl.offsetHeight
       const maxTop = 0
       const currentTop = contentEl.offsetTop
       let targetTop = currentTop + delta * (e.deltaY > 0 ? -1 : 1)
@@ -51,14 +50,14 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
       } else if (targetTop > maxTop) {
         targetTop = maxTop
       }
+      onWheel && onWheel(targetTop, Math.abs(targetTop / minTop))
       setTop(targetTop)
-      onWheel && onWheel(Math.abs(targetTop), Math.abs(targetTop / minTop))
     }
     wrapperEl.addEventListener('wheel', wheelCallback, { passive: false })
     return () => {
       wrapperEl.removeEventListener('wheel', wheelCallback)
     }
-  }, [onWheel, delta, wheelDuration])
+  }, [delta, moveEffectTime, onWheel])
 
   /**
    * other logic
@@ -66,14 +65,11 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
   const scrollUpdate = useCallback(() => {
     const wrapperEl = wrapperRef.current
     const contentEl = contentRef.current
-    const wrapperHeight = wrapperEl.clientHeight
-    const contentHeight = contentEl.offsetHeight
-    if (wrapperHeight >= contentHeight) {
+    if (wrapperEl.clientHeight >= contentEl.offsetHeight) {
       setTop(0)
-      onWheel && onWheel(0, 0)
       return
     }
-    const minTop = wrapperHeight - contentHeight
+    const minTop = wrapperEl.clientHeight - contentEl.offsetHeight
     const maxTop = 0
     let targetTop = contentEl.offsetTop
     if (targetTop < minTop) {
@@ -82,30 +78,41 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
       targetTop = maxTop
     }
     setTop(targetTop)
-    onWheel && onWheel(Math.abs(targetTop), Math.abs(targetTop / minTop))
-  }, [onWheel])
+  }, [])
 
-  const scrollTo = useCallback((to = 0, duration = 0, steps = 0) => {
+  const scrollToByTop = useCallback((targetTop = 0, duration = 0, steps = 0) => {
     if (wheelTimerRef.current) {
       return
     }
-    const targetTop = to * -1
+    const wrapperEl = wrapperRef.current
+    const contentEl = contentRef.current
+    if (wrapperEl.clientHeight >= contentEl.offsetHeight) {
+      setTop(0)
+      return
+    }
+    const minTop = wrapperEl.clientHeight - contentEl.offsetHeight
+    const maxTop = 0
+    if (targetTop < minTop) {
+      targetTop = minTop
+    } else if (targetTop > maxTop) {
+      targetTop = maxTop
+    }
     if (duration <= 0 || steps <= 0) {
       setTop(targetTop)
       return
     }
-    const currentTop = contentRef.current.offsetTop
+    const currentTop = contentEl.offsetTop
     const distance = Math.abs(targetTop - currentTop)
-    const isUp = targetTop < currentTop
-    const step = (distance / steps) * (isUp ? -1 : 1)
+    const direction = targetTop > currentTop ? 1 : -1
     const delay = duration / steps
+    const step = distance / steps
     if (toTimerRef.current) {
       clearInterval(toTimerRef.current)
     }
     toTimerRef.current = setInterval(() => {
-      const prevTop = contentRef.current.offsetTop
-      const nextTop = prevTop + step
-      if ((isUp && (nextTop <= targetTop)) || (!isUp && (nextTop >= targetTop))) {
+      const prevTop = contentEl.offsetTop
+      const nextTop = prevTop + step * direction
+      if ((direction > 0 && nextTop >= targetTop) || (direction < 0 && nextTop <= targetTop)) {
         clearInterval(toTimerRef.current)
         toTimerRef.current = null
         setTop(targetTop)
@@ -115,6 +122,14 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
     }, delay)
   }, [])
 
+  const scrollToByPercent = useCallback((percent = 0, duration = 0, steps = 0) => {
+    const wrapperEl = wrapperRef.current
+    const contentEl = contentRef.current
+    const minTop = wrapperEl.clientHeight - contentEl.offsetHeight
+    let targetTop = percent * minTop
+    scrollToByTop(targetTop, duration, steps)
+  }, [scrollToByTop])
+
   /**
    * useImperativeHandle
    */
@@ -123,8 +138,9 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
     contentEl: contentRef.current,
     to: Math.abs(contentRef.current.offsetTop),
     scrollUpdate,
-    scrollTo
-  }), [scrollUpdate, scrollTo])
+    scrollToByTop,
+    scrollToByPercent
+  }), [scrollUpdate, scrollToByTop, scrollToByPercent])
 
   return (
     <StyledWrapper ref={wrapperRef}>

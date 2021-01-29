@@ -5,7 +5,7 @@ export const StyledWrapper = styled.div`
 
   .content {
     p {
-      height: 23px;
+      min-height: 23px;
       line-height: 23px;
       font-size: 12px;
       color: #333;

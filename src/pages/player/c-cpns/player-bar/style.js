@@ -312,7 +312,8 @@ export const StyleOperator = styled.div`
     }
 
     .playlist {
-      padding-left: 18px;
+      padding-left: 25px;
+      padding-right: 8px;
       width: 59px;
       text-align: center;
       color: #ccc;

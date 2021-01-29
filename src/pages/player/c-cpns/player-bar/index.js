@@ -386,7 +386,10 @@ export default memo(function PlayerBar() {
               className={`sprite_playbar btn ${playMode.class}`}
               title={playMode.title}
               onClick={handleChangePlayMode}></button>
-            <button className="sprite_playbar btn playlist" title="播放列表" onClick={e => setIsShowPanel(!isShowPanel)}>{r_songList.length}</button>
+            <button
+              className="sprite_playbar btn playlist"
+              title="播放列表"
+              onClick={e => setIsShowPanel(!isShowPanel)}>{r_songList.length <= 99 ? r_songList.length : '99+'}</button>
           </div>
         </StyleOperator>
       </StyleContent>

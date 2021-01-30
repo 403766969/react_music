@@ -4,6 +4,7 @@ import { parseLyric } from '@/utils/parser'
 
 import * as songApi from '@/services/songApi'
 import * as songsheetApi from '@/services/songsheetApi'
+import axios from 'axios'
 
 /**
  * 操作state
@@ -164,13 +165,10 @@ export const action_clear_state = () => {
 
 export const action_increase_songList_with_trackIds = trackIds => {
   return async dispatch => {
-    const ids = []
-    for (let item of trackIds) {
-      ids.push(item.id)
-    }
+    const ids = await check_music_with_trackIds(trackIds)
     const songIds = ids.join(',')
     const res = await songApi.api_get_songDetail(songIds)
-    const newSongList = res.songs.filter(item => item.fee !== 4)
+    const newSongList = res.songs
     if (newSongList.length > 0) {
       dispatch(action_set_songList(newSongList))
       dispatch(action_set_currentSong(newSongList[0]))
@@ -202,4 +200,22 @@ export const action_get_currentLyric = songId => {
     }
     dispatch(action_set_currentLyric(lyric))
   }
+}
+
+/**
+ * 其他请求
+ */
+const check_music_with_trackIds = async trackIds => {
+  const requests = []
+  for (let item of trackIds) {
+    requests.push(songApi.api_check_music(item.id))
+  }
+  const res = await axios.all(requests)
+  const ids = []
+  res.forEach((item, index) => {
+    if (item.success) {
+      ids.push(trackIds[index].id)
+    }
+  })
+  return ids
 }

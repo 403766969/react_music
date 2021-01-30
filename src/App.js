@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { Suspense, memo } from 'react'
 
 import 'antd/dist/antd.css'
 import '@/assets/css/base.css'
@@ -21,12 +21,14 @@ export default memo(function App() {
   return (
     <Provider store={store}>
       <HashRouter>
-        <AppHeader />
-        {renderRoutes(routes)}
-        <AppFooter />
-        <BackTop />
-        {/* <DocuTitle /> */}
-        <Player />
+        <Suspense fallback={<div>Loading...</div>}>
+          <AppHeader />
+          {renderRoutes(routes)}
+          <AppFooter />
+          <BackTop />
+          {/* <DocuTitle /> */}
+          <Player />
+        </Suspense>
       </HashRouter>
     </Provider>
   )

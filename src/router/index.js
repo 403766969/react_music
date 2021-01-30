@@ -1,16 +1,17 @@
+import { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 
-import Discover from '@/pages/discover'
-import My from '@/pages/my'
-import Friend from '@/pages/friend'
-import Song from '@/pages/song'
+const Discover = lazy(() => import('@/pages/discover'))
+const My = lazy(() => import('@/pages/my'))
+const Friend = lazy(() => import('@/pages/friend'))
+const Song = lazy(() => import('@/pages/song'))
 
-import Recomd from '@/pages/discover/c-pages/recomd'
-import Toplist from '@/pages/discover/c-pages/toplist'
-import Songsheet from '@/pages/discover/c-pages/songsheet'
-import Djradio from '@/pages/discover/c-pages/djradio'
-import Artist from '@/pages/discover/c-pages/artist'
-import Album from '@/pages/discover/c-pages/album'
+const Recomd = lazy(() => import('@/pages/discover/c-pages/recomd'))
+const Toplist = lazy(() => import('@/pages/discover/c-pages/toplist'))
+const Songsheet = lazy(() => import('@/pages/discover/c-pages/songsheet'))
+const Djradio = lazy(() => import('@/pages/discover/c-pages/djradio'))
+const Artist = lazy(() => import('@/pages/discover/c-pages/artist'))
+const Album = lazy(() => import('@/pages/discover/c-pages/album'))
 
 
 const routes = [

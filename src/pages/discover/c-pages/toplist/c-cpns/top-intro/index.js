@@ -31,7 +31,7 @@ export default memo(function TopIntro(props) {
           <span className="date">{'最近更新：' + formatDate(currentCategory.updateTime, 'MM月dd日')}</span>
           <span className="frequency">{'（' + currentCategory.updateFrequency + '）'}</span>
         </div>
-        <OperationBar />
+        <OperationBar songsheetId={currentCategory.id} />
       </div>
     </StyledWrapper>
   )

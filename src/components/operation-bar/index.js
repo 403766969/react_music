@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux'
 
 import {
   action_play_song,
-  action_increase_song
+  action_increase_song,
+  action_increase_songList_with_songsheetId
 } from '@/pages/player/store/acitonCreators'
 
 import {
@@ -17,7 +18,8 @@ export default memo(function OperationBar(props) {
   /**
    * props and state
    */
-  const { songId } = props
+  const { songId, songsheetId } = props
+  const { favorText = '收藏', shareText = '分享', downloadText = '下载', commentText = '评论' } = props
 
   /**
    * redux hooks
@@ -28,11 +30,19 @@ export default memo(function OperationBar(props) {
    * other logic
    */
   const handlePlay = () => {
-    dispatch(action_play_song(songId))
+    if (songId) {
+      dispatch(action_play_song(songId))
+    } else if (songsheetId) {
+      dispatch(action_increase_songList_with_songsheetId(songsheetId, true))
+    }
   }
 
   const handleAdd = () => {
-    dispatch(action_increase_song(songId))
+    if (songId) {
+      dispatch(action_increase_song(songId))
+    } else if (songsheetId) {
+      dispatch(action_increase_songList_with_songsheetId(songsheetId, false))
+    }
   }
 
   return (
@@ -49,19 +59,19 @@ export default memo(function OperationBar(props) {
       <StyleRight>
         <button className="favor sprite_button" title="收藏">
           <i className="sprite_button"></i>
-          <span>收藏</span>
+          <span>{favorText}</span>
         </button>
         <button className="share sprite_button" title="分享">
           <i className="sprite_button"></i>
-          <span>分享</span>
+          <span>{shareText}</span>
         </button>
         <button className="download sprite_button" title="下载">
           <i className="sprite_button"></i>
-          <span>下载</span>
+          <span>{downloadText}</span>
         </button>
         <button className="comment sprite_button" title="评论">
           <i className="sprite_button"></i>
-          <span>评论</span>
+          <span>{commentText}</span>
         </button>
       </StyleRight>
     </StyleWrapper>

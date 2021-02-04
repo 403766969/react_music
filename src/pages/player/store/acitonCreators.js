@@ -163,14 +163,13 @@ export const action_clear_state = () => {
   }
 }
 
-export const action_increase_songList_with_trackIds = trackIds => {
+export const action_increase_songList_with_trackIds = (trackIds, isPlay = true) => {
   return async dispatch => {
     const ids = await check_music_with_trackIds(trackIds)
-    const songIds = ids.join(',')
-    const res = await songApi.api_get_songDetail(songIds)
+    const res = await songApi.api_get_songDetail(ids)
     const newSongList = res.songs
-    if (newSongList.length > 0) {
-      dispatch(action_set_songList(newSongList))
+    dispatch(action_set_songList(newSongList))
+    if (isPlay && newSongList.length > 0) {
       dispatch(action_set_currentSong(newSongList[0]))
       dispatch(action_set_currentSongIndex(0))
       dispatch(action_get_currentLyric(newSongList[0].id))
@@ -179,11 +178,11 @@ export const action_increase_songList_with_trackIds = trackIds => {
   }
 }
 
-export const action_increase_songList_with_songsheetId = songsheetId => {
+export const action_increase_songList_with_songsheetId = (songsheetId, isPlay = true) => {
   return async dispatch => {
     const res = await songsheetApi.api_get_playlistDetail(songsheetId)
     const trackIds = res.playlist.trackIds
-    dispatch(action_increase_songList_with_trackIds(trackIds))
+    dispatch(action_increase_songList_with_trackIds(trackIds, isPlay))
   }
 }
 
@@ -217,5 +216,5 @@ const check_music_with_trackIds = async trackIds => {
       ids.push(trackIds[index].id)
     }
   })
-  return ids
+  return ids.join(',')
 }

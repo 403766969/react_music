@@ -8,6 +8,7 @@ import {
 } from './store/actionCreators'
 
 import TopCategory from './c-cpns/top-category'
+import TopIntro from './c-cpns/top-intro'
 
 import {
   StyledWrapper,
@@ -48,7 +49,7 @@ export default memo(function Toplist() {
         <TopCategory title="全球媒体榜" categories={r_topCategory.slice(4, r_topCategory.length)} currentCategory={r_currentCategory} />
       </StyledLeft>
       <StyledRight>
-
+        <TopIntro currentCategory={r_currentCategory} />
       </StyledRight>
     </StyledWrapper>
   )

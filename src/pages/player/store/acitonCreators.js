@@ -164,11 +164,21 @@ export const action_clear_state = () => {
 
 export const action_increase_songList_with_trackIds = (trackIds, isPlay = true) => {
   return async dispatch => {
-    const ids = await check_music_with_trackIds(trackIds)
+    const preIds = await check_music_with_trackIds(trackIds.slice(0, 10))
+    const preRes = await songApi.api_get_songDetail(preIds)
+    const preSongList = preRes.songs
+    dispatch(action_set_songList(preSongList))
+    if (isPlay && preSongList.length > 0) {
+      dispatch(action_set_currentSong(preSongList[0]))
+      dispatch(action_set_currentSongIndex(0))
+      dispatch(action_get_currentLyric(preSongList[0].id))
+      dispatch(action_set_currentLyricIndex(-1))
+    }
+    const ids = await check_music_with_trackIds(trackIds.slice(10, trackIds.length))
     const res = await songApi.api_get_songDetail(ids)
-    const newSongList = res.songs
+    const newSongList = [...preSongList, ...res.songs]
     dispatch(action_set_songList(newSongList))
-    if (isPlay && newSongList.length > 0) {
+    if (isPlay && newSongList.length > 0 && preSongList.length <= 0) {
       dispatch(action_set_currentSong(newSongList[0]))
       dispatch(action_set_currentSongIndex(0))
       dispatch(action_get_currentLyric(newSongList[0].id))

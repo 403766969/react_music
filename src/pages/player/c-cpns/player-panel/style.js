@@ -1,9 +1,17 @@
 import styled from 'styled-components'
 
+export const StyledMask = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 47px;
+`
+
 export const StyledWrapper = styled.div`
   position: absolute;
   left: 50%;
-  bottom: 47px;
+  bottom: 0;
   width: 982px;
   height: 301px;
   transform: translateX(-50%);

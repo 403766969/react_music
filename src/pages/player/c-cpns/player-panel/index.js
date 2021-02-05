@@ -9,6 +9,7 @@ import PlayList from './c-cpns/play-list'
 import LyricDisplay from './c-cpns/lyric-display'
 
 import {
+  StyledMask,
   StyledWrapper,
   StyledContent,
   StyledLeft,
@@ -98,6 +99,12 @@ export default memo(function PlayerPanel(props) {
   /**
    * other logic
    */
+  const handleMaskClick = () => {
+    if (handleCloseClick && typeof handleCloseClick === 'function') {
+      handleCloseClick()
+    }
+  }
+
   const handleWheel_pl = useCallback((top, percent) => {
     scrollBarRef_pl.current.scrollToByPercent(percent, 0, 0)
   }, [])
@@ -115,22 +122,24 @@ export default memo(function PlayerPanel(props) {
   }, [])
 
   return (
-    <StyledWrapper style={{ visibility: isShowPanel ? 'visible' : 'hidden' }}>
-      <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
-      <StyledContent>
-        <StyledLeft>
-          <ScrollContainer ref={scrollContainerRef_pl} delta={55} onWheel={handleWheel_pl}>
-            <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
-          </ScrollContainer>
-          <ScrollBar ref={scrollBarRef_pl} gripSize={gripSize_pl} onDrag={handleDrag_pl} />
-        </StyledLeft>
-        <StyledRight>
-          <ScrollContainer ref={scrollContainerRef_ld} delta={45} onWheel={handleWheel_ld}>
-            <LyricDisplay ref={lyricDisplayRef} currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} />
-          </ScrollContainer>
-          <ScrollBar ref={scrollBarRef_ld} gripSize={gripSize_ld} onDrag={handleDrag_ld} />
-        </StyledRight>
-      </StyledContent>
-    </StyledWrapper>
+    <StyledMask style={{ display: isShowPanel ? 'block' : 'none' }} onClick={handleMaskClick}>
+      <StyledWrapper onClick={e => e.stopPropagation()}>
+        <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
+        <StyledContent>
+          <StyledLeft>
+            <ScrollContainer ref={scrollContainerRef_pl} delta={55} onWheel={handleWheel_pl}>
+              <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
+            </ScrollContainer>
+            <ScrollBar ref={scrollBarRef_pl} gripSize={gripSize_pl} onDrag={handleDrag_pl} />
+          </StyledLeft>
+          <StyledRight>
+            <ScrollContainer ref={scrollContainerRef_ld} delta={45} onWheel={handleWheel_ld}>
+              <LyricDisplay ref={lyricDisplayRef} currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} />
+            </ScrollContainer>
+            <ScrollBar ref={scrollBarRef_ld} gripSize={gripSize_ld} onDrag={handleDrag_ld} />
+          </StyledRight>
+        </StyledContent>
+      </StyledWrapper>
+    </StyledMask>
   )
 })

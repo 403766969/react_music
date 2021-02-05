@@ -5,7 +5,7 @@ import {
   action_get_carouselImages,
   action_get_hotRecomdList,
   action_get_newAlbumList,
-  action_get_rankMulti,
+  action_get_rankMultiList,
   action_get_settleSingerList
 } from './store/actionCreators'
 
@@ -33,17 +33,13 @@ export default memo(function Recomd() {
     carouselImages: r_carouselImages,
     hotRecomdList: r_hotRecomdList,
     newAlbumList: r_newAlbumList,
-    rankMultiUp: r_rankMultiUp,
-    rankMultiNew: r_rankMultiNew,
-    rankMultiOrg: r_rankMultiOrg,
+    rankMultiList: r_rankMultiList,
     settleSingerList: r_settleSingerList
   } = useSelector(state => ({
     carouselImages: state.getIn(['recomd', 'carouselImages']),
     hotRecomdList: state.getIn(['recomd', 'hotRecomdList']),
     newAlbumList: state.getIn(['recomd', 'newAlbumList']),
-    rankMultiUp: state.getIn(['recomd', 'rankMultiUp']),
-    rankMultiNew: state.getIn(['recomd', 'rankMultiNew']),
-    rankMultiOrg: state.getIn(['recomd', 'rankMultiOrg']),
+    rankMultiList: state.getIn(['recomd', 'rankMultiList']),
     settleSingerList: state.getIn(['recomd', 'settleSingerList'])
   }), shallowEqual)
 
@@ -56,9 +52,7 @@ export default memo(function Recomd() {
     dispatch(action_get_carouselImages())
     dispatch(action_get_hotRecomdList(8))
     dispatch(action_get_newAlbumList(10, 0))
-    dispatch(action_get_rankMulti(0))
-    dispatch(action_get_rankMulti(2))
-    dispatch(action_get_rankMulti(3))
+    dispatch(action_get_rankMultiList())
     dispatch(action_get_settleSingerList(5001, 5))
   }, [dispatch])
 
@@ -69,7 +63,7 @@ export default memo(function Recomd() {
         <StyledLeft>
           <HotRecomd hotRecomdList={r_hotRecomdList} />
           <NewAlbum newAlbumList={r_newAlbumList} />
-          <RankMulti rankMultiUp={r_rankMultiUp} rankMultiNew={r_rankMultiNew} rankMultiOrg={r_rankMultiOrg} />
+          <RankMulti rankMultiList={r_rankMultiList} />
         </StyledLeft>
         <StyledRight>
           <UserLogin />

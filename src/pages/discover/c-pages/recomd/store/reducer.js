@@ -6,9 +6,7 @@ const initialState = Map({
   carouselImages: [],
   hotRecomdList: [],
   newAlbumList: [],
-  rankMultiUp: [],
-  rankMultiNew: [],
-  rankMultiOrg: [],
+  rankMultiList: [],
   settleSingerList: []
 })
 
@@ -20,12 +18,8 @@ function reducer(state = initialState, action) {
       return state.set('hotRecomdList', action.hotRecomdList)
     case actionTypes.SET_NEW_ALBUM_LIST:
       return state.set('newAlbumList', action.newAlbumList)
-    case actionTypes.SET_RANK_MULTI_UP:
-      return state.set('rankMultiUp', action.rankMultiUp)
-    case actionTypes.SET_RANK_MULTI_NEW:
-      return state.set('rankMultiNew', action.rankMultiNew)
-    case actionTypes.SET_RANK_MULTI_ORG:
-      return state.set('rankMultiOrg', action.rankMultiOrg)
+    case actionTypes.SET_RANK_MULTI_LIST:
+      return state.set('rankMultiList', action.rankMultiList)
     case actionTypes.SET_SETTLE_SINGER_LIST:
       return state.set('settleSingerList', action.settleSingerList)
     default:

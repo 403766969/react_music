@@ -14,15 +14,17 @@ export default memo(function RankMulti(props) {
   /**
    * props and state
    */
-  const { rankMultiUp = [], rankMultiNew = [], rankMultiOrg = [] } = props
+  const { rankMultiList = [] } = props
 
   return (
     <StyledWrapper>
       <HeaderLong title="榜单" more={{ text: '更多', link: '/discover/toplist' }} />
       <StyledContent>
-        <RankSimple rankSimpleInfo={rankMultiUp} />
-        <RankSimple rankSimpleInfo={rankMultiNew} />
-        <RankSimple rankSimpleInfo={rankMultiOrg} />
+        {
+          rankMultiList.map(item => {
+            return <RankSimple rankSimpleInfo={item} key={item.id} />
+          })
+        }
       </StyledContent>
     </StyledWrapper>
   )

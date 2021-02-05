@@ -1,6 +1,9 @@
 import { actionTypes } from './constants'
 
 import * as recomdApi from '@/services/recomdApi'
+import * as toplistApi from '@/services/toplistApi'
+import * as songsheetApi from '@/services/songsheetApi'
+import * as songApi from '@/services/songApi'
 
 /**
  * 操作state
@@ -20,19 +23,9 @@ export const action_set_newAlbumList = newAlbumList => ({
   newAlbumList: newAlbumList
 })
 
-export const action_set_rankMultiUp = rankMultiUp => ({
-  type: actionTypes.SET_RANK_MULTI_UP,
-  rankMultiUp: rankMultiUp
-})
-
-export const action_set_rankMultiNew = rankMultiNew => ({
-  type: actionTypes.SET_RANK_MULTI_NEW,
-  rankMultiNew: rankMultiNew
-})
-
-export const action_set_rankMultiOrg = rankMultiOrg => ({
-  type: actionTypes.SET_RANK_MULTI_ORG,
-  rankMultiOrg: rankMultiOrg
+export const action_set_rankMultiList = rankMultiList => ({
+  type: actionTypes.SET_RANK_MULTI_LIST,
+  rankMultiList: rankMultiList
 })
 
 export const action_set_settleSingerList = settleSingerList => ({
@@ -64,22 +57,27 @@ export const action_get_newAlbumList = (limit, offset) => {
   }
 }
 
-export const action_get_rankMulti = idx => {
+export const action_get_rankMultiList = () => {
   return async dispatch => {
-    const res = await recomdApi.api_get_topList(idx)
-    switch (idx) {
-      case 0:
-        dispatch(action_set_rankMultiNew(res.playlist))
-        break
-      case 2:
-        dispatch(action_set_rankMultiOrg(res.playlist))
-        break
-      case 3:
-        dispatch(action_set_rankMultiUp(res.playlist))
-        break
-      default:
-        console.log('其他榜单', res.playlist)
-    }
+    const tlRes = await toplistApi.api_get_toplist()
+    const categories = tlRes.list.slice(0, 3)
+    const pldRes1 = await songsheetApi.api_get_playlistDetail(categories[0].id)
+    const pldRes2 = await songsheetApi.api_get_playlistDetail(categories[1].id)
+    const pldRes3 = await songsheetApi.api_get_playlistDetail(categories[2].id)
+    const ids1 = pldRes1.playlist.trackIds.slice(0, 10).map(item => item.id).join(',')
+    const ids2 = pldRes2.playlist.trackIds.slice(0, 10).map(item => item.id).join(',')
+    const ids3 = pldRes3.playlist.trackIds.slice(0, 10).map(item => item.id).join(',')
+    const sdRes1 = await songApi.api_get_songDetail(ids1)
+    const sdRes2 = await songApi.api_get_songDetail(ids2)
+    const sdRes3 = await songApi.api_get_songDetail(ids3)
+    pldRes1.playlist.tracks = sdRes1.songs
+    pldRes2.playlist.tracks = sdRes2.songs
+    pldRes3.playlist.tracks = sdRes3.songs
+    const rankMultiList = []
+    rankMultiList.push(pldRes1.playlist)
+    rankMultiList.push(pldRes2.playlist)
+    rankMultiList.push(pldRes3.playlist)
+    dispatch(action_set_rankMultiList(rankMultiList))
   }
 }
 

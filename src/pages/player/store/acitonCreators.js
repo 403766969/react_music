@@ -71,42 +71,40 @@ export const action_init_songList = () => {
   }
 }
 
-export const action_increase_song = songId => {
+export const action_increase_song = (songId, isPlay = true) => {
   return async (dispatch, getState) => {
     const checkRes = await songApi.api_check_music(songId)
     if (checkRes.success === false) {
       alert(checkRes.message)
-      return -1
+      return
     }
     const songList = getState().getIn(['player', 'songList'])
-    let songIndex = songList.findIndex(item => item.id === songId)
+    const songIndex = songList.findIndex(item => item.id === songId)
     if (songIndex === -1) {
       const res = await songApi.api_get_songDetail(songId)
       const newSong = res.songs[0]
       const newSongList = [...songList]
       newSongList.push(newSong)
-      songIndex = newSongList.length - 1
       dispatch(action_set_songList(newSongList))
-    }
-    return songIndex
-  }
-}
-
-export const action_play_song = songId => {
-  return async (dispatch, getState) => {
-    const songIndex = await action_increase_song(songId)(dispatch, getState)
-    const songList = getState().getIn(['player', 'songList'])
-    const song = songList[songIndex]
-    if (song) {
-      const currentSong = getState().getIn(['player', 'currentSong'])
-      if (song === currentSong) {
-        dispatch(action_set_currentSong(Object.assign({}, song)))
-      } else {
-        dispatch(action_set_currentSong(song))
+      if (isPlay) {
+        const newSongIndex = newSongList.length - 1
+        dispatch(action_set_currentSong(newSong))
+        dispatch(action_set_currentSongIndex(newSongIndex))
+        dispatch(action_get_currentLyric(songId))
+        dispatch(action_set_currentLyricIndex(-1))
       }
-      dispatch(action_set_currentSongIndex(songIndex))
-      dispatch(action_get_currentLyric(songId))
-      dispatch(action_set_currentLyricIndex(-1))
+    } else if (songIndex !== -1 && isPlay) {
+      const targetSong = songList[songIndex]
+      const currentSong = getState().getIn(['player', 'currentSong'])
+      if (targetSong === currentSong) {
+        dispatch(action_set_currentSong(Object.assign({}, targetSong)))
+        dispatch(action_set_currentLyricIndex(-1))
+      } else {
+        dispatch(action_set_currentSong(targetSong))
+        dispatch(action_set_currentSongIndex(songIndex))
+        dispatch(action_get_currentLyric(songId))
+        dispatch(action_set_currentLyricIndex(-1))
+      }
     }
   }
 }
@@ -114,17 +112,18 @@ export const action_play_song = songId => {
 export const action_toggle_song = songIndex => {
   return (dispatch, getState) => {
     const songList = getState().getIn(['player', 'songList'])
-    const song = songList[songIndex]
-    if (song) {
+    const targetSong = songList[songIndex]
+    if (targetSong) {
       const currentSong = getState().getIn(['player', 'currentSong'])
-      if (song === currentSong) {
-        dispatch(action_set_currentSong(Object.assign({}, song)))
+      if (targetSong === currentSong) {
+        dispatch(action_set_currentSong(Object.assign({}, targetSong)))
+        dispatch(action_set_currentLyricIndex(-1))
       } else {
-        dispatch(action_set_currentSong(song))
+        dispatch(action_set_currentSong(targetSong))
+        dispatch(action_set_currentSongIndex(songIndex))
+        dispatch(action_get_currentLyric(targetSong.id))
+        dispatch(action_set_currentLyricIndex(-1))
       }
-      dispatch(action_set_currentSongIndex(songIndex))
-      dispatch(action_get_currentLyric(song.id))
-      dispatch(action_set_currentLyricIndex(-1))
     }
   }
 }

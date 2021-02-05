@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 
 import {
-  action_play_song,
   action_increase_song,
   action_increase_songList_with_songsheetId
 } from '@/pages/player/store/acitonCreators'
@@ -31,7 +30,7 @@ export default memo(function OperationBar(props) {
    */
   const handlePlay = () => {
     if (songId) {
-      dispatch(action_play_song(songId))
+      dispatch(action_increase_song(songId, true))
     } else if (songsheetId) {
       dispatch(action_increase_songList_with_songsheetId(songsheetId, true))
     }
@@ -39,7 +38,7 @@ export default memo(function OperationBar(props) {
 
   const handleAdd = () => {
     if (songId) {
-      dispatch(action_increase_song(songId))
+      dispatch(action_increase_song(songId, false))
     } else if (songsheetId) {
       dispatch(action_increase_songList_with_songsheetId(songsheetId, false))
     }

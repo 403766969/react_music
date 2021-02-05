@@ -2,7 +2,6 @@ import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 
 import {
-  action_play_song,
   action_increase_song
 } from '@/pages/player/store/acitonCreators'
 
@@ -32,11 +31,11 @@ export default memo(function SimiSong(props) {
    * other logic
    */
   const handlePlay = id => {
-    dispatch(action_play_song(id))
+    dispatch(action_increase_song(id, true))
   }
 
   const handleAdd = id => {
-    dispatch(action_increase_song(id))
+    dispatch(action_increase_song(id, false))
   }
 
   return (

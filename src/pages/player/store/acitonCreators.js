@@ -146,6 +146,8 @@ export const action_remove_song = songIndex => {
           : -1
       dispatch(action_set_currentSong(targetSong))
       dispatch(action_set_currentSongIndex(targetIndex))
+      dispatch(action_get_currentLyric(targetSong.id))
+      dispatch(action_set_currentLyricIndex(-1))
     } else if (songIndex < currentSongIndex) {
       dispatch(action_set_currentSongIndex(currentSongIndex - 1))
     }

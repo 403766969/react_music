@@ -4,6 +4,7 @@ import * as recomdApi from '@/services/recomdApi'
 import * as toplistApi from '@/services/toplistApi'
 import * as songsheetApi from '@/services/songsheetApi'
 import * as songApi from '@/services/songApi'
+import axios from 'axios'
 
 /**
  * 操作state
@@ -59,24 +60,29 @@ export const action_get_newAlbumList = (limit, offset) => {
 
 export const action_get_rankMultiList = () => {
   return async dispatch => {
-    const tlRes = await toplistApi.api_get_toplist()
-    const categories = tlRes.list.slice(0, 3)
-    const pldRes1 = await songsheetApi.api_get_playlistDetail(categories[0].id)
-    const pldRes2 = await songsheetApi.api_get_playlistDetail(categories[1].id)
-    const pldRes3 = await songsheetApi.api_get_playlistDetail(categories[2].id)
-    const ids1 = pldRes1.playlist.trackIds.slice(0, 10).map(item => item.id).join(',')
-    const ids2 = pldRes2.playlist.trackIds.slice(0, 10).map(item => item.id).join(',')
-    const ids3 = pldRes3.playlist.trackIds.slice(0, 10).map(item => item.id).join(',')
-    const sdRes1 = await songApi.api_get_songDetail(ids1)
-    const sdRes2 = await songApi.api_get_songDetail(ids2)
-    const sdRes3 = await songApi.api_get_songDetail(ids3)
-    pldRes1.playlist.tracks = sdRes1.songs
-    pldRes2.playlist.tracks = sdRes2.songs
-    pldRes3.playlist.tracks = sdRes3.songs
+    const resA = await toplistApi.api_get_toplist()
+
+    const reqB = []
+    reqB.push(songsheetApi.api_get_playlistDetail(resA.list[0].id))
+    reqB.push(songsheetApi.api_get_playlistDetail(resA.list[1].id))
+    reqB.push(songsheetApi.api_get_playlistDetail(resA.list[2].id))
+    const resB = await axios.all(reqB)
+
+    const reqC = []
+    reqC.push(songApi.api_get_songDetail(resB[0].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    reqC.push(songApi.api_get_songDetail(resB[1].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    reqC.push(songApi.api_get_songDetail(resB[2].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    const resC = await axios.all(reqC)
+
+    resB[0].playlist.tracks = resC[0].songs
+    resB[1].playlist.tracks = resC[1].songs
+    resB[2].playlist.tracks = resC[2].songs
+
     const rankMultiList = []
-    rankMultiList.push(pldRes1.playlist)
-    rankMultiList.push(pldRes2.playlist)
-    rankMultiList.push(pldRes3.playlist)
+    rankMultiList.push(resB[0].playlist)
+    rankMultiList.push(resB[1].playlist)
+    rankMultiList.push(resB[2].playlist)
+
     dispatch(action_set_rankMultiList(rankMultiList))
   }
 }

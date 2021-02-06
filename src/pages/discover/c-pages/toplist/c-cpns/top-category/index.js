@@ -4,7 +4,9 @@ import { useDispatch } from 'react-redux'
 import { formatUrlWithSize } from '@/utils/formatter'
 
 import {
-  action_set_currentCategory
+  action_set_currentTop,
+  action_set_currentSongList,
+  action_get_currentSongList
 } from '../../store/actionCreators'
 
 import {
@@ -16,7 +18,7 @@ export default memo(function TopCategory(props) {
   /**
    * props and state
    */
-  const { title = '', categories = [], currentCategory = {} } = props
+  const { title = '', topCategories = [], currentTop = {} } = props
 
   /**
    * redux hooks
@@ -27,10 +29,12 @@ export default memo(function TopCategory(props) {
    * other logic
    */
   const hanldeItemClick = item => {
-    if (item === currentCategory) {
+    if (item === currentTop) {
       return
     }
-    dispatch(action_set_currentCategory(item))
+    dispatch(action_set_currentTop(item))
+    dispatch(action_set_currentSongList([]))
+    dispatch(action_get_currentSongList(item.id))
   }
 
   return (
@@ -38,10 +42,10 @@ export default memo(function TopCategory(props) {
       <h2 className="category-title">{title}</h2>
       <ul className="category-list">
         {
-          categories.map(item => {
+          topCategories.map(item => {
             return (
               <li
-                className={`category-item ${item === currentCategory ? 'active' : ''}`}
+                className={`category-item ${item === currentTop ? 'active' : ''}`}
                 key={item.id}
                 onClick={() => hanldeItemClick(item)}>
                 <img src={formatUrlWithSize(item.coverImgUrl, 40)} alt={item.name} />

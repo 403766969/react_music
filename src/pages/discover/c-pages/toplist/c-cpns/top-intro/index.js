@@ -16,22 +16,22 @@ export default memo(function TopIntro(props) {
   /**
    * props and state
    */
-  const { currentCategory = {} } = props
+  const { currentTop = {} } = props
 
   return (
     <StyledWrapper className="top-category">
       <div className="top-cover">
-        <img src={formatUrlWithSize(currentCategory.coverImgUrl, 150)} alt={currentCategory.name} />
+        <img src={formatUrlWithSize(currentTop.coverImgUrl, 150)} alt={currentTop.name} />
         <span className="sprite_covor mask"></span>
       </div>
       <div className="top-info">
-        <h2 className="top-name">{currentCategory.name}</h2>
+        <h2 className="top-name">{currentTop.name}</h2>
         <div className="top-update">
           <i className="sprite_icon2 clock"></i>
-          <span className="date">{'最近更新：' + formatDate(currentCategory.updateTime, 'MM月dd日')}</span>
-          <span className="frequency">{'（' + currentCategory.updateFrequency + '）'}</span>
+          <span className="date">最近更新：{formatDate(currentTop.updateTime, 'MM月dd日')}</span>
+          <span className="frequency">（{currentTop.updateFrequency}）</span>
         </div>
-        <OperationBar songsheetId={currentCategory.id} />
+        <OperationBar songsheetId={currentTop.id} />
       </div>
     </StyledWrapper>
   )

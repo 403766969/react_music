@@ -63,7 +63,11 @@ export default memo(function SongList(props) {
         </thead>
         <tbody>
           {
-            currentSongList.length <= 0 && <div>loading...</div>
+            currentSongList.length <= 0 && (
+              <tr>
+                <td>loading...</td>
+              </tr>
+            )
           }
           {
             currentSongList.map((item, index) => {

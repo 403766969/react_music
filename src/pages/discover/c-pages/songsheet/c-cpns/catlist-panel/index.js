@@ -1,4 +1,10 @@
 import React, { memo, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import {
+  action_set_currentCat,
+  action_get_songsheetData
+} from '../../store/actionCreators'
 
 import {
   StyledWrapper
@@ -15,16 +21,31 @@ export default memo(function CatlistPanel(props) {
   const [isShow, setIsShow] = useState(false)
 
   /**
+   * redux hooks
+   */
+  const dispatch = useDispatch()
+
+  /**
    * other logic
    */
   const handleAllClick = () => {
+    if (select === '全部') {
+      return
+    }
     setSelect('全部')
     setIsShow(false)
+    dispatch(action_set_currentCat('全部'))
+    dispatch(action_get_songsheetData(0, 35))
   }
 
   const handleSubClick = sub => {
+    if (select === sub.name) {
+      return
+    }
     setSelect(sub.name)
     setIsShow(false)
+    dispatch(action_set_currentCat(sub.name))
+    dispatch(action_get_songsheetData(0, 35))
   }
 
   return (

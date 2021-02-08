@@ -9,7 +9,7 @@ export default memo(function PaginationBar(props) {
   /**
    * props and state
    */
-  const { total = 300, pageSize = 10, itemCount = 7, fastStep = 5, defaultCurrent = 1, onChange } = props
+  const { total = 0, pageSize = 10, itemCount = 7, fastStep = 5, defaultCurrent = 1, onChange } = props
 
   const [current, setCurrent] = useState(defaultCurrent)
 

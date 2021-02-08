@@ -63,6 +63,7 @@ export const StyledWrapper = styled.div`
     position: absolute;
     left: -40px;
     top: 40px;
+    z-index: 99;
     width: 720px;
 
     .content-header {

@@ -9,7 +9,8 @@ export const StyledContent = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 
-  &>div{
+  .songsheet-cover {
+    margin-bottom: 30px;
     height: 204px;
   }
 `

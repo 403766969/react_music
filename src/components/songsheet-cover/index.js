@@ -46,7 +46,7 @@ export default memo(function SongsheetCover(props) {
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="songsheet-cover">
       <StyledImage onClick={pushRoute}>
         <img className="image" src={formatUrlWithSize(songsheetInfo.picUrl || songsheetInfo.coverImgUrl, 140)} alt="" />
         <div className="mask sprite_covor" title={songsheetInfo.name}></div>

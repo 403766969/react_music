@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
   width: 140px;
-  margin-bottom: 30px;
 `
 
 export const StyledImage = styled.div`

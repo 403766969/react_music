@@ -3,7 +3,7 @@ import { Map } from 'immutable'
 import { actionTypes } from './constants'
 
 const initialState = Map({
-  carouselImages: [],
+  topBannerList: [],
   hotRecomdList: [],
   newAlbumList: [],
   rankMultiList: [],
@@ -12,8 +12,8 @@ const initialState = Map({
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.SET_CAROUSEL_IMAGES:
-      return state.set('carouselImages', action.carouselImages)
+    case actionTypes.SET_TOP_BANNER_LIST:
+      return state.set('topBannerList', action.topBannerList)
     case actionTypes.SET_HOT_RECOMD_LIST:
       return state.set('hotRecomdList', action.hotRecomdList)
     case actionTypes.SET_NEW_ALBUM_LIST:

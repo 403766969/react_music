@@ -33,8 +33,8 @@ export default memo(function Songsheet(props) {
     r_catList,
     r_songsheetData
   } = useSelector(state => ({
-    r_catList: state.getIn(['songsheet', 'catList']),
-    r_songsheetData: state.getIn(['songsheet', 'songsheetData'])
+    r_catList: state.getIn(['discover/songsheet', 'catList']),
+    r_songsheetData: state.getIn(['discover/songsheet', 'songsheetData'])
   }), shallowEqual)
 
   const dispatch = useDispatch()

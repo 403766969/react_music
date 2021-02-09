@@ -9,9 +9,9 @@ import axios from 'axios'
 /**
  * 操作state
  */
-export const action_set_carouselImages = carouselImages => ({
-  type: actionTypes.SET_CAROUSEL_IMAGES,
-  carouselImages: carouselImages
+export const action_set_topBannerList = topBannerList => ({
+  type: actionTypes.SET_TOP_BANNER_LIST,
+  topBannerList: topBannerList
 })
 
 export const action_set_hotRecomdList = hotRecomdList => ({
@@ -37,10 +37,10 @@ export const action_set_settleSingerList = settleSingerList => ({
 /**
  * 异步请求
  */
-export const action_get_carouselImages = () => {
+export const action_get_topBannerList = () => {
   return async dispatch => {
     const res = await recomdApi.api_get_banner()
-    dispatch(action_set_carouselImages(res.banners))
+    dispatch(action_set_topBannerList(res.banners))
   }
 }
 

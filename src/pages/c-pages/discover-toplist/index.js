@@ -14,7 +14,7 @@ import SongList from './c-cpns/song-list'
 
 import { StyledWrapper } from './style'
 
-export default memo(function Toplist(props) {
+export default memo(function DiscoverToplist(props) {
 
   /**
    * const and let
@@ -30,9 +30,9 @@ export default memo(function Toplist(props) {
     r_currentTop,
     r_currentSongList
   } = useSelector(state => ({
-    r_topCategories: state.getIn(['toplist', 'topCategories']),
-    r_currentTop: state.getIn(['toplist', 'currentTop']),
-    r_currentSongList: state.getIn(['toplist', 'currentSongList']),
+    r_topCategories: state.getIn(['discover/toplist', 'topCategories']),
+    r_currentTop: state.getIn(['discover/toplist', 'currentTop']),
+    r_currentSongList: state.getIn(['discover/toplist', 'currentSongList']),
   }), shallowEqual)
 
   const dispatch = useDispatch()

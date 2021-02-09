@@ -2,7 +2,7 @@ import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import {
-  action_get_carouselImages,
+  action_get_topBannerList,
   action_get_hotRecomdList,
   action_get_newAlbumList,
   action_get_rankMultiList,
@@ -19,23 +19,23 @@ import HotAnchor from './c-cpns/hot-anchor'
 
 import { StyledWrapper } from './style'
 
-export default memo(function Recomd() {
+export default memo(function DiscoverRecomd() {
 
   /**
  * redux hooks
  */
   const {
-    carouselImages: r_carouselImages,
-    hotRecomdList: r_hotRecomdList,
-    newAlbumList: r_newAlbumList,
-    rankMultiList: r_rankMultiList,
-    settleSingerList: r_settleSingerList
+    r_topBannerList,
+    r_hotRecomdList,
+    r_newAlbumList,
+    r_rankMultiList,
+    r_settleSingerList
   } = useSelector(state => ({
-    carouselImages: state.getIn(['recomd', 'carouselImages']),
-    hotRecomdList: state.getIn(['recomd', 'hotRecomdList']),
-    newAlbumList: state.getIn(['recomd', 'newAlbumList']),
-    rankMultiList: state.getIn(['recomd', 'rankMultiList']),
-    settleSingerList: state.getIn(['recomd', 'settleSingerList'])
+    r_topBannerList: state.getIn(['discover/recomd', 'topBannerList']),
+    r_hotRecomdList: state.getIn(['discover/recomd', 'hotRecomdList']),
+    r_newAlbumList: state.getIn(['discover/recomd', 'newAlbumList']),
+    r_rankMultiList: state.getIn(['discover/recomd', 'rankMultiList']),
+    r_settleSingerList: state.getIn(['discover/recomd', 'settleSingerList'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -44,7 +44,7 @@ export default memo(function Recomd() {
    * other hooks
    */
   useEffect(() => {
-    dispatch(action_get_carouselImages())
+    dispatch(action_get_topBannerList())
     dispatch(action_get_hotRecomdList(8))
     dispatch(action_get_newAlbumList(10, 0))
     dispatch(action_get_rankMultiList())
@@ -53,7 +53,7 @@ export default memo(function Recomd() {
 
   return (
     <StyledWrapper className="page-discover-recomd">
-      <TopBanner carouselImages={r_carouselImages} />
+      <TopBanner topBannerList={r_topBannerList} />
       <div className="content wrap-v2">
         <div className="left">
           <HotRecomd hotRecomdList={r_hotRecomdList} />

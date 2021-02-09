@@ -42,7 +42,7 @@ export const action_get_catList = () => {
 
 export const action_get_songsheetData = (offset = 0, limit = 35, order = 'hot') => {
   return async (dispatch, getState) => {
-    const currentCat = getState().getIn(['songsheet', 'currentCat'])
+    const currentCat = getState().getIn(['discover/songsheet', 'currentCat'])
     const res = await songsheetApi.api_get_topPlaylist(currentCat, offset, limit, order)
     dispatch(action_set_songsheetData(res))
   }

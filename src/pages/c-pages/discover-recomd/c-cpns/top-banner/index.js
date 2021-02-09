@@ -10,7 +10,7 @@ export default memo(function TopBanner(props) {
   /**
    * props and state
    */
-  const { carouselImages = [] } = props
+  const { topBannerList = [] } = props
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -58,9 +58,9 @@ export default memo(function TopBanner(props) {
     }
   }
 
-  const bgImage = carouselImages[currentIndex] && (carouselImages[currentIndex].imageUrl + '?imageView&blur=40x20')
+  const bgImage = topBannerList[currentIndex] && (topBannerList[currentIndex].imageUrl + '?imageView&blur=40x20')
 
-  return carouselImages.length > 0 && (
+  return topBannerList.length > 0 && (
     <StyledWrapper className="cpn-top-banner" bgImage={bgImage}>
       <div className="content wrap-v2">
         <div className="carousel-show">
@@ -71,7 +71,7 @@ export default memo(function TopBanner(props) {
             ref={carouselRef}
             beforeChange={handleChange}>
             {
-              carouselImages.map(item => (
+              topBannerList.map(item => (
                 <div className="item" key={item.scm}>
                   {renderCarouselItem(item)}
                 </div>

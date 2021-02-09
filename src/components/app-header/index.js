@@ -1,24 +1,19 @@
-import React, { memo } from 'react'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { appheaderLinks } from '@/services/local-data'
-
-import { NavLink } from 'react-router-dom'
 
 import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 
-import {
-  StyledWrapper,
-  StyledLeft,
-  StyledRight
-} from './style'
+import { StyledWrapper } from './style'
 
-export default memo(function AppHeader() {
+export default function AppHeader() {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-app-header">
       <div className="wrap-v1 content">
-        <StyledLeft>
-          <h1 className="logo sprite_01">
+        <div className="left">
+          <h1 className="sprite_01 logo">
             <NavLink to="/">网易云音乐</NavLink>
           </h1>
           <ul className="channel-menu">
@@ -36,18 +31,18 @@ export default memo(function AppHeader() {
               })
             }
           </ul>
-        </StyledLeft>
-        <StyledRight>
+        </div>
+        <div className="right">
           <Input className="search" placeholder="音乐/视频/电台/用户" prefix={<SearchOutlined />} />
           <div className="creator-center">
-            <NavLink to="/">创作者中心</NavLink>
+            <span>创作者中心</span>
           </div>
           <div className="login">
-            <NavLink to="/">登录</NavLink>
+            <span>登录</span>
           </div>
-        </StyledRight>
+        </div>
       </div>
       <div className="divider"></div>
     </StyledWrapper>
   )
-})
+}

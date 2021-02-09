@@ -1,21 +1,17 @@
-import React, { Fragment, memo } from 'react'
+import React, { Fragment } from 'react'
 
 import {
   appFooterLinks,
   appFooterImages
 } from '@/services/local-data'
 
-import {
-  StyledWrapper,
-  StyledLeft,
-  StyledRight
-} from './style'
+import { StyledWrapper } from './style'
 
-export default memo(function AppFooter() {
+export default function AppFooter() {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-app-footer">
       <div className="wrap-v2 content">
-        <StyledLeft className="left">
+        <div className="left">
           <div className="link">
             {
               appFooterLinks.map(item => {
@@ -51,8 +47,8 @@ export default memo(function AppFooter() {
               浙公网安备 33010902002564号
             </a>
           </div>
-        </StyledLeft>
-        <StyledRight className="right">
+        </div>
+        <div className="right">
           {
             appFooterImages.map(item => {
               return (
@@ -63,8 +59,8 @@ export default memo(function AppFooter() {
               )
             })
           }
-        </StyledRight>
+        </div>
       </div>
     </StyledWrapper>
   )
-})
+}

@@ -9,7 +9,7 @@ import { StyledWrapper } from './style'
 
 export default memo(function Discover(props) {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="page-discover">
       <div className="partition">
         <ul className="wrap-v1 content">
           {

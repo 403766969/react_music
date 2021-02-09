@@ -12,11 +12,7 @@ import TopCategory from './c-cpns/top-category'
 import TopIntro from './c-cpns/top-intro'
 import SongList from './c-cpns/song-list'
 
-import {
-  StyledWrapper,
-  StyledLeft,
-  StyledRight
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function Toplist(props) {
 
@@ -54,15 +50,15 @@ export default memo(function Toplist(props) {
   }, [dispatch, topId])
 
   return (
-    <StyledWrapper className="wrap-v2">
-      <StyledLeft>
+    <StyledWrapper className="page-discover-toplist wrap-v2">
+      <div className="left">
         <TopCategory title="云音乐特色榜" topCategories={r_topCategories.slice(0, 4)} currentTop={r_currentTop} />
         <TopCategory title="全球媒体榜" topCategories={r_topCategories.slice(4, r_topCategories.length)} currentTop={r_currentTop} />
-      </StyledLeft>
-      <StyledRight>
+      </div>
+      <div className="right">
         <TopIntro currentTop={r_currentTop} />
         <SongList currentTop={r_currentTop} currentSongList={r_currentSongList} />
-      </StyledRight>
+      </div>
     </StyledWrapper>
   )
 })

@@ -17,12 +17,7 @@ import UserLogin from './c-cpns/user-login'
 import SettleSinger from './c-cpns/settle-singer'
 import HotAnchor from './c-cpns/hot-anchor'
 
-import {
-  StyledWrapper,
-  StyledContent,
-  StyledLeft,
-  StyledRight
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function Recomd() {
 
@@ -57,20 +52,20 @@ export default memo(function Recomd() {
   }, [dispatch])
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="page-discover-recomd">
       <TopBanner carouselImages={r_carouselImages} />
-      <StyledContent className="wrap-v2">
-        <StyledLeft>
+      <div className="content wrap-v2">
+        <div className="left">
           <HotRecomd hotRecomdList={r_hotRecomdList} />
           <NewAlbum newAlbumList={r_newAlbumList} />
           <RankMulti rankMultiList={r_rankMultiList} />
-        </StyledLeft>
-        <StyledRight>
+        </div>
+        <div className="right">
           <UserLogin />
           <SettleSinger settleSingerList={r_settleSingerList} />
           <HotAnchor />
-        </StyledRight>
-      </StyledContent>
+        </div>
+      </div>
     </StyledWrapper>
   )
 })

@@ -147,7 +147,7 @@ export default memo(function PaginationBar(props) {
   }
 
   return (
-    <StyledWrapper className="pagination-wrapper">
+    <StyledWrapper className="cpn-pagination-wrapper">
       <ul className="pagination-content">
         {
           liEls

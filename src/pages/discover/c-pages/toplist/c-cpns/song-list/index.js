@@ -14,9 +14,7 @@ import { NavLink } from 'react-router-dom'
 
 import ArtistsDivide from '@/components/artists-divide'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function SongList(props) {
 
@@ -41,8 +39,8 @@ export default memo(function SongList(props) {
     dispatch(action_increase_song(id, false))
   }
 
-  return (
-    <StyledWrapper>
+  return Object.keys(currentTop).length > 0 && (
+    <StyledWrapper className="cpn-song-list">
       <div className="top-header">
         <div className="header-left">
           <h3>歌曲列表</h3>

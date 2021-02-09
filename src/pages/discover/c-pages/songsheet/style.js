@@ -4,13 +4,13 @@ export const StyledWrapper = styled.div`
   padding: 40px;
   background-color: #fff;
 
-  .header {
+  &>.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #c20c0c;
 
-    .hot {
+    &>.hot {
       width: 46px;
       height: 29px;
       line-height: 29px;
@@ -26,11 +26,11 @@ export const StyledWrapper = styled.div`
     }
   }
 
-  .content-i {
+  &>.content {
     padding-top: 30px;
   }
 
-  .footer {
+  &>.footer {
     padding: 20px 0;
   }
 `

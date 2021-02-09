@@ -13,14 +13,17 @@ export default memo(function ArtistsDivide(props) {
    */
   const { artists = [] } = props
 
+  /**
+   * render logic
+   */
   const temp = artists.reduce((prev, cur) => {
     return prev + cur.name + '/'
   }, '')
 
   const title = temp.slice(0, temp.length - 1)
 
-  return (
-    <StyledWrapper title={title} >
+  return artists.length > 0 && (
+    <StyledWrapper className="cpn-artists-divide" title={title}>
       {
         artists.map(item => {
           return (

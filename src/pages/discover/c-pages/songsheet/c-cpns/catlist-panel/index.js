@@ -49,7 +49,7 @@ export default memo(function CatlistPanel(props) {
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-catlist-panel">
       <div className="panel-top">
         <h3 className="current-select">{select}</h3>
         <div className="top-selector sprite_button" onClick={e => setIsShow(!isShow)}>

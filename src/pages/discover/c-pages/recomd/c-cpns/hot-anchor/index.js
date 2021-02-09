@@ -1,21 +1,17 @@
 import React, { memo } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { hotAnchorLinks } from '@/services/local-data'
 
-import { NavLink } from 'react-router-dom'
-
 import HeaderShort from '@/components/header-short'
 
-import {
-  StyledWrapper,
-  StyledContent
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function HotAnchor() {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-hot-anchor">
       <HeaderShort title={'热门主播'} />
-      <StyledContent>
+      <div className="content">
         {
           hotAnchorLinks.map(item => {
             return (
@@ -31,7 +27,7 @@ export default memo(function HotAnchor() {
             )
           })
         }
-      </StyledContent>
+      </div>
     </StyledWrapper>
   )
 })

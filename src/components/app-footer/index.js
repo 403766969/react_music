@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, memo } from 'react'
 
 import {
   appFooterLinks,
@@ -7,7 +7,7 @@ import {
 
 import { StyledWrapper } from './style'
 
-export default function AppFooter() {
+export default memo(function AppFooter() {
   return (
     <StyledWrapper className="cpn-app-footer">
       <div className="wrap-v2 content">
@@ -63,4 +63,4 @@ export default function AppFooter() {
       </div>
     </StyledWrapper>
   )
-}
+})

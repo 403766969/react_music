@@ -5,13 +5,7 @@ import { Carousel } from 'antd'
 import HeaderLong from '@/components/header-long'
 import AlbumCover from '@/components/album-cover'
 
-import {
-  StyledWrapper,
-  StyledPanel,
-  StyledContent,
-  StyledPage,
-  StyledControl
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function NewAlbum(props) {
 
@@ -26,33 +20,33 @@ export default memo(function NewAlbum(props) {
   const carouselRef = useRef()
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-new-album">
       <HeaderLong title="新碟上架" more={{ text: '更多', link: '/discover/album' }} />
-      <StyledPanel>
-        <StyledContent>
+      <div className="panel">
+        <div className="content">
           <Carousel ref={carouselRef} dots={false}>
             {
               [0, 1].map(page => {
                 return (
-                  <StyledPage key={page}>
+                  <div className="carousel-page" key={page}>
                     {
                       newAlbumList.slice(page * 5, (page + 1) * 5).map(item => {
                         return (
-                          <AlbumCover key={item.id} albumInfo={item} />
+                          <AlbumCover key={item.id} albumData={item} />
                         )
                       })
                     }
-                  </StyledPage>
+                  </div>
                 )
               })
             }
           </Carousel>
-        </StyledContent>
-        <StyledControl>
+        </div>
+        <div className="control">
           <span className="arrow arrow-left sprite_02" onClick={e => carouselRef.current.prev()}></span>
           <span className="arrow arrow-right sprite_02" onClick={e => carouselRef.current.next()}></span>
-        </StyledControl>
-      </StyledPanel>
+        </div>
+      </div>
     </StyledWrapper>
   )
 })

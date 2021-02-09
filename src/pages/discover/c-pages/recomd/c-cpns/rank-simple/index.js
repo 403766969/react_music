@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
@@ -8,22 +9,15 @@ import {
   action_increase_songList_with_trackIds
 } from '@/pages/player/store/acitonCreators'
 
-import { NavLink } from 'react-router-dom'
-
-import {
-  StyledWrapper,
-  StyledHeader,
-  StyledContent,
-  StyledFooter
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function RankSimple(props) {
 
   /**
    * props and state
    */
-  const { rankSimpleInfo } = props
-  const { tracks = [], trackIds = [] } = rankSimpleInfo
+  const { rankSimpleData } = props
+  const { tracks = [], trackIds = [] } = rankSimpleData
 
   /**
    * redux hooks
@@ -45,22 +39,22 @@ export default memo(function RankSimple(props) {
     dispatch(action_increase_songList_with_trackIds(trackIds, true))
   }
 
-  return (
-    <StyledWrapper>
-      <StyledHeader>
+  return Object.keys(rankSimpleData).length > 0 && (
+    <StyledWrapper className="cpn-rank-simple">
+      <div className="header">
         <div className="image">
-          <img src={formatUrlWithSize(rankSimpleInfo.coverImgUrl, 80)} alt="" />
-          <NavLink to={`/discover/toplist?id=${rankSimpleInfo.id}`} className="image_cover" title={rankSimpleInfo.name}>ranking</NavLink>
+          <img src={formatUrlWithSize(rankSimpleData.coverImgUrl, 80)} alt="" />
+          <NavLink to={`/discover/toplist?id=${rankSimpleData.id}`} className="image_cover" title={rankSimpleData.name}>ranking</NavLink>
         </div>
         <div className="info">
-          <NavLink to={`/discover/toplist?id=${rankSimpleInfo.id}`} title={rankSimpleInfo.name}>{rankSimpleInfo.name}</NavLink>
+          <NavLink to={`/discover/toplist?id=${rankSimpleData.id}`} title={rankSimpleData.name}>{rankSimpleData.name}</NavLink>
           <div>
             <button className="btn play sprite_02" title="播放" onClick={handleAddList}></button>
             <button className="btn favor sprite_02" title="收藏"></button>
           </div>
         </div>
-      </StyledHeader>
-      <StyledContent>
+      </div>
+      <div className="content">
         {
           tracks.slice(0, 10).map((item, index) => {
             return (
@@ -78,10 +72,10 @@ export default memo(function RankSimple(props) {
             )
           })
         }
-      </StyledContent>
-      <StyledFooter>
-        <NavLink to={`/discover/toplist?id=${rankSimpleInfo.id}`}>查看全部 &gt;</NavLink>
-      </StyledFooter>
+      </div>
+      <div className="footer">
+        <NavLink to={`/discover/toplist?id=${rankSimpleData.id}`}>查看全部 &gt;</NavLink>
+      </div>
     </StyledWrapper>
   )
 })

@@ -1,8 +1,6 @@
 import React, { memo, useState } from 'react'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function SongLyric(props) {
 
@@ -19,7 +17,7 @@ export default memo(function SongLyric(props) {
   const lyricRows = isFold ? 13 : songLyric.length
 
   return (
-    <StyledWrapper isFold={isFold}>
+    <StyledWrapper className="cpn-song-lyric" isFold={isFold}>
       <div className="content">
         {
           songLyric.slice(0, lyricRows).map(item => {

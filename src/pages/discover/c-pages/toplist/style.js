@@ -8,21 +8,21 @@ export const StyledWrapper = styled.div`
   border-left: 1px solid #d3d3d3;
   border-right: 1px solid #d3d3d3;
   box-sizing: content-box;
-`
 
-export const StyledLeft = styled.div`
-  width: 240px;
+  &>.left {
+    width: 240px;
 
-  .top-category:nth-child(1) {
-    margin-top: 40px;
+    .cpn-top-category:nth-child(1) {
+      margin-top: 40px;
+    }
+
+    .cpn-top-category:nth-child(2) {
+      margin-top: 20px;
+    }
   }
 
-  .top-category:nth-child(2) {
-    margin-top: 20px;
+  &>.right {
+    flex: 1;
+    width: 0;
   }
-`
-
-export const StyledRight = styled.div`
-  flex: 1;
-  width: 0;
 `

@@ -6,11 +6,7 @@ import {
   action_increase_songList_with_songsheetId
 } from '@/pages/player/store/acitonCreators'
 
-import {
-  StyleWrapper,
-  StyleLeft,
-  StyleRight
-} from './style'
+import { StyleWrapper } from './style'
 
 export default memo(function OperationBar(props) {
 
@@ -45,8 +41,8 @@ export default memo(function OperationBar(props) {
   }
 
   return (
-    <StyleWrapper>
-      <StyleLeft>
+    <StyleWrapper className="cpn-operation-bar">
+      <div className="left">
         <button className="play sprite_button" title="播放" onClick={handlePlay}>
           <i className="sprite_button"></i>
           <span>播放</span>
@@ -54,8 +50,8 @@ export default memo(function OperationBar(props) {
         <button className="add sprite_button" title="添加到播放列表" onClick={handleAdd}>
           <i className="sprite_button"></i>
         </button>
-      </StyleLeft>
-      <StyleRight>
+      </div>
+      <div className="right">
         <button className="favor sprite_button" title="收藏">
           <i className="sprite_button"></i>
           <span>{favorText}</span>
@@ -72,7 +68,7 @@ export default memo(function OperationBar(props) {
           <i className="sprite_button"></i>
           <span>{commentText}</span>
         </button>
-      </StyleRight>
+      </div>
     </StyleWrapper>
   )
 })

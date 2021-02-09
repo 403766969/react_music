@@ -10,10 +10,7 @@ import { NavLink } from 'react-router-dom'
 import HeaderShort from '@/components/header-short'
 import ArtistsDivide from '@/components/artists-divide'
 
-import {
-  StyleWrapper,
-  StyleContent
-} from './style'
+import { StyleWrapper } from './style'
 
 export default memo(function SimiSong(props) {
 
@@ -39,9 +36,9 @@ export default memo(function SimiSong(props) {
   }
 
   return (
-    <StyleWrapper>
+    <StyleWrapper className="cpn-simi-song">
       <HeaderShort title="相似歌曲" />
-      <StyleContent>
+      <div className="content">
         {
           simiSong.map(item => {
             return (
@@ -62,7 +59,7 @@ export default memo(function SimiSong(props) {
             )
           })
         }
-      </StyleContent>
+      </div>
     </StyleWrapper>
   )
 })

@@ -1,16 +1,11 @@
 import React, { memo } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
-import { NavLink } from 'react-router-dom'
-
 import HeaderShort from '@/components/header-short'
 
-import {
-  StyledWrapper,
-  StyledContent,
-  StyledFooter
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function SettleSinger(props) {
 
@@ -20,9 +15,9 @@ export default memo(function SettleSinger(props) {
   const { settleSingerList = [] } = props
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-settle-singer">
       <HeaderShort title={'入驻歌手'} more={{ text: '查看全部', link: '/discover/artist/signed' }} />
-      <StyledContent>
+      <div className="content">
         {
           settleSingerList.map(item => {
             return (
@@ -36,10 +31,10 @@ export default memo(function SettleSinger(props) {
             )
           })
         }
-      </StyledContent>
-      <StyledFooter>
+      </div>
+      <div className="footer">
         <a href="https://music.163.com/st/musician" target="_blank" rel="noreferrer">申请成为网易音乐人</a>
-      </StyledFooter>
+      </div>
     </StyledWrapper>
   )
 })

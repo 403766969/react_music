@@ -61,14 +61,14 @@ export default memo(function Songsheet(props) {
   }, [dispatch])
 
   return (
-    <StyledWrapper className="wrap-v2">
+    <StyledWrapper className="page-discover-songsheet wrap-v2">
       <div className="header">
         <CatlistPanel catList={r_catList} />
         <div className="hot sprite_button2">
           <span>热门</span>
         </div>
       </div>
-      <div className="content-i">
+      <div className="content">
         <SongsheetList listData={r_songsheetData.playlists} />
       </div>
       <div className="footer">

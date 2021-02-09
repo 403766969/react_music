@@ -14,12 +14,12 @@ export default memo(function SongsheetList(props) {
   const { listData = [] } = props
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-songsheet-list">
       {
         listData.map(item => {
           return (
             <li key={item.id}>
-              <SongsheetCover songsheetInfo={item} isShowAuthor={true} />
+              <SongsheetCover songsheetData={item} isShowAuthor={true} />
             </li>
           )
         })

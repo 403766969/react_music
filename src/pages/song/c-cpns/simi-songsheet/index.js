@@ -6,10 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import HeaderShort from '@/components/header-short'
 
-import {
-  StyleWrapper,
-  StyleContent
-} from './style'
+import { StyleWrapper } from './style'
 
 export default memo(function SimiSongsheet(props) {
 
@@ -19,9 +16,9 @@ export default memo(function SimiSongsheet(props) {
   const { simiSongsheet = [] } = props
 
   return (
-    <StyleWrapper>
+    <StyleWrapper className="cpn-simi-songsheet">
       <HeaderShort title="包含这首歌的歌单" />
-      <StyleContent>
+      <div className="content">
         {
           simiSongsheet.map(item => {
             return (
@@ -42,7 +39,7 @@ export default memo(function SimiSongsheet(props) {
             )
           })
         }
-      </StyleContent>
+      </div>
     </StyleWrapper>
   )
 })

@@ -19,7 +19,7 @@ export default memo(function TopIntro(props) {
   const { currentTop = {} } = props
 
   return (
-    <StyledWrapper className="top-category">
+    <StyledWrapper className="cpn-top-intro">
       <div className="top-cover">
         <img src={formatUrlWithSize(currentTop.coverImgUrl, 150)} alt={currentTop.name} />
         <span className="sprite_covor mask"></span>

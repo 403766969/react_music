@@ -1,7 +1,6 @@
 import React, { memo } from 'react'
-import PropTypes from 'prop-types'
-
 import { NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { StyleWrapper } from './style'
 
@@ -13,7 +12,7 @@ const HeaderShortMemo = memo(function HeaderShort(props) {
   const { title, more } = props
 
   return (
-    <StyleWrapper>
+    <StyleWrapper className="cpn-header-short">
       <h3>{title}</h3>
       {
         more.link && more.text

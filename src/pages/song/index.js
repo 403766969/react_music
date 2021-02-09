@@ -16,12 +16,7 @@ import SongInfo from './c-cpns/song-info'
 import SimiSongsheet from './c-cpns/simi-songsheet'
 import SimiSong from './c-cpns/simi-song'
 
-import {
-  StyleWrapper,
-  StyleContent,
-  StyleLeft,
-  StyleRight
-} from './style'
+import { StyleWrapper } from './style'
 
 export default memo(function Song(props) {
 
@@ -63,16 +58,16 @@ export default memo(function Song(props) {
   }, [dispatch, songId])
 
   return (
-    <StyleWrapper>
-      <StyleContent className="wrap-v2">
-        <StyleLeft>
-          <SongInfo songInfo={r_songInfo} songLyric={r_songLyric} />
-        </StyleLeft>
-        <StyleRight>
+    <StyleWrapper className="page-song">
+      <div className="content wrap-v2">
+        <div className="left">
+          <SongInfo songData={r_songInfo} songLyric={r_songLyric} />
+        </div>
+        <div className="right">
           <SimiSongsheet simiSongsheet={r_simiSongsheet} />
           <SimiSong simiSong={r_simiSong} />
-        </StyleRight>
-      </StyleContent>
+        </div>
+      </div>
     </StyleWrapper>
   )
 })

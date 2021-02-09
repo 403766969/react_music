@@ -38,7 +38,7 @@ export default memo(function TopCategory(props) {
   }
 
   return (
-    <StyledWrapper className="top-category">
+    <StyledWrapper className="cpn-top-category">
       <h2 className="category-title">{title}</h2>
       <ul className="category-list">
         {

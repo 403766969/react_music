@@ -31,7 +31,7 @@ export const StyledWrapper = styled.div`
     margin-left: 30px;
     width: 0;
 
-    .top-name {
+    &>.top-name {
       margin: 16px 0 4px 0;
       height: 24px;
       line-height: 24px;
@@ -40,7 +40,7 @@ export const StyledWrapper = styled.div`
       color: #333;
     }
 
-    .top-update {
+    &>.top-update {
       display: flex;
       justify-content: flex-start;
       align-items: center;

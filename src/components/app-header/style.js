@@ -5,13 +5,13 @@ export const StyledWrapper = styled.div`
   font-size: 14px;
   background-color: #242424;
 
-  &>.content {
+  .content {
     display: flex;
     justify-content: space-between;
     height: 70px;
   }
 
-  &>.content .left {
+  .content .left {
     display: flex;
 
     .logo {
@@ -28,7 +28,7 @@ export const StyledWrapper = styled.div`
     .channel-menu {
       display: flex;
 
-      .channel-item a {
+      .channel-item a{
         position: relative;
         display: block;
         padding: 0 19px;
@@ -70,7 +70,7 @@ export const StyledWrapper = styled.div`
     }
   }
 
-  &>.content .right {
+  .content .right {
     display: flex;
     align-items: center;
 
@@ -90,6 +90,11 @@ export const StyledWrapper = styled.div`
         }
       }
     }
+
+    a {
+      font-size: 12px;
+      text-decoration: none;
+    }
     
     .creator-center {
       margin: 0 20px 0 12px;
@@ -101,13 +106,17 @@ export const StyledWrapper = styled.div`
       border-radius: 16px;
       cursor: pointer;
 
-      &:hover{
-        border-color: #ccc;
-      }
-
       span {
         font-size: 12px;
         color: #ccc;
+      }
+
+      &:hover{
+        border-color: #ccc;
+
+        span {
+          color: #fff;
+        }
       }
     }
 
@@ -127,7 +136,7 @@ export const StyledWrapper = styled.div`
     }
   }
 
-  &>.divider {
+  .divider {
     height: 5px;
     background-color: #C20C0C;
   }

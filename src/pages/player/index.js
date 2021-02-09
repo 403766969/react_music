@@ -8,7 +8,7 @@ import {
 
 export default memo(function Player() {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="page-player">
       <PlayerBar />
     </StyledWrapper>
   )

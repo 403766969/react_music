@@ -3,11 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { action_clear_state } from '../../../../store/acitonCreators'
 
-import {
-  StyledWrapper,
-  StyledLeft,
-  StyledRight
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function PanelHeader(props) {
 
@@ -38,8 +34,8 @@ export default memo(function PanelHeader(props) {
   }
 
   return (
-    <StyledWrapper>
-      <StyledLeft>
+    <StyledWrapper className="cpn-panel-header">
+      <div className="left">
         <h3 className="title">播放列表({songList.length})</h3>
         <div className="operator">
           <button title="收藏全部">
@@ -52,11 +48,11 @@ export default memo(function PanelHeader(props) {
             清除
           </button>
         </div>
-      </StyledLeft>
-      <StyledRight>
+      </div>
+      <div className="right">
         <p className="song-name text-nowrap">{currentSong.name}</p>
         <i className="sprite_playlist close" title="关闭" onClick={handleCloseClick}></i>
-      </StyledRight>
+      </div>
     </StyledWrapper>
   )
 })

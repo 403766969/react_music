@@ -12,7 +12,7 @@ export const StyledWrapper = styled.div`
     line-height: 25px;
   }
 
-  a {
+  span {
     display: inline-block;
     margin-top: 10px;
     width: 100px;
@@ -23,6 +23,7 @@ export const StyledWrapper = styled.div`
     text-shadow: 0 1px 0 #8a060b;
     color: #fff;
     background-position: 0 -195px;
+    cursor: pointer;
 
     :hover {
       background-position: -110px -195px;

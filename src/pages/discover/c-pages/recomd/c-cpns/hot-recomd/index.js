@@ -5,10 +5,7 @@ import { hotRecomdLinks } from '@/services/local-data'
 import HeaderLong from '@/components/header-long'
 import SongsheetCover from '@/components/songsheet-cover'
 
-import {
-  StyledWrapper,
-  StyledContent
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function HotRecomd(props) {
 
@@ -18,17 +15,19 @@ export default memo(function HotRecomd(props) {
   const { hotRecomdList = [] } = props
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-hot-recomd">
       <HeaderLong title="热门推荐" links={hotRecomdLinks} more={{ text: '更多', link: '/discover/songsheet' }} />
-      <StyledContent>
+      <ul className="content">
         {
           hotRecomdList.map(item => {
             return (
-              <SongsheetCover songsheetInfo={item} key={item.id} />
+              <li key={item.id}>
+                <SongsheetCover songsheetData={item} />
+              </li>
             )
           })
         }
-      </StyledContent>
+      </ul>
     </StyledWrapper>
   )
 })

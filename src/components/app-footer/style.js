@@ -6,14 +6,14 @@ export const StyledWrapper = styled.div`
   background-color: #f2f2f2;
   border-top: 1px solid #d3d3d3;
 
-  &>.content {
+  .content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 0;
   }
 
-  &>.content .left {
+  .content .left {
     line-height: 24px;
     font-size: 12px;
 
@@ -42,7 +42,7 @@ export const StyledWrapper = styled.div`
     }
   }
 
-  &>.content .right {
+  .content .right {
     display: flex;
 
     .item {

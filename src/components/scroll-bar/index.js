@@ -156,7 +156,7 @@ export default memo(forwardRef(function ScrollBar(props, ref) {
   }), [scrollToByTop, scrollToByPercent])
 
   return (
-    <StyledWrapper className="scroll-bar" gripSize={parseInt(gripSize)}>
+    <StyledWrapper className="cpn-scroll-bar" gripSize={parseInt(gripSize)}>
       <div className="scroll-track" onMouseDown={handleMouseDown} ref={trackRef}>
         <span className="scroll-grip" style={{ top: top + 'px' }} ref={gripRef}></span>
       </div>

@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
-
-import { dicoverPartLinks } from '@/services/local-data'
-
 import { NavLink } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
+
+import { dicoverPartLinks } from '@/services/local-data'
 
 import { StyledWrapper } from './style'
 

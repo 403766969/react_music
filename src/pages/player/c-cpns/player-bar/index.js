@@ -307,7 +307,7 @@ export default memo(function PlayerBar() {
   }, [])
 
   return (
-    <StyleWrapper className={`sprite_playbar ${(isLocked || isShowPanel) ? '' : 'hidden'}`}>
+    <StyleWrapper className={`cpn-player-bar sprite_playbar ${(isLocked || isShowPanel) ? '' : 'hidden'}`}>
       <StyleContent>
         <StyleControl isPlaying={isPlaying}>
           <button className="sprite_playbar btn prev" title="上一首(ctrl+←)" onClick={e => handleChangeCurrentSong(-1)}></button>

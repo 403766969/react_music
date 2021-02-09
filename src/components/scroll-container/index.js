@@ -1,9 +1,6 @@
 import React, { memo, forwardRef, useState, useRef, useEffect, useCallback, useImperativeHandle } from 'react'
 
-import {
-  StyledWrapper,
-  StyledContent
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(forwardRef(function ScrollContainer(props, ref) {
 
@@ -143,10 +140,10 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
   }), [scrollUpdate, scrollToByTop, scrollToByPercent])
 
   return (
-    <StyledWrapper ref={wrapperRef}>
-      <StyledContent ref={contentRef} style={{ top: top + 'px' }}>
+    <StyledWrapper className="cpn-scroll-container wrapper" ref={wrapperRef}>
+      <div className="content" style={{ top: top + 'px' }} ref={contentRef} >
         {children}
-      </StyledContent>
+      </div>
     </StyledWrapper>
   )
 }))

@@ -4,10 +4,7 @@ import HeaderLong from '@/components/header-long'
 
 import RankSimple from '../rank-simple'
 
-import {
-  StyledWrapper,
-  StyledContent
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function RankMulti(props) {
 
@@ -17,15 +14,15 @@ export default memo(function RankMulti(props) {
   const { rankMultiList = [] } = props
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-rank-multi">
       <HeaderLong title="榜单" more={{ text: '更多', link: '/discover/toplist' }} />
-      <StyledContent>
+      <div className="content">
         {
           rankMultiList.map(item => {
-            return <RankSimple rankSimpleInfo={item} key={item.id} />
+            return <RankSimple key={item.id} rankSimpleData={item} />
           })
         }
-      </StyledContent>
+      </div>
     </StyledWrapper>
   )
 })

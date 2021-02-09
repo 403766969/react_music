@@ -1,14 +1,9 @@
 import React, { memo } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
-import { useHistory } from 'react-router-dom'
-
-import {
-  StyledWrapper,
-  StyledImage,
-  StyledDec
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function AlbumCover(props) {
 
@@ -16,7 +11,7 @@ export default memo(function AlbumCover(props) {
    * props and state
    */
   const {
-    albumInfo = {},
+    albumData = {},
     imgW = '100px',
     imgH = '100px',
     coverW = '118px',
@@ -33,25 +28,23 @@ export default memo(function AlbumCover(props) {
    * other logic
    */
   const pushRoute_album = () => {
-    history.push(`/album?id=${albumInfo.id}`)
+    history.push(`/album?id=${albumData.id}`)
   }
 
   const pushRoute_artist = () => {
-    history.push(`/artist?id=${albumInfo.artist.id}`)
+    history.push(`/artist?id=${albumData.artist.id}`)
   }
 
-  return (
-    <StyledWrapper>
-      <StyledImage
-        imgW={imgW} imgH={imgH} coverW={coverW} coverH={coverH} bgPos={bgPos}
-        onClick={pushRoute_album}>
-        <img src={formatUrlWithSize(albumInfo.picUrl, 150)} alt="" />
-        <div className="mask sprite_covor" title={albumInfo.name}></div>
-      </StyledImage>
-      <StyledDec imgW={imgW}>
-        <div className="name text-nowrap" onClick={pushRoute_album} title={albumInfo.name}>{albumInfo.name}</div>
-        <div className="artist text-nowrap" onClick={pushRoute_artist} title={albumInfo.artist.name}>{albumInfo.artist.name}</div>
-      </StyledDec>
+  return Object.keys(albumData).length > 0 && (
+    <StyledWrapper className="cpn-album-cover" imgW={imgW} imgH={imgH} coverW={coverW} coverH={coverH} bgPos={bgPos}>
+      <div className="top-cover" onClick={pushRoute_album}>
+        <img src={formatUrlWithSize(albumData.picUrl, 150)} alt="" />
+        <div className="mask sprite_covor" title={albumData.name}></div>
+      </div>
+      <div className="bottom-dec">
+        <div className="name text-nowrap" onClick={pushRoute_album} title={albumData.name}>{albumData.name}</div>
+        <div className="artist text-nowrap" onClick={pushRoute_artist} title={albumData.artist.name}>{albumData.artist.name}</div>
+      </div>
     </StyledWrapper>
   )
 })

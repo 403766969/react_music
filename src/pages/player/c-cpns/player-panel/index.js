@@ -8,12 +8,7 @@ import PanelHeader from './c-cpns/panel-header'
 import PlayList from './c-cpns/play-list'
 import LyricDisplay from './c-cpns/lyric-display'
 
-import {
-  StyledWrapper,
-  StyledContent,
-  StyledLeft,
-  StyledRight
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function PlayerPanel(props) {
 
@@ -115,22 +110,22 @@ export default memo(function PlayerPanel(props) {
   }, [])
 
   return (
-    <StyledWrapper style={{ visibility: isShowPanel ? 'visible' : 'hidden' }} >
+    <StyledWrapper className="cpn-player-panel" style={{ visibility: isShowPanel ? 'visible' : 'hidden' }} >
       <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
-      <StyledContent>
-        <StyledLeft>
+      <div className="content">
+        <div className="left">
           <ScrollContainer ref={scrollContainerRef_pl} delta={55} onWheel={handleWheel_pl}>
             <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
           </ScrollContainer>
           <ScrollBar ref={scrollBarRef_pl} gripSize={gripSize_pl} onDrag={handleDrag_pl} />
-        </StyledLeft>
-        <StyledRight>
+        </div>
+        <div className="right">
           <ScrollContainer ref={scrollContainerRef_ld} delta={45} onWheel={handleWheel_ld}>
             <LyricDisplay ref={lyricDisplayRef} currentLyric={r_currentLyric} currentLyricIndex={r_currentLyricIndex} />
           </ScrollContainer>
           <ScrollBar ref={scrollBarRef_ld} gripSize={gripSize_ld} onDrag={handleDrag_ld} />
-        </StyledRight>
-      </StyledContent>
+        </div>
+      </div>
     </StyledWrapper>
   )
 })

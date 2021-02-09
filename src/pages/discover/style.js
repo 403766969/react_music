@@ -1,14 +1,14 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  .partition {
+  &>.partition {
     display: flex;
     align-items: center;
     height: 30px;
     background-color: #C20C0C;
   }
 
-  .content {
+  &>.partition .content {
     display: flex;
     align-items: center;
     position: relative;

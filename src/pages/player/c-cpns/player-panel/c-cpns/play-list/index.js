@@ -39,7 +39,7 @@ export default memo(function PlayList(props) {
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="cpn-play-list">
       {
         songList.map((item, index) => {
           return (

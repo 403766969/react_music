@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledWrapper = styled.ul`
   width: 100%;
 
-  .play-item {
+  &>.play-item {
     display: flex;
     justify-content: space-between;
     align-items: center;

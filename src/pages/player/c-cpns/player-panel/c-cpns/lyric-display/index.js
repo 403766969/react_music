@@ -12,7 +12,7 @@ export default memo(forwardRef(function LyricDisplay(props, ref) {
   const { currentLyric = [], currentLyricIndex = -1 } = props
 
   return (
-    <StyledWrapper ref={ref}>
+    <StyledWrapper className="cpn-lyric-display" ref={ref}>
       {
         currentLyric.map((item, index) => {
           return (

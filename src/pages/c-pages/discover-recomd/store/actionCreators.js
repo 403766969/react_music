@@ -1,7 +1,6 @@
 import { actionTypes } from './constants'
 
-import * as recomdApi from '@/services/recomdApi'
-import * as toplistApi from '@/services/toplistApi'
+import * as otherApi from '@/services/otherApi'
 import * as songsheetApi from '@/services/songsheetApi'
 import * as songApi from '@/services/songApi'
 import axios from 'axios'
@@ -9,27 +8,27 @@ import axios from 'axios'
 /**
  * 操作state
  */
-export const action_set_topBannerList = topBannerList => ({
+export const set_topBannerList = topBannerList => ({
   type: actionTypes.SET_TOP_BANNER_LIST,
   topBannerList: topBannerList
 })
 
-export const action_set_hotRecomdList = hotRecomdList => ({
+export const set_hotRecomdList = hotRecomdList => ({
   type: actionTypes.SET_HOT_RECOMD_LIST,
   hotRecomdList: hotRecomdList
 })
 
-export const action_set_newAlbumList = newAlbumList => ({
+export const set_newAlbumList = newAlbumList => ({
   type: actionTypes.SET_NEW_ALBUM_LIST,
   newAlbumList: newAlbumList
 })
 
-export const action_set_rankMultiList = rankMultiList => ({
+export const set_rankMultiList = rankMultiList => ({
   type: actionTypes.SET_RANK_MULTI_LIST,
   rankMultiList: rankMultiList
 })
 
-export const action_set_settleSingerList = settleSingerList => ({
+export const set_settleSingerList = settleSingerList => ({
   type: actionTypes.SET_SETTLE_SINGER_LIST,
   settleSingerList: settleSingerList
 })
@@ -37,30 +36,34 @@ export const action_set_settleSingerList = settleSingerList => ({
 /**
  * 异步请求
  */
-export const action_get_topBannerList = () => {
+// 轮播图
+export const get_topBannerList = () => {
   return async dispatch => {
-    const res = await recomdApi.api_get_banner()
-    dispatch(action_set_topBannerList(res.banners))
+    const res = await otherApi.get_banner()
+    dispatch(set_topBannerList(res.banners))
   }
 }
 
-export const action_get_hotRecomdList = limit => {
+// 热门推荐
+export const get_hotRecomdList = limit => {
   return async dispatch => {
-    const res = await recomdApi.api_get_personalized(limit)
-    dispatch(action_set_hotRecomdList(res.result))
+    const res = await otherApi.get_personalized(limit)
+    dispatch(set_hotRecomdList(res.result))
   }
 }
 
-export const action_get_newAlbumList = (limit, offset) => {
+// 新碟上架
+export const get_newAlbumList = (limit, offset) => {
   return async dispatch => {
-    const res = await recomdApi.api_get_topAlbum(limit, offset)
-    dispatch(action_set_newAlbumList(res.albums))
+    const res = await otherApi.get_top_album(limit, offset)
+    dispatch(set_newAlbumList(res.albums))
   }
 }
 
-export const action_get_rankMultiList = () => {
+// 榜单
+export const get_rankMultiList = () => {
   return async dispatch => {
-    const resA = await toplistApi.api_get_toplist()
+    const resA = await otherApi.get_toplist()
 
     const reqB = []
     reqB.push(songsheetApi.api_get_playlistDetail(resA.list[0].id))
@@ -83,13 +86,14 @@ export const action_get_rankMultiList = () => {
     rankMultiList.push(resB[1].playlist)
     rankMultiList.push(resB[2].playlist)
 
-    dispatch(action_set_rankMultiList(rankMultiList))
+    dispatch(set_rankMultiList(rankMultiList))
   }
 }
 
-export const action_get_settleSingerList = (cat, limit) => {
+// 入驻歌手
+export const get_settleSingerList = (cat, limit) => {
   return async dispatch => {
-    const res = await recomdApi.api_get_artistList(cat, limit)
-    dispatch(action_set_settleSingerList(res.artists))
+    const res = await otherApi.get_artistList(cat, limit)
+    dispatch(set_settleSingerList(res.artists))
   }
 }

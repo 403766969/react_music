@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { hotAnchorLinks } from '@/services/local-data'
+import { HotAnchor_Links } from '@/services/local-data'
 
 import HeaderShort from '@/components/header-short'
 
@@ -13,14 +13,14 @@ export default memo(function HotAnchor() {
       <HeaderShort title={'热门主播'} />
       <div className="content">
         {
-          hotAnchorLinks.map(item => {
+          HotAnchor_Links.map(item => {
             return (
               <div className="item" key={item.id}>
-                <NavLink to={`/user/home?id=${item.id}`} className="image">
+                <NavLink to={item.url} className="image">
                   <img src={item.picUrl} alt="" />
                 </NavLink>
                 <div className="info">
-                  <NavLink to={`/user/home?id=${item.id}`} className="name">{item.name}</NavLink>
+                  <NavLink to={item.url} className="name">{item.name}</NavLink>
                   <div className="position text-nowrap">{item.position}</div>
                 </div>
               </div>

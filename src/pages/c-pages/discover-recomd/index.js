@@ -1,13 +1,7 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import {
-  action_get_topBannerList,
-  action_get_hotRecomdList,
-  action_get_newAlbumList,
-  action_get_rankMultiList,
-  action_get_settleSingerList
-} from './store/actionCreators'
+import * as actions from './store/actionCreators'
 
 import TopBanner from './c-cpns/top-banner'
 import HotRecomd from './c-cpns/hot-recomd'
@@ -44,11 +38,11 @@ export default memo(function DiscoverRecomd() {
    * other hooks
    */
   useEffect(() => {
-    dispatch(action_get_topBannerList())
-    dispatch(action_get_hotRecomdList(8))
-    dispatch(action_get_newAlbumList(10, 0))
-    dispatch(action_get_rankMultiList())
-    dispatch(action_get_settleSingerList(5001, 5))
+    dispatch(actions.get_topBannerList())
+    dispatch(actions.get_hotRecomdList(8))
+    dispatch(actions.get_newAlbumList(10, 0))
+    dispatch(actions.get_rankMultiList())
+    dispatch(actions.get_settleSingerList(5001, 5))
   }, [dispatch])
 
   return (

@@ -1,37 +1,37 @@
-export const appheaderLinks = [
+export const AppHeader_Links = [
   {
     title: '发现音乐',
     link: '/discover',
-    isNav: true
+    isInside: true
   },
   {
     title: '我的音乐',
     link: '/my',
-    isNav: true
+    isInside: true
   },
   {
     title: '朋友',
     link: '/friend',
-    isNav: true
+    isInside: true
   },
   {
     title: '商城',
     link: 'https://music.163.com/store/product',
-    isNav: false
+    isInside: false
   },
   {
     title: '音乐人',
     link: 'https://music.163.com/st/musician',
-    isNav: false
+    isInside: false
   },
   {
     title: '下载客户端',
     link: 'https://music.163.com/#/download',
-    isNav: false
+    isInside: false
   }
 ]
 
-export const appFooterLinks = [
+export const AppFooter_Links = [
   {
     title: '服务条款',
     link: 'https://st.music.163.com/official-terms/service'
@@ -54,22 +54,26 @@ export const appFooterLinks = [
   }
 ]
 
-export const appFooterImages = [
+export const AppFooter_Images = [
   {
+    title: '用户认证',
     link: 'https://music.163.com/st/userbasic#/auth'
   },
   {
+    title: '独立音乐人',
     link: 'https://music.163.com/st/musician'
   },
   {
+    title: '赞赏',
     link: 'https://music.163.com/web/reward'
   },
   {
+    title: '视频奖励',
     link: 'https://music.163.com/uservideo#/plan'
   }
 ]
 
-export const dicoverPartLinks = [
+export const ChannelBar_Links = [
   {
     title: '推荐',
     link: '/discover/recomd'
@@ -96,7 +100,7 @@ export const dicoverPartLinks = [
   },
 ]
 
-export const hotRecomdLinks = [
+export const HotRecomd_Links = [
   {
     title: '华语',
     link: '/discover/songsheet/?cat=华语'
@@ -119,7 +123,7 @@ export const hotRecomdLinks = [
   }
 ]
 
-export const hotAnchorLinks = [
+export const HotAnchor_Links = [
   {
     picUrl: 'http://p1.music.126.net/H3QxWdf0eUiwmhJvA4vrMQ==/1407374893913311.jpg',
     name: '陈立',

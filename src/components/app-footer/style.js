@@ -80,6 +80,7 @@ export const StyledWrapper = styled.div`
         display: block;
         width: 52px;
         height: 10px;
+        text-indent: -9999px;
         background-image: url(${require('@/assets/img/sprite_footer_01.png').default});
         background-size: 180px 100px;
       }

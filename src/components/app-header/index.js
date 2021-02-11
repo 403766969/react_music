@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { appheaderLinks } from '@/services/local-data'
+import { AppHeader_Links } from '@/services/local-data'
 
 import { Input } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
@@ -18,11 +18,11 @@ export default memo(function AppHeader() {
           </h1>
           <ul className="channel-menu">
             {
-              appheaderLinks.map(item => {
+              AppHeader_Links.map(item => {
                 return (
                   <li className="channel-item" key={item.title}>
                     {
-                      item.isNav
+                      item.isInside
                         ? <NavLink to={item.link}>{item.title}</NavLink>
                         : <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
                     }

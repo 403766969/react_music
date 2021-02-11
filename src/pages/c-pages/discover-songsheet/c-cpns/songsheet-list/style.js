@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   &>li {
     padding: 0 0 30px 50px;

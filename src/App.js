@@ -1,14 +1,14 @@
-import React, { Suspense, memo } from 'react'
+import React, { memo, Suspense } from 'react'
 
 import 'antd/dist/antd.css'
 import '@/assets/css/base.css'
 
-import store from '@/store'
 import routes from '@/router'
+import store from '@/store'
 
-import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
+import { Provider } from 'react-redux'
 
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
@@ -18,16 +18,16 @@ import Player from '@/pages/player'
 
 export default memo(function App() {
   return (
-    <Provider store={store}>
-      <HashRouter>
+    <HashRouter>
+      <Provider store={store}>
+        <AppHeader />
         <Suspense fallback={<div>Loading...</div>}>
-          <AppHeader />
           {renderRoutes(routes)}
-          <AppFooter />
-          <BackTop />
-          <Player />
         </Suspense>
-      </HashRouter>
-    </Provider>
+        <AppFooter />
+        <BackTop />
+        <Player />
+      </Provider>
+    </HashRouter>
   )
 })

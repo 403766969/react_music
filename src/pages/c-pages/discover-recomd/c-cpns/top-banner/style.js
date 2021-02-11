@@ -67,7 +67,7 @@ export const StyledWrapper = styled.div`
       top: 50%;
       width: 37px;
       height: 63px;
-      background: url(${require("@/assets/img/banner_sprite.png").default}) no-repeat;
+      background: url(${require('@/assets/img/banner_sprite.png').default}) no-repeat;
       background-color: transparent;
       transform: translateY(-50%);
       cursor: pointer;

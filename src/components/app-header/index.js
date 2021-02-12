@@ -10,7 +10,7 @@ import { StyledWrapper } from './style'
 
 export default memo(function AppHeader() {
   return (
-    <StyledWrapper className="cpn-app-header">
+    <StyledWrapper className="cpn-app-header wrap-min-width">
       <div className="wrap-v1 content">
         <div className="left">
           <h1 className="logo sprite_01">

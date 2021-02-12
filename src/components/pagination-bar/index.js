@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 
 import {
   StyledWrapper
@@ -9,9 +9,7 @@ export default memo(function PaginationBar(props) {
   /**
    * props and state
    */
-  const { total = 0, pageSize = 10, itemCount = 7, fastStep = 5, defaultCurrent = 1, onChange } = props
-
-  const [current, setCurrent] = useState(defaultCurrent)
+  const { current = 1, total = 0, pageSize = 10, itemCount = 7, fastStep = 5, onChange } = props
 
   /**
    * other logic
@@ -101,7 +99,6 @@ export default memo(function PaginationBar(props) {
     if (onChange && typeof onChange === 'function') {
       onChange(index, pageSize_show)
     }
-    setCurrent(index)
   }
 
   const handlePrevClick = () => {
@@ -111,7 +108,6 @@ export default memo(function PaginationBar(props) {
     if (onChange && typeof onChange === 'function') {
       onChange(current - 1, pageSize_show)
     }
-    setCurrent(current - 1)
   }
 
   const handleNextClick = () => {
@@ -121,7 +117,6 @@ export default memo(function PaginationBar(props) {
     if (onChange && typeof onChange === 'function') {
       onChange(current + 1, pageSize_show)
     }
-    setCurrent(current + 1)
   }
 
   const handleRewindClick = () => {
@@ -132,7 +127,6 @@ export default memo(function PaginationBar(props) {
     if (onChange && typeof onChange === 'function') {
       onChange(index, pageSize_show)
     }
-    setCurrent(index)
   }
 
   const handleForwardClick = () => {
@@ -143,7 +137,6 @@ export default memo(function PaginationBar(props) {
     if (onChange && typeof onChange === 'function') {
       onChange(index, pageSize_show)
     }
-    setCurrent(index)
   }
 
   return (

@@ -103,23 +103,23 @@ export const ChannelBar_Links = [
 export const HotRecomd_Links = [
   {
     title: '华语',
-    link: '/discover/songsheet/?cat=华语'
+    link: '/discover/songsheet/?sub=华语'
   },
   {
     title: '流行',
-    link: '/discover/songsheet/?cat=流行'
+    link: '/discover/songsheet/?sub=流行'
   },
   {
     title: '摇滚',
-    link: '/discover/songsheet/?cat=摇滚'
+    link: '/discover/songsheet/?sub=摇滚'
   },
   {
     title: '民谣',
-    link: '/discover/songsheet/?cat=民谣'
+    link: '/discover/songsheet/?sub=民谣'
   },
   {
     title: '电子',
-    link: '/discover/songsheet/?cat=电子'
+    link: '/discover/songsheet/?sub=电子'
   }
 ]
 

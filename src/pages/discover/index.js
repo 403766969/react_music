@@ -7,7 +7,7 @@ import { StyledWrapper } from './style'
 
 export default memo(function Discover(props) {
   return (
-    <StyledWrapper className="page-discover">
+    <StyledWrapper className="page-discover wrap-min-width">
       <ChannelBar />
       {renderRoutes(props.route.routes)}
     </StyledWrapper>

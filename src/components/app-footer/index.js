@@ -9,7 +9,7 @@ import { StyledWrapper } from './style'
 
 export default memo(function AppFooter() {
   return (
-    <StyledWrapper className="cpn-app-footer">
+    <StyledWrapper className="cpn-app-footer wrap-min-width">
       <div className="wrap-v2 content">
         <div className="left">
           <div className="link">

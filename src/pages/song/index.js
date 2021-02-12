@@ -58,7 +58,7 @@ export default memo(function Song(props) {
   }, [dispatch, songId])
 
   return (
-    <StyleWrapper className="page-song">
+    <StyleWrapper className="page-song wrap-min-width">
       <div className="content wrap-v2">
         <div className="left">
           <SongInfo songData={r_songInfo} songLyric={r_songLyric} />

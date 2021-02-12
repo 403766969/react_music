@@ -1,57 +1,33 @@
 import React, { memo, useState } from 'react'
-import { useDispatch } from 'react-redux'
 
-import {
-  action_set_currentCat,
-  action_get_songsheetData
-} from '../../store/actionCreators'
+import { StyledWrapper } from './style'
 
-import {
-  StyledWrapper
-} from './style'
-
-export default memo(function CatlistPanel(props) {
+export default memo(function CatList(props) {
 
   /**
    * props and state
    */
-  const { catList = [] } = props
+  const { listData = [], currentSub = '', onChange } = props
 
-  const [select, setSelect] = useState('全部')
   const [isShow, setIsShow] = useState(false)
-
-  /**
-   * redux hooks
-   */
-  const dispatch = useDispatch()
 
   /**
    * other logic
    */
-  const handleAllClick = () => {
-    if (select === '全部') {
-      return
-    }
-    setSelect('全部')
-    setIsShow(false)
-    dispatch(action_set_currentCat('全部'))
-    dispatch(action_get_songsheetData(0, 35))
-  }
-
   const handleSubClick = sub => {
-    if (select === sub.name) {
+    if (sub === currentSub) {
       return
     }
-    setSelect(sub.name)
+    if (onChange && typeof onChange === 'function') {
+      onChange(sub)
+    }
     setIsShow(false)
-    dispatch(action_set_currentCat(sub.name))
-    dispatch(action_get_songsheetData(0, 35))
   }
 
   return (
-    <StyledWrapper className="cpn-catlist-panel">
+    <StyledWrapper className="cpn-cat-list">
       <div className="panel-top">
-        <h3 className="current-select">{select}</h3>
+        <h3 className="current-select">{currentSub}</h3>
         <div className="top-selector sprite_button" onClick={e => setIsShow(!isShow)}>
           <span>选择分类</span>
           <i className="sprite_icon2"></i>
@@ -63,11 +39,11 @@ export default memo(function CatlistPanel(props) {
         </div>
         <div className="content-body">
           <h3 className="body-top">
-            <span className="sprite_button2" onClick={handleAllClick}>全部风格</span>
+            <span className="sprite_button2" onClick={e => handleSubClick('全部')}>全部风格</span>
           </h3>
           <ul className="body-list">
             {
-              catList.map((catItem, catIndex) => {
+              listData.map((catItem, catIndex) => {
                 return (
                   <li className="list-li" key={catItem.name}>
                     <div className="li-left">
@@ -78,8 +54,8 @@ export default memo(function CatlistPanel(props) {
                       {
                         catItem.subs.map(subItem => {
                           return (
-                            <div className="right-item" key={subItem.name}>
-                              <span className={`name ${subItem.name === select ? 'active' : ''}`} onClick={e => handleSubClick(subItem)}>{subItem.name}</span>
+                            <div className="right-item" key={subItem}>
+                              <span className={`name ${subItem === currentSub ? 'active' : ''}`} onClick={e => handleSubClick(subItem)}>{subItem}</span>
                               <span className="divider">|</span>
                             </div>
                           )

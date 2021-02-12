@@ -72,9 +72,9 @@ export const get_rankMultiList = () => {
     const resB = await axios.all(reqB)
 
     const reqC = []
-    reqC.push(songApi.api_get_songDetail(resB[0].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
-    reqC.push(songApi.api_get_songDetail(resB[1].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
-    reqC.push(songApi.api_get_songDetail(resB[2].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    reqC.push(songApi.get_song_detail(resB[0].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    reqC.push(songApi.get_song_detail(resB[1].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    reqC.push(songApi.get_song_detail(resB[2].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
     const resC = await axios.all(reqC)
 
     resB[0].playlist.tracks = resC[0].songs

@@ -73,7 +73,7 @@ export const action_init_songList = () => {
 
 export const action_increase_song = (songId, isPlay = true) => {
   return async (dispatch, getState) => {
-    const checkRes = await songApi.api_check_music(songId)
+    const checkRes = await songApi.get_check_music(songId)
     if (checkRes.success === false) {
       alert(checkRes.message)
       return
@@ -81,7 +81,7 @@ export const action_increase_song = (songId, isPlay = true) => {
     const songList = getState().getIn(['player', 'songList'])
     const songIndex = songList.findIndex(item => item.id === songId)
     if (songIndex === -1) {
-      const res = await songApi.api_get_songDetail(songId)
+      const res = await songApi.get_song_detail(songId)
       const newSong = res.songs[0]
       const newSongList = [...songList]
       newSongList.push(newSong)
@@ -167,7 +167,7 @@ export const action_clear_state = () => {
 export const action_increase_songList_with_trackIds = (trackIds, isPlay = true) => {
   return async dispatch => {
     const preIds = await check_music_with_trackIds(trackIds.slice(0, 10))
-    const preRes = await songApi.api_get_songDetail(preIds)
+    const preRes = await songApi.get_song_detail(preIds)
     const preSongList = preRes.songs
     dispatch(action_set_songList(preSongList))
     if (isPlay && preSongList.length > 0) {
@@ -177,7 +177,7 @@ export const action_increase_songList_with_trackIds = (trackIds, isPlay = true) 
       dispatch(action_set_currentLyricIndex(-1))
     }
     const ids = await check_music_with_trackIds(trackIds.slice(10, trackIds.length))
-    const res = await songApi.api_get_songDetail(ids)
+    const res = await songApi.get_song_detail(ids)
     const newSongList = [...preSongList, ...res.songs]
     dispatch(action_set_songList(newSongList))
     if (isPlay && newSongList.length > 0 && preSongList.length <= 0) {
@@ -199,7 +199,7 @@ export const action_increase_songList_with_songsheetId = (songsheetId, isPlay = 
 
 export const action_get_currentLyric = songId => {
   return async dispatch => {
-    const res = await songApi.api_get_songLyric(songId)
+    const res = await songApi.get_lyric(songId)
     const lyric = []
     if (res.nolyric) {
       lyric.push({ time: 0, content: '纯音乐，无歌词' })
@@ -218,7 +218,7 @@ export const action_get_currentLyric = songId => {
 const check_music_with_trackIds = async trackIds => {
   const requests = []
   for (let item of trackIds) {
-    requests.push(songApi.api_check_music(item.id))
+    requests.push(songApi.get_check_music(item.id))
   }
   const res = await axios.all(requests)
   const ids = []

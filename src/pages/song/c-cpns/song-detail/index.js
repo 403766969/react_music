@@ -1,8 +1,7 @@
 import React, { memo } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
-
-import { NavLink } from 'react-router-dom'
 
 import ArtistsDivide from '@/components/artists-divide'
 import OperationBar from '@/components/operation-bar'
@@ -11,7 +10,7 @@ import SongLyric from '../song-lyric'
 
 import { StyleWrapper } from './style'
 
-export default memo(function songInfo(props) {
+export default memo(function SongDetail(props) {
 
   /**
    * props and state
@@ -19,7 +18,7 @@ export default memo(function songInfo(props) {
   const { songData = {}, songLyric = [] } = props
 
   return Object.keys(songData).length > 0 && (
-    <StyleWrapper className="cpn-song-info">
+    <StyleWrapper className="cpn-song-detail">
       <div className="content">
         <div className="left">
           <div className="image">
@@ -28,7 +27,7 @@ export default memo(function songInfo(props) {
           </div>
           <div className="link">
             <i className="sprite_icon2"></i>
-            <NavLink to={`/outchain/2/${songData.id}`} title="生成外联播放器">生成外联播放器</NavLink>
+            <a href={`https://music.163.com/#/outchain/2/${songData.id}`} title="生成外联播放器" target="_blank" rel="noreferrer">生成外联播放器</a>
           </div>
         </div>
         <div className="right">

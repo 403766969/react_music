@@ -1,11 +1,8 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
-
-import {
-  action_increase_song
-} from '@/pages/player/store/acitonCreators'
-
 import { NavLink } from 'react-router-dom'
+
+import { action_increase_song } from '@/pages/player/store/acitonCreators'
 
 import HeaderShort from '@/components/header-short'
 import ArtistsDivide from '@/components/artists-divide'
@@ -17,7 +14,7 @@ export default memo(function SimiSong(props) {
   /**
    * props and state
    */
-  const { simiSong = [] } = props
+  const { title = '', listData = [] } = props
 
   /**
    * redux hooks
@@ -37,10 +34,10 @@ export default memo(function SimiSong(props) {
 
   return (
     <StyleWrapper className="cpn-simi-song">
-      <HeaderShort title="相似歌曲" />
+      <HeaderShort title={title} />
       <div className="content">
         {
-          simiSong.map(item => {
+          listData.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">

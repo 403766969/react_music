@@ -67,7 +67,7 @@ export const get_currentChartDetail = chart => {
 export const get_currentChartSongList = trackIds => {
   return async dispatch => {
     const ids = trackIds.map(item => item.id).join(',')
-    const res = await songApi.api_get_songDetail(ids)
+    const res = await songApi.get_song_detail(ids)
     dispatch(set_currentChartSongList(res.songs))
   }
 }

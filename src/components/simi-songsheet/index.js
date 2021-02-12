@@ -1,8 +1,7 @@
 import React, { memo } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
-
-import { NavLink } from 'react-router-dom'
 
 import HeaderShort from '@/components/header-short'
 
@@ -13,14 +12,14 @@ export default memo(function SimiSongsheet(props) {
   /**
    * props and state
    */
-  const { simiSongsheet = [] } = props
+  const { title = '', listData = [] } = props
 
   return (
     <StyleWrapper className="cpn-simi-songsheet">
-      <HeaderShort title="包含这首歌的歌单" />
+      <HeaderShort title={title} />
       <div className="content">
         {
-          simiSongsheet.map(item => {
+          listData.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <NavLink className="image" to={`/songsheet?id=${item.id}`} title={item.name}>

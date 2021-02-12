@@ -7,7 +7,7 @@ export default memo(function SongLyric(props) {
   /**
    * props and state
    */
-  const { songLyric } = props
+  const { songLyric = [] } = props
 
   const [isFold, setIsFold] = useState(true)
 

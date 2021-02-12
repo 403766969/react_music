@@ -21,7 +21,7 @@ export default memo(function SongList(props) {
   /**
    * props and state
    */
-  const { currentTop = {}, currentSongList = [] } = props
+  const { listData = {} } = props
 
   /**
    * redux hooks
@@ -39,15 +39,15 @@ export default memo(function SongList(props) {
     dispatch(action_increase_song(id, false))
   }
 
-  return Object.keys(currentTop).length > 0 && (
+  return Object.keys(listData).length > 0 && (
     <StyledWrapper className="cpn-song-list">
       <div className="top-header">
         <div className="header-left">
           <h3>歌曲列表</h3>
-          <span>{currentTop.trackCount}首歌</span>
+          <span>{listData.trackCount}首歌</span>
         </div>
         <div className="header-right">
-          <div>播放：<span>{currentTop.playCount}</span>次</div>
+          <div>播放：<span>{listData.playCount}</span>次</div>
         </div>
       </div>
       <table className="song-list">
@@ -61,14 +61,14 @@ export default memo(function SongList(props) {
         </thead>
         <tbody>
           {
-            currentSongList.length <= 0 && (
+            listData.trackList.length <= 0 && (
               <tr>
                 <td>loading...</td>
               </tr>
             )
           }
           {
-            currentSongList.map((item, index) => {
+            listData.trackList.map((item, index) => {
               return (
                 <tr key={item.id}>
                   <td className="order">{index + 1}</td>

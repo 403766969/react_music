@@ -191,7 +191,7 @@ export const action_increase_songList_with_trackIds = (trackIds, isPlay = true) 
 
 export const action_increase_songList_with_songsheetId = (songsheetId, isPlay = true) => {
   return async dispatch => {
-    const res = await songsheetApi.api_get_playlistDetail(songsheetId)
+    const res = await songsheetApi.get_playlist_detail(songsheetId)
     const trackIds = res.playlist.trackIds
     dispatch(action_increase_songList_with_trackIds(trackIds, isPlay))
   }

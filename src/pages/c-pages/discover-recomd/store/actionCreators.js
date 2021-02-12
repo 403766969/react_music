@@ -63,12 +63,12 @@ export const get_newAlbumList = (limit, offset) => {
 // 榜单
 export const get_rankMultiList = () => {
   return async dispatch => {
-    const resA = await otherApi.get_toplist()
+    const resA = await songsheetApi.get_toplist()
 
     const reqB = []
-    reqB.push(songsheetApi.api_get_playlistDetail(resA.list[0].id))
-    reqB.push(songsheetApi.api_get_playlistDetail(resA.list[1].id))
-    reqB.push(songsheetApi.api_get_playlistDetail(resA.list[2].id))
+    reqB.push(songsheetApi.get_playlist_detail(resA.list[0].id))
+    reqB.push(songsheetApi.get_playlist_detail(resA.list[1].id))
+    reqB.push(songsheetApi.get_playlist_detail(resA.list[2].id))
     const resB = await axios.all(reqB)
 
     const reqC = []

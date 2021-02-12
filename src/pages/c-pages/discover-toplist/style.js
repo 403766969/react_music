@@ -12,11 +12,11 @@ export const StyledWrapper = styled.div`
   &>.left {
     width: 240px;
 
-    .cpn-top-category:nth-child(1) {
+    .cpn-chart-list:nth-child(1) {
       margin-top: 40px;
     }
 
-    .cpn-top-category:nth-child(2) {
+    .cpn-chart-list:nth-child(n+2) {
       margin-top: 20px;
     }
   }

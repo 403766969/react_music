@@ -14,7 +14,7 @@ export default memo(function OperationBar(props) {
    * props and state
    */
   const { songId, songsheetId } = props
-  const { favorText = '收藏', shareText = '分享', downloadText = '下载', commentText = '评论' } = props
+  const { favorText, shareText, downloadText, commentText } = props
 
   /**
    * redux hooks
@@ -54,19 +54,35 @@ export default memo(function OperationBar(props) {
       <div className="right">
         <button className="favor sprite_button" title="收藏">
           <i className="sprite_button"></i>
-          <span>{favorText}</span>
+          {
+            favorText
+              ? <span className="text">({favorText})</span>
+              : <span className="text-default">收藏</span>
+          }
         </button>
         <button className="share sprite_button" title="分享">
           <i className="sprite_button"></i>
-          <span>{shareText}</span>
+          {
+            shareText
+              ? <span className="text">({shareText})</span>
+              : <span className="text-default">分享</span>
+          }
         </button>
         <button className="download sprite_button" title="下载">
           <i className="sprite_button"></i>
-          <span>{downloadText}</span>
+          {
+            downloadText
+              ? <span className="text">({downloadText})</span>
+              : <span className="text-default">下载</span>
+          }
         </button>
         <button className="comment sprite_button" title="评论">
           <i className="sprite_button"></i>
-          <span>{commentText}</span>
+          {
+            commentText
+              ? <span className="text">({commentText})</span>
+              : <span className="text-default">评论</span>
+          }
         </button>
       </div>
     </StyleWrapper>

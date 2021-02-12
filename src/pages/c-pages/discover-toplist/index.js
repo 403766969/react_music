@@ -1,15 +1,10 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import {
-  action_get_topCategories,
-  action_set_topCategories,
-  action_set_currentTop,
-  action_set_currentSongList
-} from './store/actionCreators'
+import * as actions from './store/actionCreators'
 
-import TopCategory from './c-cpns/top-category'
-import TopIntro from './c-cpns/top-intro'
+import ChartList from './c-cpns/chart-list'
+import ChartIntro from './c-cpns/chart-intro'
 import SongList from './c-cpns/song-list'
 
 import { StyledWrapper } from './style'
@@ -20,19 +15,21 @@ export default memo(function DiscoverToplist(props) {
    * const and let
    */
   const params = new URLSearchParams(props.location.search)
-  const topId = parseInt(params.get('id'))
+  const chartId = params.get('id') && parseInt(params.get('id'))
 
   /**
    * redux hooks
    */
   const {
-    r_topCategories,
-    r_currentTop,
-    r_currentSongList
+    r_chartList,
+    r_currentChart,
+    r_currentChartDetail,
+    r_currentChartSongList
   } = useSelector(state => ({
-    r_topCategories: state.getIn(['discover/toplist', 'topCategories']),
-    r_currentTop: state.getIn(['discover/toplist', 'currentTop']),
-    r_currentSongList: state.getIn(['discover/toplist', 'currentSongList']),
+    r_chartList: state.getIn(['discover/toplist', 'chartList']),
+    r_currentChart: state.getIn(['discover/toplist', 'currentChart']),
+    r_currentChartDetail: state.getIn(['discover/toplist', 'currentChartDetail']),
+    r_currentChartSongList: state.getIn(['discover/toplist', 'currentChartSongList'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -41,23 +38,27 @@ export default memo(function DiscoverToplist(props) {
    * other hooks
    */
   useEffect(() => {
-    dispatch(action_get_topCategories(topId))
-    return () => {
-      dispatch(action_set_topCategories([]))
-      dispatch(action_set_currentTop({}))
-      dispatch(action_set_currentSongList([]))
-    }
-  }, [dispatch, topId])
+    dispatch(actions.get_chartList(chartId))
+  }, [dispatch, chartId])
+
+  /**
+   * other logic
+   */
+  const songListData = {
+    playCount: r_currentChartDetail.playCount,
+    trackCount: r_currentChartDetail.trackCount,
+    trackList: r_currentChartSongList
+  }
 
   return (
     <StyledWrapper className="page-discover-toplist wrap-v2">
       <div className="left">
-        <TopCategory title="云音乐特色榜" topCategories={r_topCategories.slice(0, 4)} currentTop={r_currentTop} />
-        <TopCategory title="全球媒体榜" topCategories={r_topCategories.slice(4, r_topCategories.length)} currentTop={r_currentTop} />
+        <ChartList title="云音乐特色榜" listData={r_chartList.slice(0, 4)} currentChart={r_currentChart} />
+        <ChartList title="全球媒体榜" listData={r_chartList.slice(4, r_chartList.length)} currentChart={r_currentChart} />
       </div>
       <div className="right">
-        <TopIntro currentTop={r_currentTop} />
-        <SongList currentTop={r_currentTop} currentSongList={r_currentSongList} />
+        <ChartIntro chartDetail={r_currentChartDetail} />
+        <SongList listData={songListData} />
       </div>
     </StyledWrapper>
   )

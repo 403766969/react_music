@@ -3,22 +3,18 @@ import { useDispatch } from 'react-redux'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
-import {
-  action_set_currentTop,
-  action_set_currentSongList,
-  action_get_currentSongList
-} from '../../store/actionCreators'
+import * as actions from '../../store/actionCreators'
 
 import {
   StyledWrapper
 } from './style'
 
-export default memo(function TopCategory(props) {
+export default memo(function ChartList(props) {
 
   /**
    * props and state
    */
-  const { title = '', topCategories = [], currentTop = {} } = props
+  const { title = '', listData = [], currentChart = {} } = props
 
   /**
    * redux hooks
@@ -29,23 +25,22 @@ export default memo(function TopCategory(props) {
    * other logic
    */
   const hanldeItemClick = item => {
-    if (item === currentTop) {
+    if (item === currentChart) {
       return
     }
-    dispatch(action_set_currentTop(item))
-    dispatch(action_set_currentSongList([]))
-    dispatch(action_get_currentSongList(item.id))
+    dispatch(actions.set_currentChart(item))
+    dispatch(actions.get_currentChartDetail(item))
   }
 
   return (
-    <StyledWrapper className="cpn-top-category">
-      <h2 className="category-title">{title}</h2>
-      <ul className="category-list">
+    <StyledWrapper className="cpn-chart-list">
+      <h2 className="chart-list-title">{title}</h2>
+      <ul className="chart-list">
         {
-          topCategories.map(item => {
+          listData.map(item => {
             return (
               <li
-                className={`category-item ${item === currentTop ? 'active' : ''}`}
+                className={`chart-item ${item === currentChart ? 'active' : ''}`}
                 key={item.id}
                 onClick={() => hanldeItemClick(item)}>
                 <img src={formatUrlWithSize(item.coverImgUrl, 40)} alt={item.name} />

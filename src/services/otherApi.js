@@ -6,6 +6,4 @@ export const get_personalized = limit => http.get('/personalized', { params: { l
 
 export const get_top_album = (limit, offset) => http.get('/top/album', { params: { limit, offset } })
 
-export const get_toplist = () => http.get('/toplist')
-
 export const get_artistList = (cat, limit) => http.get('/artist/list', { params: { cat, limit } })

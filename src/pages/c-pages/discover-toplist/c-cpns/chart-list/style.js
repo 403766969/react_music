@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  .category-title {
+  .chart-list-title {
     padding: 0 15px 12px 15px;
     line-height: 16px;
     font-family: simsun;
@@ -10,10 +10,10 @@ export const StyledWrapper = styled.div`
     color: #000;
   }
 
-  .category-list {
+  .chart-list {
     width: 100%;
 
-    .category-item {
+    .chart-item {
       display: flex;
       justify-content: flex-start;
       align-items: center;

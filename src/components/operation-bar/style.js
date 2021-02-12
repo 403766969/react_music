@@ -76,9 +76,19 @@ export const StyleWrapper = styled.div`
         background-position: right -1020px;
       }
 
-      span {
+      &:hover {
+        i {
+          background-position: right -1106px;
+        }
+      }
+
+      .text, .text-default {
         font-size: 12px;
         color: #333;
+      }
+
+      .text {
+        font-family: simsun;
       }
     }
 

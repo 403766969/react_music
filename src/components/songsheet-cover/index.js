@@ -33,7 +33,6 @@ export default memo(function SongsheetCover(props) {
   }
 
   const handleAddList = e => {
-    e.stopPropagation()
     dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetData.id, true))
   }
 
@@ -42,14 +41,14 @@ export default memo(function SongsheetCover(props) {
       <div className="songsheet-cover-image" onClick={pushRoute}>
         <img className="image" src={formatUrlWithSize(songsheetData.picUrl || songsheetData.coverImgUrl, 140)} alt="" />
         <div className="mask sprite_covor" title={songsheetData.name}></div>
-        <div className="heat sprite_covor">
-          <span>
+        <div className="heat sprite_covor" onClick={e => e.stopPropagation()}>
+          <div className="left">
             <i className="sprite_icon count"></i>
-            {formatCount(songsheetData.playCount)}
-          </span>
-          <span>
+            <span>{formatCount(songsheetData.playCount)}</span>
+          </div>
+          <div className="right">
             <i className="sprite_icon play" onClick={e => handleAddList(e)}></i>
-          </span>
+          </div>
         </div>
       </div>
       <div className="songsheet-cover-dec">

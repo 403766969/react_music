@@ -4,7 +4,7 @@ export const StyledWrapper = styled.div`
   width: 140px;
 
   .songsheet-cover-image {
-      position: relative;
+    position: relative;
     margin-bottom: 8px;
     cursor: pointer;
 
@@ -31,31 +31,37 @@ export const StyledWrapper = styled.div`
       right: 0;
       bottom: 0;
       padding: 0 10px;
+      height: 27px;
       color: #ccc;
       background-position: 0 -537px;
+      cursor: default;
 
-      span {
-        display: inline-block;
-        height: 27px;
-        line-height: 27px;
-        
-        i {
-          vertical-align: middle;
-        }
+      .left, .right {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;       
+      }
 
+      .left {
         .count {
-          display: inline-block;
           margin-right: 5px;
           width: 14px;
           height: 11px;
           background-position: 0 -24px;
         }
+      }
 
+      .right {
         .play {
           display: inline-block;
           width: 16px;
-          height: 17px;
+          height: 16px;
           background-position: 0 0;
+          cursor: pointer;
+
+          &:hover {
+            background-position: 0 -60px;
+          }
         }
       }
     }

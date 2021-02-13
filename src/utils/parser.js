@@ -21,3 +21,27 @@ export function parseLyric(lyricString) {
   })
   return lyric
 }
+
+export function mergeLyric(originalLyric, translationLyric) {
+  const lyric = []
+  for (let i = 0, j = 0; i < originalLyric.length; i++) {
+    const oi = originalLyric[i]
+    const obj = {
+      time: oi.time,
+      content: oi.content,
+      translation: ''
+    }
+    for (; j < translationLyric.length; j++) {
+      const ti = translationLyric[j]
+      if (oi.time === ti.time) {
+        obj.translation = ti.content
+        j++
+        break
+      } else if (oi.time < ti.time) {
+        break
+      }
+    }
+    lyric.push(obj)
+  }
+  return lyric
+}

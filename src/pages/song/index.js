@@ -3,6 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
+import ChannelBar from '@/components/channel-bar'
 import SimiSongsheet from '@/components/simi-songsheet'
 import SimiSong from '@/components/simi-song'
 
@@ -53,6 +54,7 @@ export default memo(function Song(props) {
 
   return (
     <StyleWrapper className="page-song wrap-min-width">
+      <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">
           <SongDetail songData={r_songDetail} songLyric={r_songLyric} />

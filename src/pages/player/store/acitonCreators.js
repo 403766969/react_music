@@ -1,6 +1,6 @@
 import { actionTypes } from './constants'
 
-import { parseLyric } from '@/utils/parser'
+import { parseLyric, mergeLyric } from '@/utils/parser'
 
 import * as songApi from '@/services/songApi'
 import * as songsheetApi from '@/services/songsheetApi'
@@ -160,13 +160,17 @@ export const remove_song = songIndex => {
 export const get_currentLyric = songId => {
   return async dispatch => {
     const res = await songApi.get_lyric(songId)
-    const lyric = []
+    let lyric = []
     if (res.nolyric) {
       lyric.push({ time: 0, content: '纯音乐，无歌词' })
     } else if (res.uncollected) {
       lyric.push({ time: 0, content: '暂时没有歌词' })
-    } else if (res.lrc && res.lrc.lyric) {
-      lyric.push(...parseLyric(res.lrc.lyric))
+    } else if (res.lrc && res.tlyric) {
+      const originalLyric = parseLyric(res.lrc.lyric)
+      const translationLyric = parseLyric(res.tlyric.lyric)
+      lyric = mergeLyric(originalLyric, translationLyric)
+    } else if (res.lrc && !res.tlyric) {
+      lyric = parseLyric(res.lrc.lyric)
     }
     dispatch(set_currentLyric(lyric))
   }

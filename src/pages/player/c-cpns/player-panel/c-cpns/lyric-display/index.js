@@ -18,6 +18,8 @@ export default memo(forwardRef(function LyricDisplay(props, ref) {
               key={item.time + item.content}
               className={`lyric-item ${currentLyricIndex === index ? 'active' : ''}`}>
               {item.content}
+              <br />
+              {item.translation}
             </p>
           )
         })

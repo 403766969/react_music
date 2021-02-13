@@ -1,8 +1,6 @@
 import React, { memo } from 'react'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function PaginationBar(props) {
 
@@ -55,7 +53,7 @@ export default memo(function PaginationBar(props) {
       midEnd = midStart + half * 2
       forwardEl = (
         <li className="pagination-forward" key="forward">
-          <span>...</span>
+          <span>•••</span>
           <i onClick={() => handleForwardClick()}>&gt;&gt;</i>
         </li>
       )
@@ -64,20 +62,20 @@ export default memo(function PaginationBar(props) {
       midStart = midEnd - half * 2
       rewindEl = (
         <li className="pagination-rewind" key="rewind">
-          <span>...</span>
+          <span>•••</span>
           <i onClick={() => handleRewindClick()}>&lt;&lt;</i>
         </li>
       )
     } else {
       rewindEl = (
         <li className="pagination-rewind" key="rewind">
-          <span>...</span>
+          <span>•••</span>
           <i onClick={() => handleRewindClick()}>&lt;&lt;</i>
         </li>
       )
       forwardEl = (
         <li className="pagination-forward" key="forward">
-          <span>...</span>
+          <span>•••</span>
           <i onClick={() => handleForwardClick()}>&gt;&gt;</i>
         </li>
       )
@@ -140,7 +138,7 @@ export default memo(function PaginationBar(props) {
   }
 
   return (
-    <StyledWrapper className="cpn-pagination-wrapper">
+    <StyledWrapper className="cpn-pagination-bar">
       <ul className="pagination-content">
         {
           liEls

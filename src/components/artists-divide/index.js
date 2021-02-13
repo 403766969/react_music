@@ -1,10 +1,7 @@
 import React, { memo } from 'react'
-
 import { NavLink } from 'react-router-dom'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function ArtistsDivide(props) {
 

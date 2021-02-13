@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { action_clear_state } from '../../../../store/acitonCreators'
+import * as actions from '../../../../store/acitonCreators'
 
 import { StyledWrapper } from './style'
 
@@ -24,7 +24,7 @@ export default memo(function PanelHeader(props) {
    * other logic
    */
   const handleClearClick = () => {
-    dispatch(action_clear_state())
+    dispatch(actions.clear_state())
   }
 
   const handleCloseClick = () => {

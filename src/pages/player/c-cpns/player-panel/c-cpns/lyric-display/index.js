@@ -1,8 +1,6 @@
 import React, { memo, forwardRef } from 'react'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(forwardRef(function LyricDisplay(props, ref) {
 

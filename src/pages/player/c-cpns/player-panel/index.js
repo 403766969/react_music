@@ -24,17 +24,17 @@ export default memo(function PlayerPanel(props) {
    * redux hooks
    */
   const {
-    songList: r_songList,
-    currentSong: r_currentSong,
-    currentSongIndex: r_currentSongIndex,
-    currentLyric: r_currentLyric,
-    currentLyricIndex: r_currentLyricIndex
+    r_songList,
+    r_currentSong,
+    r_currentSongIndex,
+    r_currentLyric,
+    r_currentLyricIndex
   } = useSelector(state => ({
-    songList: state.getIn(['player', 'songList']),
-    currentSong: state.getIn(['player', 'currentSong']),
-    currentSongIndex: state.getIn(['player', 'currentSongIndex']),
-    currentLyric: state.getIn(['player', 'currentLyric']),
-    currentLyricIndex: state.getIn(['player', 'currentLyricIndex'])
+    r_songList: state.getIn(['player', 'songList']),
+    r_currentSong: state.getIn(['player', 'currentSong']),
+    r_currentSongIndex: state.getIn(['player', 'currentSongIndex']),
+    r_currentLyric: state.getIn(['player', 'currentLyric']),
+    r_currentLyricIndex: state.getIn(['player', 'currentLyricIndex'])
   }), shallowEqual)
 
   /**

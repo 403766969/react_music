@@ -2,14 +2,12 @@ import { Map } from 'immutable'
 
 import { actionTypes } from './constants'
 
-
 const initialState = Map({
   songList: [],
   currentSong: {},
   currentSongIndex: -1,
   currentLyric: [],
-  currentLyricIndex: -1,
-  isInited: false
+  currentLyricIndex: -1
 })
 
 function reducer(state = initialState, action) {
@@ -24,8 +22,6 @@ function reducer(state = initialState, action) {
       return state.set('currentLyric', action.currentLyric)
     case actionTypes.SET_CURRENT_LYRIC_INDEX:
       return state.set('currentLyricIndex', action.currentLyricIndex)
-    case actionTypes.SET_IS_INITED:
-      return state.set('isInited', action.isInited)
     default:
       return state
   }

@@ -3,16 +3,11 @@ import { useDispatch } from 'react-redux'
 
 import { formatDate } from '@/utils/formatter'
 
-import {
-  action_toggle_song,
-  action_remove_song
-} from '../../../../store/acitonCreators'
+import * as actions from '../../../../store/acitonCreators'
 
 import ArtistsDivide from '@/components/artists-divide'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function PlayList(props) {
 
@@ -30,16 +25,27 @@ export default memo(function PlayList(props) {
    * other logic
    */
   const handleItemClick = index => {
-    dispatch(action_toggle_song(index))
+    dispatch(actions.toggle_song(index))
   }
 
   const hadleRemoveClick = (index, e) => {
     e.stopPropagation()
-    dispatch(action_remove_song(index))
+    dispatch(actions.remove_song(index))
   }
 
   return (
     <StyledWrapper className="cpn-play-list">
+      {
+        songList.length <= 0 && (
+          <li className="play-item">
+            <div className="left">
+              <div className="song text-nowrap">
+                loading...
+              </div>
+            </div>
+          </li>
+        )
+      }
       {
         songList.map((item, index) => {
           return (

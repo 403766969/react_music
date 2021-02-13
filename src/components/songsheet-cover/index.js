@@ -2,12 +2,9 @@ import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink, useHistory } from 'react-router-dom'
 
-import {
-  formatUrlWithSize,
-  formatCount
-} from '@/utils/formatter'
+import { formatUrlWithSize, formatCount } from '@/utils/formatter'
 
-import { action_increase_songList_with_songsheetId } from '@/pages/player/store/acitonCreators'
+import * as playerAction from '@/pages/player/store/acitonCreators'
 
 import { StyledWrapper } from './style'
 
@@ -37,7 +34,7 @@ export default memo(function SongsheetCover(props) {
 
   const handleAddList = e => {
     e.stopPropagation()
-    dispatch(action_increase_songList_with_songsheetId(songsheetData.id))
+    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetData.id, true))
   }
 
   return Object.keys(songsheetData).length > 0 && (

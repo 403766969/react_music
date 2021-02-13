@@ -94,16 +94,19 @@ export const StyledWrapper = styled.div`
 
     .pagination-rewind,
     .pagination-forward {
-      margin: 0 2px;
+      margin: 0 1px;
+      width: 16px;
 
       span {
         display: block;
         height: 100%;
+        opacity: .3;
       }
 
       i {
         display: none;
         height: 100%;
+        color: #1890ff;
       }
 
       &:hover{

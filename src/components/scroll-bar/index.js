@@ -1,8 +1,6 @@
 import React, { memo, forwardRef, useState, useRef, useEffect, useCallback, useImperativeHandle } from 'react'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(forwardRef(function ScrollBar(props, ref) {
 

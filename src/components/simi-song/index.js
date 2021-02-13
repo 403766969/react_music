@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import { action_increase_song } from '@/pages/player/store/acitonCreators'
+import * as playerAction from '@/pages/player/store/acitonCreators'
 
 import HeaderShort from '@/components/header-short'
 import ArtistsDivide from '@/components/artists-divide'
@@ -25,11 +25,11 @@ export default memo(function SimiSong(props) {
    * other logic
    */
   const handlePlay = id => {
-    dispatch(action_increase_song(id, true))
+    dispatch(playerAction.add_simpleSong(id, true))
   }
 
   const handleAdd = id => {
-    dispatch(action_increase_song(id, false))
+    dispatch(playerAction.add_simpleSong(id, false))
   }
 
   return (

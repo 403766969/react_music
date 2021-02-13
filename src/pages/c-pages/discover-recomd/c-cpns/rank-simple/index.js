@@ -4,10 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
-import {
-  action_increase_song,
-  action_increase_songList_with_trackIds
-} from '@/pages/player/store/acitonCreators'
+import * as playerAction from '@/pages/player/store/acitonCreators'
 
 import { StyledWrapper } from './style'
 
@@ -28,15 +25,15 @@ export default memo(function RankSimple(props) {
    * other logic
    */
   const handlePlay = id => {
-    dispatch(action_increase_song(id, true))
+    dispatch(playerAction.add_simpleSong(id, true))
   }
 
   const handleAdd = id => {
-    dispatch(action_increase_song(id, false))
+    dispatch(playerAction.add_simpleSong(id, false))
   }
 
   const handleAddList = () => {
-    dispatch(action_increase_songList_with_trackIds(trackIds, true))
+    dispatch(playerAction.add_multipleSong_with_trackIds(trackIds, true))
   }
 
   return Object.keys(rankSimpleData).length > 0 && (

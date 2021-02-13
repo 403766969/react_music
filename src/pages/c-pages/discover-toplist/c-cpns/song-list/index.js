@@ -1,14 +1,9 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 
-import {
-  formatUrlWithSize,
-  formatDate
-} from '@/utils/formatter'
+import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
-import {
-  action_increase_song
-} from '@/pages/player/store/acitonCreators'
+import * as playerAction from '@/pages/player/store/acitonCreators'
 
 import { NavLink } from 'react-router-dom'
 
@@ -32,11 +27,11 @@ export default memo(function SongList(props) {
    * other logic
    */
   const handlePlayClick = id => {
-    dispatch(action_increase_song(id, true))
+    dispatch(playerAction.add_simpleSong(id, true))
   }
 
   const handleAddClick = id => {
-    dispatch(action_increase_song(id, false))
+    dispatch(playerAction.add_simpleSong(id, false))
   }
 
   return Object.keys(listData).length > 0 && (

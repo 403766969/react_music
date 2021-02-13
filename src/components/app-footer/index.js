@@ -1,9 +1,6 @@
 import React, { memo, Fragment } from 'react'
 
-import {
-  AppFooter_Links,
-  AppFooter_Images
-} from '@/services/local-data'
+import { AppFooter_Links, AppFooter_Images } from '@/services/local-data'
 
 import { StyledWrapper } from './style'
 

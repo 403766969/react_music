@@ -1,9 +1,6 @@
 import React, { memo } from 'react'
 
-import {
-  formatUrlWithSize,
-  formatDate
-} from '@/utils/formatter'
+import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
 import OperationBar from '@/components/operation-bar'
 

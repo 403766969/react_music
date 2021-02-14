@@ -43,6 +43,7 @@ export default memo(function Songsheet(props) {
    */
   useEffect(() => {
     dispatch(actions.get_catList(sub))
+    window.scrollTo(0, 0)
   }, [dispatch, sub])
 
   /**

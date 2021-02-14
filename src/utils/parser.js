@@ -1,6 +1,5 @@
-const parseExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/
-
 export function parseLyric(lyricString) {
+  const parseExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/
   const rowArr = lyricString.split('\n')
   const lyric = []
   for (let row of rowArr) {

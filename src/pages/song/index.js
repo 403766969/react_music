@@ -1,9 +1,10 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
 import ChannelBar from '@/components/channel-bar'
+import CommentPanel from '@/components/comment-panel'
 import SimiSongsheet from '@/components/simi-songsheet'
 import SimiSong from '@/components/simi-song'
 
@@ -25,11 +26,15 @@ export default memo(function Song(props) {
   const {
     r_songDetail,
     r_songLyric,
+    r_hotComment,
+    r_newComment,
     r_simiSongsheetList,
     r_simiSongList
   } = useSelector(state => ({
     r_songDetail: state.getIn(['song', 'songDetail']),
     r_songLyric: state.getIn(['song', 'songLyric']),
+    r_hotComment: state.getIn(['song', 'hotComment']),
+    r_newComment: state.getIn(['song', 'newComment']),
     r_simiSongsheetList: state.getIn(['song', 'simiSongsheetList']),
     r_simiSongList: state.getIn(['song', 'simiSongList'])
   }), shallowEqual)
@@ -41,15 +46,19 @@ export default memo(function Song(props) {
     if (songId) {
       dispatch(actions.get_songDetail(songId))
       dispatch(actions.get_songLyric(songId))
+      dispatch(actions.get_hotComment(songId, 0, 15))
+      dispatch(actions.get_newComment(songId, 0, 20))
       dispatch(actions.get_simiSongsheetList(songId))
       dispatch(actions.get_simiSongList(songId))
     }
-    return () => {
-      dispatch(actions.set_songDetail({}))
-      dispatch(actions.set_songLyric([]))
-      dispatch(actions.set_simiSongsheetList([]))
-      dispatch(actions.set_simiSongList([]))
-    }
+    window.scrollTo(0, 0)
+  }, [dispatch, songId])
+
+  /**
+   * other logic
+   */
+  const handlePageChange = useCallback(page => {
+    dispatch(actions.get_newComment(songId, (page - 1) * 20, 20))
   }, [dispatch, songId])
 
   return (
@@ -57,7 +66,8 @@ export default memo(function Song(props) {
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">
-          <SongDetail songData={r_songDetail} songLyric={r_songLyric} />
+          <SongDetail songData={r_songDetail} songLyric={r_songLyric} commentTotal={r_newComment.total} />
+          <CommentPanel hotComment={r_hotComment} newComment={r_newComment} onPageChange={handlePageChange} />
         </div>
         <div className="right">
           <SimiSongsheet title="包含这首歌的歌单" listData={r_simiSongsheetList} />

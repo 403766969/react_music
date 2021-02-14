@@ -7,7 +7,7 @@ export default memo(function PaginationBar(props) {
   /**
    * props and state
    */
-  const { current = 1, total = 0, pageSize = 10, itemCount = 7, fastStep = 5, onChange } = props
+  const { current = 1, total = 0, pageSize = 20, itemCount = 9, fastStep = 5, onChange } = props
 
   /**
    * other logic
@@ -30,11 +30,8 @@ export default memo(function PaginationBar(props) {
   let rewindEl = null
   let forwardEl = null
 
-  if (pageCount_show >= 1) {
-    startEl = <li className={`pagination-item ${current === 1 ? 'active' : ''}`} key={1} onClick={() => handleItemClick(1)}>{1}</li>
-  }
-
   if (pageCount_show >= 2) {
+    startEl = <li className={`pagination-item ${current === 1 ? 'active' : ''}`} key={1} onClick={() => handleItemClick(1)}>{1}</li>
     endEl = <li className={`pagination-item ${current === pageCount_show ? 'active' : ''}`} key={pageCount_show} onClick={() => handleItemClick(pageCount_show)}>{pageCount_show}</li>
     prevEl = <li className={`pagination-prev ${current === 1 ? 'disable' : ''}`} key="prev" onClick={() => handlePrevClick()}>上一页</li>
     nextEl = <li className={`pagination-next ${current === pageCount_show ? 'disable' : ''}`} key="next" onClick={() => handleNextClick()}>下一页</li>

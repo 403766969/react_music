@@ -43,6 +43,7 @@ export default memo(function DiscoverRecomd() {
     dispatch(actions.get_newAlbumList(10, 0))
     dispatch(actions.get_rankMultiList())
     dispatch(actions.get_settleSingerList(5001, 5))
+    window.scrollTo(0, 0)
   }, [dispatch])
 
   return (

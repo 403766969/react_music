@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const StyleWrapper = styled.div`
-  padding: 47px 30px 40px 39px;
-
   &>.content {
     display: flex;
   }

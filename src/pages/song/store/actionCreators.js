@@ -17,6 +17,16 @@ export const set_songLyric = songLyric => ({
   songLyric: songLyric
 })
 
+export const set_hotComment = hotComment => ({
+  type: actionTypes.SET_HOT_COMMENT,
+  hotComment: hotComment
+})
+
+export const set_newComment = newComment => ({
+  type: actionTypes.SET_NEW_COMMENT,
+  newComment: newComment
+})
+
 export const set_simiSongsheetList = simiSongsheetList => ({
   type: actionTypes.SET_SIMI_SONGSHEET_LIST,
   simiSongsheetList: simiSongsheetList
@@ -30,6 +40,7 @@ export const set_simiSongList = simiSongList => ({
 /**
  * 异步请求
  */
+// 歌曲详情
 export const get_songDetail = songId => {
   return async dispatch => {
     const res = await songApi.get_song_detail(songId)
@@ -37,6 +48,7 @@ export const get_songDetail = songId => {
   }
 }
 
+// 歌词
 export const get_songLyric = songId => {
   return async dispatch => {
     const res = await songApi.get_lyric(songId)
@@ -56,6 +68,31 @@ export const get_songLyric = songId => {
   }
 }
 
+// 热门评论
+export const get_hotComment = (songId, offset = 0, limit = 20) => {
+  return async dispatch => {
+    const res = await songApi.get_comment_hot(songId, offset, limit)
+    const hotComment = {
+      total: res.total,
+      list: res.hotComments
+    }
+    dispatch(set_hotComment(hotComment))
+  }
+}
+
+// 最新评论
+export const get_newComment = (songId, offset = 0, limit = 20) => {
+  return async dispatch => {
+    const res = await songApi.get_comment_music(songId, offset, limit)
+    const newComment = {
+      total: res.total,
+      list: res.comments
+    }
+    dispatch(set_newComment(newComment))
+  }
+}
+
+// 相似歌单
 export const get_simiSongsheetList = songId => {
   return async dispatch => {
     const res = await songApi.get_simi_playlist(songId)
@@ -63,6 +100,7 @@ export const get_simiSongsheetList = songId => {
   }
 }
 
+// 相似歌曲
 export const get_simiSongList = songId => {
   return async dispatch => {
     const res = await songApi.get_simi_song(songId)

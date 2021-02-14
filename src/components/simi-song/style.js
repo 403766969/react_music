@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const StyleWrapper = styled.div`
-  margin-top: 40px;
-
   &>.content {
     margin-top: 20px;
 

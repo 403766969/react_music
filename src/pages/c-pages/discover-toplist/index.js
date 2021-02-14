@@ -39,6 +39,7 @@ export default memo(function DiscoverToplist(props) {
    */
   useEffect(() => {
     dispatch(actions.get_chartList(chartId))
+    window.scrollTo(0, 0)
   }, [dispatch, chartId])
 
   /**

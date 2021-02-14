@@ -15,7 +15,7 @@ export default memo(function SongDetail(props) {
   /**
    * props and state
    */
-  const { songData = {}, songLyric = [] } = props
+  const { songData = {}, songLyric = [], commentTotal = 0 } = props
 
   return Object.keys(songData).length > 0 && (
     <StyleWrapper className="cpn-song-detail">
@@ -47,7 +47,7 @@ export default memo(function SongDetail(props) {
               {songData.al.name}
             </NavLink>
           </div>
-          <OperationBar songId={songData.id} />
+          <OperationBar songId={songData.id} commentText={commentTotal} />
           <SongLyric songLyric={songLyric} />
         </div>
       </div>

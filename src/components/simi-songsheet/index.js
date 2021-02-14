@@ -14,7 +14,7 @@ export default memo(function SimiSongsheet(props) {
    */
   const { title = '', listData = [] } = props
 
-  return (
+  return listData.length > 0 && (
     <StyleWrapper className="cpn-simi-songsheet">
       <HeaderShort title={title} />
       <div className="content">

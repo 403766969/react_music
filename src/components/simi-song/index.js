@@ -32,7 +32,7 @@ export default memo(function SimiSong(props) {
     dispatch(playerAction.add_simpleSong(id, false))
   }
 
-  return (
+  return listData.length > 0 && (
     <StyleWrapper className="cpn-simi-song">
       <HeaderShort title={title} />
       <div className="content">

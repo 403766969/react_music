@@ -23,6 +23,16 @@ export const StyledWrapper = styled.div`
 
   &>.right {
     flex: 1;
+    position: relative;
+    padding: 40px;
     width: 0;
+
+    .cpn-chart-intro {
+      margin-bottom: 40px;
+    }
+
+    .cpn-song-list {
+      margin-bottom: 40px;
+    }
   }
 `

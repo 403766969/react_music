@@ -34,6 +34,7 @@ export const StyledWrapper = styled.div`
 
         .top {
           line-height: 20px;
+          overflow: hidden;
 
           .user {
             margin-right: 5px;
@@ -91,6 +92,7 @@ export const StyledWrapper = styled.div`
           line-height: 20px;
           background-color: #f4f4f4;
           border: 1px solid #dedede;
+          overflow: hidden;
 
           .user {
             margin-right: 5px;

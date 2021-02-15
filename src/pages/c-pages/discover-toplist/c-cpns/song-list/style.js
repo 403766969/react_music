@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  padding: 0 40px 40px 40px;
-
   .top-header {
     display: flex;
     justify-content: space-between;

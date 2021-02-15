@@ -69,7 +69,7 @@ export const get_songLyric = songId => {
 }
 
 // 热门评论
-export const get_hotComment = (songId, offset = 0, limit = 20) => {
+export const get_hotComment = (songId, offset = 0, limit = 15) => {
   return async dispatch => {
     const res = await songApi.get_comment_hot(songId, offset, limit)
     const hotComment = {

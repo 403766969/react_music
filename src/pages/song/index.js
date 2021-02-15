@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useCallback } from 'react'
+import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
@@ -7,6 +7,7 @@ import ChannelBar from '@/components/channel-bar'
 import CommentPanel from '@/components/comment-panel'
 import SimiSongsheet from '@/components/simi-songsheet'
 import SimiSong from '@/components/simi-song'
+import DownLoad from '@/components/down-load'
 
 import SongDetail from './c-cpns/song-detail'
 
@@ -19,6 +20,11 @@ export default memo(function Song(props) {
    */
   const params = new URLSearchParams(props.location.search)
   const songId = params.get('id')
+
+  /**
+   * props and state
+   */
+  const [currentPage, setCurrentPage] = useState(1)
 
   /**
    * redux hooks
@@ -51,14 +57,19 @@ export default memo(function Song(props) {
       dispatch(actions.get_simiSongsheetList(songId))
       dispatch(actions.get_simiSongList(songId))
     }
+    setCurrentPage(1)
     window.scrollTo(0, 0)
   }, [dispatch, songId])
+
+  const commentRef = useRef()
 
   /**
    * other logic
    */
   const handlePageChange = useCallback(page => {
     dispatch(actions.get_newComment(songId, (page - 1) * 20, 20))
+    setCurrentPage(page)
+    window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, songId])
 
   return (
@@ -67,11 +78,14 @@ export default memo(function Song(props) {
       <div className="content wrap-v2">
         <div className="left">
           <SongDetail songData={r_songDetail} songLyric={r_songLyric} commentTotal={r_newComment.total} />
-          <CommentPanel hotComment={r_hotComment} newComment={r_newComment} onPageChange={handlePageChange} />
+          <div className="song-comment" ref={commentRef}>
+            <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+          </div>
         </div>
         <div className="right">
           <SimiSongsheet title="包含这首歌的歌单" listData={r_simiSongsheetList} />
           <SimiSong title="相似歌曲" listData={r_simiSongList} />
+          <DownLoad />
         </div>
       </div>
     </StyleWrapper>

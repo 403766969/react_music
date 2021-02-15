@@ -19,6 +19,10 @@ export const StyleWrapper = styled.div`
       .cpn-simi-songsheet {
         margin-bottom: 40px;
       }
+
+      .cpn-simi-song {
+        margin-bottom: 25px;
+      }
     }
   }
 `

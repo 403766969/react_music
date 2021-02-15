@@ -1,7 +1,9 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
+
+import CommentPanel from '@/components/comment-panel'
 
 import ChartList from './c-cpns/chart-list'
 import ChartIntro from './c-cpns/chart-intro'
@@ -18,18 +20,27 @@ export default memo(function DiscoverToplist(props) {
   const chartId = params.get('id') && parseInt(params.get('id'))
 
   /**
+   * props and state
+   */
+  const [currentPage, setCurrentPage] = useState(1)
+
+  /**
    * redux hooks
    */
   const {
     r_chartList,
     r_currentChart,
     r_currentChartDetail,
-    r_currentChartSongList
+    r_currentChartSongList,
+    r_hotComment,
+    r_newComment
   } = useSelector(state => ({
     r_chartList: state.getIn(['discover/toplist', 'chartList']),
     r_currentChart: state.getIn(['discover/toplist', 'currentChart']),
     r_currentChartDetail: state.getIn(['discover/toplist', 'currentChartDetail']),
-    r_currentChartSongList: state.getIn(['discover/toplist', 'currentChartSongList'])
+    r_currentChartSongList: state.getIn(['discover/toplist', 'currentChartSongList']),
+    r_hotComment: state.getIn(['discover/toplist', 'hotComment']),
+    r_newComment: state.getIn(['discover/toplist', 'newComment'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -39,8 +50,14 @@ export default memo(function DiscoverToplist(props) {
    */
   useEffect(() => {
     dispatch(actions.get_chartList(chartId))
-    window.scrollTo(0, 0)
   }, [dispatch, chartId])
+
+  useEffect(() => {
+    setCurrentPage(1)
+    window.scrollTo(0, 0)
+  }, [r_currentChart])
+
+  const commentRef = useRef()
 
   /**
    * other logic
@@ -51,6 +68,12 @@ export default memo(function DiscoverToplist(props) {
     trackList: r_currentChartSongList
   }
 
+  const handlePageChange = useCallback(page => {
+    dispatch(actions.get_newComment((page - 1) * 20, 20))
+    setCurrentPage(page)
+    window.scrollTo(0, commentRef.current.offsetTop + 100)
+  }, [dispatch])
+
   return (
     <StyledWrapper className="page-discover-toplist wrap-v2">
       <div className="left">
@@ -60,6 +83,9 @@ export default memo(function DiscoverToplist(props) {
       <div className="right">
         <ChartIntro chartDetail={r_currentChartDetail} />
         <SongList listData={songListData} />
+        <div className="toplist-comment" ref={commentRef}>
+          <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+        </div>
       </div>
     </StyledWrapper>
   )

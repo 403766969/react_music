@@ -5,9 +5,7 @@ import { formatUrlWithSize } from '@/utils/formatter'
 
 import * as actions from '../../store/actionCreators'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function ChartList(props) {
 
@@ -29,7 +27,9 @@ export default memo(function ChartList(props) {
       return
     }
     dispatch(actions.set_currentChart(item))
-    dispatch(actions.get_currentChartDetail(item))
+    dispatch(actions.get_currentChartDetail())
+    dispatch(actions.get_hotComment(0, 15))
+    dispatch(actions.get_newComment(0, 20))
   }
 
   return (

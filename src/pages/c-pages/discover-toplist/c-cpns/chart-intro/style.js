@@ -4,7 +4,6 @@ export const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px;
 
   .chart-cover {
     position: relative;

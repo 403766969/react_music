@@ -7,7 +7,7 @@ export default memo(function PaginationBar(props) {
   /**
    * props and state
    */
-  const { current = 1, total = 0, pageSize = 20, itemCount = 9, fastStep = 5, onChange } = props
+  const { currentPage = 1, total = 0, pageSize = 20, itemCount = 9, fastStep = 5, onPageChange } = props
 
   /**
    * other logic
@@ -31,20 +31,20 @@ export default memo(function PaginationBar(props) {
   let forwardEl = null
 
   if (pageCount_show >= 2) {
-    startEl = <li className={`pagination-item ${current === 1 ? 'active' : ''}`} key={1} onClick={() => handleItemClick(1)}>{1}</li>
-    endEl = <li className={`pagination-item ${current === pageCount_show ? 'active' : ''}`} key={pageCount_show} onClick={() => handleItemClick(pageCount_show)}>{pageCount_show}</li>
-    prevEl = <li className={`pagination-prev ${current === 1 ? 'disable' : ''}`} key="prev" onClick={() => handlePrevClick()}>上一页</li>
-    nextEl = <li className={`pagination-next ${current === pageCount_show ? 'disable' : ''}`} key="next" onClick={() => handleNextClick()}>下一页</li>
+    startEl = <li className={`pagination-item ${currentPage === 1 ? 'active' : ''}`} key={1} onClick={() => handleItemClick(1)}>{1}</li>
+    endEl = <li className={`pagination-item ${currentPage === pageCount_show ? 'active' : ''}`} key={pageCount_show} onClick={() => handleItemClick(pageCount_show)}>{pageCount_show}</li>
+    prevEl = <li className={`pagination-prev ${currentPage === 1 ? 'disable' : ''}`} key="prev" onClick={() => handlePrevClick()}>上一页</li>
+    nextEl = <li className={`pagination-next ${currentPage === pageCount_show ? 'disable' : ''}`} key="next" onClick={() => handleNextClick()}>下一页</li>
   }
 
   if (pageCount_show >= 3 && pageCount_show <= itemCount_show) {
     for (let index = 2; index <= pageCount_show - 1; index++) {
-      midEls.push(<li className={`pagination-item ${current === index ? 'active' : ''}`} key={index} onClick={() => handleItemClick(index)}>{index}</li>)
+      midEls.push(<li className={`pagination-item ${currentPage === index ? 'active' : ''}`} key={index} onClick={() => handleItemClick(index)}>{index}</li>)
     }
   } else if (pageCount_show >= 3 && pageCount_show > itemCount_show) {
     const half = (itemCount_show - 3) / 2
-    let midStart = current - half
-    let midEnd = current + half
+    let midStart = currentPage - half
+    let midEnd = currentPage + half
     if (midStart <= 2) {
       midStart = 2
       midEnd = midStart + half * 2
@@ -78,7 +78,7 @@ export default memo(function PaginationBar(props) {
       )
     }
     for (let index = midStart; index <= midEnd; index++) {
-      midEls.push(<li className={`pagination-item ${current === index ? 'active' : ''}`} key={index} onClick={() => handleItemClick(index)}>{index}</li>)
+      midEls.push(<li className={`pagination-item ${currentPage === index ? 'active' : ''}`} key={index} onClick={() => handleItemClick(index)}>{index}</li>)
     }
   }
 
@@ -88,49 +88,49 @@ export default memo(function PaginationBar(props) {
    * event logic
    */
   const handleItemClick = index => {
-    if (index === current) {
+    if (index === currentPage) {
       return
     }
-    if (onChange && typeof onChange === 'function') {
-      onChange(index, pageSize_show)
+    if (onPageChange && typeof onPageChange === 'function') {
+      onPageChange(index, pageSize_show)
     }
   }
 
   const handlePrevClick = () => {
-    if (current === 1) {
+    if (currentPage === 1) {
       return
     }
-    if (onChange && typeof onChange === 'function') {
-      onChange(current - 1, pageSize_show)
+    if (onPageChange && typeof onPageChange === 'function') {
+      onPageChange(currentPage - 1, pageSize_show)
     }
   }
 
   const handleNextClick = () => {
-    if (current === pageCount_show) {
+    if (currentPage === pageCount_show) {
       return
     }
-    if (onChange && typeof onChange === 'function') {
-      onChange(current + 1, pageSize_show)
+    if (onPageChange && typeof onPageChange === 'function') {
+      onPageChange(currentPage + 1, pageSize_show)
     }
   }
 
   const handleRewindClick = () => {
-    let index = current - fastStep
+    let index = currentPage - fastStep
     if (index < 1) {
       index = 1
     }
-    if (onChange && typeof onChange === 'function') {
-      onChange(index, pageSize_show)
+    if (onPageChange && typeof onPageChange === 'function') {
+      onPageChange(index, pageSize_show)
     }
   }
 
   const handleForwardClick = () => {
-    let index = current + fastStep
+    let index = currentPage + fastStep
     if (index > pageCount_show) {
       index = pageCount_show
     }
-    if (onChange && typeof onChange === 'function') {
-      onChange(index, pageSize_show)
+    if (onPageChange && typeof onPageChange === 'function') {
+      onPageChange(index, pageSize_show)
     }
   }
 

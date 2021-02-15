@@ -43,6 +43,7 @@ export default memo(function Songsheet(props) {
    */
   useEffect(() => {
     dispatch(actions.get_catList(sub))
+    setCurrentPage(1)
     window.scrollTo(0, 0)
   }, [dispatch, sub])
 
@@ -51,12 +52,12 @@ export default memo(function Songsheet(props) {
    */
   const handleSubChange = useCallback(sub => {
     dispatch(actions.set_currentSub(sub))
-    dispatch(actions.get_songsheetData(0, 35, 'hot'))
+    dispatch(actions.get_songsheetData(0, 35))
     setCurrentPage(1)
   }, [dispatch])
 
   const handlePageChange = useCallback(page => {
-    dispatch(actions.get_songsheetData((page - 1) * 35, 35, 'hot'))
+    dispatch(actions.get_songsheetData((page - 1) * 35, 35))
     setCurrentPage(page)
     window.scrollTo(0, 140)
   }, [dispatch])
@@ -73,7 +74,7 @@ export default memo(function Songsheet(props) {
         <SongsheetList listData={r_songsheetData.playlists} />
       </div>
       <div className="footer">
-        <Pagination current={currentPage} total={r_songsheetData.total} pageSize={35} itemCount={9} onChange={handlePageChange} />
+        <Pagination currentPage={currentPage} total={r_songsheetData.total} pageSize={35} itemCount={9} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

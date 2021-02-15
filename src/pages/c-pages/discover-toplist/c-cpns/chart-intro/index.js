@@ -4,9 +4,7 @@ import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
 import OperationBar from '@/components/operation-bar'
 
-import {
-  StyledWrapper
-} from './style'
+import { StyledWrapper } from './style'
 
 export default memo(function ChartIntro(props) {
 

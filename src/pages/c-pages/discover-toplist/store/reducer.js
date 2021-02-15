@@ -6,7 +6,9 @@ const initialState = Map({
   chartList: [],
   currentChart: {},
   currentChartDetail: {},
-  currentChartSongList: []
+  currentChartSongList: [],
+  hotComment: {},
+  newComment: {}
 })
 
 function reducer(state = initialState, action) {
@@ -19,6 +21,10 @@ function reducer(state = initialState, action) {
       return state.set('currentChartDetail', action.currentChartDetail)
     case actionTypes.SET_CURRENT_CHART_SONG_LIST:
       return state.set('currentChartSongList', action.currentChartSongList)
+    case actionTypes.SET_HOT_COMMENT:
+      return state.set('hotComment', action.hotComment)
+    case actionTypes.SET_NEW_COMMENT:
+      return state.set('newComment', action.newComment)
     default:
       return state
   }

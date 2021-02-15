@@ -43,7 +43,7 @@ export const get_catList = sub => {
     }
     dispatch(set_catList(catlist))
     dispatch(set_currentSub(targetSub))
-    dispatch(get_songsheetData(0, 35, 'hot'))
+    dispatch(get_songsheetData(0, 35))
   }
 }
 

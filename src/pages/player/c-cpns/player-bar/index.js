@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { playModeTypes } from './constants'
+import { playModeTypes, playerStatusTypes } from '@/common/constants'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
@@ -14,6 +14,7 @@ import { Slider } from 'antd'
 import ArtistsDivide from '@/components/artists-divide'
 
 import PlayerPanel from '../player-panel'
+import PlayerMessage from '../player-message'
 
 import { StyleWrapper, StyleContent, StyleControl, StyleDetail, StyleOperator, StyleLock } from './style'
 
@@ -96,6 +97,7 @@ export default memo(function PlayerBar() {
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true)
+          dispatch(actions.set_playerStatus(playerStatusTypes.PLAYING))
         })
         .catch(() => {
           audioRef.current.pause()
@@ -107,7 +109,7 @@ export default memo(function PlayerBar() {
       audioRef.current.src = ''
       setIsPlaying(false)
     }
-  }, [r_currentSong])
+  }, [r_currentSong, dispatch])
 
   // 音量改变时
   useEffect(() => {
@@ -378,6 +380,7 @@ export default memo(function PlayerBar() {
         ></i>
       </StyleLock>
       <PlayerPanel isShowPanel={isShowPanel} handleCloseClick={handleCloseClick} />
+      <PlayerMessage />
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnded} />
     </StyleWrapper>
   )

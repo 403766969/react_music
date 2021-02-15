@@ -7,7 +7,8 @@ const initialState = Map({
   currentSong: {},
   currentSongIndex: -1,
   currentLyric: [],
-  currentLyricIndex: -1
+  currentLyricIndex: -1,
+  playerStatus: ''
 })
 
 function reducer(state = initialState, action) {
@@ -22,6 +23,8 @@ function reducer(state = initialState, action) {
       return state.set('currentLyric', action.currentLyric)
     case actionTypes.SET_CURRENT_LYRIC_INDEX:
       return state.set('currentLyricIndex', action.currentLyricIndex)
+    case actionTypes.SET_PLAYER_STATUS:
+      return state.set('playerStatus', action.playerStatus)
     default:
       return state
   }

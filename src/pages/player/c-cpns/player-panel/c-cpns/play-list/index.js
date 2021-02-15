@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 
 import { formatDate } from '@/utils/formatter'
 
+import { playerStatusTypes } from '@/common/constants'
+
 import * as actions from '../../../../store/acitonCreators'
 
 import ArtistsDivide from '@/components/artists-divide'
@@ -14,7 +16,7 @@ export default memo(function PlayList(props) {
   /**
    * props and state
    */
-  const { songList = [], currentSongIndex = -1 } = props
+  const { songList = [], currentSongIndex = -1, playerStatus = '' } = props
 
   /**
    * redux hooks
@@ -36,11 +38,11 @@ export default memo(function PlayList(props) {
   return (
     <StyledWrapper className="cpn-play-list">
       {
-        songList.length <= 0 && (
+        songList.length <= 0 && playerStatus === playerStatusTypes.LOADING && (
           <li className="play-item">
             <div className="left">
               <div className="song text-nowrap">
-                loading...
+                {playerStatus}...
               </div>
             </div>
           </li>

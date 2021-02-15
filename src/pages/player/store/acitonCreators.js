@@ -1,4 +1,5 @@
 import { actionTypes } from './constants'
+import { playerStatusTypes } from '@/common/constants'
 
 import { parseLyric, mergeLyric } from '@/utils/parser'
 
@@ -42,6 +43,13 @@ export const set_currentLyricIndex = currentLyricIndex => {
   }
 }
 
+export const set_playerStatus = playerStatus => {
+  return {
+    type: actionTypes.SET_PLAYER_STATUS,
+    playerStatus: playerStatus
+  }
+}
+
 /**
  * 异步请求
  */
@@ -70,6 +78,7 @@ export const add_simpleSong = (songId, isPlay = false) => {
       alert(checkRes.message)
       return
     }
+    dispatch(set_playerStatus(playerStatusTypes.LOADING))
     const songList = getState().getIn(['player', 'songList'])
     const existSongIndex = songList.findIndex(item => item.id === songId)
     if (existSongIndex !== -1 && isPlay) {
@@ -97,6 +106,9 @@ export const add_simpleSong = (songId, isPlay = false) => {
         dispatch(get_currentLyric(songId))
         dispatch(set_currentLyricIndex(-1))
       }
+    }
+    if (!isPlay) {
+      dispatch(set_playerStatus(playerStatusTypes.LOADED))
     }
   }
 }
@@ -190,6 +202,7 @@ export const clear_state = () => {
 // 添加多条歌曲
 export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
   return async dispatch => {
+    dispatch(set_playerStatus(playerStatusTypes.LOADING))
     dispatch(clear_state())
     const ids = await check_music_with_trackIds(trackIds)
     const res = await songApi.get_song_detail(ids)
@@ -201,12 +214,16 @@ export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
       dispatch(get_currentLyric(newSongList[0].id))
       dispatch(set_currentLyricIndex(-1))
     }
+    if (!isPlay) {
+      dispatch(set_playerStatus(playerStatusTypes.LOADED))
+    }
   }
 }
 
 // 添加多条歌曲
 export const add_multipleSong_with_songsheetId = (songsheetId, isPlay = true) => {
   return async dispatch => {
+    dispatch(set_playerStatus(playerStatusTypes.LOADING))
     const res = await songsheetApi.get_playlist_detail(songsheetId)
     const trackIds = res.playlist.trackIds
     dispatch(add_multipleSong_with_trackIds(trackIds, isPlay))

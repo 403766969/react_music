@@ -100,7 +100,7 @@ export const StyledWrapper = styled.div`
           }
 
           .text {
-            color: #333;
+            color: #666;
 
             a {
               color: #0c73c2;

@@ -2,14 +2,16 @@ export function formatUrlWithSize(url, width = 0, height = width) {
   return `${url}?param=${width}x${height}`
 }
 
-export function formatCount(count) {
+export function formatCount(count, isInt = false) {
   if (count < 0) return
   if (count < 10000) {
     return count
   } else if (Math.floor(count / 10000) < 10000) {
-    return Math.floor(count / 1000) / 10 + '万'
+    const temp = Math.floor(count / 1000) / 10
+    return (isInt ? parseInt(temp) : temp) + '万'
   } else {
-    return Math.floor(count / 10000000) / 10 + '亿'
+    const temp = Math.floor(count / 10000000) / 10
+    return (isInt ? parseInt(temp) : temp) + '亿'
   }
 }
 

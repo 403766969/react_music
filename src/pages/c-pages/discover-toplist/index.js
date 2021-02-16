@@ -4,10 +4,10 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import * as actions from './store/actionCreators'
 
 import CommentPanel from '@/components/comment-panel'
+import SongList from '@/components/song-list'
 
 import ChartList from './c-cpns/chart-list'
 import ChartIntro from './c-cpns/chart-intro'
-import SongList from './c-cpns/song-list'
 
 import { StyledWrapper } from './style'
 
@@ -50,6 +50,14 @@ export default memo(function DiscoverToplist(props) {
    */
   useEffect(() => {
     dispatch(actions.get_chartList(chartId))
+    return () => {
+      dispatch(actions.set_chartList([]))
+      dispatch(actions.set_currentChart({}))
+      dispatch(actions.set_currentChartDetail({}))
+      dispatch(actions.set_currentChartSongList([]))
+      dispatch(actions.set_hotComment({}))
+      dispatch(actions.set_newComment({}))
+    }
   }, [dispatch, chartId])
 
   useEffect(() => {
@@ -63,6 +71,7 @@ export default memo(function DiscoverToplist(props) {
    * other logic
    */
   const songListData = {
+    id: r_currentChartDetail.id,
     playCount: r_currentChartDetail.playCount,
     trackCount: r_currentChartDetail.trackCount,
     trackList: r_currentChartSongList
@@ -82,7 +91,7 @@ export default memo(function DiscoverToplist(props) {
       </div>
       <div className="right">
         <ChartIntro chartDetail={r_currentChartDetail} />
-        <SongList listData={songListData} />
+        <SongList listData={songListData} order={45} duration={91} singer={173} showCoverCount={3} />
         <div className="toplist-comment" ref={commentRef}>
           <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>

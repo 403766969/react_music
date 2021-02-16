@@ -21,7 +21,7 @@ export default memo(function SimiSongsheet(props) {
         {
           listData.map(item => {
             return (
-              <div className="song-item" key={item.id}>
+              <div className="songsheet-item" key={item.id}>
                 <NavLink className="image" to={`/songsheet?id=${item.id}`} title={item.name}>
                   <img src={formatUrlWithSize(item.coverImgUrl, 50)} alt="" />
                 </NavLink>

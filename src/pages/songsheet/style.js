@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyleWrapper = styled.div`
+export const StyledWrapper = styled.div`
   &>.content {
     display: flex;
     background: url(${require(`@/assets/img/wrap-bg.png`).default}) repeat-y;
@@ -8,19 +8,27 @@ export const StyleWrapper = styled.div`
 
     &>.left {
       position: relative;
-      padding: 37px 30px 40px 40px;
+      padding: 47px 30px 40px 40px;
       width: 710px;
+
+      .cpn-songsheet-detail {
+        margin-bottom: 27px;
+      }
+
+      .cpn-song-list {
+        margin-bottom: 40px;
+      }
     }
 
     &>.right {
       padding: 20px 40px 40px 30px;
       width: 270px;
 
-      .cpn-simi-songsheet {
-        margin-bottom: 40px;
+      .cpn-simi-user {
+        margin-bottom: 25px;
       }
 
-      .cpn-simi-song {
+      .cpn-simi-songsheet {
         margin-bottom: 25px;
       }
     }

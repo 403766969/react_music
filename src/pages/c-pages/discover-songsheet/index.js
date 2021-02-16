@@ -16,7 +16,7 @@ export default memo(function Songsheet(props) {
    * const and let
    */
   const params = new URLSearchParams(props.location.search)
-  const sub = params.get('sub')
+  const sub = params.get('sub') || '全部'
 
   /**
    * props and state
@@ -45,6 +45,11 @@ export default memo(function Songsheet(props) {
     dispatch(actions.get_catList(sub))
     setCurrentPage(1)
     window.scrollTo(0, 0)
+    return () => {
+      dispatch(actions.set_catList([]))
+      dispatch(actions.set_currentSub(''))
+      dispatch(actions.set_songsheetData({}))
+    }
   }, [dispatch, sub])
 
   /**

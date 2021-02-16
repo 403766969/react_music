@@ -5,6 +5,7 @@ const Discover = lazy(() => import('@/pages/discover'))
 const My = lazy(() => import('@/pages/my'))
 const Friend = lazy(() => import('@/pages/friend'))
 const Song = lazy(() => import('@/pages/song'))
+const Songsheet = lazy(() => import('@/pages/songsheet'))
 
 const DiscoverRecomd = lazy(() => import('@/pages/c-pages/discover-recomd'))
 const DiscoverToplist = lazy(() => import('@/pages/c-pages/discover-toplist'))
@@ -69,6 +70,10 @@ const routes = [
   {
     path: '/song',
     component: Song
+  },
+  {
+    path: '/songsheet',
+    component: Songsheet
   }
 ]
 

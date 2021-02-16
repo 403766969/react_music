@@ -25,7 +25,29 @@ export const StyledWrapper = styled.div`
     }
 
     .header-right {
-      div {
+      display: flex;
+      align-items: center;
+
+      .link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+
+        i {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-position: -34px -862px;
+        }
+
+        a {
+          color: #0c73c2;
+          text-decoration: underline;
+        }
+      }
+
+      .count {
         font-size: 12px;
         color: #666;
 
@@ -51,7 +73,7 @@ export const StyledWrapper = styled.div`
       align-items: center;
 
       .order {
-        width: 45px;
+        width: ${props => props.order + 'px'};
       }
 
       .title {
@@ -59,12 +81,16 @@ export const StyledWrapper = styled.div`
         width: 0;
       }
 
-      .duration{
-        width: 91px;
+      .duration {
+        width: ${props => props.duration + 'px'};
       }
 
-      .singer{
-        width: 173px;
+      .singer {
+        width: ${props => props.singer + 'px'};
+      }
+
+      .album {
+        width: ${props => props.album + 'px'};
       }
     }
   }
@@ -270,6 +296,11 @@ export const StyledWrapper = styled.div`
       }
 
       .singer {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .album {
         font-size: 12px;
         color: #666;
       }

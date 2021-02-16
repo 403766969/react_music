@@ -16,7 +16,7 @@ export default memo(function SongLyric(props) {
    */
   const lyricRows = isFold ? 13 : songLyric.length
 
-  return (
+  return songLyric.length > 0 && (
     <StyledWrapper className="cpn-song-lyric" isFold={isFold}>
       <div className="content">
         {

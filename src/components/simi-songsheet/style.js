@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const StyleWrapper = styled.div`
   .content {
-    .song-item {
+    .songsheet-item {
       display: flex;
       align-items: center;
       margin-top: 15px;

@@ -59,6 +59,14 @@ export default memo(function Song(props) {
     }
     setCurrentPage(1)
     window.scrollTo(0, 0)
+    return () => {
+      dispatch(actions.set_songDetail({}))
+      dispatch(actions.set_songLyric([]))
+      dispatch(actions.set_hotComment({}))
+      dispatch(actions.set_newComment({}))
+      dispatch(actions.set_simiSongsheetList([]))
+      dispatch(actions.set_simiSongList([]))
+    }
   }, [dispatch, songId])
 
   const commentRef = useRef()

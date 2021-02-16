@@ -52,6 +52,9 @@ export const StyleWrapper = styled.div`
     .header {
       display: flex;
       align-items: center;
+      height: 32px;
+      line-height: 32px;
+      
       i {
         display: inline-block;
         width: 54px;

@@ -11,3 +11,5 @@ export const get_playlist_detail = id => http.get('/playlist/detail', { params: 
 export const get_comment_hot = (id, offset, limit, type = 2) => http.get('/comment/hot', { params: { id, offset, limit, type } })
 
 export const get_comment_playlist = (id, offset, limit) => http.get('/comment/playlist', { params: { id, offset, limit } })
+
+export const get_related_playlist = id => http.get('/related/playlist', { params: { id } })

@@ -117,7 +117,7 @@ export default memo(function CommentList(props) {
                     {
                       (nowTime - item.time) < limitTime
                         ? (
-                          <div className="time">{formatDate(item.time, 'MM月dd日 mm:ss')}</div>
+                          <div className="time">{formatDate(item.time, 'MM月dd日 hh:mm')}</div>
                         )
                         : (
                           <div className="time">{formatDate(item.time, 'yyyy年MM月dd日')}</div>

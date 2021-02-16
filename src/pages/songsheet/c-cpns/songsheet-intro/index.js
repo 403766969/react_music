@@ -15,36 +15,45 @@ export default memo(function SongsheetIntro(props) {
   /**
    * other logic
    */
-  const decArr = description.split('\n')
-  decArr[0] = '介绍：' + decArr[0]
+  let decArr = null
+  if (description) {
+    decArr = description.split('\n')
+    decArr[0] = '介绍：' + decArr[0]
+  }
 
   const rows = isFold ? 13 : decArr.length
 
   return (
     <StyledWrapper className="cpn-songsheet-intro" isFold={isFold}>
-      <div className="tags">
-        <b>标签：</b>
-        {
-          tags.map((item, index) => {
-            return (
-              <NavLink to={`/discover/songsheet?cat=${item}`} key={item + index}>{item}</NavLink>
-            )
-          })
-        }
-      </div>
-      <div className="dec">
-        {
-          decArr.slice(0, rows).map((item, index) => {
-            return (
-              <p key={item + index}>{item}</p>
-            )
-          })
-        }
-      </div>
       {
-        decArr.length > 13
-        &&
-        (
+        tags && tags.length > 0 && (
+          <div className="tags">
+            <b>标签：</b>
+            {
+              tags.map((item, index) => {
+                return (
+                  <NavLink to={`/discover/songsheet?sub=${item}`} key={item + index}>{item}</NavLink>
+                )
+              })
+            }
+          </div>
+        )
+      }
+      {
+        decArr && decArr.length > 0 && (
+          <div className="dec">
+            {
+              decArr.slice(0, rows).map((item, index) => {
+                return (
+                  <p key={item + index}>{item}</p>
+                )
+              })
+            }
+          </div>
+        )
+      }
+      {
+        decArr && decArr.length > 13 && (
           <div className="control">
             <button onClick={e => setIsFold(!isFold)}>
               {isFold ? '展开' : '收起'}

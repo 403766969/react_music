@@ -4,7 +4,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import * as actions from './store/actionCreators'
 
 import ChannelBar from '@/components/channel-bar'
-import SongList from '@/components/song-list'
+import SongArea from '@/components/song-area'
 import CommentPanel from '@/components/comment-panel'
 import SimiUser from '@/components/simi-user'
 import SimiSongsheet from '@/components/simi-songsheet'
@@ -72,13 +72,6 @@ export default memo(function Songsheet(props) {
   /**
  * other logic
  */
-  const songListData = {
-    id: r_songsheetDetail.id,
-    playCount: r_songsheetDetail.playCount,
-    trackCount: r_songsheetDetail.trackCount,
-    trackList: r_songList
-  }
-
   const handlePageChange = useCallback(page => {
     dispatch(actions.get_newComment(songsheetId, (page - 1) * 20, 20))
     setCurrentPage(page)
@@ -91,7 +84,16 @@ export default memo(function Songsheet(props) {
       <div className="content wrap-v2">
         <div className="left">
           <SongsheetDetail songsheetData={r_songsheetDetail} />
-          <SongList listData={songListData} order={45} duration={91} singer={120} album={120} />
+          <SongArea
+            songsheetId={r_songsheetDetail.id}
+            playCount={r_songsheetDetail.playCount}
+            songCount={r_songsheetDetail.trackCount}
+            songList={r_songList}
+            order
+            name
+            duration
+            artist
+            album />
           <div className="songsheet-comment" ref={commentRef}>
             <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>

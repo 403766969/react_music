@@ -4,7 +4,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import * as actions from './store/actionCreators'
 
 import CommentPanel from '@/components/comment-panel'
-import SongList from '@/components/song-list'
+import SongArea from '@/components/song-area'
 
 import ChartList from './c-cpns/chart-list'
 import ChartIntro from './c-cpns/chart-intro'
@@ -70,13 +70,6 @@ export default memo(function DiscoverToplist(props) {
   /**
    * other logic
    */
-  const songListData = {
-    id: r_currentChartDetail.id,
-    playCount: r_currentChartDetail.playCount,
-    trackCount: r_currentChartDetail.trackCount,
-    trackList: r_currentChartSongList
-  }
-
   const handlePageChange = useCallback(page => {
     dispatch(actions.get_newComment((page - 1) * 20, 20))
     setCurrentPage(page)
@@ -91,7 +84,16 @@ export default memo(function DiscoverToplist(props) {
       </div>
       <div className="right">
         <ChartIntro chartDetail={r_currentChartDetail} />
-        <SongList listData={songListData} order={45} duration={91} singer={173} showCoverCount={3} />
+        <SongArea
+          songsheetId={r_currentChartDetail.id}
+          playCount={r_currentChartDetail.playCount}
+          songCount={r_currentChartDetail.trackCount}
+          songList={r_currentChartSongList}
+          order
+          name
+          duration
+          artist={{ width: '170px' }}
+          showCoverCount={3} />
         <div className="toplist-comment" ref={commentRef}>
           <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>

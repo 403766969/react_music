@@ -31,7 +31,7 @@ export const StyledWrapper = styled.div`
       margin-bottom: 40px;
     }
 
-    .cpn-song-list {
+    .cpn-song-area {
       margin-bottom: 40px;
     }
   }

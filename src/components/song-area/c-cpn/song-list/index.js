@@ -18,7 +18,7 @@ export default memo(function AreaList(props) {
 
   return (
     <StyledWrapper
-      className="cpn-area-list"
+      className="cpn-song-list"
       orderConfig={orderConfig}
       nameConfig={nameConfig}
       durationConfig={durationConfig}

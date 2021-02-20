@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 export function parseLyric(lyricString) {
   const parseExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/
   const rowArr = lyricString.split('\n')
@@ -43,4 +45,60 @@ export function mergeLyric(originalLyric, translationLyric) {
     lyric.push(obj)
   }
   return lyric
+}
+
+export function matchText(text, ...matchers) {
+  if (!text || text === '') {
+    return []
+  }
+  if (!matchers || matchers.length <= 0) {
+    return [text]
+  }
+
+  let regExpString = matchers.reduce((prev, current) => {
+    let temp = current.regExp.toString()
+    return prev + '|' + temp.slice(1, temp.length - 1)
+  }, '')
+  regExpString = regExpString.slice(1, regExpString.length)
+
+  const regExp = new RegExp(regExpString, 'g')
+
+  const matchArr = text.match(regExp)
+  if (!matchArr || matchArr.length <= 0) {
+    return [text]
+  }
+
+  const splitArr = text.split(regExp)
+  const els = []
+  for (let i = 0; i < splitArr.length; i++) {
+    els.push(splitArr[i])
+    let match = matchArr[i]
+    if (match) {
+      for (let matcher of matchers) {
+        if (matcher.regExp.test(match)) {
+          els.push(matcher.replace(match))
+          break
+        }
+      }
+    }
+  }
+  return els
+}
+
+export const wrapMatcher = {
+  regExp: /\n/,
+  replace: function (match) {
+    return (
+      <br />
+    )
+  }
+}
+
+export const atMatcher = {
+  regExp: /@[^@\s]+/,
+  replace: function (match) {
+    return (
+      <NavLink to={`/user/home?nickname=${match}`}>{match}</NavLink>
+    )
+  }
 }

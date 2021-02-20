@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledWrapper = styled.div`
+export const StyledWrapper = styled.li`
   display: flex;
   align-items: center;
   min-height: 30px;

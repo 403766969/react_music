@@ -3,7 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
-import CommentPanel from '@/components/comment-panel'
+import CommentArea from '@/components/comment-area'
 import SongArea from '@/components/song-area'
 
 import ChartList from './c-cpns/chart-list'
@@ -95,7 +95,7 @@ export default memo(function DiscoverToplist(props) {
           artist={{ width: '170px' }}
           showCoverCount={3} />
         <div className="toplist-comment" ref={commentRef}>
-          <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+          <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>
       </div>
     </StyledWrapper>

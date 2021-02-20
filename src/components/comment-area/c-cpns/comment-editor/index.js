@@ -7,7 +7,7 @@ export default memo(function CommentEditor(props) {
   /**
    * props and state
    */
-  const { title = '', commentTotal = 0 } = props
+  const { title, commentTotal } = props
 
   /**
    * other hooks

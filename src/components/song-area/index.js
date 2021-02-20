@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
 import AreaHeader from './c-cpn/area-header'
-import AreaList from './c-cpn/area-list'
+import SongList from './c-cpn/song-list'
 
 import { StyledWrapper } from './style'
 
@@ -63,7 +63,7 @@ export default memo(function SongArea(props) {
   return (
     <StyledWrapper className="cpn-song-area">
       <AreaHeader areaTitle={areaTitle} playCount={playCount} songCount={songCount} songsheetId={songsheetId} />
-      <AreaList
+      <SongList
         songList={songList}
         orderConfig={orderConfig}
         nameConfig={nameConfig}

@@ -5,11 +5,13 @@ export const StyledWrapper = styled.div`
     margin-bottom: 20px;
   }
 
-  &>.cpn-comment-list:nth-child(3) {
-    margin-top: 25px;
-  }
+  &>.comment-content {
+    .cpn-comment-list:nth-child(2) {
+      margin-top: 25px;
+    }
 
-  &>.cpn-pagination-bar {
-    margin: 20px 0;
+    .cpn-pagination-bar {
+      margin: 20px 0;
+    }
   }
 `

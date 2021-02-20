@@ -4,7 +4,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import * as actions from './store/actionCreators'
 
 import ChannelBar from '@/components/channel-bar'
-import CommentPanel from '@/components/comment-panel'
+import CommentArea from '@/components/comment-area'
 import SimiSongsheet from '@/components/simi-songsheet'
 import SimiSong from '@/components/simi-song'
 import DownLoad from '@/components/down-load'
@@ -87,7 +87,7 @@ export default memo(function Song(props) {
         <div className="left">
           <SongDetail songData={r_songDetail} songLyric={r_songLyric} commentTotal={r_newComment.total} />
           <div className="song-comment" ref={commentRef}>
-            <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+            <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>
         </div>
         <div className="right">

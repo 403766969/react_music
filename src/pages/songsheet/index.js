@@ -5,7 +5,7 @@ import * as actions from './store/actionCreators'
 
 import ChannelBar from '@/components/channel-bar'
 import SongArea from '@/components/song-area'
-import CommentPanel from '@/components/comment-panel'
+import CommentArea from '@/components/comment-area'
 import SimiUser from '@/components/simi-user'
 import SimiSongsheet from '@/components/simi-songsheet'
 import DownLoad from '@/components/down-load'
@@ -95,7 +95,7 @@ export default memo(function Songsheet(props) {
             artist
             album />
           <div className="songsheet-comment" ref={commentRef}>
-            <CommentPanel hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+            <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>
         </div>
         <div className="right">

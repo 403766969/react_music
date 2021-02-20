@@ -1,5 +1,7 @@
 import React, { memo, useState } from 'react'
 
+import { emojiUrl } from '@/common/constants'
+
 import { StyledWrapper } from './style'
 
 export default memo(function CommentEditor(props) {
@@ -14,12 +16,21 @@ export default memo(function CommentEditor(props) {
    */
   const [textValue, setTextValue] = useState('')
   const [textCount, setTextCount] = useState(140)
+  const [isShowEmoji, setIsShowEmoji] = useState(false)
 
   /**
    * other logic
    */
   const handleTextChange = e => {
     const newValue = e.target.value
+    if (newValue.length <= 140) {
+      setTextValue(newValue)
+      setTextCount(140 - newValue.length)
+    }
+  }
+
+  const handleEmojiClick = item => {
+    const newValue = textValue + item
     if (newValue.length <= 140) {
       setTextValue(newValue)
       setTextCount(140 - newValue.length)
@@ -45,8 +56,21 @@ export default memo(function CommentEditor(props) {
           </div>
           <div className="operation">
             <div className="operation-left">
-              <span className="emoji sprite_icon2"></span>
+              <span className="emoji sprite_icon2" onClick={() => setIsShowEmoji(!isShowEmoji)}></span>
               <span className="at sprite_icon2"></span>
+              <div className="emoji-list" style={{ display: isShowEmoji ? 'flex' : 'none' }}>
+                <ul>
+                  {
+                    Object.keys(emojiUrl).map(item => {
+                      return (
+                        <li key={item} title={item} onClick={() => handleEmojiClick(item)}>
+                          <img src={emojiUrl[item]} alt={item} />
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
             </div>
             <div className="operation-right">
               <span className="count">{textCount}</span>

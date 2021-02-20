@@ -41,31 +41,31 @@ export const StyledWrapper = styled.li`
         vertical-align: text-bottom;
 
         &.vip-1 {
-          background: url(${require('@/assets/img/vip-1.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-1.png').default}) 0 0 / contain no-repeat;
         }
 
         &.vip-2 {
-          background: url(${require('@/assets/img/vip-2.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-2.png').default}) 0 0 / contain no-repeat;
         }
 
         &.vip-3 {
-          background: url(${require('@/assets/img/vip-3.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-3.png').default}) 0 0 / contain no-repeat;
         }
 
         &.vip-4 {
-          background: url(${require('@/assets/img/vip-4.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-4.png').default}) 0 0 / contain no-repeat;
         }
 
         &.vip-5 {
-          background: url(${require('@/assets/img/vip-5.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-5.png').default}) 0 0 / contain no-repeat;
         }
 
         &.vip-6 {
-          background: url(${require('@/assets/img/vip-6.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-6.png').default}) 0 0 / contain no-repeat;
         }
 
         &.vip-7 {
-          background: url(${require('@/assets/img/vip-7.png').default}) 0 0 / contain no-repeat;
+          background: url(${require('@/assets/img/vip/vip-7.png').default}) 0 0 / contain no-repeat;
         }
       }
 

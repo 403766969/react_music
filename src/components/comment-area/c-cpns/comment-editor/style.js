@@ -96,6 +96,7 @@ export const StyledWrapper = styled.div`
         .operation-left {
           display: flex;
           align-items: center;
+          position: relative;
 
           .emoji, .at {
             display: block;
@@ -111,6 +112,36 @@ export const StyledWrapper = styled.div`
           .at {
             margin-left: 10px;
             background-position: -60px -490px;
+          }
+
+          .emoji-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            left: -12px;
+            width: 282px;
+            height: 178px;
+            background: url(${require('@/assets/img/emoji/emtbg.png').default}) 0 0 no-repeat;
+
+            ul {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              width: 250px;
+
+              li {
+                margin: 1px;
+                border: 1px solid #fff;
+                cursor: pointer;
+
+                &:hover {
+                  border-color: #3d91ec;
+                }
+              }
+            }
           }
         }
 

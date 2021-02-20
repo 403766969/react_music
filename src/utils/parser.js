@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom'
 
+import { emojiUrl } from '@/common/constants'
+
 export function parseLyric(lyricString) {
   const parseExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/
   const rowArr = lyricString.split('\n')
@@ -100,5 +102,15 @@ export const atMatcher = {
     return (
       <NavLink to={`/user/home?nickname=${match}`}>{match}</NavLink>
     )
+  }
+}
+
+export const emojiMatcher = {
+  regExp: /\[\S+?\]/,
+  replace: function (match) {
+    const imgUrl = emojiUrl[match]
+    return imgUrl
+      ? <img src={imgUrl} alt={match} style={{ width: '21px', height: '21px' }} />
+      : match
   }
 }

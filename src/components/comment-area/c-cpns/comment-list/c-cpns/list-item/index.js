@@ -2,7 +2,7 @@ import React, { memo, Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { formatDate } from '@/utils/formatter'
-import { matchText, wrapMatcher, atMatcher } from '@/utils/parser'
+import { matchText, wrapMatcher, atMatcher, emojiMatcher } from '@/utils/parser'
 
 import { StyledWrapper } from './style'
 
@@ -37,7 +37,7 @@ export default memo(function CommentList(props) {
           <span className="text">
             ：
             {
-              matchText(item.content, wrapMatcher, atMatcher).map((itemX, indeX) => {
+              matchText(item.content, wrapMatcher, atMatcher, emojiMatcher).map((itemX, indeX) => {
                 return (
                   <Fragment key={indeX}>{itemX}</Fragment>
                 )
@@ -52,7 +52,7 @@ export default memo(function CommentList(props) {
               <span className="text">
                 ：
                 {
-                  matchText(item.beReplied[0].content, wrapMatcher, atMatcher).map((itemY, indeY) => {
+                  matchText(item.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher).map((itemY, indeY) => {
                     return (
                       <Fragment key={indeY}>{itemY}</Fragment>
                     )

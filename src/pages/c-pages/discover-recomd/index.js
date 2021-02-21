@@ -41,23 +41,23 @@ export default memo(function DiscoverRecomd() {
     dispatch(actions.get_topBannerList())
     dispatch(actions.get_hotRecomdList(8))
     dispatch(actions.get_newAlbumList(10, 0))
-    dispatch(actions.get_rankMultiList())
+    dispatch(actions.get_rankMultiList(3))
     dispatch(actions.get_settleSingerList(5001, 5))
     window.scrollTo(0, 0)
   }, [dispatch])
 
   return (
     <StyledWrapper className="page-discover-recomd">
-      <TopBanner topBannerList={r_topBannerList} />
+      <TopBanner cpnData={r_topBannerList} />
       <div className="content wrap-v2">
         <div className="left">
-          <HotRecomd hotRecomdList={r_hotRecomdList} />
-          <NewAlbum newAlbumList={r_newAlbumList} />
-          <RankMulti rankMultiList={r_rankMultiList} />
+          <HotRecomd cpnData={r_hotRecomdList} />
+          <NewAlbum cpnData={r_newAlbumList} />
+          <RankMulti cpnData={r_rankMultiList} />
         </div>
         <div className="right">
           <UserLogin />
-          <SettleSinger settleSingerList={r_settleSingerList} />
+          <SettleSinger cpnData={r_settleSingerList} />
           <HotAnchor />
         </div>
       </div>

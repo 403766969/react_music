@@ -43,6 +43,9 @@ export const set_newComment = newComment => ({
 export const get_chartList = chartId => {
   return async dispatch => {
     const res = await songsheetApi.get_toplist()
+    if (!res || !res.list || res.list.length <= 0) {
+      return
+    }
     const chart = res.list.find(item => item.id === chartId) || res.list[0] || {}
     dispatch(set_chartList(res.list))
     dispatch(set_currentChart(chart))
@@ -56,32 +59,31 @@ export const get_chartList = chartId => {
 export const get_currentChartDetail = () => {
   return async (dispatch, getState) => {
     const chart = getState().getIn(['discover/toplist', 'currentChart'])
-    const res = await songsheetApi.get_playlist_detail(chart.id)
-    const chartDetail = {
-      id: chart.id,
-      name: res.playlist.name,
-      updateTime: res.playlist.updateTime,
-      updateFrequency: chart.updateFrequency,
-      trackCount: res.playlist.trackCount,
-      playCount: res.playlist.playCount,
-      favorCount: res.playlist.subscribedCount,
-      shareCount: res.playlist.shareCount,
-      commentCount: res.playlist.commentCount,
-      coverImgUrl: res.playlist.coverImgUrl,
-      trackIds: res.playlist.trackIds
+    if (!chart || !chart.id) {
+      return
     }
-    dispatch(set_currentChartDetail(chartDetail))
+    const res = await songsheetApi.get_playlist_detail(chart.id)
+    if (!res || !res.playlist) {
+      return
+    }
+    res.playlist.updateFrequency = chart.updateFrequency
+    dispatch(set_currentChartDetail(res.playlist))
     dispatch(set_currentChartSongList([]))
-    dispatch(get_currentChartSongList(chartDetail.trackIds))
+    dispatch(get_currentChartSongList(res.playlist.trackIds))
   }
 }
 
 // 排行榜歌曲列表
 export const get_currentChartSongList = trackIds => {
   return async dispatch => {
+    if (!trackIds) {
+      return
+    }
     const ids = trackIds.map(item => item.id).join(',')
     const res = await songApi.get_song_detail(ids)
-    dispatch(set_currentChartSongList(res.songs))
+    if (res && res.songs) {
+      dispatch(set_currentChartSongList(res.songs))
+    }
   }
 }
 
@@ -89,7 +91,13 @@ export const get_currentChartSongList = trackIds => {
 export const get_hotComment = (offset = 0, limit = 15) => {
   return async (dispatch, getState) => {
     const chart = getState().getIn(['discover/toplist', 'currentChart'])
+    if (!chart || !chart.id) {
+      return
+    }
     const res = await songsheetApi.get_comment_hot(chart.id, offset, limit)
+    if (!res || !res.hotComments) {
+      return
+    }
     const hotComment = {
       total: res.total,
       list: res.hotComments
@@ -102,7 +110,13 @@ export const get_hotComment = (offset = 0, limit = 15) => {
 export const get_newComment = (offset = 0, limit = 20) => {
   return async (dispatch, getState) => {
     const chart = getState().getIn(['discover/toplist', 'currentChart'])
+    if (!chart || !chart.id) {
+      return
+    }
     const res = await songsheetApi.get_comment_playlist(chart.id, offset, limit)
+    if (!res || !res.comments) {
+      return
+    }
     const newComment = {
       total: res.total,
       list: res.comments

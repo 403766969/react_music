@@ -38,14 +38,19 @@ export const set_relatedSongsheet = relatedSongsheet => ({
 export const get_songsheetDetail = songsheetId => {
   return async dispatch => {
     const res = await songsheetApi.get_playlist_detail(songsheetId)
-    dispatch(set_songsheetDetail(res.playlist))
-    dispatch(get_songList(res.playlist.trackIds))
+    if (res && res.playlist) {
+      dispatch(set_songsheetDetail(res.playlist))
+      dispatch(get_songList(res.playlist.trackIds))
+    }
   }
 }
 
 // 歌曲列表
 export const get_songList = trackIds => {
   return async dispatch => {
+    if (!trackIds) {
+      return
+    }
     const ids = trackIds.map(item => item.id).join(',')
     const res = await songApi.get_song_detail(ids)
     dispatch(set_songList(res.songs))
@@ -56,6 +61,9 @@ export const get_songList = trackIds => {
 export const get_hotComment = (songsheetId, offset = 0, limit = 15) => {
   return async dispatch => {
     const res = await songsheetApi.get_comment_hot(songsheetId, offset, limit)
+    if (!res || !res.hotComments) {
+      return
+    }
     const hotComment = {
       total: res.total,
       list: res.hotComments
@@ -68,6 +76,9 @@ export const get_hotComment = (songsheetId, offset = 0, limit = 15) => {
 export const get_newComment = (songsheetId, offset = 0, limit = 20) => {
   return async dispatch => {
     const res = await songsheetApi.get_comment_playlist(songsheetId, offset, limit)
+    if (!res || !res.comments) {
+      return
+    }
     const newComment = {
       total: res.total,
       list: res.comments
@@ -80,6 +91,8 @@ export const get_newComment = (songsheetId, offset = 0, limit = 20) => {
 export const get_relatedSongsheet = songsheetId => {
   return async dispatch => {
     const res = await songsheetApi.get_related_playlist(songsheetId)
-    dispatch(set_relatedSongsheet(res.playlists))
+    if (res && res.playlists) {
+      dispatch(set_relatedSongsheet(res.playlists))
+    }
   }
 }

@@ -79,11 +79,11 @@ export default memo(function DiscoverToplist(props) {
   return (
     <StyledWrapper className="page-discover-toplist wrap-v2">
       <div className="left">
-        <ChartList title="云音乐特色榜" listData={r_chartList.slice(0, 4)} currentChart={r_currentChart} />
-        <ChartList title="全球媒体榜" listData={r_chartList.slice(4, r_chartList.length)} currentChart={r_currentChart} />
+        <ChartList title="云音乐特色榜" cpnData={r_chartList.slice(0, 4)} currentChart={r_currentChart} />
+        <ChartList title="全球媒体榜" cpnData={r_chartList.slice(4, r_chartList.length)} currentChart={r_currentChart} />
       </div>
       <div className="right">
-        <ChartIntro chartDetail={r_currentChartDetail} />
+        <ChartIntro cpnData={r_currentChartDetail} />
         <SongArea
           songsheetId={r_currentChartDetail.id}
           playCount={r_currentChartDetail.playCount}

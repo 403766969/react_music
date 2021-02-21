@@ -44,7 +44,9 @@ export const set_simiSongList = simiSongList => ({
 export const get_songDetail = songId => {
   return async dispatch => {
     const res = await songApi.get_song_detail(songId)
-    dispatch(set_songDetail(res.songs[0]))
+    if (res && res.songs && res.songs[0]) {
+      dispatch(set_songDetail(res.songs[0]))
+    }
   }
 }
 
@@ -52,6 +54,9 @@ export const get_songDetail = songId => {
 export const get_songLyric = songId => {
   return async dispatch => {
     const res = await songApi.get_lyric(songId)
+    if (!res) {
+      return
+    }
     let lyric = []
     if (res.nolyric) {
       lyric.push({ time: 0, content: '纯音乐，无歌词' })
@@ -72,6 +77,9 @@ export const get_songLyric = songId => {
 export const get_hotComment = (songId, offset = 0, limit = 15) => {
   return async dispatch => {
     const res = await songApi.get_comment_hot(songId, offset, limit)
+    if (!res || !res.hotComments) {
+      return
+    }
     const hotComment = {
       total: res.total,
       list: res.hotComments
@@ -84,6 +92,9 @@ export const get_hotComment = (songId, offset = 0, limit = 15) => {
 export const get_newComment = (songId, offset = 0, limit = 20) => {
   return async dispatch => {
     const res = await songApi.get_comment_music(songId, offset, limit)
+    if (!res || !res.comments) {
+      return
+    }
     const newComment = {
       total: res.total,
       list: res.comments
@@ -96,7 +107,9 @@ export const get_newComment = (songId, offset = 0, limit = 20) => {
 export const get_simiSongsheetList = songId => {
   return async dispatch => {
     const res = await songApi.get_simi_playlist(songId)
-    dispatch(set_simiSongsheetList(res.playlists))
+    if (res && res.playlists) {
+      dispatch(set_simiSongsheetList(res.playlists))
+    }
   }
 }
 
@@ -104,6 +117,8 @@ export const get_simiSongsheetList = songId => {
 export const get_simiSongList = songId => {
   return async dispatch => {
     const res = await songApi.get_simi_song(songId)
-    dispatch(set_simiSongList(res.songs))
+    if (res && res.songs) {
+      dispatch(set_simiSongList(res.songs))
+    }
   }
 }

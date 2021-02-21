@@ -12,7 +12,7 @@ export default memo(function ChartList(props) {
   /**
    * props and state
    */
-  const { title = '', listData = [], currentChart = {} } = props
+  const { title = '', cpnData = [], currentChart = {} } = props
 
   /**
    * redux hooks
@@ -37,7 +37,7 @@ export default memo(function ChartList(props) {
       <h2 className="chart-list-title">{title}</h2>
       <ul className="chart-list">
         {
-          listData.map(item => {
+          cpnData.map(item => {
             return (
               <li
                 className={`chart-item ${item === currentChart ? 'active' : ''}`}

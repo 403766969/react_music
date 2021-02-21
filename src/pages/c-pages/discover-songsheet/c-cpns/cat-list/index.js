@@ -7,7 +7,7 @@ export default memo(function CatList(props) {
   /**
    * props and state
    */
-  const { listData = [], currentSub = '', onChange } = props
+  const { cpnData = [], currentSub = '', onChange } = props
 
   const [isShow, setIsShow] = useState(false)
 
@@ -28,7 +28,7 @@ export default memo(function CatList(props) {
     <StyledWrapper className="cpn-cat-list">
       <div className="panel-top">
         <h3 className="current-select">{currentSub}</h3>
-        <div className="top-selector sprite_button" onClick={e => setIsShow(!isShow)}>
+        <div className="top-selector sprite_button" onClick={() => setIsShow(!isShow)}>
           <span>选择分类</span>
           <i className="sprite_icon2"></i>
         </div>
@@ -39,11 +39,11 @@ export default memo(function CatList(props) {
         </div>
         <div className="content-body">
           <h3 className="body-top">
-            <span className="sprite_button2" onClick={e => handleSubClick('全部')}>全部风格</span>
+            <span className="sprite_button2" onClick={() => handleSubClick('全部')}>全部风格</span>
           </h3>
           <ul className="body-list">
             {
-              listData.map((catItem, catIndex) => {
+              cpnData.map((catItem, catIndex) => {
                 return (
                   <li className="list-li" key={catItem.name}>
                     <div className="li-left">
@@ -55,7 +55,7 @@ export default memo(function CatList(props) {
                         catItem.subs.map(subItem => {
                           return (
                             <div className="right-item" key={subItem}>
-                              <span className={`name ${subItem === currentSub ? 'active' : ''}`} onClick={e => handleSubClick(subItem)}>{subItem}</span>
+                              <span className={`name ${subItem === currentSub ? 'active' : ''}`} onClick={() => handleSubClick(subItem)}>{subItem}</span>
                               <span className="divider">|</span>
                             </div>
                           )

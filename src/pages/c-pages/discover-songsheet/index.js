@@ -70,13 +70,13 @@ export default memo(function Songsheet(props) {
   return (
     <StyledWrapper className="page-discover-songsheet wrap-v2">
       <div className="header">
-        <CatList listData={r_catList} currentSub={r_currentSub} onChange={handleSubChange} />
+        <CatList cpnData={r_catList} currentSub={r_currentSub} onChange={handleSubChange} />
         <div className="hot sprite_button2">
           <span>热门</span>
         </div>
       </div>
       <div className="content">
-        <SongsheetList listData={r_songsheetData.playlists} />
+        <SongsheetList cpnData={r_songsheetData.playlists} />
       </div>
       <div className="footer">
         <Pagination currentPage={currentPage} total={r_songsheetData.total} pageSize={35} itemCount={9} onPageChange={handlePageChange} />

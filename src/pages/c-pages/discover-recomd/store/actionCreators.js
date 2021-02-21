@@ -40,60 +40,80 @@ export const set_settleSingerList = settleSingerList => ({
 export const get_topBannerList = () => {
   return async dispatch => {
     const res = await otherApi.get_banner()
-    dispatch(set_topBannerList(res.banners))
+    if (res && res.banners) {
+      dispatch(set_topBannerList(res.banners))
+    }
   }
 }
 
 // 热门推荐
-export const get_hotRecomdList = limit => {
+export const get_hotRecomdList = (limit = 8) => {
   return async dispatch => {
     const res = await otherApi.get_personalized(limit)
-    dispatch(set_hotRecomdList(res.result))
+    if (res && res.result) {
+      dispatch(set_hotRecomdList(res.result))
+    }
   }
 }
 
 // 新碟上架
-export const get_newAlbumList = (limit, offset) => {
+export const get_newAlbumList = (limit = 10, offset = 0) => {
   return async dispatch => {
     const res = await otherApi.get_top_album(limit, offset)
-    dispatch(set_newAlbumList(res.albums))
+    if (res && res.albums) {
+      dispatch(set_newAlbumList(res.albums))
+    }
   }
 }
 
 // 榜单
-export const get_rankMultiList = () => {
+export const get_rankMultiList = (rankCount = 3) => {
   return async dispatch => {
     const resA = await songsheetApi.get_toplist()
 
+    if (!resA || !resA.list || resA.list.length <= 0) {
+      return
+    }
+
     const reqB = []
-    reqB.push(songsheetApi.get_playlist_detail(resA.list[0].id))
-    reqB.push(songsheetApi.get_playlist_detail(resA.list[1].id))
-    reqB.push(songsheetApi.get_playlist_detail(resA.list[2].id))
+    const reqCount = (rankCount <= resA.list.length) ? rankCount : resA.list.length
+    for (let i = 0; i < reqCount; i++) {
+      reqB.push(songsheetApi.get_playlist_detail(resA.list[i].id))
+    }
     const resB = await axios.all(reqB)
 
+    const rankList = resB.filter(item => {
+      if (item.playlist) {
+        return true
+      } else {
+        return false
+      }
+    }).map(item => item.playlist)
+
+    if (rankList.length <= 0) {
+      return
+    }
+
     const reqC = []
-    reqC.push(songApi.get_song_detail(resB[0].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
-    reqC.push(songApi.get_song_detail(resB[1].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
-    reqC.push(songApi.get_song_detail(resB[2].playlist.trackIds.slice(0, 10).map(item => item.id).join(',')))
+    for (let i = 0; i < rankList.length; i++) {
+      reqC.push(songApi.get_song_detail(rankList[i].trackIds.slice(0, 10).map(item => item.id).join(',')))
+    }
     const resC = await axios.all(reqC)
 
-    resB[0].playlist.tracks = resC[0].songs
-    resB[1].playlist.tracks = resC[1].songs
-    resB[2].playlist.tracks = resC[2].songs
+    for (let i = 0; i < rankList.length; i++) {
+      rankList[i].tracks = resC[i].songs || []
+    }
 
-    const rankMultiList = []
-    rankMultiList.push(resB[0].playlist)
-    rankMultiList.push(resB[1].playlist)
-    rankMultiList.push(resB[2].playlist)
-
-    dispatch(set_rankMultiList(rankMultiList))
+    dispatch(set_rankMultiList(rankList))
   }
 }
 
 // 入驻歌手
-export const get_settleSingerList = (cat, limit) => {
+export const get_settleSingerList = (cat = 5001, limit = 5) => {
   return async dispatch => {
     const res = await otherApi.get_artistList(cat, limit)
-    dispatch(set_settleSingerList(res.artists))
+    if (res && res.artists) {
+      dispatch(set_settleSingerList(res.artists))
+    }
   }
 }

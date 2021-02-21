@@ -12,7 +12,7 @@ export default memo(function NewAlbum(props) {
   /**
    * props and state
    */
-  const { newAlbumList = [] } = props
+  const { cpnData = [] } = props
 
   /**
    * other hooks
@@ -30,7 +30,7 @@ export default memo(function NewAlbum(props) {
                 return (
                   <div className="carousel-page" key={page}>
                     {
-                      newAlbumList.slice(page * 5, (page + 1) * 5).map(item => {
+                      cpnData.slice(page * 5, (page + 1) * 5).map(item => {
                         return (
                           <AlbumCover key={item.id} albumData={item} />
                         )
@@ -43,8 +43,8 @@ export default memo(function NewAlbum(props) {
           </Carousel>
         </div>
         <div className="control">
-          <span className="arrow arrow-left sprite_02" onClick={e => carouselRef.current.prev()}></span>
-          <span className="arrow arrow-right sprite_02" onClick={e => carouselRef.current.next()}></span>
+          <span className="arrow arrow-left sprite_02" onClick={() => carouselRef.current.prev()}></span>
+          <span className="arrow arrow-right sprite_02" onClick={() => carouselRef.current.next()}></span>
         </div>
       </div>
     </StyledWrapper>

@@ -15,40 +15,40 @@ export default memo(function SongDetail(props) {
   /**
    * props and state
    */
-  const { songData = {}, songLyric = [], commentTotal = 0 } = props
+  const { cpnData = {} } = props
 
-  return Object.keys(songData).length > 0 && (
+  return Object.keys(cpnData.songDetail).length > 0 && (
     <StyleWrapper className="cpn-song-detail">
       <div className="content">
         <div className="left">
           <div className="image">
-            <img src={formatUrlWithSize(songData.al.picUrl, 130)} alt="" />
+            <img src={formatUrlWithSize(cpnData.songDetail.al.picUrl, 130)} alt="" />
             <span className="cover image_cover"></span>
           </div>
           <div className="link">
             <i className="sprite_icon2"></i>
-            <a href={`https://music.163.com/#/outchain/2/${songData.id}`} title="生成外联播放器" target="_blank" rel="noreferrer">生成外联播放器</a>
+            <a href={`https://music.163.com/#/outchain/2/${cpnData.songDetail.id}`} title="生成外联播放器" target="_blank" rel="noreferrer">生成外联播放器</a>
           </div>
         </div>
         <div className="right">
           <div className="header">
             <i className="sprite_icon2"></i>
-            <h3 className="title">{songData.name}</h3>
+            <h3 className="title">{cpnData.songDetail.name}</h3>
           </div>
           <div className="singer">
             <span className="label">歌手：</span>
-            <ArtistsDivide artists={songData.ar} />
+            <ArtistsDivide artists={cpnData.songDetail.ar} />
           </div>
           <div className="album">
             <span className="label">所属专辑：</span>
-            <NavLink to={`/album?id=${songData.al.id}`}
-              title={songData.al.name}
+            <NavLink to={`/album?id=${cpnData.songDetail.al.id}`}
+              title={cpnData.songDetail.al.name}
               className="name">
-              {songData.al.name}
+              {cpnData.songDetail.al.name}
             </NavLink>
           </div>
-          <OperationBar songId={songData.id} commentText={commentTotal} />
-          <SongLyric songLyric={songLyric} />
+          <OperationBar songId={cpnData.songDetail.id} commentText={cpnData.commentTotal} />
+          <SongLyric cpnData={cpnData.songLyric} />
         </div>
       </div>
     </StyleWrapper>

@@ -80,12 +80,18 @@ export default memo(function Song(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, songId])
 
+  const SongDetailData = {
+    songDetail: r_songDetail,
+    songLyric: r_songLyric,
+    commentTotal: r_newComment.total
+  }
+
   return (
     <StyleWrapper className="page-song wrap-min-width">
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">
-          <SongDetail songData={r_songDetail} songLyric={r_songLyric} commentTotal={r_newComment.total} />
+          <SongDetail cpnData={SongDetailData} />
           <div className="song-comment" ref={commentRef}>
             <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>

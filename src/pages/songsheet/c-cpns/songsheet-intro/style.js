@@ -28,18 +28,28 @@ export const StyledWrapper = styled.div`
   }
 
   .dec {
+    overflow: hidden;
+
     p {
+      min-height: 18px;
       line-height: 18px;
       color: #666;
     }
   }
 
+  .ellipsis {
+      line-height: 18px;
+      color: #666;
+  }
+
   .control {
+    display: flex;
+    justify-content: flex-end;
     margin-top: 5px;
 
     button {
       position: relative;
-      margin: 0;
+      margin-right: 15px;
       padding: 0;
       height: 23px;
       line-height: 23px;

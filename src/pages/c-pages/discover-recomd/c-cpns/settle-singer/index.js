@@ -12,14 +12,14 @@ export default memo(function SettleSinger(props) {
   /**
    * props and state
    */
-  const { settleSingerList = [] } = props
+  const { cpnData = [] } = props
 
   return (
     <StyledWrapper className="cpn-settle-singer">
       <HeaderShort title={'入驻歌手'} more={{ text: '查看全部', link: '/discover/artist/signed' }} />
       <div className="content">
         {
-          settleSingerList.map(item => {
+          cpnData.map(item => {
             return (
               <NavLink to={`/user/home?id=${item.id}`} key={item.id} className="item">
                 <img src={formatUrlWithSize(item.img1v1Url, 62)} alt="" />

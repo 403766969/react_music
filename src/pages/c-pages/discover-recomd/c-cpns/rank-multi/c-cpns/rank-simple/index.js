@@ -13,8 +13,8 @@ export default memo(function RankSimple(props) {
   /**
    * props and state
    */
-  const { rankSimpleData } = props
-  const { tracks = [], trackIds = [] } = rankSimpleData
+  const { cpnData = {} } = props
+  const { tracks = [], trackIds = [] } = cpnData
 
   /**
    * redux hooks
@@ -36,15 +36,15 @@ export default memo(function RankSimple(props) {
     dispatch(playerAction.add_multipleSong_with_trackIds(trackIds, true))
   }
 
-  return Object.keys(rankSimpleData).length > 0 && (
+  return Object.keys(cpnData).length > 0 && (
     <StyledWrapper className="cpn-rank-simple">
       <div className="header">
         <div className="image">
-          <img src={formatUrlWithSize(rankSimpleData.coverImgUrl, 80)} alt="" />
-          <NavLink to={`/discover/toplist?id=${rankSimpleData.id}`} className="image_cover" title={rankSimpleData.name}>ranking</NavLink>
+          <img src={formatUrlWithSize(cpnData.coverImgUrl, 80)} alt="" />
+          <NavLink to={`/discover/toplist?id=${cpnData.id}`} className="image_cover" title={cpnData.name}>ranking</NavLink>
         </div>
         <div className="info">
-          <NavLink to={`/discover/toplist?id=${rankSimpleData.id}`} title={rankSimpleData.name}>{rankSimpleData.name}</NavLink>
+          <NavLink to={`/discover/toplist?id=${cpnData.id}`} title={cpnData.name}>{cpnData.name}</NavLink>
           <div>
             <button className="btn play sprite_02" title="播放" onClick={handleAddList}></button>
             <button className="btn favor sprite_02" title="收藏"></button>
@@ -60,8 +60,8 @@ export default memo(function RankSimple(props) {
                 <div className="info">
                   <NavLink to={`/song?id=${item.id}`} className="name text-nowrap" title={item.name}>{item.name}</NavLink>
                   <div className="operate">
-                    <button className="btn sprite_02 play" title="播放" onClick={e => handlePlay(item.id)}></button>
-                    <button className="btn sprite_icon2 addto" title="添加到播放列表" onClick={e => handleAdd(item.id)}></button>
+                    <button className="btn sprite_02 play" title="播放" onClick={() => handlePlay(item.id)}></button>
+                    <button className="btn sprite_icon2 addto" title="添加到播放列表" onClick={() => handleAdd(item.id)}></button>
                     <button className="btn sprite_02 favor" title="收藏"></button>
                   </div>
                 </div>
@@ -71,7 +71,7 @@ export default memo(function RankSimple(props) {
         }
       </div>
       <div className="footer">
-        <NavLink to={`/discover/toplist?id=${rankSimpleData.id}`}>查看全部 &gt;</NavLink>
+        <NavLink to={`/discover/toplist?id=${cpnData.id}`}>查看全部 &gt;</NavLink>
       </div>
     </StyledWrapper>
   )

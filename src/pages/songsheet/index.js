@@ -83,7 +83,7 @@ export default memo(function Songsheet(props) {
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">
-          <SongsheetDetail songsheetData={r_songsheetDetail} />
+          <SongsheetDetail cpnData={r_songsheetDetail} />
           <SongArea
             songsheetId={r_songsheetDetail.id}
             playCount={r_songsheetDetail.playCount}

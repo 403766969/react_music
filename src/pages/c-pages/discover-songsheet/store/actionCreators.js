@@ -27,6 +27,9 @@ export const set_songsheetData = songsheetData => ({
 export const get_catList = sub => {
   return async dispatch => {
     const res = await songsheetApi.get_playlist_catlist()
+    if (!res || !res.categories || !res.sub) {
+      return
+    }
     const catlist = []
     Object.entries(res.categories).forEach(([key, value]) => {
       catlist[key] = {
@@ -52,6 +55,8 @@ export const get_songsheetData = (offset = 0, limit = 35, order = 'hot') => {
   return async (dispatch, getState) => {
     const sub = getState().getIn(['discover/songsheet', 'currentSub'])
     const res = await songsheetApi.get_top_playlist(sub, offset, limit, order)
-    dispatch(set_songsheetData(res))
+    if (res) {
+      dispatch(set_songsheetData(res))
+    }
   }
 }

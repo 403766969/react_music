@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { playModeTypes, playerStatusTypes } from '@/common/constants'
+import { playModeTypes } from '@/common/constants'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
@@ -31,29 +31,19 @@ export default memo(function PlayerBar() {
 
   const [volume, setVolume] = useState(() => {
     const s_volume = window.localStorage.getItem('volume')
-      ? Number(window.localStorage.getItem('volume'))
-      : 50
-    return s_volume
+    return s_volume ? Number(s_volume) : 50
   })
 
   const [isShowVolume, setIsShowVolume] = useState(false)
 
   const [playMode, setPlayMode] = useState(() => {
     const s_playMode = window.localStorage.getItem('playMode')
-      ? JSON.parse(window.localStorage.getItem('playMode'))
-      : {
-        type: playModeTypes.LIST_LOOP,
-        class: 'list-loop',
-        title: '列表循环'
-      }
-    return s_playMode
+    return s_playMode || playModeTypes.LIST_LOOP
   })
 
   const [isLocked, setIsLocked] = useState(() => {
     const s_lock = window.localStorage.getItem('lock')
-      ? Number(window.localStorage.getItem('lock'))
-      : 0
-    return s_lock ? true : false
+    return s_lock ? Number(s_lock) === 1 : false
   })
 
   const [isShowPanel, setIsShowPanel] = useState(false)
@@ -97,7 +87,6 @@ export default memo(function PlayerBar() {
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true)
-          dispatch(actions.set_playerStatus(playerStatusTypes.PLAYING))
         })
         .catch(() => {
           audioRef.current.pause()
@@ -147,7 +136,7 @@ export default memo(function PlayerBar() {
       return
     }
     let index = r_currentSongIndex
-    switch (playMode.type) {
+    switch (playMode) {
       case playModeTypes.RANDOM_PLAY:
         while (index === r_currentSongIndex) {
           index = Math.floor(Math.random() * songCount)
@@ -161,7 +150,7 @@ export default memo(function PlayerBar() {
           index = 0
         }
     }
-    dispatch(actions.toggle_song(index))
+    dispatch(actions.toggle_song_with_songIndex(index))
   }
 
   // 播放时间
@@ -192,7 +181,7 @@ export default memo(function PlayerBar() {
   const handleEnded = () => {
     audioRef.current.pause()
     setIsPlaying(!audioRef.current.paused)
-    if (playMode.type === playModeTypes.SINGLE_LOOP || r_songList.length === 1) {
+    if (playMode === playModeTypes.SINGLE_LOOP || r_songList.length === 1) {
       setCurrentTime(0)
       setProgessValue(0)
       audioRef.current.currentTime = 0
@@ -236,38 +225,22 @@ export default memo(function PlayerBar() {
 
   // 切换播放模式
   const handleChangePlayMode = () => {
-    let newPlayMode = {}
-    switch (playMode.type) {
+    let newPlayMode = ''
+    switch (playMode) {
       case playModeTypes.LIST_LOOP:
-        newPlayMode = {
-          type: playModeTypes.SINGLE_LOOP,
-          class: 'single-loop',
-          title: '单曲循环'
-        }
+        newPlayMode = playModeTypes.SINGLE_LOOP
         break
       case playModeTypes.SINGLE_LOOP:
-        newPlayMode = {
-          type: playModeTypes.RANDOM_PLAY,
-          class: 'random-play',
-          title: '随机播放'
-        }
+        newPlayMode = playModeTypes.RANDOM_PLAY
         break
       case playModeTypes.RANDOM_PLAY:
-        newPlayMode = {
-          type: playModeTypes.LIST_LOOP,
-          class: 'list-loop',
-          title: '列表循环'
-        }
+        newPlayMode = playModeTypes.LIST_LOOP
         break
       default:
-        newPlayMode = {
-          type: playModeTypes.LIST_LOOP,
-          class: 'list-loop',
-          title: '列表循环'
-        }
+        newPlayMode = playModeTypes.LIST_LOOP
     }
     setPlayMode(newPlayMode)
-    window.localStorage.setItem('playMode', JSON.stringify(newPlayMode))
+    window.localStorage.setItem('playMode', newPlayMode)
   }
 
   // 锁定播放器
@@ -284,6 +257,29 @@ export default memo(function PlayerBar() {
   const handleCloseClick = useCallback(() => {
     setIsShowPanel(false)
   }, [])
+
+  /**
+   * render logic
+   */
+  let playModeClass = ''
+  let playModeTitle = ''
+  switch (playMode) {
+    case playModeTypes.LIST_LOOP:
+      playModeClass = 'list-loop'
+      playModeTitle = '列表循环'
+      break
+    case playModeTypes.SINGLE_LOOP:
+      playModeClass = 'single-loop'
+      playModeTitle = '单曲循环'
+      break
+    case playModeTypes.RANDOM_PLAY:
+      playModeClass = 'random-play'
+      playModeTitle = '随机播放'
+      break
+    default:
+      playModeClass = 'list-loop'
+      playModeTitle = '列表循环'
+  }
 
   return (
     <StyleWrapper className={`cpn-player-bar sprite_playbar ${(isLocked || isShowPanel) ? '' : 'hidden'}`}>
@@ -362,8 +358,8 @@ export default memo(function PlayerBar() {
               </div>
             </button>
             <button
-              className={`sprite_playbar btn ${playMode.class}`}
-              title={playMode.title}
+              className={`sprite_playbar btn ${playModeClass}`}
+              title={playModeTitle}
               onClick={handleChangePlayMode}></button>
             <button
               className="sprite_playbar btn playlist"

@@ -29,14 +29,14 @@ export default memo(function SongDetail(props) {
    * other logic
    */
   const handlePlayClick = useCallback(() => {
-    if (cpnData.songDetail && cpnData.songDetail.id) {
-      dispatch(playerActions.add_simpleSong(cpnData.songDetail.id, true))
+    if (cpnData.songDetail) {
+      dispatch(playerActions.add_simpleSong_with_song(cpnData.songDetail, true))
     }
   }, [dispatch, cpnData])
 
   const handleAddClick = useCallback(() => {
-    if (cpnData.songDetail && cpnData.songDetail.id) {
-      dispatch(playerActions.add_simpleSong(cpnData.songDetail.id, false))
+    if (cpnData.songDetail) {
+      dispatch(playerActions.add_simpleSong_with_song(cpnData.songDetail, false))
     }
   }, [dispatch, cpnData])
 

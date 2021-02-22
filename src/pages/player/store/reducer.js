@@ -8,7 +8,7 @@ const initialState = Map({
   currentSongIndex: -1,
   currentLyric: [],
   currentLyricIndex: -1,
-  playerStatus: ''
+  playerStatus: {}
 })
 
 function reducer(state = initialState, action) {

@@ -28,15 +28,13 @@ export default memo(function PlayerPanel(props) {
     r_currentSong,
     r_currentSongIndex,
     r_currentLyric,
-    r_currentLyricIndex,
-    r_playerStatus
+    r_currentLyricIndex
   } = useSelector(state => ({
     r_songList: state.getIn(['player', 'songList']),
     r_currentSong: state.getIn(['player', 'currentSong']),
     r_currentSongIndex: state.getIn(['player', 'currentSongIndex']),
     r_currentLyric: state.getIn(['player', 'currentLyric']),
-    r_currentLyricIndex: state.getIn(['player', 'currentLyricIndex']),
-    r_playerStatus: state.getIn(['player', 'playerStatus'])
+    r_currentLyricIndex: state.getIn(['player', 'currentLyricIndex'])
   }), shallowEqual)
 
   /**
@@ -117,7 +115,7 @@ export default memo(function PlayerPanel(props) {
       <div className="content">
         <div className="left">
           <ScrollContainer ref={scrollContainerRef_pl} delta={55} onWheel={handleWheel_pl}>
-            <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} playerStatus={r_playerStatus} />
+            <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
           </ScrollContainer>
           <ScrollBar ref={scrollBarRef_pl} gripSize={gripSize_pl} onDrag={handleDrag_pl} />
         </div>

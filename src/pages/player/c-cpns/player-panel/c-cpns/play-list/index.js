@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux'
 
 import { formatDate } from '@/utils/formatter'
 
-import { playerStatusTypes } from '@/common/constants'
-
 import * as actions from '../../../../store/acitonCreators'
 
 import ArtistsDivide from '@/components/artists-divide'
@@ -16,7 +14,7 @@ export default memo(function PlayList(props) {
   /**
    * props and state
    */
-  const { songList = [], currentSongIndex = -1, playerStatus = '' } = props
+  const { songList = [], currentSongIndex = -1 } = props
 
   /**
    * redux hooks
@@ -27,7 +25,7 @@ export default memo(function PlayList(props) {
    * other logic
    */
   const handleItemClick = index => {
-    dispatch(actions.toggle_song(index))
+    dispatch(actions.toggle_song_with_songIndex(index))
   }
 
   const hadleRemoveClick = (index, e) => {
@@ -37,17 +35,6 @@ export default memo(function PlayList(props) {
 
   return (
     <StyledWrapper className="cpn-play-list">
-      {
-        songList.length <= 0 && playerStatus === playerStatusTypes.LOADING && (
-          <li className="play-item">
-            <div className="left">
-              <div className="song text-nowrap">
-                {playerStatus}...
-              </div>
-            </div>
-          </li>
-        )
-      }
       {
         songList.map((item, index) => {
           return (

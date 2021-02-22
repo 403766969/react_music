@@ -24,12 +24,12 @@ export default memo(function RankSimple(props) {
   /**
    * other logic
    */
-  const handlePlay = id => {
-    dispatch(playerAction.add_simpleSong(id, true))
+  const handlePlay = item => {
+    dispatch(playerAction.add_simpleSong_with_song(item, true))
   }
 
-  const handleAdd = id => {
-    dispatch(playerAction.add_simpleSong(id, false))
+  const handleAdd = item => {
+    dispatch(playerAction.add_simpleSong_with_song(item, false))
   }
 
   const handleAddList = () => {
@@ -60,8 +60,8 @@ export default memo(function RankSimple(props) {
                 <div className="info">
                   <NavLink to={`/song?id=${item.id}`} className="name text-nowrap" title={item.name}>{item.name}</NavLink>
                   <div className="operate">
-                    <button className="btn sprite_02 play" title="播放" onClick={() => handlePlay(item.id)}></button>
-                    <button className="btn sprite_icon2 addto" title="添加到播放列表" onClick={() => handleAdd(item.id)}></button>
+                    <button className="btn sprite_02 play" title="播放" onClick={() => handlePlay(item)}></button>
+                    <button className="btn sprite_icon2 addto" title="添加到播放列表" onClick={() => handleAdd(item)}></button>
                     <button className="btn sprite_02 favor" title="收藏"></button>
                   </div>
                 </div>

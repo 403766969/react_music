@@ -29,12 +29,12 @@ export default memo(function ListItem(props) {
   /**
    * other logic
    */
-  const handlePlayClick = id => {
-    dispatch(playerAction.add_simpleSong(id, true))
+  const handlePlayClick = item => {
+    dispatch(playerAction.add_simpleSong_with_song(item, true))
   }
 
-  const handleAddClick = id => {
-    dispatch(playerAction.add_simpleSong(id, false))
+  const handleAddClick = item => {
+    dispatch(playerAction.add_simpleSong_with_song(item, false))
   }
 
   /**
@@ -82,7 +82,7 @@ export default memo(function ListItem(props) {
                   </NavLink>
                 )
               }
-              <i className="sprite_table play-btn" onClick={() => handlePlayClick(cpnData.id)}></i>
+              <i className="sprite_table play-btn" onClick={() => handlePlayClick(cpnData)}></i>
               <div className="song-info">
                 <div className="song-text text-nowrap">
                   <NavLink className="song-name" to={`/song?id=${cpnData.id}`} title={cpnData.name + tnsAndAlia}>
@@ -109,7 +109,7 @@ export default memo(function ListItem(props) {
               <span className="time">{formatDate(cpnData.dt, 'mm:ss')}</span>
             </div>
             <div className="operation">
-              <i className="sprite_icon2 btn add" title="添加到播放列表" onClick={() => handleAddClick(cpnData.id)}></i>
+              <i className="sprite_icon2 btn add" title="添加到播放列表" onClick={() => handleAddClick(cpnData)}></i>
               <i className="sprite_table btn favor" title="收藏"></i>
               <i className="sprite_table btn share" title="分享"></i>
               <i className="sprite_table btn download" title="下载"></i>

@@ -4,12 +4,6 @@ export const playModeTypes = {
   RANDOM_PLAY: 'RANDOM_PLAY'
 }
 
-export const playerStatusTypes = {
-  LOADING: '加载中',
-  LOADED: '已添加到播放列表',
-  PLAYING: '已开始播放'
-}
-
 export const emojiUrl = {
   '[大笑]': require('@/assets/img/emoji/emoji_大笑.png').default,
   '[可爱]': require('@/assets/img/emoji/emoji_可爱.png').default,

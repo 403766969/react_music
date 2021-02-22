@@ -24,12 +24,12 @@ export default memo(function SimiSong(props) {
   /**
    * other logic
    */
-  const handlePlay = id => {
-    dispatch(playerActions.add_simpleSong(id, true))
+  const handlePlay = item => {
+    dispatch(playerActions.add_simpleSong_with_song(item, true))
   }
 
-  const handleAdd = id => {
-    dispatch(playerActions.add_simpleSong(id, false))
+  const handleAdd = item => {
+    dispatch(playerActions.add_simpleSong_with_song(item, false))
   }
 
   return (
@@ -49,8 +49,8 @@ export default memo(function SimiSong(props) {
                   </div>
                 </div>
                 <div className="operate">
-                  <button className="item sprite_icon3 play" title="播放" onClick={() => handlePlay(item.id)}></button>
-                  <button className="item sprite_icon3 add" title="添加到播放列表" onClick={() => handleAdd(item.id)}></button>
+                  <button className="item sprite_icon3 play" title="播放" onClick={() => handlePlay(item)}></button>
+                  <button className="item sprite_icon3 add" title="添加到播放列表" onClick={() => handleAdd(item)}></button>
                 </div>
               </div>
             )

@@ -25,7 +25,7 @@ export default memo(function PlayerMessage() {
   const timeRef = useRef(null)
 
   useEffect(() => {
-    if (r_playerStatus !== '') {
+    if (r_playerStatus.isShowMessage) {
       setIsShow(true)
       if (timeRef.current) {
         clearTimeout(timeRef.current)
@@ -38,7 +38,7 @@ export default memo(function PlayerMessage() {
 
   return (
     <StyledWrapper className="cpn-player-message sprite_playbar text-nowrap" style={{ display: isShow ? 'block' : 'none' }}>
-      {r_playerStatus}
+      {r_playerStatus.message}
     </StyledWrapper>
   )
 })

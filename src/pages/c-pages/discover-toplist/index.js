@@ -76,6 +76,18 @@ export default memo(function DiscoverToplist(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch])
 
+  const songAreaData = {
+    songsheetId: r_currentChartDetail.id,
+    playCount: r_currentChartDetail.playCount,
+    songCount: r_currentChartDetail.trackCount,
+    songList: r_currentChartSongList
+  }
+
+  const commentAreaData = {
+    hotComment: r_hotComment,
+    newComment: r_newComment
+  }
+
   return (
     <StyledWrapper className="page-discover-toplist wrap-v2">
       <div className="left">
@@ -84,18 +96,9 @@ export default memo(function DiscoverToplist(props) {
       </div>
       <div className="right">
         <ChartIntro cpnData={r_currentChartDetail} />
-        <SongArea
-          songsheetId={r_currentChartDetail.id}
-          playCount={r_currentChartDetail.playCount}
-          songCount={r_currentChartDetail.trackCount}
-          songList={r_currentChartSongList}
-          order
-          name
-          duration
-          artist={{ width: '170px' }}
-          showCoverCount={3} />
+        <SongArea cpnData={songAreaData} order name duration artist={{ width: '170px' }} showCoverCount={3} />
         <div className="toplist-comment" ref={commentRef}>
-          <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+          <CommentArea cpnData={commentAreaData} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>
       </div>
     </StyledWrapper>

@@ -10,14 +10,11 @@ export default memo(function AlbumCover(props) {
   /**
    * props and state
    */
-  const {
-    albumData = {},
-    imgW = '100px',
-    imgH = '100px',
-    coverW = '118px',
-    coverH = '100px',
-    bgPos = '-570px'
-  } = props
+  const { cpnData = {} } = props
+
+  const { imageWidth = '100px', imageHeight = '100px', coverWidth = '118px', coverHeight = '100px' } = props
+
+  const { backgroundPosition = '-570px' } = props
 
   /**
    * other hooks
@@ -28,22 +25,26 @@ export default memo(function AlbumCover(props) {
    * other logic
    */
   const pushRoute_album = () => {
-    history.push(`/album?id=${albumData.id}`)
+    if (cpnData.id) {
+      history.push(`/album?id=${cpnData.id}`)
+    }
   }
 
   const pushRoute_artist = () => {
-    history.push(`/artist?id=${albumData.artist.id}`)
+    if (cpnData.artist && cpnData.artist.id) {
+      history.push(`/artist?id=${cpnData.artist.id}`)
+    }
   }
 
-  return Object.keys(albumData).length > 0 && (
-    <StyledWrapper className="cpn-album-cover" imgW={imgW} imgH={imgH} coverW={coverW} coverH={coverH} bgPos={bgPos}>
+  return Object.keys(cpnData).length > 0 && (
+    <StyledWrapper className="cpn-album-cover" imageWidth={imageWidth} imageHeight={imageHeight} coverWidth={coverWidth} coverHeight={coverHeight} backgroundPosition={backgroundPosition}>
       <div className="top-cover" onClick={pushRoute_album}>
-        <img src={formatUrlWithSize(albumData.picUrl, 150)} alt="" />
-        <div className="mask sprite_covor" title={albumData.name}></div>
+        <img src={formatUrlWithSize(cpnData.picUrl, 150)} alt="" />
+        <div className="mask sprite_covor" title={cpnData.name}></div>
       </div>
       <div className="bottom-dec">
-        <div className="name text-nowrap" onClick={pushRoute_album} title={albumData.name}>{albumData.name}</div>
-        <div className="artist text-nowrap" onClick={pushRoute_artist} title={albumData.artist.name}>{albumData.artist.name}</div>
+        <div className="name text-nowrap" onClick={pushRoute_album} title={cpnData.name}>{cpnData.name}</div>
+        <div className="artist text-nowrap" onClick={pushRoute_artist} title={cpnData.artist.name}>{cpnData.artist.name}</div>
       </div>
     </StyledWrapper>
   )

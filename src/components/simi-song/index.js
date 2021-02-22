@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import * as playerAction from '@/pages/player/store/acitonCreators'
+import * as playerActions from '@/pages/player/store/acitonCreators'
 
 import HeaderShort from '@/components/header-short'
 import ArtistsDivide from '@/components/artists-divide'
@@ -14,7 +14,7 @@ export default memo(function SimiSong(props) {
   /**
    * props and state
    */
-  const { title = '', listData = [] } = props
+  const { title = '', cpnData = [] } = props
 
   /**
    * redux hooks
@@ -25,19 +25,19 @@ export default memo(function SimiSong(props) {
    * other logic
    */
   const handlePlay = id => {
-    dispatch(playerAction.add_simpleSong(id, true))
+    dispatch(playerActions.add_simpleSong(id, true))
   }
 
   const handleAdd = id => {
-    dispatch(playerAction.add_simpleSong(id, false))
+    dispatch(playerActions.add_simpleSong(id, false))
   }
 
-  return listData.length > 0 && (
+  return (
     <StyleWrapper className="cpn-simi-song">
       <HeaderShort title={title} />
       <div className="content">
         {
-          listData.map(item => {
+          cpnData.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">
@@ -45,12 +45,12 @@ export default memo(function SimiSong(props) {
                     <NavLink to={`/song?id=${item.id}`} title={item.name}>{item.name}</NavLink>
                   </div>
                   <div className="artists text-nowrap">
-                    <ArtistsDivide artists={item.artists} />
+                    <ArtistsDivide cpnData={item.artists} />
                   </div>
                 </div>
                 <div className="operate">
-                  <button className="item sprite_icon3 play" title="播放" onClick={e => handlePlay(item.id)}></button>
-                  <button className="item sprite_icon3 add" title="添加到播放列表" onClick={e => handleAdd(item.id)}></button>
+                  <button className="item sprite_icon3 play" title="播放" onClick={() => handlePlay(item.id)}></button>
+                  <button className="item sprite_icon3 add" title="添加到播放列表" onClick={() => handleAdd(item.id)}></button>
                 </div>
               </div>
             )

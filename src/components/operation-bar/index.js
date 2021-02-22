@@ -1,7 +1,4 @@
 import React, { memo } from 'react'
-import { useDispatch } from 'react-redux'
-
-import * as playerAction from '@/pages/player/store/acitonCreators'
 
 import { StyleWrapper } from './style'
 
@@ -10,41 +7,32 @@ export default memo(function OperationBar(props) {
   /**
    * props and state
    */
-  const { songId, songsheetId } = props
   const { favorText, shareText, downloadText, commentText } = props
-
-  /**
-   * redux hooks
-   */
-  const dispatch = useDispatch()
+  const { onPlayClick, onAddClick } = props
 
   /**
    * other logic
    */
-  const handlePlay = () => {
-    if (songId) {
-      dispatch(playerAction.add_simpleSong(songId, true))
-    } else if (songsheetId) {
-      dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetId, true))
+  const handlePlayClick = () => {
+    if (onPlayClick && typeof onPlayClick === 'function') {
+      onPlayClick()
     }
   }
 
-  const handleAdd = () => {
-    if (songId) {
-      dispatch(playerAction.add_simpleSong(songId, false))
-    } else if (songsheetId) {
-      dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetId, false))
+  const handleAddClick = () => {
+    if (onAddClick && typeof onAddClick === 'function') {
+      onAddClick()
     }
   }
 
   return (
     <StyleWrapper className="cpn-operation-bar">
       <div className="left">
-        <button className="play sprite_button" title="播放" onClick={handlePlay}>
+        <button className="play sprite_button" title="播放" onClick={handlePlayClick}>
           <i className="sprite_button"></i>
           <span>播放</span>
         </button>
-        <button className="add sprite_button" title="添加到播放列表" onClick={handleAdd}>
+        <button className="add sprite_button" title="添加到播放列表" onClick={handleAddClick}>
           <i className="sprite_button"></i>
         </button>
       </div>

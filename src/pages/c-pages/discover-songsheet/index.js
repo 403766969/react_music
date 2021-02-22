@@ -79,7 +79,7 @@ export default memo(function Songsheet(props) {
         <SongsheetList cpnData={r_songsheetData.playlists} />
       </div>
       <div className="footer">
-        <Pagination currentPage={currentPage} total={r_songsheetData.total} pageSize={35} itemCount={9} onPageChange={handlePageChange} />
+        <Pagination currentPage={currentPage} total={r_songsheetData.total} pageSize={35} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

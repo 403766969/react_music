@@ -328,7 +328,7 @@ export default memo(function PlayerBar() {
                 Object.keys(r_currentSong).length > 0
                   ? (
                     <div className="artists text-nowrap">
-                      <ArtistsDivide artists={r_currentSong.ar} />
+                      <ArtistsDivide cpnData={r_currentSong.ar} />
                     </div>
                   )
                   : null

@@ -11,7 +11,7 @@ export default memo(function CommentList(props) {
   /**
    * props and state
    */
-  const { item } = props
+  const { cpnData = {} } = props
 
   /**
    * render logic
@@ -19,25 +19,25 @@ export default memo(function CommentList(props) {
   const nowTime = new Date().getTime()
   const limitTime = 7 * 24 * 60 * 60 * 1000
 
-  return (
+  return Object.keys(cpnData).length > 0 && (
     <StyledWrapper className="cpn-list-item">
       <div className="avater">
-        <NavLink to={`/user/home?id=${item.user.userId}`}>
-          <img src={item.user.avatarUrl} alt="" />
+        <NavLink to={`/user/home?id=${cpnData.user.userId}`}>
+          <img src={cpnData.user.avatarUrl} alt="" />
         </NavLink>
       </div>
       <div className="main">
         <div className="top">
-          <NavLink className="user" to={`/user/home?id=${item.user.userId}`}>{item.user.nickname}</NavLink>
+          <NavLink className="user" to={`/user/home?id=${cpnData.user.userId}`}>{cpnData.user.nickname}</NavLink>
           {
-            item.user.vipRights && item.user.vipRights.redVipLevel >= 1 && item.user.vipRights.redVipLevel <= 7 && (
-              <i className={`vip vip-${item.user.vipRights.redVipLevel}`}></i>
+            cpnData.user.vipRights && cpnData.user.vipRights.redVipLevel >= 1 && cpnData.user.vipRights.redVipLevel <= 7 && (
+              <i className={`vip vip-${cpnData.user.vipRights.redVipLevel}`}></i>
             )
           }
           <span className="text">
             ：
             {
-              matchText(item.content, wrapMatcher, atMatcher, emojiMatcher).map((itemX, indeX) => {
+              matchText(cpnData.content, wrapMatcher, atMatcher, emojiMatcher).map((itemX, indeX) => {
                 return (
                   <Fragment key={indeX}>{itemX}</Fragment>
                 )
@@ -46,13 +46,13 @@ export default memo(function CommentList(props) {
           </span>
         </div>
         {
-          item.beReplied && item.beReplied[0] && (
+          cpnData.beReplied && cpnData.beReplied[0] && (
             <div className="mid">
-              <NavLink className="user" to={`/user/home?id=${item.beReplied[0].user.userId}`}>{item.beReplied[0].user.nickname}</NavLink>
+              <NavLink className="user" to={`/user/home?id=${cpnData.beReplied[0].user.userId}`}>{cpnData.beReplied[0].user.nickname}</NavLink>
               <span className="text">
                 ：
                 {
-                  matchText(item.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher).map((itemY, indeY) => {
+                  matchText(cpnData.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher).map((itemY, indeY) => {
                     return (
                       <Fragment key={indeY}>{itemY}</Fragment>
                     )
@@ -64,18 +64,18 @@ export default memo(function CommentList(props) {
         }
         <div className="bottom">
           {
-            (nowTime - item.time) < limitTime
+            (nowTime - cpnData.time) < limitTime
               ? (
-                <div className="time">{formatDate(item.time, 'MM月dd日 hh:mm')}</div>
+                <div className="time">{formatDate(cpnData.time, 'MM月dd日 hh:mm')}</div>
               )
               : (
-                <div className="time">{formatDate(item.time, 'yyyy年MM月dd日')}</div>
+                <div className="time">{formatDate(cpnData.time, 'yyyy年MM月dd日')}</div>
               )
           }
           <div className="operation">
             <span className="like">
               <i className="sprite_icon3 like-icon"></i>
-              ({item.likedCount})
+              ({cpnData.likedCount})
             </span>
             <span className="divide">|</span>
             <span className="reply">回复</span>

@@ -7,7 +7,7 @@ export default memo(function ListHeader(props) {
   /**
    * props and state
    */
-  const { orderConfig, nameConfig, durationConfig, artistConfig, albumConfig } = props
+  const { orderConfig = {}, nameConfig = {}, durationConfig = {}, artistConfig = {}, albumConfig = {} } = props
 
   return (
     <StyledWrapper className="cpn-list-header">

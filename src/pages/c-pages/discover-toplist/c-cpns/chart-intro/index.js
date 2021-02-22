@@ -1,6 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
+
+import * as playerActions from '@/pages/player/store/acitonCreators'
 
 import OperationBar from '@/components/operation-bar'
 
@@ -12,6 +15,26 @@ export default memo(function ChartIntro(props) {
    * props and state
    */
   const { cpnData = {} } = props
+
+  /**
+   * redux hooks
+   */
+  const dispatch = useDispatch()
+
+  /**
+   * other logic
+   */
+  const handlePlayClick = useCallback(() => {
+    if (cpnData.id) {
+      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, true))
+    }
+  }, [dispatch, cpnData])
+
+  const handleAddClick = useCallback(() => {
+    if (cpnData.id) {
+      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, false))
+    }
+  }, [dispatch, cpnData])
 
   return Object.keys(cpnData).length > 0 && (
     <StyledWrapper className="cpn-chart-intro">
@@ -27,10 +50,11 @@ export default memo(function ChartIntro(props) {
           <span className="frequency">（{cpnData.updateFrequency}）</span>
         </div>
         <OperationBar
-          songsheetId={cpnData.id}
           favorText={cpnData.favorCount}
           shareText={cpnData.shareCount}
-          commentText={cpnData.commentCount} />
+          commentText={cpnData.commentCount}
+          onPlayClick={handlePlayClick}
+          onAddClick={handleAddClick} />
       </div>
     </StyledWrapper>
   )

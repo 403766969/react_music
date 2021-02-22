@@ -76,21 +76,13 @@ export const StyleWrapper = styled.div`
     }
 
     .singer {
-      a {
+      .cpn-artists-divide {
         color: #0c73c2;
-
-        &::after {
-          content: " / "
-        }
-
-        &:last-of-type::after {
-          content: ""
-        }
       }
     }
 
     .album {
-      a {
+      .name {
         color: #0c73c2;
       }
     }

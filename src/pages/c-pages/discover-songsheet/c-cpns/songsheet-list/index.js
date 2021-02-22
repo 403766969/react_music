@@ -17,7 +17,7 @@ export default memo(function SongsheetList(props) {
         cpnData.map(item => {
           return (
             <li key={item.id}>
-              <SongsheetCover songsheetData={item} isShowAuthor={true} />
+              <SongsheetCover cpnData={item} author />
             </li>
           )
         })

@@ -1,6 +1,6 @@
 import http from './http'
 
-export const get_song_detail = ids => http.get('/song/detail', { params: { ids } })
+export const get_song_detail = ids => http.get('/song/detail', { params: { ids }, timeout: 300000 })
 
 export const get_lyric = id => http.get('/lyric', { params: { id } })
 

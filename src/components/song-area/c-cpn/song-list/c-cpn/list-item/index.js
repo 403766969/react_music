@@ -15,11 +15,11 @@ export default memo(function ListItem(props) {
   /**
    * props and state
    */
-  const { item, index } = props
+  const { index = 0, cpnData = {} } = props
 
-  const { orderConfig, nameConfig, durationConfig, artistConfig, albumConfig } = props
+  const { showCoverCount = 0 } = props
 
-  const { showCoverCount } = props
+  const { orderConfig = {}, nameConfig = {}, durationConfig = {}, artistConfig = {}, albumConfig = {} } = props
 
   /**
  * redux hooks
@@ -42,18 +42,18 @@ export default memo(function ListItem(props) {
    */
   let tnsAndAlia = ''
 
-  if ((item.tns && item.tns.length > 0) || (item.alia && item.alia.length > 0)) {
+  if ((cpnData.tns && cpnData.tns.length > 0) || (cpnData.alia && cpnData.alia.length > 0)) {
     tnsAndAlia = ' - '
   }
 
-  if (item.tns && item.tns.length > 0) {
-    for (let tnsItem of item.tns) {
+  if (cpnData.tns && cpnData.tns.length > 0) {
+    for (let tnsItem of cpnData.tns) {
       tnsAndAlia = tnsAndAlia + '(' + tnsItem + ')/'
     }
   }
 
-  if (item.alia && item.alia.length > 0) {
-    for (let aliaItem of item.alia) {
+  if (cpnData.alia && cpnData.alia.length > 0) {
+    for (let aliaItem of cpnData.alia) {
       tnsAndAlia = tnsAndAlia + '(' + aliaItem + ')/'
     }
   }
@@ -77,21 +77,21 @@ export default memo(function ListItem(props) {
             <div className="content">
               {
                 index < showCoverCount && (
-                  <NavLink className="song-cover" to={`/song?id=${item.id}`} title={item.name}>
-                    <img src={formatUrlWithSize(item.al.picUrl, 50)} alt={item.name} />
+                  <NavLink className="song-cover" to={`/song?id=${cpnData.id}`} title={cpnData.name}>
+                    <img src={formatUrlWithSize(cpnData.al.picUrl, 50)} alt={cpnData.name} />
                   </NavLink>
                 )
               }
-              <i className="sprite_table play-btn" onClick={() => handlePlayClick(item.id)}></i>
+              <i className="sprite_table play-btn" onClick={() => handlePlayClick(cpnData.id)}></i>
               <div className="song-info">
                 <div className="song-text text-nowrap">
-                  <NavLink className="song-name" to={`/song?id=${item.id}`} title={item.name + tnsAndAlia}>
-                    {item.name}
+                  <NavLink className="song-name" to={`/song?id=${cpnData.id}`} title={cpnData.name + tnsAndAlia}>
+                    {cpnData.name}
                   </NavLink>
                   <span className="song-tns-alia" title={tnsAndAlia}>{tnsAndAlia}</span>
                   {
-                    item.mv !== 0 && (
-                      <NavLink className="song-mv" to={`/mv?id=${item.mv}`} title="播放mv">
+                    cpnData.mv !== 0 && (
+                      <NavLink className="song-mv" to={`/mv?id=${cpnData.mv}`} title="播放mv">
                         <i className="sprite_table"></i>
                       </NavLink>
                     )
@@ -106,10 +106,10 @@ export default memo(function ListItem(props) {
         durationConfig.isShow && (
           <div className="cell duration">
             <div className="content text-nowrap">
-              <span className="time">{formatDate(item.dt, 'mm:ss')}</span>
+              <span className="time">{formatDate(cpnData.dt, 'mm:ss')}</span>
             </div>
             <div className="operation">
-              <i className="sprite_icon2 btn add" title="添加到播放列表" onClick={() => handleAddClick(item.id)}></i>
+              <i className="sprite_icon2 btn add" title="添加到播放列表" onClick={() => handleAddClick(cpnData.id)}></i>
               <i className="sprite_table btn favor" title="收藏"></i>
               <i className="sprite_table btn share" title="分享"></i>
               <i className="sprite_table btn download" title="下载"></i>
@@ -121,7 +121,7 @@ export default memo(function ListItem(props) {
         artistConfig.isShow && (
           <div className="cell artist">
             <div className="content text-nowrap">
-              <ArtistsDivide artists={item.ar} />
+              <ArtistsDivide cpnData={cpnData.ar} />
             </div>
           </div>
         )
@@ -130,8 +130,8 @@ export default memo(function ListItem(props) {
         albumConfig.isShow && (
           <div className="cell album">
             <div className="content text-nowrap">
-              <NavLink className="song-album" to={`/album?id=${item.al.id}`} title={item.al.name}>
-                {item.al.name}
+              <NavLink className="song-album" to={`/album?id=${cpnData.al.id}`} title={cpnData.al.name}>
+                {cpnData.al.name}
               </NavLink>
             </div>
           </div>

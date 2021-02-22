@@ -1,7 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize, formatDate, formatCount } from '@/utils/formatter'
+
+import * as playerActions from '@/pages/player/store/acitonCreators'
 
 import OperationBar from '@/components/operation-bar'
 
@@ -17,12 +20,29 @@ export default memo(function SongsheetDetail(props) {
   const { cpnData = {} } = props
 
   /**
+   * redux hooks
+   */
+  const dispatch = useDispatch()
+
+  /**
    * other logic
    */
   const songsheetIntroData = {
     tags: cpnData.tags || [],
     description: cpnData.description || ''
   }
+
+  const handlePlayClick = useCallback(() => {
+    if (cpnData.id) {
+      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, true))
+    }
+  }, [dispatch, cpnData])
+
+  const handleAddClick = useCallback(() => {
+    if (cpnData.id) {
+      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, false))
+    }
+  }, [dispatch, cpnData])
 
   return Object.keys(cpnData).length > 0 && (
     <StyledWrapper className="cpn-songsheet-detail">
@@ -48,10 +68,11 @@ export default memo(function SongsheetDetail(props) {
           <span className="time">{formatDate(cpnData.createTime, 'yyyy-MM-dd')}&nbsp;创建</span>
         </div>
         <OperationBar
-          songsheetId={cpnData.id}
           favorText={formatCount(cpnData.subscribedCount, true)}
           shareText={cpnData.shareCount}
-          commentText={cpnData.commentCount} />
+          commentText={cpnData.commentCount}
+          onPlayClick={handlePlayClick}
+          onAddClick={handleAddClick} />
         <SongsheetIntro cpnData={songsheetIntroData} />
       </div>
     </StyledWrapper>

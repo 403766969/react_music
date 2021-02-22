@@ -78,29 +78,32 @@ export default memo(function Songsheet(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, songsheetId])
 
+  const songAreaData = {
+    songsheetId: r_songsheetDetail.id,
+    playCount: r_songsheetDetail.playCount,
+    songCount: r_songsheetDetail.trackCount,
+    songList: r_songList
+  }
+
+  const commentAreaData = {
+    hotComment: r_hotComment,
+    newComment: r_newComment
+  }
+
   return (
     <StyledWrapper className="page-songsheet wrap-min-width">
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">
           <SongsheetDetail cpnData={r_songsheetDetail} />
-          <SongArea
-            songsheetId={r_songsheetDetail.id}
-            playCount={r_songsheetDetail.playCount}
-            songCount={r_songsheetDetail.trackCount}
-            songList={r_songList}
-            order
-            name
-            duration
-            artist
-            album />
+          <SongArea cpnData={songAreaData} order name duration artist album />
           <div className="songsheet-comment" ref={commentRef}>
-            <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+            <CommentArea cpnData={commentAreaData} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>
         </div>
         <div className="right">
-          <SimiUser title="喜欢这个歌单的人" listData={r_songsheetDetail.subscribers} />
-          <SimiSongsheet title="相关推荐" listData={r_relatedSongsheet} />
+          <SimiUser title="喜欢这个歌单的人" cpnData={r_songsheetDetail.subscribers} />
+          <SimiSongsheet title="相关推荐" cpnData={r_relatedSongsheet} />
           <DownLoad />
         </div>
       </div>

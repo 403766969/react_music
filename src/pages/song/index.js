@@ -86,6 +86,11 @@ export default memo(function Song(props) {
     commentTotal: r_newComment.total
   }
 
+  const commentAreaData = {
+    hotComment: r_hotComment,
+    newComment: r_newComment
+  }
+
   return (
     <StyleWrapper className="page-song wrap-min-width">
       <ChannelBar />
@@ -93,12 +98,12 @@ export default memo(function Song(props) {
         <div className="left">
           <SongDetail cpnData={SongDetailData} />
           <div className="song-comment" ref={commentRef}>
-            <CommentArea hotComment={r_hotComment} newComment={r_newComment} currentPage={currentPage} onPageChange={handlePageChange} />
+            <CommentArea cpnData={commentAreaData} currentPage={currentPage} onPageChange={handlePageChange} />
           </div>
         </div>
         <div className="right">
-          <SimiSongsheet title="包含这首歌的歌单" listData={r_simiSongsheetList} />
-          <SimiSong title="相似歌曲" listData={r_simiSongList} />
+          <SimiSongsheet title="包含这首歌的歌单" cpnData={r_simiSongsheetList} />
+          <SimiSong title="相似歌曲" cpnData={r_simiSongList} />
           <DownLoad />
         </div>
       </div>

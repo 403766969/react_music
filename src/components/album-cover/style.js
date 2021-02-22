@@ -4,14 +4,14 @@ export const StyledWrapper = styled.div`
   .top-cover {
     position: relative;
     margin-bottom: 7px;
-    width: ${props => props.coverW};
-    height: ${props => props.coverH};
+    width: ${props => props.coverWidth};
+    height: ${props => props.coverHeight};
     overflow: hidden;
     cursor: pointer;
 
     img {
-      width: ${props => props.imgW};
-      height: ${props => props.imgH};
+      width: ${props => props.imageWidth};
+      height: ${props => props.imageHeight};
     }
 
     .mask {
@@ -20,12 +20,12 @@ export const StyledWrapper = styled.div`
       right: 0;
       top: 0;
       bottom: 0;
-      background-position: 0 ${props => props.bgPos};
+      background-position: 0 ${props => props.backgroundPosition};
     }
   }
 
   .bottom-dec {
-    width: ${props => props.imgW};
+    width: ${props => props.imageWidth};
     font-size: 12px;
 
     .name {

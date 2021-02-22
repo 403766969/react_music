@@ -3,6 +3,8 @@ import { actionTypes } from './constants'
 import * as otherApi from '@/services/otherApi'
 import * as songsheetApi from '@/services/songsheetApi'
 import * as songApi from '@/services/songApi'
+import * as albumApi from '@/services/albumApi'
+import * as artistsApi from '@/services/artistsApi'
 import axios from 'axios'
 
 /**
@@ -28,9 +30,9 @@ export const set_rankMultiList = rankMultiList => ({
   rankMultiList: rankMultiList
 })
 
-export const set_settleSingerList = settleSingerList => ({
-  type: actionTypes.SET_SETTLE_SINGER_LIST,
-  settleSingerList: settleSingerList
+export const set_hotArtistsList = hotArtistsList => ({
+  type: actionTypes.SET_HOT_ARTISTS_LIST,
+  hotArtistsList: hotArtistsList
 })
 
 /**
@@ -59,7 +61,7 @@ export const get_hotRecomdList = (limit = 8) => {
 // 新碟上架
 export const get_newAlbumList = (limit = 10, offset = 0) => {
   return async dispatch => {
-    const res = await otherApi.get_top_album(limit, offset)
+    const res = await albumApi.get_top_album(limit, offset)
     if (res && res.albums) {
       dispatch(set_newAlbumList(res.albums))
     }
@@ -109,11 +111,11 @@ export const get_rankMultiList = (rankCount = 3) => {
 }
 
 // 入驻歌手
-export const get_settleSingerList = (cat = 5001, limit = 5) => {
+export const get_hotArtistsList = (limit = 5, offset = 0) => {
   return async dispatch => {
-    const res = await otherApi.get_artistList(cat, limit)
+    const res = await artistsApi.get_top_artists(limit, offset)
     if (res && res.artists) {
-      dispatch(set_settleSingerList(res.artists))
+      dispatch(set_hotArtistsList(res.artists))
     }
   }
 }

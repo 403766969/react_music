@@ -82,12 +82,10 @@ export const StyledWrapper = styled.div`
     .cover-author {
       span {
         margin-right: 3px;
-        font-size: 12px;
         color: #999;
       }
       
       a {
-        font-size: 12px;
         color: #666;
       }
     }

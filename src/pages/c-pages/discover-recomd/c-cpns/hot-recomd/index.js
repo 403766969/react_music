@@ -22,7 +22,7 @@ export default memo(function HotRecomd(props) {
           cpnData.map(item => {
             return (
               <li key={item.id}>
-                <SongsheetCover songsheetData={item} />
+                <SongsheetCover cpnData={item} />
               </li>
             )
           })

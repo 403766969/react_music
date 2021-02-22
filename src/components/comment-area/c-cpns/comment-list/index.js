@@ -9,16 +9,16 @@ export default memo(function CommentList(props) {
   /**
    * props and state
    */
-  const { title, commentList } = props
+  const { title = '评论', cpnData = [] } = props
 
   return (
     <StyledWrapper className="cpn-comment-list">
       <h3 className="title">{title}</h3>
       <ul className="list-content">
         {
-          commentList && commentList.map(item => {
+          cpnData.map(item => {
             return (
-              <ListItem key={item.commentId} item={item} />
+              <ListItem key={item.commentId} cpnData={item} />
             )
           })
         }

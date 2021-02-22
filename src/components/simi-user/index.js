@@ -12,14 +12,14 @@ export default memo(function SimiUser(props) {
   /**
    * props and state
    */
-  const { title = '', listData = [] } = props
+  const { title = '', cpnData = [] } = props
 
-  return listData.length > 0 && (
+  return (
     <StyleWrapper className="cpn-simi-user">
       <HeaderShort title={title} />
       <div className="content">
         {
-          listData.map(item => {
+          cpnData.map(item => {
             return (
               <div className="user-item" key={item.userId}>
                 <NavLink to={`/user/home?id=${item.userId}`} title={item.nickname}>

@@ -32,7 +32,7 @@ export default memo(function NewAlbum(props) {
                     {
                       cpnData.slice(page * 5, (page + 1) * 5).map(item => {
                         return (
-                          <AlbumCover key={item.id} albumData={item} />
+                          <AlbumCover key={item.id} cpnData={item} />
                         )
                       })
                     }

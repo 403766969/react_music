@@ -9,7 +9,7 @@ export default memo(function CommentEditor(props) {
   /**
    * props and state
    */
-  const { title, commentTotal } = props
+  const { title = '评论', commentTotal } = props
 
   /**
    * other hooks
@@ -41,7 +41,11 @@ export default memo(function CommentEditor(props) {
     <StyledWrapper className="cpn-comment-editor">
       <div className="title">
         <h3>{title}</h3>
-        <span>共{commentTotal}条评论</span>
+        {
+          commentTotal && (
+            <span>共{commentTotal}条评论</span>
+          )
+        }
       </div>
       <div className="main">
         <div className="left">

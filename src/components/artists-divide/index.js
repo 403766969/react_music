@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { StyledWrapper } from './style'
@@ -8,26 +8,32 @@ export default memo(function ArtistsDivide(props) {
   /**
    * props and state
    */
-  const { artists = [] } = props
+  const { cpnData = [], divide = '/' } = props
 
   /**
    * render logic
    */
-  const temp = artists.reduce((prev, cur) => {
-    return prev + cur.name + '/'
+  const temp = cpnData.reduce((prev, cur) => {
+    return prev + cur.name + divide
   }, '')
 
-  const title = temp.slice(0, temp.length - 1)
+  const title = temp.slice(0, temp.length - divide.length)
 
-  return artists.length > 0 && (
+  const divideCount = cpnData.length - 1
+
+  return cpnData.length > 0 && (
     <StyledWrapper className="cpn-artists-divide" title={title}>
       {
-        artists.map(item => {
+        cpnData.map((item, index) => {
           return (
-            <NavLink key={item.id + item.name}
-              to={`/artist?id=${item.id}`}>
-              {item.name}
-            </NavLink>
+            <Fragment key={item.id + index}>
+              <NavLink to={`/artist?id=${item.id}`}>{item.name}</NavLink>
+              {
+                index < divideCount && (
+                  <i>{divide}</i>
+                )
+              }
+            </Fragment>
           )
         })
       }

@@ -34,22 +34,20 @@ export const StyledWrapper = styled.div`
       }
 
       .item-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
         flex: 1;
         width: 0;
-        height: 40px;
+        height: 38px;
 
         .item-name {
-          margin-bottom: 4px;
-          font-size: 12px;
+          height: 16px;
+          line-height: 16px;
           color: #000;
         }
 
         .item-update {
-          font-size: 12px;
+          margin-top: 6px;
+          height: 16px;
+          line-height: 16px;
           color: #999;
         }
       }

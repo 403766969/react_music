@@ -68,7 +68,7 @@ export default memo(function PlayList(props) {
                   <i className="sprite_playlist remove" title="删除" onClick={e => hadleRemoveClick(index, e)}></i>
                 </div>
                 <div className="artists text-nowrap" onClick={e => e.stopPropagation()}>
-                  <ArtistsDivide artists={item.ar} />
+                  <ArtistsDivide cpnData={item.ar} />
                 </div>
                 <div className="duration">{formatDate(item.dt, 'mm:ss')}</div>
                 <div className="sprite_playlist link" title="来自榜单"></div>

@@ -1,7 +1,10 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
+
+import * as playerActions from '@/pages/player/store/acitonCreators'
 
 import ArtistsDivide from '@/components/artists-divide'
 import OperationBar from '@/components/operation-bar'
@@ -16,6 +19,26 @@ export default memo(function SongDetail(props) {
    * props and state
    */
   const { cpnData = {} } = props
+
+  /**
+   * redux hooks
+   */
+  const dispatch = useDispatch()
+
+  /**
+   * other logic
+   */
+  const handlePlayClick = useCallback(() => {
+    if (cpnData.songDetail && cpnData.songDetail.id) {
+      dispatch(playerActions.add_simpleSong(cpnData.songDetail.id, true))
+    }
+  }, [dispatch, cpnData])
+
+  const handleAddClick = useCallback(() => {
+    if (cpnData.songDetail && cpnData.songDetail.id) {
+      dispatch(playerActions.add_simpleSong(cpnData.songDetail.id, false))
+    }
+  }, [dispatch, cpnData])
 
   return Object.keys(cpnData.songDetail).length > 0 && (
     <StyleWrapper className="cpn-song-detail">
@@ -37,7 +60,7 @@ export default memo(function SongDetail(props) {
           </div>
           <div className="singer">
             <span className="label">歌手：</span>
-            <ArtistsDivide artists={cpnData.songDetail.ar} />
+            <ArtistsDivide cpnData={cpnData.songDetail.ar} divide={' / '} />
           </div>
           <div className="album">
             <span className="label">所属专辑：</span>
@@ -47,7 +70,7 @@ export default memo(function SongDetail(props) {
               {cpnData.songDetail.al.name}
             </NavLink>
           </div>
-          <OperationBar songId={cpnData.songDetail.id} commentText={cpnData.commentTotal} />
+          <OperationBar commentText={cpnData.commentTotal} onPlayClick={handlePlayClick} onAddClick={handleAddClick} />
           <SongLyric cpnData={cpnData.songLyric} />
         </div>
       </div>

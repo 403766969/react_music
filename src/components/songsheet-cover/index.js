@@ -13,7 +13,7 @@ export default memo(function SongsheetCover(props) {
   /**
    * props and state
    */
-  const { songsheetData = {}, isShowAuthor = false } = props
+  const { cpnData = {}, author } = props
 
   /**
    * redux hooks
@@ -29,22 +29,27 @@ export default memo(function SongsheetCover(props) {
    * other logic
    */
   const pushRoute = () => {
-    history.push(`/songsheet?id=${songsheetData.id}`)
+    if (cpnData.id) {
+      history.push(`/songsheet?id=${cpnData.id}`)
+    }
   }
 
   const handleAddList = e => {
-    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetData.id, true))
+    e.stopPropagation()
+    if (cpnData.id) {
+      dispatch(playerAction.add_multipleSong_with_songsheetId(cpnData.id, true))
+    }
   }
 
-  return Object.keys(songsheetData).length > 0 && (
+  return Object.keys(cpnData).length > 0 && (
     <StyledWrapper className="cpn-songsheet-cover">
       <div className="songsheet-cover-image" onClick={pushRoute}>
-        <img className="image" src={formatUrlWithSize(songsheetData.picUrl || songsheetData.coverImgUrl, 140)} alt="" />
-        <div className="mask sprite_covor" title={songsheetData.name}></div>
-        <div className="heat sprite_covor" onClick={e => e.stopPropagation()}>
+        <img className="image" src={formatUrlWithSize(cpnData.picUrl || cpnData.coverImgUrl, 140)} alt="" />
+        <div className="mask sprite_covor" title={cpnData.name}></div>
+        <div className="heat sprite_covor">
           <div className="left">
             <i className="sprite_icon count"></i>
-            <span>{formatCount(songsheetData.playCount)}</span>
+            <span>{formatCount(cpnData.playCount)}</span>
           </div>
           <div className="right">
             <i className="sprite_icon play" onClick={e => handleAddList(e)}></i>
@@ -52,16 +57,16 @@ export default memo(function SongsheetCover(props) {
         </div>
       </div>
       <div className="songsheet-cover-dec">
-        <p className={'cover-name' + (isShowAuthor ? ' text-nowrap' : '')}>
-          <NavLink to={`/songsheet?id=${songsheetData.id}`} title={songsheetData.name}>{songsheetData.name}</NavLink>
+        <p className={'cover-name' + (author ? ' text-nowrap' : '')}>
+          <NavLink to={`/songsheet?id=${cpnData.id}`} title={cpnData.name}>{cpnData.name}</NavLink>
         </p>
         {
-          isShowAuthor && (
+          author && (
             <p className="cover-author text-nowrap">
               <span>by</span>
-              <NavLink to={`/user/home?id=${songsheetData.id}`}
-                title={songsheetData.copywriter || songsheetData.creator.nickname}>
-                {songsheetData.copywriter || songsheetData.creator.nickname}
+              <NavLink to={`/user/home?id=${cpnData.id}`}
+                title={cpnData.copywriter || (cpnData.creator && cpnData.creator.nickname)}>
+                {cpnData.copywriter || (cpnData.creator && cpnData.creator.nickname)}
               </NavLink>
             </p>
           )

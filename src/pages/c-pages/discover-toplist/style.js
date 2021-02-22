@@ -5,12 +5,11 @@ export const StyledWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   background: url(${require(`@/assets/img/wrap3.png`).default}) repeat-y center 0;
-  border-left: 1px solid #d3d3d3;
-  border-right: 1px solid #d3d3d3;
-  box-sizing: content-box;
+  border: 1px solid #d3d3d3;
+  border-width: 0 1px;
 
   &>.left {
-    width: 240px;
+    width: 239px;
 
     .cpn-chart-list:nth-child(1) {
       margin-top: 40px;

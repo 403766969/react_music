@@ -7,7 +7,7 @@ const initialState = Map({
   hotRecomdList: [],
   newAlbumList: [],
   rankMultiList: [],
-  settleSingerList: []
+  hotArtistsList: []
 })
 
 function reducer(state = initialState, action) {
@@ -20,8 +20,8 @@ function reducer(state = initialState, action) {
       return state.set('newAlbumList', action.newAlbumList)
     case actionTypes.SET_RANK_MULTI_LIST:
       return state.set('rankMultiList', action.rankMultiList)
-    case actionTypes.SET_SETTLE_SINGER_LIST:
-      return state.set('settleSingerList', action.settleSingerList)
+    case actionTypes.SET_HOT_ARTISTS_LIST:
+      return state.set('hotArtistsList', action.hotArtistsList)
     default:
       return state
   }

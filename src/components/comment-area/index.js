@@ -12,7 +12,8 @@ export default memo(function CommentArea(props) {
   /**
  * props and state
  */
-  const { hotComment = {}, newComment = {}, currentPage = 1, onPageChange } = props
+  const { cpnData = {}, currentPage = 1, onPageChange } = props
+  const { hotComment = {}, newComment = {} } = cpnData
 
   return (
     <StyledWrapper className="cpn-comment-area">
@@ -20,12 +21,12 @@ export default memo(function CommentArea(props) {
       <div className="comment-content">
         {
           hotComment.list && hotComment.list.length > 0 && currentPage === 1 && (
-            <CommentList title="精彩评论" commentList={hotComment.list} />
+            <CommentList title="精彩评论" cpnData={hotComment.list} />
           )
         }
         {
           newComment.list && newComment.list.length > 0 && (
-            <CommentList title={`最新评论(${newComment.total || 0})`} commentList={newComment.list} />
+            <CommentList title={`最新评论(${newComment.total || 0})`} cpnData={newComment.list} />
           )
         }
         {

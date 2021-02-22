@@ -5,13 +5,9 @@ export const StyledWrapper = styled.span`
   
   a {
     color: inherit;
-    
-    &::after {
-      content: "/"
-    }
-    
-    &:last-of-type::after {
-      content: ""
-    }
+  }
+
+  i {
+    color: inherit;
   }
 `

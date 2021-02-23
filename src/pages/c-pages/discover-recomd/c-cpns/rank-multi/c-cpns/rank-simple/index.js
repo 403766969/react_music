@@ -25,11 +25,11 @@ export default memo(function RankSimple(props) {
    * other logic
    */
   const handlePlay = item => {
-    dispatch(playerAction.add_simpleSong_with_song(item, true))
+    dispatch(playerAction.add_simpleSong_with_songObject(item, true, true))
   }
 
   const handleAdd = item => {
-    dispatch(playerAction.add_simpleSong_with_song(item, false))
+    dispatch(playerAction.add_simpleSong_with_songObject(item, false, true))
   }
 
   const handleAddList = () => {

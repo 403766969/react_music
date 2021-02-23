@@ -25,14 +25,12 @@ export default memo(function PlayerPanel(props) {
    */
   const {
     r_songList,
-    r_currentSong,
-    r_currentSongIndex,
+    r_currentIndex,
     r_currentLyric,
     r_currentLyricIndex
   } = useSelector(state => ({
     r_songList: state.getIn(['player', 'songList']),
-    r_currentSong: state.getIn(['player', 'currentSong']),
-    r_currentSongIndex: state.getIn(['player', 'currentSongIndex']),
+    r_currentIndex: state.getIn(['player', 'currentIndex']),
     r_currentLyric: state.getIn(['player', 'currentLyric']),
     r_currentLyricIndex: state.getIn(['player', 'currentLyricIndex'])
   }), shallowEqual)
@@ -111,11 +109,11 @@ export default memo(function PlayerPanel(props) {
 
   return (
     <StyledWrapper className="cpn-player-panel" style={{ visibility: isShowPanel ? 'visible' : 'hidden' }} >
-      <PanelHeader songList={r_songList} currentSong={r_currentSong} handleCloseClick={handleCloseClick} />
+      <PanelHeader songList={r_songList} currentIndex={r_currentIndex} handleCloseClick={handleCloseClick} />
       <div className="content">
         <div className="left">
           <ScrollContainer ref={scrollContainerRef_pl} delta={55} onWheel={handleWheel_pl}>
-            <PlayList songList={r_songList} currentSongIndex={r_currentSongIndex} />
+            <PlayList songList={r_songList} currentIndex={r_currentIndex} />
           </ScrollContainer>
           <ScrollBar ref={scrollBarRef_pl} gripSize={gripSize_pl} onDrag={handleDrag_pl} />
         </div>

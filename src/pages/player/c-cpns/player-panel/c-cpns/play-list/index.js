@@ -14,7 +14,7 @@ export default memo(function PlayList(props) {
   /**
    * props and state
    */
-  const { songList = [], currentSongIndex = -1 } = props
+  const { songList = [], currentIndex = -1 } = props
 
   /**
    * redux hooks
@@ -25,7 +25,7 @@ export default memo(function PlayList(props) {
    * other logic
    */
   const handleItemClick = index => {
-    dispatch(actions.toggle_song_with_songIndex(index))
+    dispatch(actions.toggle_song(index))
   }
 
   const hadleRemoveClick = (index, e) => {
@@ -40,7 +40,7 @@ export default memo(function PlayList(props) {
           return (
             <li
               key={item.id}
-              className={`play-item ${currentSongIndex === index ? 'active' : ''}`}
+              className={`play-item ${currentIndex === index ? 'active' : ''}`}
               onClick={e => handleItemClick(index)}>
               <div className="left">
                 <div className="song text-nowrap">

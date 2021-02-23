@@ -30,13 +30,13 @@ export default memo(function SongDetail(props) {
    */
   const handlePlayClick = useCallback(() => {
     if (cpnData.songDetail) {
-      dispatch(playerActions.add_simpleSong_with_song(cpnData.songDetail, true))
+      dispatch(playerActions.add_simpleSong_with_songObject(cpnData.songDetail, true))
     }
   }, [dispatch, cpnData])
 
   const handleAddClick = useCallback(() => {
     if (cpnData.songDetail) {
-      dispatch(playerActions.add_simpleSong_with_song(cpnData.songDetail, false))
+      dispatch(playerActions.add_simpleSong_with_songObject(cpnData.songDetail, false))
     }
   }, [dispatch, cpnData])
 

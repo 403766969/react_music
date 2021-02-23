@@ -1,5 +1,7 @@
 import { actionTypes } from './constants'
 
+import { playerStatusTypes } from '@/common/constants'
+
 import { parseLyric, mergeLyric } from '@/utils/parser'
 
 import * as songApi from '@/services/songApi'
@@ -17,16 +19,11 @@ export const set_songList = songList => {
   }
 }
 
-export const set_currentSong = currentSong => ({
-  type: actionTypes.SET_CURRENT_SONG,
-  currentSong: currentSong
-})
-
-export const set_currentSongIndex = currentSongIndex => {
-  window.localStorage.setItem('currentSongIndex', currentSongIndex)
+export const set_currentIndex = currentIndex => {
+  window.localStorage.setItem('currentIndex', currentIndex)
   return {
-    type: actionTypes.SET_CURRENT_SONG_INDEX,
-    currentSongIndex: currentSongIndex
+    type: actionTypes.SET_CURRENT_INDEX,
+    currentIndex: currentIndex
   }
 }
 
@@ -53,164 +50,127 @@ export const set_playerStatus = playerStatus => {
  * 异步请求
  */
 // 初始化播放列表
-export const init_songList = () => {
+export const init_store = () => {
   return async dispatch => {
     const s_songList = window.localStorage.getItem('songList')
-    const s_currentSongIndex = window.localStorage.getItem('currentSongIndex')
+    const s_currentIndex = window.localStorage.getItem('currentIndex')
     const songList = s_songList ? JSON.parse(s_songList) : []
-    const currentSongIndex = s_currentSongIndex ? parseInt(JSON.parse(s_currentSongIndex)) : -1
-    if (songList.length <= 0) {
-      return
+    const currentIndex = s_currentIndex ? parseInt(JSON.parse(s_currentIndex)) : -1
+    if (songList.length > 0) {
+      dispatch(set_songList(songList))
     }
-    dispatch(set_songList(songList))
-    const currentSong = songList[currentSongIndex]
-    if (currentSong) {
-      dispatch(set_currentSong(currentSong))
-      dispatch(set_currentSongIndex(currentSongIndex))
-      dispatch(get_currentLyric(currentSong.id))
-      dispatch(set_currentLyricIndex(-1))
-    }
-  }
-}
-
-// 添加单条歌曲
-export const add_simpleSong_with_song = (song, isPlay = false) => {
-  return async (dispatch, getState) => {
-    if (!song.id) {
-      return
-    }
-    dispatch(set_playerStatus({
-      isShowMessage: true,
-      message: '加载中'
-    }))
-    const songList = getState().getIn(['player', 'songList'])
-    const currentSong = getState().getIn(['player', 'currentSong'])
-    const existSongIndex = songList.findIndex(item => item.id === song.id)
-    let targetSong = null
-    let targetSongIndex = -1
-    if (existSongIndex !== -1) {
-      targetSong = songList[existSongIndex]
-      targetSongIndex = existSongIndex
-    } else {
-      const checkRes = await songApi.get_check_music(song.id, new Date().getTime())
-      if (checkRes && checkRes.success) {
-        const newSongList = [...songList]
-        newSongList.push(song)
-        targetSong = song
-        targetSongIndex = newSongList.length - 1
-        dispatch(set_songList(newSongList))
-      } else {
-        alert(checkRes.message)
-      }
-    }
-    if (targetSong) {
-      dispatch(set_playerStatus({
-        isShowMessage: true,
-        message: '已添加到播放列表'
-      }))
-    } else {
-      dispatch(set_playerStatus({
-        isShowMessage: true,
-        message: '加载失败'
-      }))
-    }
-    if (targetSong && isPlay) {
-      playSong(dispatch, currentSong, targetSong, targetSongIndex)
-    }
-  }
-}
-
-// 添加单条歌曲
-export const add_simpleSong_with_songId = (songId, isPlay = false) => {
-  return async (dispatch, getState) => {
-    dispatch(set_playerStatus({
-      isShowMessage: true,
-      message: '加载中'
-    }))
-    const songList = getState().getIn(['player', 'songList'])
-    const currentSong = getState().getIn(['player', 'currentSong'])
-    const existSongIndex = songList.findIndex(item => item.id === songId)
-    let targetSong = null
-    let targetSongIndex = -1
-    if (existSongIndex !== -1) {
-      targetSong = songList[existSongIndex]
-      targetSongIndex = existSongIndex
-    } else {
-      const checkRes = await songApi.get_check_music(songId, new Date().getTime())
-      if (checkRes && checkRes.success) {
-        const res = await songApi.get_song_detail(songId)
-        if (res && res.songs && res.songs[0]) {
-          const newSongList = [...songList]
-          newSongList.push(res.songs[0])
-          targetSong = res.songs[0]
-          targetSongIndex = newSongList.length - 1
-          dispatch(set_songList(newSongList))
-        }
-      } else {
-        alert(checkRes.message)
-      }
-    }
-    if (targetSong) {
-      dispatch(set_playerStatus({
-        isShowMessage: true,
-        message: '已添加到播放列表'
-      }))
-    } else {
-      dispatch(set_playerStatus({
-        isShowMessage: true,
-        message: '加载失败'
-      }))
-    }
-    if (targetSong && isPlay) {
-      playSong(dispatch, currentSong, targetSong, targetSongIndex)
+    if (songList[currentIndex]) {
+      dispatch(set_currentIndex(currentIndex))
+      dispatch(get_currentLyric(songList[currentIndex].id))
     }
   }
 }
 
 // 切换歌曲
-export const toggle_song_with_songIndex = songIndex => {
+export const toggle_song = targetIndex => {
   return (dispatch, getState) => {
     const songList = getState().getIn(['player', 'songList'])
-    const currentSong = getState().getIn(['player', 'currentSong'])
-    const existSong = songList[songIndex]
-    if (existSong) {
-      playSong(dispatch, currentSong, existSong, songIndex)
+    const currentIndex = getState().getIn(['player', 'currentIndex'])
+    if (currentIndex === targetIndex) {
+      dispatch(set_playerStatus({
+        type: playerStatusTypes.AUDIO_RESTART
+      }))
+    } else {
+      const targetSong = songList[targetIndex]
+      dispatch(set_currentIndex(targetIndex))
+      dispatch(get_currentLyric(targetSong.id))
     }
   }
 }
 
 // 删除歌曲
-export const remove_song = songIndex => {
+export const remove_song = targetIndex => {
   return (dispatch, getState) => {
     const songList = getState().getIn(['player', 'songList'])
-    const currentSongIndex = getState().getIn(['player', 'currentSongIndex'])
-    if (songIndex === currentSongIndex) {
-      let targetSong = null
-      let targetSongIndex = -1
-      if (songList[songIndex + 1]) {
-        targetSong = songList[songIndex + 1]
-        targetSongIndex = songIndex
-      } else if (songList[songIndex - 1]) {
-        targetSong = songList[songIndex - 1]
-        targetSongIndex = songIndex - 1
-      }
-      if (targetSong) {
-        dispatch(set_currentSong(targetSong))
-        dispatch(set_currentSongIndex(targetSongIndex))
-        dispatch(get_currentLyric(targetSong.id))
-        dispatch(set_currentLyricIndex(-1))
-      } else {
-        dispatch(set_currentSong({}))
-        dispatch(set_currentSongIndex(-1))
-        dispatch(set_currentLyric([]))
-        dispatch(set_currentLyricIndex(-1))
-      }
-    } else if (songIndex < currentSongIndex) {
-      dispatch(set_currentSongIndex(currentSongIndex - 1))
-    }
+    const currentIndex = getState().getIn(['player', 'currentIndex'])
     const newSongList = [...songList]
-    newSongList.splice(songIndex, 1)
-    dispatch(set_songList(newSongList))
+    newSongList.splice(targetIndex, 1)
+    if (targetIndex < currentIndex) {
+      dispatch(set_songList(newSongList))
+      dispatch(set_currentIndex(currentIndex - 1))
+    } else if (targetIndex > currentIndex) {
+      dispatch(set_songList(newSongList))
+    } else {
+      if (newSongList.length <= 0) {
+        dispatch(set_songList(newSongList))
+        dispatch(set_currentIndex(-1))
+      } else if (targetIndex > newSongList.length - 1) {
+        dispatch(set_songList(newSongList))
+        dispatch(set_currentIndex(targetIndex - 1))
+      } else {
+        dispatch(set_songList(newSongList))
+      }
+    }
+  }
+}
+
+// 添加单条歌曲
+export const add_simpleSong_with_songObject = (targetSong, isPlay = false) => {
+  return async (dispatch, getState) => {
+    dispatch(set_playerStatus({
+      type: playerStatusTypes.LOAD_ING
+    }))
+
+    const songList = getState().getIn(['player', 'songList'])
+    const existIndex = songList.findIndex(item => item.id === targetSong.id)
+
+    if (existIndex !== -1) {
+      dispatch(set_playerStatus({
+        type: playerStatusTypes.LOAD_SUCCESS
+      }))
+      if (isPlay) {
+        dispatch(toggle_song(existIndex))
+      }
+      return
+    }
+
+    let targetIndex = -1
+    const checkRes = await songApi.get_check_music(targetSong.id, new Date().getTime())
+    if (!checkRes) {
+      alert('检查可用无效')
+    } else if (!checkRes.success) {
+      alert(checkRes.message)
+    } else {
+      const newSongList = [...songList]
+      newSongList.push(targetSong)
+      targetIndex = newSongList.length - 1
+      dispatch(set_songList(newSongList))
+    }
+
+    if (targetIndex !== -1) {
+      dispatch(set_playerStatus({
+        type: playerStatusTypes.LOAD_SUCCESS
+      }))
+      if (isPlay) {
+        dispatch(toggle_song(targetIndex))
+      }
+    } else {
+      dispatch(set_playerStatus({
+        type: playerStatusTypes.LOAD_FAIL
+      }))
+    }
+  }
+}
+
+// 添加单条歌曲
+export const add_simpleSong_with_songId = (targetSongId, isPlay = false) => {
+  return async dispatch => {
+    dispatch(set_playerStatus({
+      type: playerStatusTypes.LOAD_ING
+    }))
+    const res = await songApi.get_song_detail(targetSongId)
+    if (res && res.songs && res.songs[0]) {
+      dispatch(add_simpleSong_with_songObject(res.songs[0], isPlay))
+    } else {
+      dispatch(set_playerStatus({
+        type: playerStatusTypes.LOAD_FAIL
+      }))
+    }
   }
 }
 
@@ -238,8 +198,7 @@ export const get_currentLyric = songId => {
 export const clear_state = () => {
   return dispatch => {
     dispatch(set_songList([]))
-    dispatch(set_currentSong({}))
-    dispatch(set_currentSongIndex(-1))
+    dispatch(set_currentIndex(-1))
     dispatch(set_currentLyric([]))
     dispatch(set_currentLyricIndex(-1))
   }
@@ -248,35 +207,22 @@ export const clear_state = () => {
 // 添加多条歌曲
 export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
   return async dispatch => {
-    dispatch(set_playerStatus({
-      isShowMessage: true,
-      message: '加载中'
-    }))
     dispatch(clear_state())
     const ids = await check_multipleSong_with_trackIds(trackIds)
     const res = await songApi.get_song_detail(ids)
     const newSongList = res.songs
     dispatch(set_songList(newSongList))
     if (isPlay && newSongList.length > 0) {
-      dispatch(set_currentSong(newSongList[0]))
-      dispatch(set_currentSongIndex(0))
+      dispatch(set_currentIndex(0))
       dispatch(get_currentLyric(newSongList[0].id))
       dispatch(set_currentLyricIndex(-1))
     }
-    dispatch(set_playerStatus({
-      isShowMessage: true,
-      message: '已添加到播放列表'
-    }))
   }
 }
 
 // 添加多条歌曲
 export const add_multipleSong_with_songsheetId = (songsheetId, isPlay = true) => {
   return async dispatch => {
-    dispatch(set_playerStatus({
-      isShowMessage: true,
-      message: '加载中'
-    }))
     const res = await songsheetApi.get_playlist_detail(songsheetId)
     const trackIds = res.playlist.trackIds
     dispatch(add_multipleSong_with_trackIds(trackIds, isPlay))
@@ -301,20 +247,4 @@ const check_multipleSong_with_trackIds = async trackIds => {
     }
   })
   return ids.join(',')
-}
-
-/**
- * other logic
- */
-// 播放歌曲
-const playSong = (dispatch, currentSong, targetSong, targetSongIndex) => {
-  if (currentSong.id === targetSong.id) {
-    dispatch(set_currentSong(Object.assign({}, currentSong)))
-    dispatch(set_currentLyricIndex(-1))
-  } else {
-    dispatch(set_currentSong(targetSong))
-    dispatch(set_currentSongIndex(targetSongIndex))
-    dispatch(get_currentLyric(targetSong.id))
-    dispatch(set_currentLyricIndex(-1))
-  }
 }

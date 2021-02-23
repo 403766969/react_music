@@ -10,7 +10,7 @@ export default memo(function PanelHeader(props) {
   /**
    * props and state
    */
-  const { songList = [], currentSong = {} } = props
+  const { songList = [], currentIndex = -1 } = props
 
   const { handleCloseClick: hccCallback } = props
 
@@ -33,6 +33,11 @@ export default memo(function PanelHeader(props) {
     }
   }
 
+  /**
+   * render logic
+   */
+  const currentSong = songList[currentIndex]
+
   return (
     <StyledWrapper className="cpn-panel-header">
       <div className="left">
@@ -50,7 +55,7 @@ export default memo(function PanelHeader(props) {
         </div>
       </div>
       <div className="right">
-        <p className="song-name text-nowrap">{currentSong.name}</p>
+        <p className="song-name text-nowrap">{currentSong && currentSong.name}</p>
         <i className="sprite_playlist close" title="关闭" onClick={handleCloseClick}></i>
       </div>
     </StyledWrapper>

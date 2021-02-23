@@ -30,11 +30,11 @@ export default memo(function ListItem(props) {
    * other logic
    */
   const handlePlayClick = item => {
-    dispatch(playerAction.add_simpleSong_with_song(item, true))
+    dispatch(playerAction.add_simpleSong_with_songObject(item, true))
   }
 
   const handleAddClick = item => {
-    dispatch(playerAction.add_simpleSong_with_song(item, false))
+    dispatch(playerAction.add_simpleSong_with_songObject(item, false))
   }
 
   /**

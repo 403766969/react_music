@@ -25,11 +25,11 @@ export default memo(function SimiSong(props) {
    * other logic
    */
   const handlePlay = item => {
-    dispatch(playerActions.add_simpleSong_with_song(item, true))
+    dispatch(playerActions.add_simpleSong_with_songId(item.id, true))
   }
 
   const handleAdd = item => {
-    dispatch(playerActions.add_simpleSong_with_song(item, false))
+    dispatch(playerActions.add_simpleSong_with_songId(item.id, false))
   }
 
   return (

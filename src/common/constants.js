@@ -1,7 +1,17 @@
-export const playModeTypes = {
+export const playerModeTypes = {
   LIST_LOOP: 'LIST_LOOP',
   SINGLE_LOOP: 'SINGLE_LOOP',
   RANDOM_PLAY: 'RANDOM_PLAY'
+}
+
+export const playerStatusTypes = {
+  LOAD_ING: 'LOAD_ING',
+  LOAD_SUCCESS: 'LOAD_SUCCESS',
+  LOAD_FAIL: 'LOAD_FAIL',
+  AUDIO_IDLE: 'AUDIO_IDLE',
+  AUDIO_PLAY: 'AUDIO_PLAY',
+  AUDIO_PAUSE: 'AUDIO_PAUSE',
+  AUDIO_RESTART: 'AUDIO_RESTART'
 }
 
 export const emojiUrl = {

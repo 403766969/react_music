@@ -36,9 +36,7 @@ export default memo(function SongsheetCover(props) {
 
   const handleAddList = e => {
     e.stopPropagation()
-    if (cpnData.id) {
-      dispatch(playerAction.add_multipleSong_with_songsheetId(cpnData.id, true))
-    }
+    dispatch(playerAction.add_multipleSong_with_songsheetId(cpnData.id, true))
   }
 
   return Object.keys(cpnData).length > 0 && (

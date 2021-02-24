@@ -14,7 +14,7 @@ export default memo(function PlayList(props) {
   /**
    * props and state
    */
-  const { songList = [], currentIndex = -1 } = props
+  const { songList, currentIndex } = props
 
   /**
    * redux hooks
@@ -36,12 +36,12 @@ export default memo(function PlayList(props) {
   return (
     <StyledWrapper className="cpn-play-list">
       {
-        songList.map((item, index) => {
+        songList && songList.map((item, index) => {
           return (
             <li
               key={item.id}
-              className={`play-item ${currentIndex === index ? 'active' : ''}`}
-              onClick={e => handleItemClick(index)}>
+              className={`play-item ${index === currentIndex ? 'active' : ''}`}
+              onClick={() => handleItemClick(index)}>
               <div className="left">
                 <div className="song text-nowrap">
                   {item.name}

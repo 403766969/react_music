@@ -1,44 +1,39 @@
-import React, { memo, useState, useRef, useEffect } from 'react'
-import { useSelector, shallowEqual } from 'react-redux'
+import React, { memo, useEffect, useRef } from 'react'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+
+import * as actions from '../../store/acitonCreators'
 
 import { StyledWrapper } from './style'
 
 export default memo(function PlayerMessage() {
 
   /**
-   * props and state
+   * redux hooks
    */
-  const [isShow, setIsShow] = useState(false)
+  const r_messageConfig = useSelector(state => state.getIn(['player', 'messageConfig']), shallowEqual)
 
-  /**
- * redux hooks
- */
-  const {
-    r_playerStatus
-  } = useSelector(state => ({
-    r_playerStatus: state.getIn(['player', 'playerStatus'])
-  }), shallowEqual)
+  const dispatch = useDispatch()
 
   /**
    * other hooks
    */
-  const timeRef = useRef(null)
+  const timer = useRef()
 
   useEffect(() => {
-    if (r_playerStatus.isShowMessage) {
-      setIsShow(true)
-      if (timeRef.current) {
-        clearTimeout(timeRef.current)
+    if (r_messageConfig) {
+      if (timer.current) {
+        clearTimeout(timer.current)
       }
-      timeRef.current = setTimeout(() => {
-        setIsShow(false)
-      }, 3000)
+      timer.current = setTimeout(() => {
+        clearTimeout(timer.current)
+        dispatch(actions.set_messageConfig(null))
+      }, r_messageConfig.duration || 3000)
     }
-  }, [r_playerStatus])
+  }, [dispatch, r_messageConfig])
 
   return (
-    <StyledWrapper className="cpn-player-message sprite_playbar text-nowrap" style={{ display: isShow ? 'block' : 'none' }}>
-      {r_playerStatus.message}
+    <StyledWrapper className="cpn-player-message sprite_playbar text-nowrap" style={{ display: r_messageConfig ? 'block' : 'none' }}>
+      {r_messageConfig && r_messageConfig.message}
     </StyledWrapper>
   )
 })

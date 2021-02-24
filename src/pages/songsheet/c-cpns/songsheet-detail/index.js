@@ -17,7 +17,9 @@ export default memo(function SongsheetDetail(props) {
   /**
    * props and state
    */
-  const { cpnData = {} } = props
+  const { cpnData } = props
+
+  const { detail, songList } = cpnData
 
   /**
    * redux hooks
@@ -28,49 +30,45 @@ export default memo(function SongsheetDetail(props) {
    * other logic
    */
   const songsheetIntroData = {
-    tags: cpnData.tags || [],
-    description: cpnData.description || ''
+    tags: detail.tags || [],
+    description: detail.description || ''
   }
 
   const handlePlayClick = useCallback(() => {
-    if (cpnData.id) {
-      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, true))
-    }
-  }, [dispatch, cpnData])
+    dispatch(playerActions.add_multipleSong_with_songList(songList, true))
+  }, [dispatch, songList])
 
   const handleAddClick = useCallback(() => {
-    if (cpnData.id) {
-      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, false))
-    }
-  }, [dispatch, cpnData])
+    dispatch(playerActions.add_multipleSong_with_songList(songList, false))
+  }, [dispatch, songList])
 
-  return Object.keys(cpnData).length > 0 && (
+  return Object.keys(detail).length > 0 && (
     <StyledWrapper className="cpn-songsheet-detail">
       <div className="cover">
-        <img src={formatUrlWithSize(cpnData.coverImgUrl, 200)} alt="" />
+        <img src={formatUrlWithSize(detail.coverImgUrl, 200)} alt="" />
         <span className="image_cover mask"></span>
       </div>
       <div className="info">
         <div className="header">
           <i className="sprite_icon2"></i>
-          <h2 className="title">{cpnData.name}</h2>
+          <h2 className="title">{detail.name}</h2>
         </div>
         <div className="creator">
-          <NavLink to={`/user/home?id=${cpnData.creator.userId}`}>
-            <img className="avatar" src={formatUrlWithSize(cpnData.creator.avatarUrl, 35)} alt="" />
+          <NavLink to={`/user/home?id=${detail.creator.userId}`}>
+            <img className="avatar" src={formatUrlWithSize(detail.creator.avatarUrl, 35)} alt="" />
           </NavLink>
-          <NavLink className="nickname" to={`/user/home?id=${cpnData.creator.userId}`}>{cpnData.creator.nickname}</NavLink>
+          <NavLink className="nickname" to={`/user/home?id=${detail.creator.userId}`}>{detail.creator.nickname}</NavLink>
           {
-            cpnData.creator.avatarDetail && (
-              <img className="icon" src={cpnData.creator.avatarDetail.identityIconUrl} alt="" />
+            detail.creator.avatarDetail && (
+              <img className="icon" src={detail.creator.avatarDetail.identityIconUrl} alt="" />
             )
           }
-          <span className="time">{formatDate(cpnData.createTime, 'yyyy-MM-dd')}&nbsp;创建</span>
+          <span className="time">{formatDate(detail.createTime, 'yyyy-MM-dd')}&nbsp;创建</span>
         </div>
         <OperationBar
-          favorText={formatCount(cpnData.subscribedCount, true)}
-          shareText={cpnData.shareCount}
-          commentText={cpnData.commentCount}
+          favorText={formatCount(detail.subscribedCount, true)}
+          shareText={detail.shareCount}
+          commentText={detail.commentCount}
           onPlayClick={handlePlayClick}
           onAddClick={handleAddClick} />
         <SongsheetIntro cpnData={songsheetIntroData} />

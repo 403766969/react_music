@@ -78,6 +78,11 @@ export default memo(function Songsheet(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, songsheetId])
 
+  const songsheetDetailData = {
+    detail: r_songsheetDetail,
+    songList: r_songList
+  }
+
   const songAreaData = {
     songsheetId: r_songsheetDetail.id,
     playCount: r_songsheetDetail.playCount,
@@ -95,7 +100,7 @@ export default memo(function Songsheet(props) {
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">
-          <SongsheetDetail cpnData={r_songsheetDetail} />
+          <SongsheetDetail cpnData={songsheetDetailData} />
           <SongArea cpnData={songAreaData} order name duration artist album />
           <div className="songsheet-comment" ref={commentRef}>
             <CommentArea cpnData={commentAreaData} currentPage={currentPage} onPageChange={handlePageChange} />

@@ -25,15 +25,11 @@ export default memo(function ChartIntro(props) {
    * other logic
    */
   const handlePlayClick = useCallback(() => {
-    if (cpnData.id) {
-      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, true))
-    }
+    dispatch(playerActions.add_multipleSong_with_trackIds(cpnData.trackIds, true))
   }, [dispatch, cpnData])
 
   const handleAddClick = useCallback(() => {
-    if (cpnData.id) {
-      dispatch(playerActions.add_multipleSong_with_songsheetId(cpnData.id, false))
-    }
+    dispatch(playerActions.add_multipleSong_with_trackIds(cpnData.trackIds, false))
   }, [dispatch, cpnData])
 
   return Object.keys(cpnData).length > 0 && (

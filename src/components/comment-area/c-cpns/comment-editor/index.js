@@ -42,7 +42,7 @@ export default memo(function CommentEditor(props) {
       <div className="title">
         <h3>{title}</h3>
         {
-          commentTotal && (
+          commentTotal !== undefined && commentTotal !== null && (
             <span>共{commentTotal}条评论</span>
           )
         }

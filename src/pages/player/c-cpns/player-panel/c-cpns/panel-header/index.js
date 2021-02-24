@@ -10,9 +10,7 @@ export default memo(function PanelHeader(props) {
   /**
    * props and state
    */
-  const { songList = [], currentIndex = -1 } = props
-
-  const { handleCloseClick: hccCallback } = props
+  const { songCount, songName, onCloseClick } = props
 
   /**
    * redux hooks
@@ -28,20 +26,15 @@ export default memo(function PanelHeader(props) {
   }
 
   const handleCloseClick = () => {
-    if (hccCallback && typeof hccCallback === 'function') {
-      hccCallback()
+    if (onCloseClick && typeof onCloseClick === 'function') {
+      onCloseClick()
     }
   }
-
-  /**
-   * render logic
-   */
-  const currentSong = songList[currentIndex]
 
   return (
     <StyledWrapper className="cpn-panel-header">
       <div className="left">
-        <h3 className="title">播放列表({songList.length})</h3>
+        <h3 className="title">播放列表({songCount})</h3>
         <div className="operator">
           <button title="收藏全部">
             <i className="sprite_playlist icon favor"></i>
@@ -55,7 +48,7 @@ export default memo(function PanelHeader(props) {
         </div>
       </div>
       <div className="right">
-        <p className="song-name text-nowrap">{currentSong && currentSong.name}</p>
+        <p className="song-name text-nowrap">{songName}</p>
         <i className="sprite_playlist close" title="关闭" onClick={handleCloseClick}></i>
       </div>
     </StyledWrapper>

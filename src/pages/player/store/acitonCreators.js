@@ -14,6 +14,10 @@ export const merge_state = state => ({
   state: state
 })
 
+export const clear_state = () => ({
+  type: actionTypes.CLEAR_STATE
+})
+
 export const set_songList = songList => {
   window.localStorage.setItem('songList', JSON.stringify(songList))
   return {
@@ -96,8 +100,19 @@ export const update_lyricList = () => {
 
 // 切换歌曲
 export const toggle_song = index => {
-  return dispatch => {
-    dispatch(set_currentIndex(index))
+  return (dispatch, getState) => {
+    const currentIndex = getState().getIn(['player', 'currentIndex'])
+    if (currentIndex === index) {
+      const songList = getState().getIn(['player', 'songList'])
+      const currentSong = songList[currentIndex]
+      if (currentSong) {
+        const newSongList = [...songList]
+        newSongList[currentIndex] = Object.assign({}, currentSong)
+        dispatch(set_songList(newSongList))
+      }
+    } else {
+      dispatch(set_currentIndex(index))
+    }
     dispatch(update_lyricList())
   }
 }
@@ -147,7 +162,7 @@ export const add_simpleSong_with_songId = (songId, isPlay = false) => {
 export const add_multipleSong_with_songList = (songList, isPlay = false) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
-    dispatch(clear_state())
+    dispatch(clear_List())
     const ids = []
     for (let item of songList) {
       ids.push(item.id)
@@ -171,7 +186,7 @@ export const add_multipleSong_with_songList = (songList, isPlay = false) => {
 export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
-    dispatch(clear_state())
+    dispatch(clear_List())
     const ids = []
     for (let item of trackIds) {
       ids.push(item.id)
@@ -232,7 +247,7 @@ export const remove_song = targetIndex => {
 }
 
 // 清空播放列表
-export const clear_state = () => {
+export const clear_List = () => {
   return dispatch => {
     dispatch(set_songList([]))
     dispatch(set_lyricList([]))

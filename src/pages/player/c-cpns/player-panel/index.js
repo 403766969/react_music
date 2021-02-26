@@ -35,8 +35,8 @@ export default memo(function PlayerPanel(props) {
     r_currentRow: state.getIn(['player', 'currentRow'])
   }), shallowEqual)
 
-  const currentSong = r_songList[r_currentIndex]
-  const currentLyric = r_lyricList[r_currentIndex]
+  const currentSong = r_songList && r_songList[r_currentIndex]
+  const currentLyric = r_lyricList && r_lyricList[r_currentIndex]
 
   /**
    * other hooks

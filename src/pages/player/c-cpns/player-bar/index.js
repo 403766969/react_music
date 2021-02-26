@@ -62,9 +62,9 @@ export default memo(function PlayerBar() {
     r_audioStatus: state.getIn(['player', 'audioStatus'])
   }), shallowEqual)
 
-  const currentSong = r_songList[r_currentIndex]
+  const currentSong = r_songList && r_songList[r_currentIndex]
 
-  const currentLyric = r_lyricList[r_currentIndex]
+  const currentLyric = r_lyricList && r_lyricList[r_currentIndex]
 
   const dispatch = useDispatch()
 

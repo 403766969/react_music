@@ -22,7 +22,7 @@ export default memo(function PanelHeader(props) {
    * other logic
    */
   const handleClearClick = () => {
-    dispatch(actions.clear_state())
+    dispatch(actions.clear_List())
   }
 
   const handleCloseClick = () => {

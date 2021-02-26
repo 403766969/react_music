@@ -70,12 +70,18 @@ export const update_lyricList = () => {
         lyric.push({ time: 0, content: '纯音乐，无歌词' })
       } else if (res.uncollected) {
         lyric.push({ time: 0, content: '暂时没有歌词' })
-      } else if (res.lrc && !res.tlyric) {
-        lyric = parseLyric(res.lrc.lyric)
-      } else if (res.lrc && res.tlyric) {
-        const originalLyric = parseLyric(res.lrc.lyric)
-        const translationLyric = parseLyric(res.tlyric.lyric)
-        lyric = mergeLyric(originalLyric, translationLyric)
+      } else {
+        let ol = res.lrc && res.lrc.lyric
+        let tl = res.tlyric && res.tlyric.lyric
+        if (ol && tl) {
+          lyric = mergeLyric(parseLyric(ol), parseLyric(tl))
+        } else if (ol && !tl) {
+          lyric = parseLyric(ol)
+        } else if (!ol && tl) {
+          lyric = parseLyric(tl)
+        } else {
+          lyric.push({ time: 0, content: '暂无歌词' })
+        }
       }
       const newLyricList = [...lyricList]
       newLyricList[currentIndex] = {
@@ -240,8 +246,7 @@ export const clear_state = () => {
  */
 // 检查单条歌曲可用性
 const checkSimpleSong = async id => {
-  const timestamp = new Date().getTime()
-  const res = await songApi.get_check_music(id, timestamp)
+  const res = await songApi.get_check_music(id)
   if (res && res.success) {
     return true
   } else {
@@ -251,10 +256,9 @@ const checkSimpleSong = async id => {
 
 // 检查多条歌曲可用性
 const checkMultipleSong = async ids => {
-  const timestamp = new Date().getTime()
   const req = []
   for (let id of ids) {
-    req.push(songApi.get_check_music(id, timestamp))
+    req.push(songApi.get_check_music(id))
   }
   const res = await axios.all(req)
   const checkResult = []

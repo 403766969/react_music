@@ -4,12 +4,21 @@ import * as otherApi from '@/services/otherApi'
 import * as songsheetApi from '@/services/songsheetApi'
 import * as songApi from '@/services/songApi'
 import * as albumApi from '@/services/albumApi'
-import * as artistsApi from '@/services/artistsApi'
+import * as artistApi from '@/services/artistApi'
 import axios from 'axios'
 
 /**
  * 操作state
  */
+export const merge_state = state => ({
+  type: actionTypes.MERGE_STATE,
+  state: state
+})
+
+export const clear_state = () => ({
+  type: actionTypes.CLEAR_STATE
+})
+
 export const set_topBannerList = topBannerList => ({
   type: actionTypes.SET_TOP_BANNER_LIST,
   topBannerList: topBannerList
@@ -30,9 +39,9 @@ export const set_rankMultiList = rankMultiList => ({
   rankMultiList: rankMultiList
 })
 
-export const set_hotArtistsList = hotArtistsList => ({
-  type: actionTypes.SET_HOT_ARTISTS_LIST,
-  hotArtistsList: hotArtistsList
+export const set_hotArtistList = hotArtistList => ({
+  type: actionTypes.SET_HOT_ARTIST_LIST,
+  hotArtistList: hotArtistList
 })
 
 /**
@@ -110,12 +119,12 @@ export const get_rankMultiList = (rankCount = 3) => {
   }
 }
 
-// 入驻歌手
-export const get_hotArtistsList = (limit = 5, offset = 0) => {
+// 热门歌手
+export const get_hotArtistList = (limit = 5, offset = 0) => {
   return async dispatch => {
-    const res = await artistsApi.get_top_artists(limit, offset)
+    const res = await artistApi.get_top_artists(limit, offset)
     if (res && res.artists) {
-      dispatch(set_hotArtistsList(res.artists))
+      dispatch(set_hotArtistList(res.artists))
     }
   }
 }

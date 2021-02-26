@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
 
@@ -10,11 +10,11 @@ export default memo(function AlbumCover(props) {
   /**
    * props and state
    */
-  const { cpnData = {} } = props
+  const { albumInfo } = props
 
-  const { imageWidth = '100px', imageHeight = '100px', coverWidth = '118px', coverHeight = '100px' } = props
+  const { imageWidth = '100', imageHeight = '100', coverWidth = '118', coverHeight = '100' } = props
 
-  const { backgroundPosition = '-570px' } = props
+  const { backgroundPosition = '-570' } = props
 
   /**
    * other hooks
@@ -25,27 +25,26 @@ export default memo(function AlbumCover(props) {
    * other logic
    */
   const pushRoute_album = () => {
-    if (cpnData.id) {
-      history.push(`/album?id=${cpnData.id}`)
-    }
+    history.push(`/album?id=${albumInfo.id}`)
   }
 
-  const pushRoute_artist = () => {
-    if (cpnData.artist && cpnData.artist.id) {
-      history.push(`/artist?id=${cpnData.artist.id}`)
-    }
-  }
-
-  return Object.keys(cpnData).length > 0 && (
-    <StyledWrapper className="cpn-album-cover" imageWidth={imageWidth} imageHeight={imageHeight} coverWidth={coverWidth} coverHeight={coverHeight} backgroundPosition={backgroundPosition}>
-      <div className="top-cover" onClick={pushRoute_album}>
-        <img src={formatUrlWithSize(cpnData.picUrl, 150)} alt="" />
-        <div className="mask sprite_covor" title={cpnData.name}></div>
-      </div>
-      <div className="bottom-dec">
-        <div className="name text-nowrap" onClick={pushRoute_album} title={cpnData.name}>{cpnData.name}</div>
-        <div className="artist text-nowrap" onClick={pushRoute_artist} title={cpnData.artist.name}>{cpnData.artist.name}</div>
-      </div>
-    </StyledWrapper>
-  )
+  return albumInfo
+    ? (
+      <StyledWrapper className="cpn-album-cover" imageWidth={imageWidth} imageHeight={imageHeight} coverWidth={coverWidth} coverHeight={coverHeight} backgroundPosition={backgroundPosition}>
+        <div className="top-cover" onClick={pushRoute_album}>
+          <img src={formatUrlWithSize(albumInfo.picUrl, 150)} alt="" />
+          <div className="mask sprite_covor" title={albumInfo.name}></div>
+          <i className="play sprite_icon" title="播放"></i>
+        </div>
+        <div className="bottom-desc">
+          <div className="name text-nowrap">
+            <NavLink to={`/album?id=${albumInfo.id}`} title={albumInfo.name}>{albumInfo.name}</NavLink>
+          </div>
+          <div className="artist text-nowrap">
+            <NavLink to={`/artist?id=${albumInfo.artist.id}`} title={albumInfo.artist.name}>{albumInfo.artist.name}</NavLink>
+          </div>
+        </div>
+      </StyledWrapper>
+    )
+    : null
 })

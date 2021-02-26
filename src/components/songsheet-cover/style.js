@@ -67,7 +67,7 @@ export const StyledWrapper = styled.div`
     }
   }
 
-  .songsheet-cover-dec {
+  .songsheet-cover-desc {
     line-height: 1.4;
     
     .cover-name {
@@ -79,7 +79,7 @@ export const StyledWrapper = styled.div`
       }
     }
 
-    .cover-author {
+    .cover-creator {
       span {
         margin-right: 3px;
         color: #999;

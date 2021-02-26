@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom'
 
 import { Slider } from 'antd'
 
-import ArtistsDivide from '@/components/artists-divide'
+import ArtistDivide from '@/components/artist-divide'
 
 import PlayerPanel from '../player-panel'
 import PlayerMessage from '../player-message'
@@ -359,7 +359,7 @@ export default memo(function PlayerBar() {
               {
                 currentSong && (
                   <div className="artists text-nowrap">
-                    <ArtistsDivide cpnData={currentSong.ar} />
+                    <ArtistDivide artistList={currentSong.ar} />
                   </div>
                 )
               }

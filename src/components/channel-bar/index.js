@@ -11,7 +11,7 @@ export default memo(function ChannelBar() {
       <div className="wrapper">
         <ul className="wrap-v1 content">
           {
-            ChannelBar_Links.map(item => {
+            ChannelBar_Links && ChannelBar_Links.map(item => {
               return (
                 <li className="item" key={item.title}>
                   <NavLink to={item.link}>{item.title}</NavLink>

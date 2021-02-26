@@ -2,30 +2,29 @@ import React, { memo, useState } from 'react'
 
 import { StyledWrapper } from './style'
 
-export default memo(function CatList(props) {
+export default memo(function CatSub(props) {
 
   /**
    * props and state
    */
-  const { cpnData = [], currentSub = '', onChange } = props
+  const { catSubList, currentSub, onSubClick } = props
 
   const [isShow, setIsShow] = useState(false)
 
   /**
    * other logic
    */
-  const handleSubClick = sub => {
-    if (sub === currentSub) {
-      return
+  const handleSubClick = subItem => {
+    if (subItem !== currentSub) {
+      setIsShow(false)
+      if (onSubClick && typeof onSubClick === 'function') {
+        onSubClick(subItem)
+      }
     }
-    if (onChange && typeof onChange === 'function') {
-      onChange(sub)
-    }
-    setIsShow(false)
   }
 
   return (
-    <StyledWrapper className="cpn-cat-list">
+    <StyledWrapper className="cpn-cat-sub">
       <div className="panel-top">
         <h3 className="current-select">{currentSub}</h3>
         <div className="top-selector sprite_button" onClick={() => setIsShow(!isShow)}>
@@ -43,7 +42,7 @@ export default memo(function CatList(props) {
           </h3>
           <ul className="body-list">
             {
-              cpnData.map((catItem, catIndex) => {
+              catSubList && catSubList.map((catItem, catIndex) => {
                 return (
                   <li className="list-li" key={catItem.name}>
                     <div className="li-left">
@@ -52,7 +51,7 @@ export default memo(function CatList(props) {
                     </div>
                     <div className="li-right">
                       {
-                        catItem.subs.map(subItem => {
+                        catItem.subs && catItem.subs.map(subItem => {
                           return (
                             <div className="right-item" key={subItem}>
                               <span className={`name ${subItem === currentSub ? 'active' : ''}`} onClick={() => handleSubClick(subItem)}>{subItem}</span>

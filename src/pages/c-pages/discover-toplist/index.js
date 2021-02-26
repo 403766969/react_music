@@ -7,7 +7,7 @@ import CommentArea from '@/components/comment-area'
 import SongArea from '@/components/song-area'
 
 import ChartList from './c-cpns/chart-list'
-import ChartIntro from './c-cpns/chart-intro'
+import ChartDetail from './c-cpns/chart-detail'
 
 import { StyledWrapper } from './style'
 
@@ -17,7 +17,7 @@ export default memo(function DiscoverToplist(props) {
    * const and let
    */
   const params = new URLSearchParams(props.location.search)
-  const chartId = params.get('id') && parseInt(params.get('id'))
+  const paramsId = params.get('id') && parseInt(params.get('id'))
 
   /**
    * props and state
@@ -29,41 +29,50 @@ export default memo(function DiscoverToplist(props) {
    */
   const {
     r_chartList,
-    r_currentChart,
-    r_currentChartDetail,
-    r_currentChartSongList,
-    r_hotComment,
-    r_newComment
+    r_chartDetail,
+    r_songList,
+    r_hotCommentList,
+    r_newCommentList,
+    r_newCommentCount
   } = useSelector(state => ({
     r_chartList: state.getIn(['discover/toplist', 'chartList']),
-    r_currentChart: state.getIn(['discover/toplist', 'currentChart']),
-    r_currentChartDetail: state.getIn(['discover/toplist', 'currentChartDetail']),
-    r_currentChartSongList: state.getIn(['discover/toplist', 'currentChartSongList']),
-    r_hotComment: state.getIn(['discover/toplist', 'hotComment']),
-    r_newComment: state.getIn(['discover/toplist', 'newComment'])
+    r_chartDetail: state.getIn(['discover/toplist', 'chartDetail']),
+    r_songList: state.getIn(['discover/toplist', 'songList']),
+    r_hotCommentList: state.getIn(['discover/toplist', 'hotCommentList']),
+    r_newCommentList: state.getIn(['discover/toplist', 'newCommentList']),
+    r_newCommentCount: state.getIn(['discover/toplist', 'newCommentCount'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
+
+  const firstChart = r_chartList && r_chartList[0]
+  const currentChartId = paramsId || (firstChart && firstChart.id)
 
   /**
    * other hooks
    */
   useEffect(() => {
-    dispatch(actions.get_chartList(chartId))
-    return () => {
-      dispatch(actions.set_chartList([]))
-      dispatch(actions.set_currentChart({}))
-      dispatch(actions.set_currentChartDetail({}))
-      dispatch(actions.set_currentChartSongList([]))
-      dispatch(actions.set_hotComment({}))
-      dispatch(actions.set_newComment({}))
-    }
-  }, [dispatch, chartId])
+    dispatch(actions.get_chartList())
+  }, [dispatch])
 
   useEffect(() => {
+    if (currentChartId) {
+      dispatch(actions.get_chartDetail(currentChartId))
+      dispatch(actions.get_hotCommentList(currentChartId, 0, 15))
+      dispatch(actions.get_newCommentList(currentChartId, 0, 20))
+    }
     setCurrentPage(1)
     window.scrollTo(0, 0)
-  }, [r_currentChart])
+    return () => {
+      dispatch(actions.merge_state({
+        chartDetail: null,
+        songList: [],
+        hotCommentList: [],
+        newCommentList: [],
+        newCommentCount: 0
+      }))
+    }
+  }, [dispatch, currentChartId])
 
   const commentRef = useRef()
 
@@ -71,34 +80,33 @@ export default memo(function DiscoverToplist(props) {
    * other logic
    */
   const handlePageChange = useCallback(page => {
-    dispatch(actions.get_newComment((page - 1) * 20, 20))
+    dispatch(actions.get_newCommentList(currentChartId, (page - 1) * 20, 20))
     setCurrentPage(page)
     window.scrollTo(0, commentRef.current.offsetTop + 100)
-  }, [dispatch])
-
-  const songAreaData = {
-    songsheetId: r_currentChartDetail.id,
-    playCount: r_currentChartDetail.playCount,
-    songCount: r_currentChartDetail.trackCount,
-    songList: r_currentChartSongList
-  }
-
-  const commentAreaData = {
-    hotComment: r_hotComment,
-    newComment: r_newComment
-  }
+  }, [dispatch, currentChartId])
 
   return (
     <StyledWrapper className="page-discover-toplist wrap-v2">
       <div className="left">
-        <ChartList title="云音乐特色榜" cpnData={r_chartList.slice(0, 4)} currentChart={r_currentChart} />
-        <ChartList title="全球媒体榜" cpnData={r_chartList.slice(4, r_chartList.length)} currentChart={r_currentChart} />
+        <ChartList title="云音乐特色榜" chartList={r_chartList.slice(0, 4)} currentChartId={currentChartId} />
+        <ChartList title="全球媒体榜" chartList={r_chartList.slice(4, r_chartList.length)} currentChartId={currentChartId} />
       </div>
       <div className="right">
-        <ChartIntro cpnData={r_currentChartDetail} />
-        <SongArea cpnData={songAreaData} order name duration artist={{ width: '170px' }} showCoverCount={3} />
+        <ChartDetail chartDetail={r_chartDetail} chartList={r_chartList} currentChartId={currentChartId} songList={r_songList} />
+        <SongArea
+          songCount={r_songList && r_songList.length}
+          playCount={r_chartDetail && r_chartDetail.playCount}
+          link={r_chartDetail && `https://music.163.com/#/outchain/0/${r_chartDetail.id}`}
+          showCoverCount={3}
+          order name duration artist={{ width: '170px' }}
+          songList={r_songList} />
         <div className="toplist-comment" ref={commentRef}>
-          <CommentArea cpnData={commentAreaData} currentPage={currentPage} onPageChange={handlePageChange} />
+          <CommentArea
+            hotCommentList={r_hotCommentList}
+            newCommentList={r_newCommentList}
+            newCommentCount={r_newCommentCount}
+            currentPage={currentPage}
+            onPageChange={handlePageChange} />
         </div>
       </div>
     </StyledWrapper>

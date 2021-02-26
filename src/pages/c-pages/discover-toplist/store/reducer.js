@@ -4,27 +4,31 @@ import { actionTypes } from './constants'
 
 const initialState = Map({
   chartList: [],
-  currentChart: {},
-  currentChartDetail: {},
-  currentChartSongList: [],
-  hotComment: {},
-  newComment: {}
+  chartDetail: null,
+  songList: [],
+  hotCommentList: [],
+  newCommentList: [],
+  newCommentCount: 0
 })
 
 function reducer(state = initialState, action) {
   switch (action.type) {
+    case actionTypes.MERGE_STATE:
+      return state.merge(action.state)
+    case actionTypes.CLEAR_STATE:
+      return state.clear()
     case actionTypes.SET_CHART_LIST:
       return state.set('chartList', action.chartList)
-    case actionTypes.SET_CURRENT_CHART:
-      return state.set('currentChart', action.currentChart)
-    case actionTypes.SET_CURRENT_CHART_DETAIL:
-      return state.set('currentChartDetail', action.currentChartDetail)
-    case actionTypes.SET_CURRENT_CHART_SONG_LIST:
-      return state.set('currentChartSongList', action.currentChartSongList)
-    case actionTypes.SET_HOT_COMMENT:
-      return state.set('hotComment', action.hotComment)
-    case actionTypes.SET_NEW_COMMENT:
-      return state.set('newComment', action.newComment)
+    case actionTypes.SET_CHART_DETAIL:
+      return state.set('chartDetail', action.chartDetail)
+    case actionTypes.SET_SONG_LIST:
+      return state.set('songList', action.songList)
+    case actionTypes.SET_HOT_COMMENT_LIST:
+      return state.set('hotCommentList', action.hotCommentList)
+    case actionTypes.SET_NEW_COMMENT_LIST:
+      return state.set('newCommentList', action.newCommentList)
+    case actionTypes.SET_NEW_COMMENT_COUNT:
+      return state.set('newCommentCount', action.newCommentCount)
     default:
       return state
   }

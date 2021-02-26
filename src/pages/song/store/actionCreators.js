@@ -7,6 +7,15 @@ import * as songApi from '@/services/songApi'
 /**
  * 操作state
  */
+export const merge_state = state => ({
+  type: actionTypes.MERGE_STATE,
+  state: state
+})
+
+export const clear_state = () => ({
+  type: actionTypes.CLEAR_STATE
+})
+
 export const set_songDetail = songDetail => ({
   type: actionTypes.SET_SONG_DETAIL,
   songDetail: songDetail
@@ -17,14 +26,19 @@ export const set_songLyric = songLyric => ({
   songLyric: songLyric
 })
 
-export const set_hotComment = hotComment => ({
-  type: actionTypes.SET_HOT_COMMENT,
-  hotComment: hotComment
+export const set_hotCommentList = hotCommentList => ({
+  type: actionTypes.SET_HOT_COMMENT_LIST,
+  hotCommentList: hotCommentList
 })
 
-export const set_newComment = newComment => ({
-  type: actionTypes.SET_NEW_COMMENT,
-  newComment: newComment
+export const set_newCommentList = newCommentList => ({
+  type: actionTypes.SET_NEW_COMMENT_LIST,
+  newCommentList: newCommentList
+})
+
+export const set_newCommentCount = newCommentCount => ({
+  type: actionTypes.SET_NEW_COMMENT_COUNT,
+  newCommentCount: newCommentCount
 })
 
 export const set_simiSongsheetList = simiSongsheetList => ({
@@ -60,45 +74,46 @@ export const get_songLyric = songId => {
     } else if (res.nolyric) {
       lyric.push({ time: 0, content: '纯音乐，无歌词' })
     } else if (res.uncollected) {
-      lyric.push({ time: 0, content: '暂时没有歌词' })
-    } else if (res.lrc && !res.tlyric) {
-      lyric = parseLyric(res.lrc.lyric)
-    } else if (res.lrc && res.tlyric) {
-      const originalLyric = parseLyric(res.lrc.lyric)
-      const translationLyric = parseLyric(res.tlyric.lyric)
-      lyric = mergeLyric(originalLyric, translationLyric)
+      lyric.push({ time: 0, content: '暂无歌词' })
+    } else {
+      let ol = res.lrc && res.lrc.lyric
+      let tl = res.tlyric && res.tlyric.lyric
+      if (ol && tl) {
+        lyric = mergeLyric(parseLyric(ol), parseLyric(tl))
+      } else if (ol && !tl) {
+        lyric = parseLyric(ol)
+      } else if (!ol && tl) {
+        lyric = parseLyric(tl)
+      } else {
+        lyric.push({ time: 0, content: '暂无歌词' })
+      }
     }
     dispatch(set_songLyric(lyric))
   }
 }
 
 // 热门评论
-export const get_hotComment = (songId, offset = 0, limit = 15) => {
+export const get_hotCommentList = (songId, offset = 0, limit = 15) => {
   return async dispatch => {
     const res = await songApi.get_comment_hot(songId, offset, limit)
-    if (!res || !res.hotComments) {
-      return
+    if (res && res.hotComments) {
+      dispatch(set_hotCommentList(res.hotComments))
     }
-    const hotComment = {
-      total: res.total,
-      list: res.hotComments
-    }
-    dispatch(set_hotComment(hotComment))
   }
 }
 
 // 最新评论
-export const get_newComment = (songId, offset = 0, limit = 20) => {
+export const get_newCommentList = (songId, offset = 0, limit = 20) => {
   return async dispatch => {
     const res = await songApi.get_comment_music(songId, offset, limit)
-    if (!res || !res.comments) {
-      return
+    if (res) {
+      if (res.comments) {
+        dispatch(set_newCommentList(res.comments))
+      }
+      if (res.total) {
+        dispatch(set_newCommentCount(res.total))
+      }
     }
-    const newComment = {
-      total: res.total,
-      list: res.comments
-    }
-    dispatch(set_newComment(newComment))
   }
 }
 

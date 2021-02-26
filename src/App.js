@@ -1,14 +1,14 @@
 import React, { memo, Suspense } from 'react'
 
-import 'antd/dist/antd.css'
-import '@/assets/css/base.css'
+import { HashRouter } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
+import { Provider } from 'react-redux'
 
 import routes from '@/router'
 import store from '@/store'
 
-import { HashRouter } from 'react-router-dom'
-import { renderRoutes } from 'react-router-config'
-import { Provider } from 'react-redux'
+import 'antd/dist/antd.css'
+import '@/assets/css/base.css'
 
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'

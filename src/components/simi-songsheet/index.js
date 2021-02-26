@@ -12,14 +12,14 @@ export default memo(function SimiSongsheet(props) {
   /**
    * props and state
    */
-  const { title = '', cpnData = [] } = props
+  const { title, songsheetList } = props
 
   return (
     <StyleWrapper className="cpn-simi-songsheet">
       <HeaderShort title={title} />
       <div className="content">
         {
-          cpnData.map(item => {
+          songsheetList && songsheetList.map(item => {
             return (
               <div className="songsheet-item" key={item.id}>
                 <NavLink className="image" to={`/songsheet?id=${item.id}`} title={item.name}>

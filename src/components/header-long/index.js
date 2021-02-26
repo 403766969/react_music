@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -17,7 +17,7 @@ const HeaderLongMemo = memo(function HeaderLong(props) {
         <h3 className="title">{title}</h3>
         <ul className="keyword">
           {
-            links.map(item => {
+            links && links.map(item => {
               return (
                 <li className="item" key={item.title}>
                   <NavLink to={item.link}>{item.title}</NavLink>
@@ -30,14 +30,12 @@ const HeaderLongMemo = memo(function HeaderLong(props) {
       </div>
       <div className="right">
         {
-          more.link && more.text
-            ? <NavLink to={more.link}>{more.text}</NavLink>
-            : null
-        }
-        {
-          more.link && more.text
-            ? <i className="icon sprite_02"></i>
-            : null
+          more && (
+            <Fragment>
+              <NavLink to={more.link}>{more.text}</NavLink>
+              <i className="icon sprite_02"></i>
+            </Fragment>
+          )
         }
       </div>
     </StyledWrapper>

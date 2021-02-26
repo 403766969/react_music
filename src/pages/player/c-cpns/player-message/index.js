@@ -26,6 +26,7 @@ export default memo(function PlayerMessage() {
       }
       timer.current = setTimeout(() => {
         clearTimeout(timer.current)
+        timer.current = null
         dispatch(actions.set_messageConfig(null))
       }, r_messageConfig.duration || 3000)
     }

@@ -7,20 +7,20 @@ export default memo(function SongLyric(props) {
   /**
    * props and state
    */
-  const { cpnData = [] } = props
+  const { songLyric } = props
 
   const [isFold, setIsFold] = useState(true)
 
   /**
    * other logic
    */
-  const lyricRows = isFold ? 13 : cpnData.length
+  const lyricRows = isFold ? 13 : (songLyric ? songLyric.length : 0)
 
-  return cpnData.length > 0 && (
+  return (
     <StyledWrapper className="cpn-song-lyric" isFold={isFold}>
       <div className="content">
         {
-          cpnData.slice(0, lyricRows).map(item => {
+          songLyric && songLyric.slice(0, lyricRows).map(item => {
             return (
               <p key={item.time + item.content}>
                 {item.content}
@@ -32,9 +32,7 @@ export default memo(function SongLyric(props) {
         }
       </div>
       {
-        cpnData.length > 13
-        &&
-        (
+        songLyric && songLyric.length > 13 && (
           <div className="control">
             <button onClick={() => setIsFold(!isFold)}>
               {isFold ? '展开' : '收起'}

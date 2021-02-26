@@ -1,11 +1,12 @@
-import React, { memo, useState, useEffect, useCallback } from 'react'
+import React, { memo, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import * as actions from './store/actionCreators'
 
 import Pagination from '@/components/pagination-bar'
 
-import CatList from './c-cpns/cat-list'
+import CatSub from './c-cpns/cat-sub'
 import SongsheetList from './c-cpns/songsheet-list'
 
 import { StyledWrapper } from './style'
@@ -16,24 +17,21 @@ export default memo(function Songsheet(props) {
    * const and let
    */
   const params = new URLSearchParams(props.location.search)
-  const sub = params.get('sub') || '全部'
-
-  /**
-   * props and state
-   */
-  const [currentPage, setCurrentPage] = useState(1)
+  const currentSub = params.get('sub') || '全部'
+  const currentOrder = params.get('order') || 'hot'
+  const currentPage = (params.get('page') && parseInt(params.get('page'))) || 1
 
   /**
    * redux hooks
    */
   const {
-    r_catList,
-    r_currentSub,
-    r_songsheetData
+    r_catSubList,
+    r_songsheetList,
+    r_songsheetCount
   } = useSelector(state => ({
-    r_catList: state.getIn(['discover/songsheet', 'catList']),
-    r_currentSub: state.getIn(['discover/songsheet', 'currentSub']),
-    r_songsheetData: state.getIn(['discover/songsheet', 'songsheetData'])
+    r_catSubList: state.getIn(['discover/songsheet', 'catSubList']),
+    r_songsheetList: state.getIn(['discover/songsheet', 'songsheetList']),
+    r_songsheetCount: state.getIn(['discover/songsheet', 'songsheetCount'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -41,45 +39,47 @@ export default memo(function Songsheet(props) {
   /**
    * other hooks
    */
+  const history = useHistory()
+
   useEffect(() => {
-    dispatch(actions.get_catList(sub))
-    setCurrentPage(1)
-    window.scrollTo(0, 0)
+    dispatch(actions.get_catSubList())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(actions.get_songsheetList(currentSub, currentOrder, (currentPage - 1) * 35, 35))
     return () => {
-      dispatch(actions.set_catList([]))
-      dispatch(actions.set_currentSub(''))
-      dispatch(actions.set_songsheetData({}))
+      dispatch(actions.merge_state({
+        songsheetList: [],
+        songsheetCount: 0
+      }))
     }
-  }, [dispatch, sub])
+  }, [dispatch, currentSub, currentOrder, currentPage])
 
   /**
    * other logic
    */
-  const handleSubChange = useCallback(sub => {
-    dispatch(actions.set_currentSub(sub))
-    dispatch(actions.get_songsheetData(0, 35))
-    setCurrentPage(1)
-  }, [dispatch])
+  const handleSubClick = useCallback(sub => {
+    history.push(`/discover/songsheet?sub=${sub}&order=${currentOrder}&page=${1}`)
+  }, [history, currentOrder])
 
   const handlePageChange = useCallback(page => {
-    dispatch(actions.get_songsheetData((page - 1) * 35, 35))
-    setCurrentPage(page)
+    history.push(`/discover/songsheet?sub=${currentSub}&order=${currentOrder}&page=${page}`)
     window.scrollTo(0, 140)
-  }, [dispatch])
+  }, [history, currentSub, currentOrder])
 
   return (
     <StyledWrapper className="page-discover-songsheet wrap-v2">
       <div className="header">
-        <CatList cpnData={r_catList} currentSub={r_currentSub} onChange={handleSubChange} />
+        <CatSub catSubList={r_catSubList} currentSub={currentSub} onSubClick={handleSubClick} />
         <div className="hot sprite_button2">
           <span>热门</span>
         </div>
       </div>
       <div className="content">
-        <SongsheetList cpnData={r_songsheetData.playlists} />
+        <SongsheetList songsheetList={r_songsheetList} />
       </div>
       <div className="footer">
-        <Pagination currentPage={currentPage} total={r_songsheetData.total} pageSize={35} onPageChange={handlePageChange} />
+        <Pagination currentPage={currentPage} total={r_songsheetCount} pageSize={35} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

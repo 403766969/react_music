@@ -1,9 +1,7 @@
 import React, { memo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
-
-import * as actions from '../../store/actionCreators'
 
 import { StyledWrapper } from './style'
 
@@ -12,24 +10,20 @@ export default memo(function ChartList(props) {
   /**
    * props and state
    */
-  const { title = '', cpnData = [], currentChart = {} } = props
+  const { title, chartList, currentChartId } = props
 
   /**
-   * redux hooks
+   * other hooks
    */
-  const dispatch = useDispatch()
+  const history = useHistory()
 
   /**
    * other logic
    */
   const hanldeItemClick = item => {
-    if (item === currentChart) {
-      return
+    if (item.id !== currentChartId) {
+      history.push(`/discover/toplist?id=${item.id}`)
     }
-    dispatch(actions.set_currentChart(item))
-    dispatch(actions.get_currentChartDetail())
-    dispatch(actions.get_hotComment(0, 15))
-    dispatch(actions.get_newComment(0, 20))
   }
 
   return (
@@ -37,10 +31,10 @@ export default memo(function ChartList(props) {
       <h2 className="chart-list-title">{title}</h2>
       <ul className="chart-list">
         {
-          cpnData.map(item => {
+          chartList && chartList.map(item => {
             return (
               <li
-                className={`chart-item ${item === currentChart ? 'active' : ''}`}
+                className={`chart-item ${item.id === currentChartId ? 'active' : ''}`}
                 key={item.id}
                 onClick={() => hanldeItemClick(item)}>
                 <img src={formatUrlWithSize(item.coverImgUrl, 40)} alt={item.name} />

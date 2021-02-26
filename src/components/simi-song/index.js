@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import * as playerActions from '@/pages/player/store/acitonCreators'
 
 import HeaderShort from '@/components/header-short'
-import ArtistsDivide from '@/components/artists-divide'
+import ArtistDivide from '@/components/artist-divide'
 
 import { StyleWrapper } from './style'
 
@@ -14,7 +14,7 @@ export default memo(function SimiSong(props) {
   /**
    * props and state
    */
-  const { title = '', cpnData = [] } = props
+  const { title, songList } = props
 
   /**
    * redux hooks
@@ -37,7 +37,7 @@ export default memo(function SimiSong(props) {
       <HeaderShort title={title} />
       <div className="content">
         {
-          cpnData.map(item => {
+          songList && songList.map(item => {
             return (
               <div className="song-item" key={item.id}>
                 <div className="info">
@@ -45,7 +45,7 @@ export default memo(function SimiSong(props) {
                     <NavLink to={`/song?id=${item.id}`} title={item.name}>{item.name}</NavLink>
                   </div>
                   <div className="artists text-nowrap">
-                    <ArtistsDivide cpnData={item.artists} />
+                    <ArtistDivide artistList={item.artists} />
                   </div>
                 </div>
                 <div className="operate">

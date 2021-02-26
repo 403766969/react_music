@@ -8,7 +8,7 @@ export default memo(function SongsheetIntro(props) {
   /**
    * props and state
    */
-  const { cpnData = {} } = props
+  const { tags, description } = props
 
   const [isShowControl, setIsShowControl] = useState(false)
   const [isFold, setIsFold] = useState(true)
@@ -16,7 +16,7 @@ export default memo(function SongsheetIntro(props) {
   /**
    * other hooks
    */
-  const decRef = useCallback(node => {
+  const descRef = useCallback(node => {
     if (node && node.offsetHeight > 90) {
       setIsShowControl(true)
     }
@@ -25,31 +25,31 @@ export default memo(function SongsheetIntro(props) {
   /**
    * other logic
    */
-  let decArr = []
-  if (cpnData.description) {
-    decArr = cpnData.description.split('\n')
-    decArr[0] = '介绍：' + decArr[0]
+  let descArr = []
+  if (description) {
+    descArr = description.split('\n')
+    descArr[0] = '介绍：' + descArr[0]
   }
 
   return (
     <StyledWrapper className="cpn-songsheet-intro" isFold={isFold}>
       <div className="tags">
         {
-          cpnData.tags.length > 0 && (
+          tags && tags.length > 0 && (
             <b>标签：</b>
           )
         }
         {
-          cpnData.tags.map(item => {
+          tags && tags.map(item => {
             return (
               <NavLink to={`/discover/songsheet?sub=${item}`} key={item}>{item}</NavLink>
             )
           })
         }
       </div>
-      <div className="dec" style={{ height: (isShowControl && isFold) ? '90px' : 'auto' }} ref={decRef}>
+      <div className="desc" style={{ height: (isShowControl && isFold) ? '90px' : 'auto' }} ref={descRef}>
         {
-          decArr.map((item, index) => {
+          descArr.map((item, index) => {
             return (
               <p key={item + index}>{item}</p>
             )

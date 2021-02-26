@@ -32,7 +32,6 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
         clearTimeout(wheelTimerRef.current)
         wheelTimerRef.current = null
       }, moveEffectTime)
-
       if (wrapperEl.clientHeight >= contentEl.offsetHeight) {
         onWheel && onWheel(0, 0)
         setTop(0)
@@ -133,7 +132,6 @@ export default memo(forwardRef(function ScrollContainer(props, ref) {
   useImperativeHandle(ref, () => ({
     wrapperEl: wrapperRef.current,
     contentEl: contentRef.current,
-    to: Math.abs(contentRef.current.offsetTop),
     scrollUpdate,
     scrollToByTop,
     scrollToByPercent

@@ -3,19 +3,23 @@ import { Map } from 'immutable'
 import { actionTypes } from './constants'
 
 const initialState = Map({
-  catList: [],
-  currentSub: '',
-  songsheetData: {}
+  catSubList: [],
+  songsheetList: [],
+  songsheetCount: 0
 })
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.SET_CAT_LIST:
-      return state.set('catList', action.catList)
-    case actionTypes.SET_CURRENT_SUB:
-      return state.set('currentSub', action.currentSub)
-    case actionTypes.SET_SONGSHEET_DATA:
-      return state.set('songsheetData', action.songsheetData)
+    case actionTypes.MERGE_STATE:
+      return state.merge(action.state)
+    case actionTypes.CLEAR_STATE:
+      return state.clear()
+    case actionTypes.SET_CAT_SUB_LIST:
+      return state.set('catSubList', action.catSubList)
+    case actionTypes.SET_SONGSHEET_LIST:
+      return state.set('songsheetList', action.songsheetList)
+    case actionTypes.SET_SONGSHEET_COUNT:
+      return state.set('songsheetCount', action.songsheetCount)
     default:
       return state
   }

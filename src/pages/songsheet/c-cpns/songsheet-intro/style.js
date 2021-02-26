@@ -27,7 +27,7 @@ export const StyledWrapper = styled.div`
     }
   }
 
-  .dec {
+  .desc {
     overflow: hidden;
 
     p {

@@ -18,7 +18,7 @@ export default memo(function AppHeader() {
           </h1>
           <ul className="channel-menu">
             {
-              AppHeader_Links.map(item => {
+              AppHeader_Links && AppHeader_Links.map(item => {
                 return (
                   <li className="channel-item" key={item.title}>
                     {

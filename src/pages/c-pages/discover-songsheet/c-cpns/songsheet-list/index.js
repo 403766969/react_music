@@ -9,15 +9,15 @@ export default memo(function SongsheetList(props) {
   /**
    * props and state
    */
-  const { cpnData = [] } = props
+  const { songsheetList } = props
 
   return (
     <StyledWrapper className="cpn-songsheet-list">
       {
-        cpnData.map(item => {
+        songsheetList && songsheetList.map((item, index) => {
           return (
-            <li key={item.id}>
-              <SongsheetCover cpnData={item} author />
+            <li key={item.id + index}>
+              <SongsheetCover songsheetInfo={item} creator />
             </li>
           )
         })

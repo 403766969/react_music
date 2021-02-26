@@ -11,15 +11,15 @@ export default memo(function RankMulti(props) {
   /**
    * props and state
    */
-  const { cpnData = [] } = props
+  const { rankList } = props
 
   return (
     <StyledWrapper className="cpn-rank-multi">
       <HeaderLong title="榜单" more={{ text: '更多', link: '/discover/toplist' }} />
       <div className="content">
         {
-          cpnData.map(item => {
-            return <RankSimple key={item.id} cpnData={item} />
+          rankList && rankList.map(item => {
+            return <RankSimple key={item.id} rankInfo={item} />
           })
         }
       </div>

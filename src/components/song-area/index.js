@@ -10,26 +10,26 @@ export default memo(function SongArea(props) {
   /**
    * props and state
    */
-  const { areaTitle = '歌曲列表' } = props
+  const { songCount, playCount, link } = props
 
-  const { cpnData = {} } = props
-
-  const { isShowHeader = true, showCoverCount = 0 } = props
+  const { isShowHeader, showCoverCount } = props
 
   const { order, name, duration, artist, album } = props
 
+  const { songList } = props
+
   return (
     <StyledWrapper className="cpn-song-area">
-      <AreaHeader title={areaTitle} cpnData={cpnData} />
+      <AreaHeader title="歌曲列表" songCount={songCount} playCount={playCount} link={link} />
       <SongList
-        cpnData={cpnData.songList}
         isShowHeader={isShowHeader}
         showCoverCount={showCoverCount}
         order={order}
         name={name}
         duration={duration}
         artist={artist}
-        album={album} />
+        album={album}
+        songList={songList} />
     </StyledWrapper>
   )
 })

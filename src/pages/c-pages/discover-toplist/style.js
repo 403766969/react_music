@@ -26,7 +26,7 @@ export const StyledWrapper = styled.div`
     padding: 40px;
     width: 0;
 
-    .cpn-chart-intro {
+    .cpn-chart-detail {
       margin-bottom: 40px;
     }
 

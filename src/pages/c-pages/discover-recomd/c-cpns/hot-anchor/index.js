@@ -13,7 +13,7 @@ export default memo(function HotAnchor() {
       <HeaderShort title={'热门主播'} />
       <div className="content">
         {
-          HotAnchor_Links.map(item => {
+          HotAnchor_Links && HotAnchor_Links.map(item => {
             return (
               <div className="item" key={item.id}>
                 <NavLink to={item.url} className="image">

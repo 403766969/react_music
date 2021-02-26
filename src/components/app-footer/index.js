@@ -11,7 +11,7 @@ export default memo(function AppFooter() {
         <div className="left">
           <div className="link">
             {
-              AppFooter_Links.map(item => {
+              AppFooter_Links && AppFooter_Links.map(item => {
                 return (
                   <Fragment key={item.title}>
                     <a href={item.link} target="_blank" rel="noreferrer">{item.title}</a>
@@ -47,7 +47,7 @@ export default memo(function AppFooter() {
         </div>
         <div className="right">
           {
-            AppFooter_Images.map(item => {
+            AppFooter_Images && AppFooter_Images.map(item => {
               return (
                 <li className="item" key={item.link}>
                   <a className="link" href={item.link} rel="noreferrer" target="_blank"> </a>

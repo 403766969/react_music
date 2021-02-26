@@ -7,19 +7,19 @@ import HeaderShort from '@/components/header-short'
 
 import { StyledWrapper } from './style'
 
-export default memo(function HotArtists(props) {
+export default memo(function HotArtist(props) {
 
   /**
    * props and state
    */
-  const { cpnData = [] } = props
+  const { artistList } = props
 
   return (
-    <StyledWrapper className="cpn-hot-artists">
+    <StyledWrapper className="cpn-hot-artist">
       <HeaderShort title={'热门歌手'} more={{ text: '查看全部', link: '/discover/artist' }} />
       <ul className="content">
         {
-          cpnData.map(item => {
+          artistList && artistList.map(item => {
             return (
               <li className="item" key={item.id} >
                 <NavLink className="link" to={`/user/home?id=${item.id}`}>

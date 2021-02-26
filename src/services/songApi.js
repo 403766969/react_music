@@ -14,8 +14,7 @@ export const get_simi_song = id => http.get('/simi/song', { params: { id } })
 
 export const get_check_music = (id, timestamp) => http.get('/check/music', {
   params: {
-    id,
-    timestamp
+    id
   },
   validateStatus: status => {
     return status < 500

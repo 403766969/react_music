@@ -5,7 +5,7 @@ import { formatDate } from '@/utils/formatter'
 
 import * as actions from '../../../../store/acitonCreators'
 
-import ArtistsDivide from '@/components/artists-divide'
+import ArtistDivide from '@/components/artist-divide'
 
 import { StyledWrapper } from './style'
 
@@ -55,7 +55,7 @@ export default memo(function PlayList(props) {
                   <i className="sprite_playlist remove" title="删除" onClick={e => hadleRemoveClick(index, e)}></i>
                 </div>
                 <div className="artists text-nowrap" onClick={e => e.stopPropagation()}>
-                  <ArtistsDivide cpnData={item.ar} />
+                  <ArtistDivide artistList={item.ar} />
                 </div>
                 <div className="duration">{formatDate(item.dt, 'mm:ss')}</div>
                 <div className="sprite_playlist link" title="来自榜单"></div>

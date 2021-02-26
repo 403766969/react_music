@@ -12,7 +12,7 @@ export default memo(function NewAlbum(props) {
   /**
    * props and state
    */
-  const { cpnData = [] } = props
+  const { albumList } = props
 
   /**
    * other hooks
@@ -30,9 +30,9 @@ export default memo(function NewAlbum(props) {
                 return (
                   <div className="carousel-page" key={page}>
                     {
-                      cpnData.slice(page * 5, (page + 1) * 5).map(item => {
+                      albumList && albumList.slice(page * 5, (page + 1) * 5).map(item => {
                         return (
-                          <AlbumCover key={item.id} cpnData={item} />
+                          <AlbumCover key={item.id} albumInfo={item} />
                         )
                       })
                     }

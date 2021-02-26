@@ -3,28 +3,30 @@ import { NavLink } from 'react-router-dom'
 
 import { StyledWrapper } from './style'
 
-export default memo(function ArtistsDivide(props) {
+export default memo(function ArtistDivide(props) {
 
   /**
    * props and state
    */
-  const { cpnData = [], divide = '/' } = props
+  const { artistList, divide = '/' } = props
 
   /**
    * render logic
    */
-  const temp = cpnData.reduce((prev, cur) => {
-    return prev + cur.name + divide
-  }, '')
+  let title = ''
+  let divideCount = 0
+  if (artistList) {
+    const temp = artistList.reduce((prev, cur) => {
+      return prev + cur.name + divide
+    }, '')
+    title = temp.slice(0, temp.length - divide.length)
+    divideCount = artistList.length - 1
+  }
 
-  const title = temp.slice(0, temp.length - divide.length)
-
-  const divideCount = cpnData.length - 1
-
-  return cpnData.length > 0 && (
-    <StyledWrapper className="cpn-artists-divide" title={title}>
+  return (
+    <StyledWrapper className="cpn-artist-divide" title={title}>
       {
-        cpnData.map((item, index) => {
+        artistList && artistList.map((item, index) => {
           return (
             <Fragment key={item.id + index}>
               <NavLink to={`/artist?id=${item.id}`}>{item.name}</NavLink>

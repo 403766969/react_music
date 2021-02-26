@@ -7,12 +7,12 @@ export default memo(function ListHeader(props) {
   /**
    * props and state
    */
-  const { orderConfig = {}, nameConfig = {}, durationConfig = {}, artistConfig = {}, albumConfig = {} } = props
+  const { orderConfig, nameConfig, durationConfig, artistConfig, albumConfig } = props
 
   return (
     <StyledWrapper className="cpn-list-header">
       {
-        orderConfig.isShow && (
+        orderConfig && (
           <div className="cell order">
             <div className="content text-nowrap">
               <span>{orderConfig.text}</span>
@@ -21,7 +21,7 @@ export default memo(function ListHeader(props) {
         )
       }
       {
-        nameConfig.isShow && (
+        nameConfig && (
           <div className="cell name">
             <div className="content text-nowrap">
               <span>{nameConfig.text}</span>
@@ -30,7 +30,7 @@ export default memo(function ListHeader(props) {
         )
       }
       {
-        durationConfig.isShow && (
+        durationConfig && (
           <div className="cell duration">
             <div className="content text-nowrap">
               <span>{durationConfig.text}</span>
@@ -39,7 +39,7 @@ export default memo(function ListHeader(props) {
         )
       }
       {
-        artistConfig.isShow && (
+        artistConfig && (
           <div className="cell artist">
             <div className="content text-nowrap">
               <span>{artistConfig.text}</span>
@@ -48,7 +48,7 @@ export default memo(function ListHeader(props) {
         )
       }
       {
-        albumConfig.isShow && (
+        albumConfig && (
           <div className="cell album">
             <div className="content text-nowrap">
               <span>{albumConfig.text}</span>

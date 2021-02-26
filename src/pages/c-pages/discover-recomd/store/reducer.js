@@ -7,11 +7,15 @@ const initialState = Map({
   hotRecomdList: [],
   newAlbumList: [],
   rankMultiList: [],
-  hotArtistsList: []
+  hotArtistList: []
 })
 
 function reducer(state = initialState, action) {
   switch (action.type) {
+    case actionTypes.MERGE_STATE:
+      return state.merge(action.state)
+    case actionTypes.CLEAR_STATE:
+      return state.clear()
     case actionTypes.SET_TOP_BANNER_LIST:
       return state.set('topBannerList', action.topBannerList)
     case actionTypes.SET_HOT_RECOMD_LIST:
@@ -20,8 +24,8 @@ function reducer(state = initialState, action) {
       return state.set('newAlbumList', action.newAlbumList)
     case actionTypes.SET_RANK_MULTI_LIST:
       return state.set('rankMultiList', action.rankMultiList)
-    case actionTypes.SET_HOT_ARTISTS_LIST:
-      return state.set('hotArtistsList', action.hotArtistsList)
+    case actionTypes.SET_HOT_ARTIST_LIST:
+      return state.set('hotArtistList', action.hotArtistList)
     default:
       return state
   }

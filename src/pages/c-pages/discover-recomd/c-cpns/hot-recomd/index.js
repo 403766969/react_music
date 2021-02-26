@@ -12,17 +12,17 @@ export default memo(function HotRecomd(props) {
   /**
    * props and state
    */
-  const { cpnData = [] } = props
+  const { recomdList } = props
 
   return (
     <StyledWrapper className="cpn-hot-recomd">
       <HeaderLong title="热门推荐" links={HotRecomd_Links} more={{ text: '更多', link: '/discover/songsheet' }} />
       <ul className="content">
         {
-          cpnData.map(item => {
+          recomdList && recomdList.map(item => {
             return (
               <li key={item.id}>
-                <SongsheetCover cpnData={item} />
+                <SongsheetCover songsheetInfo={item} />
               </li>
             )
           })

@@ -13,7 +13,7 @@ export default memo(function SongsheetCover(props) {
   /**
    * props and state
    */
-  const { cpnData = {}, author } = props
+  const { songsheetInfo, creator } = props
 
   /**
    * redux hooks
@@ -29,47 +29,46 @@ export default memo(function SongsheetCover(props) {
    * other logic
    */
   const pushRoute = () => {
-    if (cpnData.id) {
-      history.push(`/songsheet?id=${cpnData.id}`)
-    }
+    history.push(`/songsheet?id=${songsheetInfo.id}`)
   }
 
   const handleAddList = e => {
-    e.stopPropagation()
-    dispatch(playerAction.add_multipleSong_with_songsheetId(cpnData.id, true))
+    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetInfo.id, true))
   }
 
-  return Object.keys(cpnData).length > 0 && (
-    <StyledWrapper className="cpn-songsheet-cover">
-      <div className="songsheet-cover-image" onClick={pushRoute}>
-        <img className="image" src={formatUrlWithSize(cpnData.picUrl || cpnData.coverImgUrl, 140)} alt="" />
-        <div className="mask sprite_covor" title={cpnData.name}></div>
-        <div className="heat sprite_covor">
-          <div className="left">
-            <i className="sprite_icon count"></i>
-            <span>{formatCount(cpnData.playCount)}</span>
-          </div>
-          <div className="right">
-            <i className="sprite_icon play" onClick={e => handleAddList(e)}></i>
+  return songsheetInfo
+    ? (
+      <StyledWrapper className="cpn-songsheet-cover">
+        <div className="songsheet-cover-image" onClick={pushRoute}>
+          <img className="image" src={formatUrlWithSize(songsheetInfo.picUrl || songsheetInfo.coverImgUrl, 140)} alt="" />
+          <div className="mask sprite_covor" title={songsheetInfo.name}></div>
+          <div className="heat sprite_covor" onClick={e => e.stopPropagation()}>
+            <div className="left">
+              <i className="sprite_icon count"></i>
+              <span>{formatCount(songsheetInfo.playCount)}</span>
+            </div>
+            <div className="right">
+              <i className="sprite_icon play" onClick={() => handleAddList()}></i>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="songsheet-cover-dec">
-        <p className={'cover-name' + (author ? ' text-nowrap' : '')}>
-          <NavLink to={`/songsheet?id=${cpnData.id}`} title={cpnData.name}>{cpnData.name}</NavLink>
-        </p>
-        {
-          author && (
-            <p className="cover-author text-nowrap">
-              <span>by</span>
-              <NavLink to={`/user/home?id=${cpnData.id}`}
-                title={cpnData.copywriter || (cpnData.creator && cpnData.creator.nickname)}>
-                {cpnData.copywriter || (cpnData.creator && cpnData.creator.nickname)}
-              </NavLink>
-            </p>
-          )
-        }
-      </div>
-    </StyledWrapper>
-  )
+        <div className="songsheet-cover-desc">
+          <p className={'cover-name' + (creator ? ' text-nowrap' : '')}>
+            <NavLink to={`/songsheet?id=${songsheetInfo.id}`} title={songsheetInfo.name}>{songsheetInfo.name}</NavLink>
+          </p>
+          {
+            creator && (
+              <p className="cover-creator text-nowrap">
+                <span>by</span>
+                <NavLink to={`/user/home?id=${songsheetInfo.id}`}
+                  title={songsheetInfo.copywriter || (songsheetInfo.creator && songsheetInfo.creator.nickname)}>
+                  {songsheetInfo.copywriter || (songsheetInfo.creator && songsheetInfo.creator.nickname)}
+                </NavLink>
+              </p>
+            )
+          }
+        </div>
+      </StyledWrapper>
+    )
+    : null
 })

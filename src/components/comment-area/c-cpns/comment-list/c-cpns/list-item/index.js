@@ -11,7 +11,7 @@ export default memo(function CommentList(props) {
   /**
    * props and state
    */
-  const { cpnData = {} } = props
+  const { commentInfo } = props
 
   /**
    * render logic
@@ -19,69 +19,71 @@ export default memo(function CommentList(props) {
   const nowTime = new Date().getTime()
   const limitTime = 7 * 24 * 60 * 60 * 1000
 
-  return Object.keys(cpnData).length > 0 && (
-    <StyledWrapper className="cpn-list-item">
-      <div className="avater">
-        <NavLink to={`/user/home?id=${cpnData.user.userId}`}>
-          <img src={cpnData.user.avatarUrl} alt="" />
-        </NavLink>
-      </div>
-      <div className="main">
-        <div className="top">
-          <NavLink className="user" to={`/user/home?id=${cpnData.user.userId}`}>{cpnData.user.nickname}</NavLink>
+  return commentInfo
+    ? (
+      <StyledWrapper className="cpn-list-item">
+        <div className="avater">
+          <NavLink to={`/user/home?id=${commentInfo.user.userId}`}>
+            <img src={commentInfo.user.avatarUrl} alt="" />
+          </NavLink>
+        </div>
+        <div className="main">
+          <div className="top">
+            <NavLink className="user" to={`/user/home?id=${commentInfo.user.userId}`}>{commentInfo.user.nickname}</NavLink>
+            {
+              commentInfo.user.vipRights && commentInfo.user.vipRights.redVipLevel >= 1 && commentInfo.user.vipRights.redVipLevel <= 7 && (
+                <i className={`vip vip-${commentInfo.user.vipRights.redVipLevel}`}></i>
+              )
+            }
+            <span className="text">
+              ：
+            {
+                matchText(commentInfo.content, wrapMatcher, atMatcher, emojiMatcher).map((itemX, indeX) => {
+                  return (
+                    <Fragment key={indeX}>{itemX}</Fragment>
+                  )
+                })
+              }
+            </span>
+          </div>
           {
-            cpnData.user.vipRights && cpnData.user.vipRights.redVipLevel >= 1 && cpnData.user.vipRights.redVipLevel <= 7 && (
-              <i className={`vip vip-${cpnData.user.vipRights.redVipLevel}`}></i>
+            commentInfo.beReplied && commentInfo.beReplied[0] && (
+              <div className="mid">
+                <NavLink className="user" to={`/user/home?id=${commentInfo.beReplied[0].user.userId}`}>{commentInfo.beReplied[0].user.nickname}</NavLink>
+                <span className="text">
+                  ：
+                {
+                    matchText(commentInfo.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher).map((itemY, indeY) => {
+                      return (
+                        <Fragment key={indeY}>{itemY}</Fragment>
+                      )
+                    })
+                  }
+                </span>
+              </div>
             )
           }
-          <span className="text">
-            ：
+          <div className="bottom">
             {
-              matchText(cpnData.content, wrapMatcher, atMatcher, emojiMatcher).map((itemX, indeX) => {
-                return (
-                  <Fragment key={indeX}>{itemX}</Fragment>
+              (nowTime - commentInfo.time) < limitTime
+                ? (
+                  <div className="time">{formatDate(commentInfo.time, 'MM月dd日 hh:mm')}</div>
                 )
-              })
+                : (
+                  <div className="time">{formatDate(commentInfo.time, 'yyyy年MM月dd日')}</div>
+                )
             }
-          </span>
-        </div>
-        {
-          cpnData.beReplied && cpnData.beReplied[0] && (
-            <div className="mid">
-              <NavLink className="user" to={`/user/home?id=${cpnData.beReplied[0].user.userId}`}>{cpnData.beReplied[0].user.nickname}</NavLink>
-              <span className="text">
-                ：
-                {
-                  matchText(cpnData.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher).map((itemY, indeY) => {
-                    return (
-                      <Fragment key={indeY}>{itemY}</Fragment>
-                    )
-                  })
-                }
-              </span>
-            </div>
-          )
-        }
-        <div className="bottom">
-          {
-            (nowTime - cpnData.time) < limitTime
-              ? (
-                <div className="time">{formatDate(cpnData.time, 'MM月dd日 hh:mm')}</div>
-              )
-              : (
-                <div className="time">{formatDate(cpnData.time, 'yyyy年MM月dd日')}</div>
-              )
-          }
-          <div className="operation">
-            <span className="like">
-              <i className="sprite_icon3 like-icon"></i>
-              ({cpnData.likedCount})
+            <div className="operation">
+              <span className="like">
+                <i className="sprite_icon3 like-icon"></i>
+              ({commentInfo.likedCount})
             </span>
-            <span className="divide">|</span>
-            <span className="reply">回复</span>
+              <span className="divide">|</span>
+              <span className="reply">回复</span>
+            </div>
           </div>
         </div>
-      </div>
-    </StyledWrapper>
-  )
+      </StyledWrapper>
+    )
+    : null
 })

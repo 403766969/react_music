@@ -10,55 +10,54 @@ export default memo(function AreaList(props) {
   /**
    * props and state
    */
-  const { cpnData = [] } = props
-
   const { isShowHeader = true, showCoverCount = 0 } = props
 
   const { order, name, duration, artist, album } = props
 
+  const { songList } = props
+
   /**
    * render logic
    */
-  const orderText = order && order.text
-  const nameText = name && name.text
-  const durationText = duration && duration.text
-  const artistText = artist && artist.text
-  const albumText = album && album.text
+  const orderConfig = order
+    ? {
+      text: (order.text !== undefined && order.text !== null) ? order.text : '',
+      flex: order.flex || 'none',
+      width: order.width || '45px'
+    }
+    : null
 
-  const orderConfig = {
-    isShow: order ? true : false,
-    text: (orderText !== undefined && orderText !== null) ? orderText : '',
-    flex: (order && order.flex) || 'none',
-    width: (order && order.width) || '45px'
-  }
+  const nameConfig = name
+    ? {
+      text: (name.text !== undefined && name.text !== null) ? name.text : '标题',
+      flex: name.flex || '1',
+      width: name.width || '0'
+    }
+    : null
 
-  const nameConfig = {
-    isShow: name ? true : false,
-    text: (nameText !== undefined && nameText !== null) ? nameText : '标题',
-    flex: (name && name.flex) || '1',
-    width: (name && name.width) || '0'
-  }
+  const durationConfig = duration
+    ? {
+      text: (duration.text !== undefined && duration.text !== null) ? duration.text : '时长',
+      flex: duration.flex || 'none',
+      width: duration.width || '90px'
+    }
+    : null
 
-  const durationConfig = {
-    isShow: duration ? true : false,
-    text: (durationText !== undefined && durationText !== null) ? durationText : '时长',
-    flex: (duration && duration.flex) || 'none',
-    width: (duration && duration.width) || '90px'
-  }
+  const artistConfig = artist
+    ? {
+      text: (artist.text !== undefined && artist.text !== null) ? artist.text : '歌手',
+      flex: artist.flex || 'none',
+      width: artist.width || '110px'
+    }
+    : null
 
-  const artistConfig = {
-    isShow: artist ? true : false,
-    text: (artistText !== undefined && artistText !== null) ? artistText : '歌手',
-    flex: (artist && artist.flex) || 'none',
-    width: (artist && artist.width) || '110px'
-  }
-
-  const albumConfig = {
-    isShow: album ? true : false,
-    text: (albumText !== undefined && albumText !== null) ? albumText : '专辑',
-    flex: (album && album.flex) || 'none',
-    width: (album && album.width) || '110px'
-  }
+  const albumConfig = album
+    ? {
+      text: (album.text !== undefined && album.text !== null) ? album.text : '专辑',
+      flex: album.flex || 'none',
+      width: album.width || '110px'
+    }
+    : null
 
   return (
     <StyledWrapper
@@ -80,10 +79,10 @@ export default memo(function AreaList(props) {
       }
       <ul className="list-content">
         {
-          cpnData.map((item, index) => {
+          songList && songList.map((item, index) => {
             return (
               <ListItem
-                key={item.id} index={index} cpnData={item}
+                key={item.id} index={index} songInfo={item}
                 showCoverCount={showCoverCount}
                 orderConfig={orderConfig}
                 nameConfig={nameConfig}

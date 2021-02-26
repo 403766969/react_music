@@ -50,20 +50,21 @@ export const StyleWrapper = styled.div`
     margin-left: 20px;
 
     .header {
-      display: flex;
-      align-items: center;
-      height: 32px;
-      line-height: 32px;
+      position: relative;
+      padding-left: 64px;
       
       i {
-        display: inline-block;
+        display: block;
+        position: absolute;
+        top: 4px;
+        left: 0;
         width: 54px;
         height: 24px;
         background-position: 0 -463px;
       }
 
       .title {
-        margin-left: 10px;
+        line-height: 32px;
         font-size: 24px;
         font-weight: 400;
       }
@@ -76,7 +77,7 @@ export const StyleWrapper = styled.div`
     }
 
     .singer {
-      .cpn-artists-divide {
+      .cpn-artist-divide {
         color: #0c73c2;
       }
     }

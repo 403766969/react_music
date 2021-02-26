@@ -5,58 +5,62 @@ import * as songsheetApi from '@/services/songsheetApi'
 /**
  * 操作state
  */
-export const set_catList = catList => ({
-  type: actionTypes.SET_CAT_LIST,
-  catList: catList
+export const merge_state = state => ({
+  type: actionTypes.MERGE_STATE,
+  state: state
 })
 
-export const set_currentSub = currentSub => ({
-  type: actionTypes.SET_CURRENT_SUB,
-  currentSub: currentSub
+export const clear_state = () => ({
+  type: actionTypes.CLEAR_STATE
 })
 
-export const set_songsheetData = songsheetData => ({
-  type: actionTypes.SET_SONGSHEET_DATA,
-  songsheetData: songsheetData
+export const set_catSubList = catSubList => ({
+  type: actionTypes.SET_CAT_SUB_LIST,
+  catSubList: catSubList
+})
+
+export const set_songsheetList = songsheetList => ({
+  type: actionTypes.SET_SONGSHEET_LIST,
+  songsheetList: songsheetList
+})
+
+export const set_songsheetCount = songsheetCount => ({
+  type: actionTypes.SET_SONGSHEET_COUNT,
+  songsheetCount: songsheetCount
 })
 
 /**
  * 异步请求
  */
 // 歌单分类
-export const get_catList = sub => {
+export const get_catSubList = () => {
   return async dispatch => {
     const res = await songsheetApi.get_playlist_catlist()
-    if (!res || !res.categories || !res.sub) {
-      return
-    }
-    const catlist = []
-    Object.entries(res.categories).forEach(([key, value]) => {
-      catlist[key] = {
-        name: value,
-        subs: []
+    const catSubList = []
+    if (res && res.categories && res.sub) {
+      Object.entries(res.categories).forEach(([key, value]) => {
+        catSubList[key] = {
+          name: value,
+          subs: []
+        }
+      })
+      for (let item of res.sub) {
+        catSubList[item.category].subs.push(item.name)
       }
-    })
-    let targetSub = '全部'
-    for (let item of res.sub) {
-      catlist[item.category].subs.push(item.name)
-      if (item.name === sub) {
-        targetSub = item.name
-      }
+      dispatch(set_catSubList(catSubList))
     }
-    dispatch(set_catList(catlist))
-    dispatch(set_currentSub(targetSub))
-    dispatch(get_songsheetData(0, 35))
   }
 }
 
 // 歌单列表
-export const get_songsheetData = (offset = 0, limit = 35, order = 'hot') => {
-  return async (dispatch, getState) => {
-    const sub = getState().getIn(['discover/songsheet', 'currentSub'])
-    const res = await songsheetApi.get_top_playlist(sub, offset, limit, order)
-    if (res) {
-      dispatch(set_songsheetData(res))
+export const get_songsheetList = (sub = '全部', order = 'hot', offset = 0, limit = 35) => {
+  return async dispatch => {
+    const res = await songsheetApi.get_top_playlist(sub, order, offset, limit)
+    if (res && res.playlists) {
+      dispatch(set_songsheetList(res.playlists))
+    }
+    if (res && res.total) {
+      dispatch(set_songsheetCount(res.total))
     }
   }
 }

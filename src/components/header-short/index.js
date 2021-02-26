@@ -8,13 +8,13 @@ export default memo(function HeaderShort(props) {
   /**
    * props and state
    */
-  const { title = '', more = {} } = props
+  const { title, more } = props
 
   return (
     <StyleWrapper className="cpn-header-short">
       <h3>{title}</h3>
       {
-        more.link && more.text && (
+        more && (
           <NavLink to={more.link}>{more.text} &gt;</NavLink>
         )
       }

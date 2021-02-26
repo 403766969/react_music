@@ -5,28 +5,28 @@ export const StyledWrapper = styled.div`
 
   .cpn-list-header, .cpn-list-item {
     .order {
-      flex: ${props => props.orderConfig.flex};
-      width: ${props => props.orderConfig.width};
+      flex: ${props => props.orderConfig ? props.orderConfig.flex : 'none'};
+      width: ${props => props.orderConfig ? props.orderConfig.width : '45px'};
     }
 
     .name {
-      flex: ${props => props.nameConfig.flex};
-      width: ${props => props.nameConfig.width};
+      flex: ${props => props.nameConfig ? props.nameConfig.flex : '1'};
+      width: ${props => props.nameConfig ? props.nameConfig.width : '0'};
     }
 
     .duration {
-      flex: ${props => props.durationConfig.flex};
-      width: ${props => props.durationConfig.width};
+      flex: ${props => props.durationConfig ? props.durationConfig.flex : 'none'};
+      width: ${props => props.durationConfig ? props.durationConfig.width : '90px'};
     }
 
     .artist {
-      flex: ${props => props.artistConfig.flex};
-      width: ${props => props.artistConfig.width};
+      flex: ${props => props.artistConfig ? props.artistConfig.flex : 'none'};
+      width: ${props => props.artistConfig ? props.artistConfig.width : '110px'};
     }
 
     .album {
-      flex: ${props => props.albumConfig.flex};
-      width: ${props => props.albumConfig.width};
+      flex: ${props => props.albumConfig ? props.albumConfig.flex : 'none'};
+      width: ${props => props.albumConfig ? props.albumConfig.width : '110px'};
     }
   }
 `

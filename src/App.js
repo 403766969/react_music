@@ -13,6 +13,7 @@ import '@/assets/css/base.css'
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
 import BackTop from '@/components/back-top'
+import DocumentTitle from '@/components/document-title'
 
 import Player from '@/pages/player'
 
@@ -26,6 +27,7 @@ export default memo(function App() {
         </Suspense>
         <AppFooter />
         <BackTop />
+        <DocumentTitle />
         <Player />
       </Provider>
     </HashRouter>

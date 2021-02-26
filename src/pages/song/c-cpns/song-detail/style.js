@@ -79,6 +79,10 @@ export const StyleWrapper = styled.div`
     .singer {
       .cpn-artist-divide {
         color: #0c73c2;
+
+        span {
+          color: #333;
+        }
       }
     }
 

@@ -47,6 +47,7 @@ export default memo(function Songsheet(props) {
 
   useEffect(() => {
     dispatch(actions.get_songsheetList(currentSub, currentOrder, (currentPage - 1) * 35, 35))
+    window.scrollTo(0, 0)
     return () => {
       dispatch(actions.merge_state({
         songsheetList: [],
@@ -64,7 +65,6 @@ export default memo(function Songsheet(props) {
 
   const handlePageChange = useCallback(page => {
     history.push(`/discover/songsheet?sub=${currentSub}&order=${currentOrder}&page=${page}`)
-    window.scrollTo(0, 140)
   }, [history, currentSub, currentOrder])
 
   return (

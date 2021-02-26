@@ -28,8 +28,12 @@ export default memo(function ArtistDivide(props) {
       {
         artistList && artistList.map((item, index) => {
           return (
-            <Fragment key={item.id + index}>
-              <NavLink to={`/artist?id=${item.id}`}>{item.name}</NavLink>
+            <Fragment key={item.id + item.name}>
+              {
+                item.id !== 0
+                  ? <NavLink to={`/artist?id=${item.id}`}>{item.name}</NavLink>
+                  : <span>{item.name}</span>
+              }
               {
                 index < divideCount && (
                   <i>{divide}</i>

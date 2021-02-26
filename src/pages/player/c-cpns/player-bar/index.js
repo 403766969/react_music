@@ -43,7 +43,7 @@ export default memo(function PlayerBar() {
   const [currentTime, setCurrentTime] = useState(0)
   const [progessValue, setProgessValue] = useState(0)
 
-  const [playerId, setPlayerId] = useState('')
+  const [playerId, setPlayerId] = useState(null)
 
   /**
    * redux hooks
@@ -88,10 +88,10 @@ export default memo(function PlayerBar() {
   const audioPlay = useCallback(() => {
     audioRef.current.play()
       .then(() => {
-        dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_PLAY))
         const newPlayerId = new Date().getTime().toString()
         window.localStorage.setItem('playerId', newPlayerId)
         setPlayerId(newPlayerId)
+        dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_PLAY))
       })
       .catch(() => {
         audioPause()
@@ -107,6 +107,7 @@ export default memo(function PlayerBar() {
 
   // 当前歌曲改变时
   useEffect(() => {
+    setPlayerId(window.localStorage.getItem('playerId'))
     audioPause()
     backZero()
     if (currentSong) {
@@ -114,7 +115,7 @@ export default memo(function PlayerBar() {
       setDuration(currentSong.dt)
       audioPlay()
     } else {
-      audioRef.current.src = ``
+      audioRef.current.src = ''
       setDuration(0)
       dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_IDLE))
     }
@@ -265,7 +266,7 @@ export default memo(function PlayerBar() {
   // 进度条随时间改变
   const handleTimeUpdate = e => {
     const s_playerId = window.localStorage.getItem('playerId')
-    if (playerId !== s_playerId) {
+    if (s_playerId && s_playerId !== playerId) {
       audioPause()
       return
     }

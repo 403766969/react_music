@@ -43,6 +43,8 @@ export default memo(function PlayerBar() {
   const [currentTime, setCurrentTime] = useState(0)
   const [progessValue, setProgessValue] = useState(0)
 
+  const [playerId, setPlayerId] = useState('')
+
   /**
    * redux hooks
    */
@@ -87,6 +89,9 @@ export default memo(function PlayerBar() {
     audioRef.current.play()
       .then(() => {
         dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_PLAY))
+        const newPlayerId = new Date().getTime().toString()
+        window.localStorage.setItem('playerId', newPlayerId)
+        setPlayerId(newPlayerId)
       })
       .catch(() => {
         audioPause()
@@ -259,6 +264,12 @@ export default memo(function PlayerBar() {
 
   // 进度条随时间改变
   const handleTimeUpdate = e => {
+    const s_playerId = window.localStorage.getItem('playerId')
+    if (playerId !== s_playerId) {
+      audioPause()
+      return
+    }
+
     const audio_currentTime = e.target.currentTime * 1000
     if (!isDragging) {
       setCurrentTime(audio_currentTime)

@@ -77,7 +77,7 @@ export default memo(function Songsheet(props) {
   }, [dispatch, songsheetId])
 
   return (
-    <StyledWrapper className="page-songsheet wrap-min-width">
+    <StyledWrapper className="page-songsheet">
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">

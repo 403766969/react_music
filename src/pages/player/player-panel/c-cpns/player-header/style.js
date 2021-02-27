@@ -4,6 +4,7 @@ export const StyledWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 41px;
   background: url(${require('@/assets/img/playpanel_bg.png').default}) no-repeat;
   background-position: -2px 0;
@@ -31,7 +32,6 @@ export const StyledWrapper = styled.div`
         margin: 0;
         padding: 0;
         color: #ccc;
-        font-size: 12px;
         background-color: transparent;
         cursor: pointer;
 
@@ -51,6 +51,19 @@ export const StyledWrapper = styled.div`
           width: 13px;
           height: 16px;
           background-position: -51px 0;
+        }
+
+        &:hover {
+          text-decoration: underline;
+          color: #e2e2e2;
+
+          .favor {
+            background-position: -24px -20px;
+          }
+
+          .clear {
+            background-position: -51px -20px;
+          }
         }
       }
 

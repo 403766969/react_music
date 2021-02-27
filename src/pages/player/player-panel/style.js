@@ -1,17 +1,11 @@
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
-  position: absolute;
-  left: 50%;
-  bottom: 47px;
-  width: 982px;
-  height: 301px;
-  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
 
   &>.content {
     display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     height: 260px;
     background: url(${require('@/assets/img/playpanel_bg.png').default}) repeat-y;
@@ -31,9 +25,10 @@ export const StyledWrapper = styled.div`
     }
 
     &>.right {
-      position: relative;
       flex: 1;
+      position: relative;
       padding: 21px 41px 21px 35px;
+      width: 0;
       height: 100%;
 
       .cpn-scroll-bar {

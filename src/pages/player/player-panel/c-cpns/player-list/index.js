@@ -1,47 +1,35 @@
 import React, { memo } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { formatDate } from '@/utils/formatter'
-
-import * as actions from '../../../../store/acitonCreators'
 
 import ArtistDivide from '@/components/artist-divide'
 
 import { StyledWrapper } from './style'
 
-export default memo(function PlayList(props) {
+export default memo(function PlayerList(props) {
 
   /**
    * props and state
    */
-  const { songList, currentIndex } = props
-
-  /**
-   * redux hooks
-   */
-  const dispatch = useDispatch()
+  const { dispatch, actions, songList, currentIndex } = props
 
   /**
    * other logic
    */
-  const handleItemClick = index => {
-    dispatch(actions.toggle_song(index))
-  }
-
   const hadleRemoveClick = (index, e) => {
     e.stopPropagation()
     dispatch(actions.remove_song(index))
   }
 
   return (
-    <StyledWrapper className="cpn-play-list">
+    <StyledWrapper className="cpn-player-list">
       {
         songList && songList.map((item, index) => {
           return (
             <li
               key={item.id}
-              className={`play-item ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => handleItemClick(index)}>
+              className={`list-item ${index === currentIndex ? 'active' : ''}`}
+              onClick={() => dispatch(actions.toggle_song(index))}>
               <div className="left">
                 <div className="song text-nowrap">
                   {item.name}

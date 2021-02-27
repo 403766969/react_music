@@ -2,7 +2,7 @@ import React, { memo, forwardRef } from 'react'
 
 import { StyledWrapper } from './style'
 
-export default memo(forwardRef(function LyricDisplay(props, ref) {
+export default memo(forwardRef(function PlayerLyric(props, ref) {
 
   /**
    * props and state
@@ -10,7 +10,7 @@ export default memo(forwardRef(function LyricDisplay(props, ref) {
   const { currentLyric, currentRow } = props
 
   return (
-    <StyledWrapper className="cpn-lyric-display" ref={ref}>
+    <StyledWrapper className="cpn-player-lyric" ref={ref}>
       {
         currentLyric && currentLyric.lyric && currentLyric.lyric.map((item, index) => {
           return (

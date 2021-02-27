@@ -4,7 +4,7 @@ import { StyledWrapper } from './style'
 
 export default memo(function My() {
   return (
-    <StyledWrapper className="page-my wrap-min-width">
+    <StyledWrapper className="page-my">
       <h2>My</h2>
     </StyledWrapper>
   )

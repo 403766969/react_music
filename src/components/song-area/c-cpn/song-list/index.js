@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { useSelector } from 'react-redux'
 
 import ListHeader from './c-cpn/list-header'
 import ListItem from './c-cpn/list-item'
@@ -15,6 +16,19 @@ export default memo(function AreaList(props) {
   const { order, name, duration, artist, album } = props
 
   const { songList } = props
+
+  /**
+   * redux hooks
+   */
+  const {
+    player_songList,
+    player_currentIndex
+  } = useSelector(state => ({
+    player_songList: state.getIn(['player', 'songList']),
+    player_currentIndex: state.getIn(['player', 'currentIndex'])
+  }))
+
+  const currentSongId = player_songList && player_songList[player_currentIndex] && player_songList[player_currentIndex].id
 
   /**
    * render logic
@@ -82,7 +96,7 @@ export default memo(function AreaList(props) {
           songList && songList.map((item, index) => {
             return (
               <ListItem
-                key={item.id} index={index} songInfo={item}
+                key={item.id} index={index} songInfo={item} active={item.id === currentSongId}
                 showCoverCount={showCoverCount}
                 orderConfig={orderConfig}
                 nameConfig={nameConfig}

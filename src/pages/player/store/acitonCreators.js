@@ -9,10 +9,18 @@ import axios from 'axios'
 /**
  * 操作state
  */
-export const merge_state = state => ({
-  type: actionTypes.MERGE_STATE,
-  state: state
-})
+export const merge_state = state => {
+  if (state.songList) {
+    window.localStorage.setItem('songList', JSON.stringify(state.songList))
+  }
+  if (state.currentIndex) {
+    window.localStorage.setItem('currentIndex', state.currentIndex)
+  }
+  return {
+    type: actionTypes.MERGE_STATE,
+    state: state
+  }
+}
 
 export const clear_state = () => ({
   type: actionTypes.CLEAR_STATE

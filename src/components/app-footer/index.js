@@ -6,7 +6,7 @@ import { StyledWrapper } from './style'
 
 export default memo(function AppFooter() {
   return (
-    <StyledWrapper className="cpn-app-footer wrap-min-width">
+    <StyledWrapper className="cpn-app-footer">
       <div className="wrap-v2 content">
         <div className="left">
           <div className="link">

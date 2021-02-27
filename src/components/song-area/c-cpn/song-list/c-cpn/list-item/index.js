@@ -15,7 +15,7 @@ export default memo(function ListItem(props) {
   /**
    * props and state
    */
-  const { index, songInfo } = props
+  const { index, songInfo, active } = props
 
   const { showCoverCount } = props
 
@@ -77,7 +77,7 @@ export default memo(function ListItem(props) {
                     </NavLink>
                   )
                 }
-                <i className="sprite_table play-btn" onClick={handlePlayClick}></i>
+                <i className={`sprite_table play-btn ${active ? 'active' : ''}`} onClick={handlePlayClick}></i>
                 <div className="song-info">
                   <div className="song-text text-nowrap">
                     <NavLink className="song-name" to={`/song?id=${songInfo.id}`} title={songInfo.name + tnsAndAlia}>

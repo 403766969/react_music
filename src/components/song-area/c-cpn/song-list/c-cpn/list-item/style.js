@@ -62,6 +62,10 @@ export const StyledWrapper = styled.li`
       &:hover {
         background-position: 0 -128px;
       }
+
+      &.active {
+        background-position: -20px -128px;
+      }
     }
 
     .song-info {

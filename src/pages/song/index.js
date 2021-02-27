@@ -78,7 +78,7 @@ export default memo(function Song(props) {
   }, [dispatch, songId])
 
   return (
-    <StyleWrapper className="page-song wrap-min-width">
+    <StyleWrapper className="page-song">
       <ChannelBar />
       <div className="content wrap-v2">
         <div className="left">

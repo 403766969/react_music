@@ -7,7 +7,6 @@ export const StyledWrapper = styled.div`
     width: 100%;
     min-height: 32px;
     line-height: 32px;
-    font-size: 12px;
     color: #989898;
     text-align: center;
     transition: color 0.7s linear;

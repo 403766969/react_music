@@ -68,7 +68,7 @@ export default memo(function Songsheet(props) {
   }, [history, currentSub, currentOrder])
 
   return (
-    <StyledWrapper className="page-discover-songsheet wrap-v2">
+    <StyledWrapper className="page-discover-songsheet wrap-v3">
       <div className="header">
         <CatSub catSubList={r_catSubList} currentSub={currentSub} onSubClick={handleSubClick} />
         <div className="hot sprite_button2">

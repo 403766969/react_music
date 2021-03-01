@@ -49,7 +49,7 @@ export default memo(function DiscoverRecomd() {
   return (
     <StyledWrapper className="page-discover-recomd">
       <TopBanner bannerList={r_topBannerList} />
-      <div className="content wrap-v2">
+      <div className="content wrap-v3">
         <div className="left">
           <HotRecomd recomdList={r_hotRecomdList} />
           <NewAlbum albumList={r_newAlbumList} />

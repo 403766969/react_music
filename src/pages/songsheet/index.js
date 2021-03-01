@@ -79,7 +79,7 @@ export default memo(function Songsheet(props) {
   return (
     <StyledWrapper className="page-songsheet">
       <ChannelBar />
-      <div className="content wrap-v2">
+      <div className="content wrap-v3">
         <div className="left">
           <SongsheetDetail songsheetDetail={r_songsheetDetail} songList={r_songList} />
           <SongArea

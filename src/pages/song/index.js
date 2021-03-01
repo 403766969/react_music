@@ -80,7 +80,7 @@ export default memo(function Song(props) {
   return (
     <StyleWrapper className="page-song">
       <ChannelBar />
-      <div className="content wrap-v2">
+      <div className="content wrap-v3">
         <div className="left">
           <SongDetail songDetail={r_songDetail} songLyric={r_songLyric} commentCount={r_newCommentCount} />
           <div className="song-comment" ref={commentRef}>

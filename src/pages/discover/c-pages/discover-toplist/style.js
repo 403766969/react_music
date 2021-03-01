@@ -9,7 +9,7 @@ export const StyledWrapper = styled.div`
   border-width: 0 1px;
 
   &>.left {
-    width: 239px;
+    width: 240px;
 
     .cpn-chart-list:nth-child(1) {
       margin-top: 40px;
@@ -23,6 +23,7 @@ export const StyledWrapper = styled.div`
   &>.right {
     flex: 1;
     position: relative;
+    margin-left: 1px;
     padding: 40px;
     width: 0;
 

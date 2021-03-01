@@ -6,13 +6,14 @@ const My = lazy(() => import('@/pages/my'))
 const Friend = lazy(() => import('@/pages/friend'))
 const Song = lazy(() => import('@/pages/song'))
 const Songsheet = lazy(() => import('@/pages/songsheet'))
+const Artist = lazy(() => import('@/pages/artist'))
 
-const DiscoverRecomd = lazy(() => import('@/pages/c-pages/discover-recomd'))
-const DiscoverToplist = lazy(() => import('@/pages/c-pages/discover-toplist'))
-const DiscoverSongsheet = lazy(() => import('@/pages/c-pages/discover-songsheet'))
-const DiscoverDjradio = lazy(() => import('@/pages/c-pages/discover-djradio'))
-const DiscoverArtist = lazy(() => import('@/pages/c-pages/discover-artist'))
-const DiscoverAlbum = lazy(() => import('@/pages/c-pages/discover-album'))
+const DiscoverRecomd = lazy(() => import('@/pages/discover/c-pages/discover-recomd'))
+const DiscoverToplist = lazy(() => import('@/pages/discover/c-pages/discover-toplist'))
+const DiscoverSongsheet = lazy(() => import('@/pages/discover/c-pages/discover-songsheet'))
+const DiscoverDjradio = lazy(() => import('@/pages/discover/c-pages/discover-djradio'))
+const DiscoverArtist = lazy(() => import('@/pages/discover/c-pages/discover-artist'))
+const DiscoverAlbum = lazy(() => import('@/pages/discover/c-pages/discover-album'))
 
 const routes = [
   {
@@ -74,6 +75,10 @@ const routes = [
   {
     path: '/songsheet',
     component: Songsheet
+  },
+  {
+    path: '/artist',
+    component: Artist
   }
 ]
 

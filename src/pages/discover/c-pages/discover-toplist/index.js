@@ -86,7 +86,7 @@ export default memo(function DiscoverToplist(props) {
   }, [dispatch, currentChartId])
 
   return (
-    <StyledWrapper className="page-discover-toplist wrap-v2">
+    <StyledWrapper className="page-discover-toplist wrap-v3">
       <div className="left">
         <ChartList title="云音乐特色榜" chartList={r_chartList.slice(0, 4)} currentChartId={currentChartId} />
         <ChartList title="全球媒体榜" chartList={r_chartList.slice(4, r_chartList.length)} currentChartId={currentChartId} />

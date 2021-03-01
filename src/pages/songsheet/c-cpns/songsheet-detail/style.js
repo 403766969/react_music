@@ -4,8 +4,9 @@ export const StyledWrapper = styled.div`
   display: flex;
 
   &>.cover {
+    flex: 1;
     position: relative;
-    width: 230px;
+    width: 0;
 
     img {
       width: 200px;

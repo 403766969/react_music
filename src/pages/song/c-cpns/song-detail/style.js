@@ -53,7 +53,7 @@ export const StyleWrapper = styled.div`
       position: relative;
       padding-left: 64px;
       
-      i {
+      .icon-tag {
         display: block;
         position: absolute;
         top: 4px;
@@ -67,6 +67,21 @@ export const StyleWrapper = styled.div`
         line-height: 32px;
         font-size: 24px;
         font-weight: 400;
+
+        .icon-mv {
+          display: inline-block;
+          margin-left: 10px;
+          width: 21px;
+          height: 18px;
+          background-position: 0 -18px;
+          vertical-align: middle;
+        }
+      }
+
+      .tna {
+        margin: 1px 0 5px 0;
+        font-size: 14px;
+        color: #bababa;
       }
     }
 

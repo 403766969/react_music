@@ -36,6 +36,17 @@ export default memo(function SongDetail(props) {
     dispatch(playerActions.add_simpleSong_with_songObject(songDetail, false))
   }, [dispatch, songDetail])
 
+  /**
+   * render logic
+   */
+  let tnsAndAlia = ''
+  if (songDetail) {
+    const tns = songDetail.tns || []
+    const alia = songDetail.alia || []
+    const temp = [...tns, ...alia]
+    tnsAndAlia = temp.join(' / ')
+  }
+
   return songDetail
     ? (
       <StyleWrapper className="cpn-song-detail">
@@ -52,8 +63,24 @@ export default memo(function SongDetail(props) {
           </div>
           <div className="right">
             <div className="header">
-              <i className="sprite_icon2"></i>
-              <h3 className="title">{songDetail.name}</h3>
+              <i className="sprite_icon2 icon-tag"></i>
+              <h3 className="title">
+                <span>{songDetail.name}</span>
+                {
+                  songDetail.mv !== 0 && (
+                    <NavLink className="song-mv" to={`/mv?id=${songDetail.mv}`} title="播放mv">
+                      <i className="sprite_icon2 icon-mv"></i>
+                    </NavLink>
+                  )
+                }
+              </h3>
+              {
+                tnsAndAlia !== '' && (
+                  <p className="tna">
+                    <span>{tnsAndAlia}</span>
+                  </p>
+                )
+              }
             </div>
             <div className="singer">
               <span className="label">歌手：</span>

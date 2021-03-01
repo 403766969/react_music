@@ -68,9 +68,9 @@ export const get_hotRecomdList = (limit = 8) => {
 }
 
 // 新碟上架
-export const get_newAlbumList = (limit = 10, offset = 0) => {
+export const get_newAlbumList = (offset = 0, limit = 10) => {
   return async dispatch => {
-    const res = await albumApi.get_top_album(limit, offset)
+    const res = await albumApi.get_top_album(offset, limit)
     if (res && res.albums) {
       dispatch(set_newAlbumList(res.albums))
     }
@@ -120,9 +120,9 @@ export const get_rankMultiList = (rankCount = 3) => {
 }
 
 // 热门歌手
-export const get_hotArtistList = (limit = 5, offset = 0) => {
+export const get_hotArtistList = (offset = 0, limit = 5) => {
   return async dispatch => {
-    const res = await artistApi.get_top_artists(limit, offset)
+    const res = await artistApi.get_top_artists(offset, limit)
     if (res && res.artists) {
       dispatch(set_hotArtistList(res.artists))
     }

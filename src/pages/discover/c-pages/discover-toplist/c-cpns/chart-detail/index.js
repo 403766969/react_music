@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
-import * as playerActions from '@/pages/player/store/acitonCreators'
+import * as playerActions from '@/pages/player/store/actionCreators'
 
 import OperationBar from '@/components/operation-bar'
 

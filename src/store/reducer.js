@@ -7,6 +7,7 @@ import { reducer as DiscoverSongsheet_Reducer } from '@/pages/discover/c-pages/d
 
 import { reducer as Song_Reducer } from '@/pages/song/store'
 import { reducer as Songsheet_Reducer } from '@/pages/songsheet/store'
+import { reducer as Artist_Reducer } from '@/pages/artist/store'
 import { reducer as Player_Reducer } from '@/pages/player/store'
 
 const reducer = combineReducers({
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   'discover/songsheet': DiscoverSongsheet_Reducer,
   'song': Song_Reducer,
   'songsheet': Songsheet_Reducer,
+  'artist': Artist_Reducer,
   'player': Player_Reducer
 })
 

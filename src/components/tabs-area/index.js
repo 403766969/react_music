@@ -33,7 +33,7 @@ export default memo(function TabsArea(props) {
         {
           React.Children.map(children, item => {
             if (item.key === activeKey) {
-              return item
+              return item.props.children
             } else {
               return null
             }

@@ -4,7 +4,7 @@ import { NavLink, useHistory } from 'react-router-dom'
 
 import { formatUrlWithSize, formatCount } from '@/utils/formatter'
 
-import * as playerAction from '@/pages/player/store/acitonCreators'
+import * as playerAction from '@/pages/player/store/actionCreators'
 
 import { StyledWrapper } from './style'
 

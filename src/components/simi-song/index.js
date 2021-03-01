@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import * as playerActions from '@/pages/player/store/acitonCreators'
+import * as playerActions from '@/pages/player/store/actionCreators'
 
 import HeaderShort from '@/components/header-short'
 import ArtistDivide from '@/components/artist-divide'

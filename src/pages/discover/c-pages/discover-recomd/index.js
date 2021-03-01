@@ -40,9 +40,9 @@ export default memo(function DiscoverRecomd() {
   useEffect(() => {
     dispatch(actions.get_topBannerList())
     dispatch(actions.get_hotRecomdList(8))
-    dispatch(actions.get_newAlbumList(10, 0))
+    dispatch(actions.get_newAlbumList(0, 10))
     dispatch(actions.get_rankMultiList(3))
-    dispatch(actions.get_hotArtistList(5, 0))
+    dispatch(actions.get_hotArtistList(0, 5))
     window.scrollTo(0, 0)
   }, [dispatch])
 

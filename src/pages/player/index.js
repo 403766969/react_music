@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import * as actions from './store/acitonCreators'
+import * as actions from './store/actionCreators'
 
 import PlayerBar from './player-bar'
 import PlayerPanel from './player-panel'

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
 
-import * as playerAction from '@/pages/player/store/acitonCreators'
+import * as playerAction from '@/pages/player/store/actionCreators'
 
 import ArtistDivide from '@/components/artist-divide'
 

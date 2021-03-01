@@ -16,17 +16,10 @@ export const StyledWrapper = styled.div`
       width: 140px;
       height: 39px;
       line-height: 37px;
+      font-size: 14px;
       text-align: center;
       background: url(${require('@/assets/img/tab.png').default}) 0 9999px no-repeat;
       cursor: pointer;
-
-      &:first-child {
-        margin-left: -1px;
-      }
-
-      &:last-child {
-        margin-right: -1px;
-      }
 
       &:hover {
         background-position: -5px -45px;

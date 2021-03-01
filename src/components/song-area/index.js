@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 
-import AreaHeader from './c-cpn/area-header'
-import SongList from './c-cpn/song-list'
+import AreaHeader from './c-cpns/area-header'
+import SongList from './c-cpns/song-list'
 
 import { StyledWrapper } from './style'
 

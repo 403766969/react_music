@@ -1,7 +1,7 @@
 import React, { memo, useState, useRef, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import * as actions from '../store/acitonCreators'
+import * as actions from '../store/actionCreators'
 
 import ScrollContainer from '@/components/scroll-container'
 import ScrollBar from '@/components/scroll-bar'

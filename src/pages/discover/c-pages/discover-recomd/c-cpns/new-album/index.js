@@ -32,7 +32,7 @@ export default memo(function NewAlbum(props) {
                     {
                       albumList && albumList.slice(page * 5, (page + 1) * 5).map(item => {
                         return (
-                          <AlbumCover key={item.id} albumInfo={item} />
+                          <AlbumCover key={item.id} albumInfo={item} name artist />
                         )
                       })
                     }

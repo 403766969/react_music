@@ -3,7 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import { audioStatusTypes, playerModeTypes } from '@/common/constants'
 
-import * as actions from '../store/acitonCreators'
+import * as actions from '../store/actionCreators'
 
 import PlayerControl from './c-cpns/player-control'
 import PlayerContent from './c-cpns/player-content'

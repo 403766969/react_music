@@ -1,5 +1,5 @@
-export function formatUrlWithSize(url, width = 0, height = width) {
-  return `${url}?param=${width}x${height}`
+export function formatUrlWithSize(url, width = 0, height = width, direction = 'x') {
+  return `${url}?param=${width}${direction}${height}`
 }
 
 export function formatCount(count, isInt = false) {

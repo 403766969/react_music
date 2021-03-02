@@ -181,7 +181,6 @@ export default memo(function PlayerBar(props) {
       audioPlay()
     } else {
       audioRef.current.src = ''
-      dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_IDLE))
     }
   }, [dispatch, audioPause, audioPlay, backZero, currentSong])
 

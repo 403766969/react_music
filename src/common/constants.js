@@ -1,5 +1,4 @@
 export const audioStatusTypes = {
-  AUDIO_IDLE: 'AUDIO_IDLE',
   AUDIO_PLAY: 'AUDIO_PLAY',
   AUDIO_PAUSE: 'AUDIO_PAUSE'
 }

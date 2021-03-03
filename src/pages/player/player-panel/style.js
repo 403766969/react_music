@@ -12,29 +12,19 @@ export const StyledWrapper = styled.div`
     background-position: -1016px 0;
 
     &>.left {
-      position: relative;
-      padding-right: 6px;
       width: 556px;
       height: 100%;
-
-      .cpn-scroll-bar {
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
     }
 
     &>.right {
       flex: 1;
-      position: relative;
-      padding: 21px 41px 21px 35px;
       width: 0;
       height: 100%;
 
-      .cpn-scroll-bar {
-        position: absolute;
-        right: 0;
-        top: 0;
+      &>.cpn-scroll-area {
+        &>.scroll-main {
+          padding: 21px 35px;
+        }
       }
     }
   }

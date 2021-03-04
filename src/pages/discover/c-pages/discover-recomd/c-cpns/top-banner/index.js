@@ -43,6 +43,18 @@ export default memo(function TopBanner(props) {
             <img className="image" src={item.imageUrl} alt={item.typeTitle} />
           </NavLink>
         )
+      case 100:
+        return (
+          <NavLink to={`/artist?id=${item.targetId}`}>
+            <img className="image" src={item.imageUrl} alt={item.typeTitle} />
+          </NavLink>
+        )
+      case 1000:
+        return (
+          <NavLink to={`/songsheet?id=${item.targetId}`}>
+            <img className="image" src={item.imageUrl} alt={item.typeTitle} />
+          </NavLink>
+        )
       case 1004:
         return (
           <NavLink to={`/mv?id=${item.targetId}`}>

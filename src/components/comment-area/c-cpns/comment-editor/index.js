@@ -16,17 +16,33 @@ export default memo(function CommentEditor(props) {
    */
   const [textValue, setTextValue] = useState('')
   const [textCount, setTextCount] = useState(140)
+  const [isComposition, setIsComposition] = useState(false)
   const [isShowEmoji, setIsShowEmoji] = useState(false)
 
   /**
    * other logic
    */
-  const handleTextChange = e => {
+  const handleTextInput = e => {
     const newValue = e.target.value
-    if (newValue.length <= 140) {
+    if (isComposition) {
       setTextValue(newValue)
-      setTextCount(140 - newValue.length)
+    } else {
+      if (newValue.length <= 140) {
+        setTextValue(newValue)
+        setTextCount(140 - newValue.length)
+      }
     }
+  }
+
+  const handleCompositionStart = e => {
+    setIsComposition(true)
+  }
+
+  const handleCompositionEnd = e => {
+    setIsComposition(false)
+    const newValue = e.target.value.slice(0, 140)
+    setTextValue(newValue)
+    setTextCount(140 - newValue.length)
   }
 
   const handleEmojiClick = item => {
@@ -49,7 +65,13 @@ export default memo(function CommentEditor(props) {
         </div>
         <div className="right">
           <div className="content">
-            <textarea className="text" placeholder="评论" value={textValue} onChange={handleTextChange}></textarea>
+            <textarea
+              className="text"
+              placeholder="评论"
+              value={textValue}
+              onInput={handleTextInput}
+              onCompositionStart={handleCompositionStart}
+              onCompositionEnd={handleCompositionEnd}></textarea>
             <div className="arrow">
               <i className="mask"></i>
             </div>

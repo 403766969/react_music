@@ -62,7 +62,15 @@ export default memo(function Song(props) {
     setCurrentPage(1)
     window.scrollTo(0, 0)
     return () => {
-      dispatch(actions.clear_state())
+      dispatch(actions.merge_state({
+        songDetail: null,
+        songLyric: [],
+        hotCommentList: [],
+        newCommentList: [],
+        newCommentCount: 0,
+        simiSongsheetList: [],
+        simiSongList: []
+      }))
     }
   }, [dispatch, songId])
 

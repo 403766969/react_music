@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const StyledWrapper = styled.div`
   &>.operation {
     display: flex;
-    margin: 20px 0 10px 0;
+    margin-bottom: 10px;
 
     .btn {
       margin: 0;

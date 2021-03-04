@@ -22,8 +22,8 @@ export default memo(function ListItem(props) {
   const { orderConfig, nameConfig, durationConfig, artistConfig, albumConfig } = props
 
   /**
- * redux hooks
- */
+   * redux hooks
+   */
   const dispatch = useDispatch()
 
   /**
@@ -83,7 +83,11 @@ export default memo(function ListItem(props) {
                     <NavLink className="song-name" to={`/song?id=${songInfo.id}`} title={songInfo.name + tnsAndAlia}>
                       {songInfo.name}
                     </NavLink>
-                    <span className="song-tns-alia" title={tnsAndAlia}>{tnsAndAlia}</span>
+                    {
+                      tnsAndAlia !== '' && (
+                        <span className="song-tns-alia" title={tnsAndAlia.slice(3)}>{tnsAndAlia}</span>
+                      )
+                    }
                     {
                       songInfo.mv !== 0 && (
                         <NavLink className="song-mv" to={`/mv?id=${songInfo.mv}`} title="播放mv">

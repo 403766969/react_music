@@ -2,8 +2,8 @@ export const throttle = (callback, delay = 1000) => {
   let timer = null
   return (...args) => {
     if (!timer) {
+      callback && callback.apply(null, args)
       timer = setTimeout(() => {
-        callback && callback.apply(null, args)
         clearTimeout(timer)
         timer = null
       }, delay)

@@ -4,7 +4,6 @@ export const StyledWrapper = styled.div`
   &>.mv-list {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 20px;
 
     .mv-item {
       width: 137px;

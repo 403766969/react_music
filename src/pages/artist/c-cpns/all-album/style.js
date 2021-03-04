@@ -4,7 +4,6 @@ export const StyledWrapper = styled.div`
   &>.album-list {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 20px;
 
     .album-item {
       width: 145px;

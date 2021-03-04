@@ -85,8 +85,12 @@ export function matchText(text, ...matchers) {
   }
 
   let regExpString = matchers.reduce((prev, current) => {
-    let temp = current.regExp.toString()
-    return prev + '|' + temp.slice(1, temp.length - 1)
+    if (current) {
+      let temp = current.regExp.toString()
+      return prev + '|' + temp.slice(1, temp.length - 1)
+    } else {
+      return prev
+    }
   }, '')
   regExpString = regExpString.slice(1, regExpString.length)
 
@@ -104,7 +108,7 @@ export function matchText(text, ...matchers) {
     let match = matchArr[i]
     if (match) {
       for (let matcher of matchers) {
-        if (matcher.regExp.test(match)) {
+        if (matcher && matcher.regExp.test(match)) {
           els.push(matcher.replace(match))
           break
         }

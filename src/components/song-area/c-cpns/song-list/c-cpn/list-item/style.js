@@ -77,7 +77,7 @@ export const StyledWrapper = styled.li`
       .song-text {
         display: inline-block;
         position: relative;
-        padding-right:24px;
+        padding-right: 24px;
         max-width: 100%;
         height: 17px;
         line-height: 17px;

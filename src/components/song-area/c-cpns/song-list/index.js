@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux'
 
 import ListHeader from './c-cpn/list-header'
 import ListItem from './c-cpn/list-item'
@@ -26,7 +26,7 @@ export default memo(function AreaList(props) {
   } = useSelector(state => ({
     player_songList: state.getIn(['player', 'songList']),
     player_currentIndex: state.getIn(['player', 'currentIndex'])
-  }))
+  }), shallowEqual)
 
   const currentSongId = player_songList && player_songList[player_currentIndex] && player_songList[player_currentIndex].id
 

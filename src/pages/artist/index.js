@@ -22,7 +22,7 @@ export default memo(function Artist(props) {
    */
   const params = new URLSearchParams(props.location.search)
   const artistId = params.get('id') && parseInt(params.get('id'))
-  const tabKey = params.get('tabKey') || 'song'
+  const type = params.get('type') || 'song'
 
   /**
    * redux hooks
@@ -53,9 +53,6 @@ export default memo(function Artist(props) {
   useEffect(() => {
     if (artistId) {
       dispatch(actions.get_artistDetail(artistId))
-      dispatch(actions.get_descInfo(artistId))
-      dispatch(actions.get_albumList(artistId, 0, 12))
-      dispatch(actions.get_mvList(artistId, 0, 12))
     }
     return () => {
       dispatch(actions.merge_state({
@@ -71,40 +68,62 @@ export default memo(function Artist(props) {
     }
   }, [dispatch, artistId])
 
+  useEffect(() => {
+    if (artistId) {
+      switch (type) {
+        case 'desc':
+          dispatch(actions.get_descInfo(artistId))
+          break
+        case 'album':
+          dispatch(actions.get_albumList(artistId, 0, 12))
+          break
+        case 'mv':
+          dispatch(actions.get_mvList(artistId, 0, 12))
+          break
+        default:
+          break
+      }
+    }
+  }, [dispatch, artistId, type])
+
   /**
    * other logic
    */
   const handleTabClick = useCallback(key => {
     if (artistId) {
-      props.history.push(`/artist?id=${artistId}&tabKey=${key}`)
+      props.history.push(`/artist?id=${artistId}&type=${key}`)
     }
   }, [props.history, artistId])
 
   return (
     <StyledWrapper className="page-artist">
       <ChannelBar />
-      <div className="content wrap-v3">
-        <div className="left">
-          <BaseInfo baseInfo={r_baseInfo} />
-          <TabsArea activeKey={tabKey} onTabClick={handleTabClick}>
-            <div tab="热门歌曲" key="song">
-              <HotSong songList={r_songList} />
+      {
+        artistId && (
+          <div className="content wrap-v3">
+            <div className="left">
+              <BaseInfo baseInfo={r_baseInfo} />
+              <TabsArea activeKey={type} onTabClick={handleTabClick}>
+                <div tab="热门歌曲" key="song">
+                  <HotSong songList={r_songList} />
+                </div>
+                <div tab="所有专辑" key="album">
+                  <AllAlbum artistId={artistId} albumList={r_albumList} albumCount={r_albumCount} />
+                </div>
+                <div tab="相关MV" key="mv">
+                  <RelatedMv artistId={artistId} mvList={r_mvList} mvCount={r_mvCount} />
+                </div>
+                <div tab="艺人介绍" key="desc">
+                  <DescInfo descInfo={r_descInfo} />
+                </div>
+              </TabsArea>
             </div>
-            <div tab="所有专辑" key="album">
-              <AllAlbum artistId={artistId} albumList={r_albumList} albumCount={r_albumCount} />
+            <div className="right">
+              <DownLoad />
             </div>
-            <div tab="相关MV" key="mv">
-              <RelatedMv artistId={artistId} mvList={r_mvList} mvCount={r_mvCount} />
-            </div>
-            <div tab="艺人介绍" key="desc">
-              <DescInfo descInfo={r_descInfo} />
-            </div>
-          </TabsArea>
-        </div>
-        <div className="right">
-          <DownLoad />
-        </div>
-      </div>
+          </div>
+        )
+      }
     </StyledWrapper>
   )
 })

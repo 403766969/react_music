@@ -43,6 +43,7 @@ export const StyledWrapper = styled.div`
   }
 
   &>.tabs-content {
+    margin-top: 20px;
     width: 100%;
   }
 `

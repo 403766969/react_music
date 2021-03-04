@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 
 import { AppHeader_Links } from '@/services/local-data'
 
@@ -9,6 +9,18 @@ import { SearchOutlined } from '@ant-design/icons'
 import { StyledWrapper } from './style'
 
 export default memo(function AppHeader() {
+
+  /**
+   * other logic
+   */
+  const history = useHistory()
+
+  const handleKeyUp = e => {
+    if (e.keyCode === 13) {
+      history.push(`/search?keywords=${e.target.value.trim()}`)
+    }
+  }
+
   return (
     <StyledWrapper className="cpn-app-header">
       <div className="wrap-v1 content">
@@ -33,7 +45,7 @@ export default memo(function AppHeader() {
           </ul>
         </div>
         <div className="right">
-          <Input className="search" placeholder="音乐/视频/电台/用户" prefix={<SearchOutlined />} />
+          <Input className="search" placeholder="音乐/视频/电台/用户" prefix={<SearchOutlined />} onKeyUp={handleKeyUp} />
           <div className="creator-center">
             <span to="/">创作者中心</span>
           </div>

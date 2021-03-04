@@ -88,7 +88,7 @@ export default memo(function Search(props) {
 
   const keywordsMatcher = keywords
     ? {
-      regExp: new RegExp(keywords),
+      regExp: new RegExp(keywords, 'i'),
       replace: function (match) {
         return (
           <span style={{ color: '#0c73c2' }}>{match}</span>

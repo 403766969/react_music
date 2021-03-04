@@ -133,7 +133,7 @@ export const StyledWrapper = styled.li`
 
   .creator {
     padding: 0 10px;
-    width: 180px;
+    width: 170px;
     color: #666;
 
     .link {
@@ -144,13 +144,13 @@ export const StyledWrapper = styled.li`
 
   .favor-count {
     padding: 0 10px;
-    width: 95px;
+    width: 100px;
     color: #999;
   }
 
   .play-count {
     padding: 0 10px;
-    width: 95px;
+    width: 100px;
     color: #999;
   }
 `

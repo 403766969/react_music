@@ -19,7 +19,7 @@ export default memo(function SearchInput(props) {
 
   const [inputValue, setInputValue] = useState(keywords || '')
   const [isComposition, setIsComposition] = useState(false)
-  const [isShowSuggest, setIsShowSuggest] = useState(false)
+  const [isFocus, setIsFocus] = useState(false)
 
   /**
    * redux hooks
@@ -76,10 +76,10 @@ export default memo(function SearchInput(props) {
         onInput={handleInput}
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
-        onFocus={() => setIsShowSuggest(true)}
-        onBlur={() => setIsShowSuggest(false)} />
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)} />
       <span className="search" title="搜索" onClick={handleSearchClick}>搜索</span>
-      <div className="suggest" style={{ display: (isShowSuggest && searchSuggest) ? 'block' : 'none' }}>
+      <div className="suggest" style={{ display: (isFocus && searchSuggest) ? 'block' : 'none' }}>
         <SearchSuggest inputValue={inputValue} searchSuggest={searchSuggest} />
       </div>
     </StyledWrapper>

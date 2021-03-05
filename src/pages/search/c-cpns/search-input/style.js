@@ -36,5 +36,9 @@ export const StyledWrapper = styled.div`
     top: 43px;
     z-index: 999;
     width: 420px;
+
+    &:hover {
+      display: block !important;
+    }
   }
 `

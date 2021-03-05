@@ -1,6 +1,8 @@
 import React, { memo, useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { keywordsMatcher } from '@/utils/parser'
+
 import * as actions from '../../store/actionCreators'
 
 import Pagination from '@/components/pagination-bar'
@@ -14,7 +16,7 @@ export default memo(function ResultSongsheet(props) {
   /**
    * props and state
    */
-  const { songsheetList, songsheetCount, keywords, keywordsMatcher } = props
+  const { songsheetList, songsheetCount, keywords } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -34,13 +36,15 @@ export default memo(function ResultSongsheet(props) {
     }
   }, [dispatch, keywords])
 
+  const kwMatcher = keywordsMatcher(keywords)
+
   return (
     <StyledWrapper className="cpn-result-songsheet">
       <ul className="songsheet-list">
         {
           songsheetList && songsheetList.map(item => {
             return (
-              <SongsheetItem key={item.id} songsheetInfo={item} keywordsMatcher={keywordsMatcher} />
+              <SongsheetItem key={item.id} songsheetInfo={item} kwMatcher={kwMatcher} />
             )
           })
         }

@@ -1,7 +1,12 @@
 import React, { memo, useState, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import { throttle, debounce } from '@/utils/performance'
+import { debounce } from '@/utils/performance'
+
+import * as actions from '../../store/actionCreators'
+
+import SearchSuggest from './search-suggest'
 
 import { StyledWrapper } from './style'
 
@@ -10,20 +15,27 @@ export default memo(function SearchInput(props) {
   /**
    * props and state
    */
-  const { keywords, type } = props
+  const { keywords, type, searchSuggest } = props
 
-  const [value, setValue] = useState(keywords || '')
+  const [inputValue, setInputValue] = useState(keywords || '')
   const [isComposition, setIsComposition] = useState(false)
+  const [isShowSuggest, setIsShowSuggest] = useState(false)
+
+  /**
+   * redux hooks
+   */
+  const dispatch = useDispatch()
 
   /**
    * ref hooks
    */
-  const throttleRequest = useRef(throttle(value => {
-    // console.log('throttleRequest', value)
-  }, 1000)).current
-
   const debounceRequest = useRef(debounce(value => {
-    // console.log('debounceRequest', value)
+    let searchKeywords = value.trim()
+    if (searchKeywords !== '') {
+      dispatch(actions.get_searchSuggest(searchKeywords))
+    } else {
+      dispatch(actions.set_searchSuggest(null))
+    }
   }, 1000)).current
 
   /**
@@ -31,26 +43,19 @@ export default memo(function SearchInput(props) {
    */
   const history = useHistory()
 
-  const handleSearchClick = () => {
-    history.push(`/search?keywords=${value.trim()}&type=${type}`)
+  const handleSearchClick = e => {
+    history.push(`/search?keywords=${inputValue.trim()}&type=${type}`)
   }
 
   const handleKeyUp = e => {
     if (e.keyCode === 13) {
-      history.push(`/search?keywords=${value.trim()}&type=${type}`)
+      history.push(`/search?keywords=${inputValue.trim()}&type=${type}`)
     }
   }
 
-  const handleFocus = e => {
-    setValue(e.target.value)
-    throttleRequest(e.target.value)
-    debounceRequest(e.target.value)
-  }
-
   const handleInput = e => {
-    setValue(e.target.value)
+    setInputValue(e.target.value)
     if (!isComposition) {
-      throttleRequest(e.target.value)
       debounceRequest(e.target.value)
     }
   }
@@ -61,21 +66,22 @@ export default memo(function SearchInput(props) {
 
   const handleCompositionEnd = e => {
     setIsComposition(false)
-    setValue(e.target.value)
-    throttleRequest(e.target.value)
     debounceRequest(e.target.value)
   }
-
   return (
     <StyledWrapper className="cpn-search-input sprite_03">
       <input className="input" type="text"
-        value={value}
+        value={inputValue}
         onKeyUp={handleKeyUp}
-        onFocus={handleFocus}
         onInput={handleInput}
         onCompositionStart={handleCompositionStart}
-        onCompositionEnd={handleCompositionEnd} />
+        onCompositionEnd={handleCompositionEnd}
+        onFocus={() => setIsShowSuggest(true)}
+        onBlur={() => setIsShowSuggest(false)} />
       <span className="search" title="搜索" onClick={handleSearchClick}>搜索</span>
+      <div className="suggest" style={{ display: (isShowSuggest && searchSuggest) ? 'block' : 'none' }}>
+        <SearchSuggest inputValue={inputValue} searchSuggest={searchSuggest} />
+      </div>
     </StyledWrapper>
   )
 })

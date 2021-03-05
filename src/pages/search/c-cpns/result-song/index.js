@@ -1,6 +1,8 @@
 import React, { memo, useState, useCallback } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
+import { keywordsMatcher } from '@/utils/parser'
+
 import * as actions from '../../store/actionCreators'
 
 import Pagination from '@/components/pagination-bar'
@@ -14,7 +16,7 @@ export default memo(function ResultSong(props) {
   /**
    * props and state
    */
-  const { songList, songCount, keywords, keywordsMatcher } = props
+  const { songList, songCount, keywords } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -44,13 +46,15 @@ export default memo(function ResultSong(props) {
     }
   }, [dispatch, keywords])
 
+  const kwMatcher = keywordsMatcher(keywords)
+
   return (
     <StyledWrapper className="cpn-result-song">
       <ul className="song-list">
         {
           songList && songList.map(item => {
             return (
-              <SongItem key={item.id} songInfo={item} active={item.id === currentSongId} keywordsMatcher={keywordsMatcher} />
+              <SongItem key={item.id} songInfo={item} active={item.id === currentSongId} kwMatcher={kwMatcher} />
             )
           })
         }

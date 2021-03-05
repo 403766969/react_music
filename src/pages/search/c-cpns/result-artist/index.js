@@ -1,9 +1,9 @@
-import React, { memo, Fragment, useState, useCallback } from 'react'
+import React, { memo, useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize } from '@/utils/formatter'
-import { matchText } from '@/utils/parser'
+import { renderText, keywordsMatcher } from '@/utils/parser'
 
 import * as actions from '../../store/actionCreators'
 
@@ -16,7 +16,7 @@ export default memo(function ResultArtist(props) {
   /**
    * props and state
    */
-  const { artistList, artistCount, keywords, keywordsMatcher } = props
+  const { artistList, artistCount, keywords } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -36,6 +36,8 @@ export default memo(function ResultArtist(props) {
     }
   }, [dispatch, keywords])
 
+  const kwMatcher = keywordsMatcher(keywords)
+
   return (
     <StyledWrapper className="cpn-result-artist">
       <ul className="artist-list">
@@ -52,11 +54,7 @@ export default memo(function ResultArtist(props) {
                 <p className="desc text-nowrap">
                   <NavLink className="link" to={`/artist?id=${item.id}`} title={item.name}>
                     {
-                      matchText(item.name, keywordsMatcher).map((item, index) => {
-                        return (
-                          <Fragment key={index}>{item}</Fragment>
-                        )
-                      })
+                      renderText(item.name, kwMatcher)
                     }
                   </NavLink>
                 </p>

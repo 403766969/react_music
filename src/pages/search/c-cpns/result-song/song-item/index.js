@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { formatDate } from '@/utils/formatter'
-import { matchText } from '@/utils/parser'
+import { renderText } from '@/utils/parser'
 
 import * as playerAction from '@/pages/player/store/actionCreators'
 
@@ -14,7 +14,7 @@ export default memo(function SongItem(props) {
   /**
    * props and state
    */
-  const { songInfo, active, keywordsMatcher } = props
+  const { songInfo, active, kwMatcher } = props
 
   /**
    * redux hooks
@@ -67,11 +67,7 @@ export default memo(function SongItem(props) {
             <i className={`sprite_table play-btn ${active ? 'active' : ''}`} title="播放" onClick={handlePlayClick}></i>
             <NavLink className="link" to={`/song?id=${songInfo.id}`} title={songInfo.name + tnsAndAlia}>
               {
-                matchText(songInfo.name, keywordsMatcher).map((item, index) => {
-                  return (
-                    <Fragment key={index}>{item}</Fragment>
-                  )
-                })
+                renderText(songInfo.name, kwMatcher)
               }
             </NavLink>
             {
@@ -104,20 +100,12 @@ export default memo(function SongItem(props) {
                       item.id !== 0
                         ? <NavLink className="link" to={`/artist?id=${item.id}`}>
                           {
-                            matchText(item.name, keywordsMatcher).map((itemY, indeY) => {
-                              return (
-                                <Fragment key={indeY}>{itemY}</Fragment>
-                              )
-                            })
+                            renderText(item.name, kwMatcher)
                           }
                         </NavLink>
                         : <span>
                           {
-                            matchText(item.name, keywordsMatcher).map((itemY, indeY) => {
-                              return (
-                                <Fragment key={indeY}>{itemY}</Fragment>
-                              )
-                            })
+                            renderText(item.name, kwMatcher)
                           }
                         </span>
                     }
@@ -138,11 +126,7 @@ export default memo(function SongItem(props) {
               <NavLink className="song-album" to={`/album?id=${songInfo.album.id}`} title={`《${songInfo.album.name}》`}>
                 《
                 {
-                  matchText(songInfo.album.name, keywordsMatcher).map((item, index) => {
-                    return (
-                      <Fragment key={index}>{item}</Fragment>
-                    )
-                  })
+                  renderText(songInfo.album.name, kwMatcher)
                 }
                 》
               </NavLink>

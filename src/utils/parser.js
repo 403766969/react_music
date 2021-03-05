@@ -1,7 +1,9 @@
+import { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { emojiUrl } from '@/common/constants'
 
+// 解析歌曲字符串，返回歌词数组
 export function parseLyric(lyricString) {
   const regExp = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/
   const regExpG = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/g
@@ -29,6 +31,7 @@ export function parseLyric(lyricString) {
   return lyric
 }
 
+// 合并歌词原词和翻译
 export function mergeLyric(originalLyric, translationLyric) {
   const lyric = []
   for (let i = 0, j = 0; i < originalLyric.length; i++) {
@@ -53,6 +56,7 @@ export function mergeLyric(originalLyric, translationLyric) {
   return lyric
 }
 
+// 匹配字符串，并将匹配到的字符替换成对应内容，返回由匹配项分隔的元素数组
 export function matchText(text, ...matchers) {
   if (!text || text === '') {
     return []
@@ -76,6 +80,16 @@ export function matchText(text, ...matchers) {
   return [text]
 }
 
+// 渲染元素数组
+export const renderText = (text, ...matchers) => {
+  return matchText(text, ...matchers).map((item, index) => {
+    return (
+      <Fragment key={index}>{item}</Fragment>
+    )
+  })
+}
+
+// 匹配换行
 export const wrapMatcher = {
   regExp: /\n/,
   replace: function (match) {
@@ -85,6 +99,7 @@ export const wrapMatcher = {
   }
 }
 
+// 匹配@
 export const atMatcher = {
   regExp: /@[^@\s]+/,
   replace: function (match) {
@@ -94,6 +109,7 @@ export const atMatcher = {
   }
 }
 
+// 匹配emoji
 export const emojiMatcher = {
   regExp: /\[\S+?\]/,
   replace: function (match) {
@@ -101,6 +117,22 @@ export const emojiMatcher = {
     return imgUrl
       ? <img src={imgUrl} alt={match} style={{ width: '21px', height: '21px' }} />
       : match
+  }
+}
+
+// 匹配关键字
+export const keywordsMatcher = keywords => {
+  if (keywords) {
+    return {
+      regExp: new RegExp(keywords, 'i'),
+      replace: function (match) {
+        return (
+          <span style={{ color: '#0c73c2' }}>{match}</span>
+        )
+      }
+    }
+  } else {
+    return null
   }
 }
 

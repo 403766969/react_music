@@ -44,6 +44,11 @@ export const set_artistCount = artistCount => ({
   artistCount: artistCount
 })
 
+export const set_searchSuggest = searchSuggest => ({
+  type: actionTypes.SET_SEARCH_SUGGEST,
+  searchSuggest: searchSuggest
+})
+
 /**
  * 异步请求
  */
@@ -89,6 +94,16 @@ export const get_artistList = (keywords, offset = 0, limit = 24) => {
       if (res.result.artistCount) {
         dispatch(set_artistCount(res.result.artistCount))
       }
+    }
+  }
+}
+
+// 搜索建议
+export const get_searchSuggest = keywords => {
+  return async dispatch => {
+    const res = await searchApi.get_search_suggest(keywords)
+    if (res && res.result) {
+      dispatch(set_searchSuggest(res.result))
     }
   }
 }

@@ -1,8 +1,8 @@
-import React, { memo, Fragment } from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { formatDate } from '@/utils/formatter'
-import { matchText, wrapMatcher, atMatcher, emojiMatcher } from '@/utils/parser'
+import { renderText, wrapMatcher, atMatcher, emojiMatcher } from '@/utils/parser'
 
 import { StyledWrapper } from './style'
 
@@ -35,14 +35,9 @@ export default memo(function CommentList(props) {
                 <i className={`vip vip-${commentInfo.user.vipRights.redVipLevel}`}></i>
               )
             }
-            <span className="text">
-              ：
-            {
-                matchText(commentInfo.content, wrapMatcher, atMatcher, emojiMatcher).map((itemX, indeX) => {
-                  return (
-                    <Fragment key={indeX}>{itemX}</Fragment>
-                  )
-                })
+            <span className="text">：
+              {
+                renderText(commentInfo.content, wrapMatcher, atMatcher, emojiMatcher)
               }
             </span>
           </div>
@@ -50,14 +45,9 @@ export default memo(function CommentList(props) {
             commentInfo.beReplied && commentInfo.beReplied[0] && (
               <div className="mid">
                 <NavLink className="user" to={`/user/home?id=${commentInfo.beReplied[0].user.userId}`}>{commentInfo.beReplied[0].user.nickname}</NavLink>
-                <span className="text">
-                  ：
-                {
-                    matchText(commentInfo.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher).map((itemY, indeY) => {
-                      return (
-                        <Fragment key={indeY}>{itemY}</Fragment>
-                      )
-                    })
+                <span className="text">：
+                  {
+                    renderText(commentInfo.beReplied[0].content, wrapMatcher, atMatcher, emojiMatcher)
                   }
                 </span>
               </div>

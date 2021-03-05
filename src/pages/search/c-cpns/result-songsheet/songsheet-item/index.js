@@ -1,9 +1,9 @@
-import React, { memo, Fragment } from 'react'
+import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize, formatCount } from '@/utils/formatter'
-import { matchText } from '@/utils/parser'
+import { renderText } from '@/utils/parser'
 
 import * as playerAction from '@/pages/player/store/actionCreators'
 
@@ -14,7 +14,7 @@ export default memo(function SongsheetItem(props) {
   /**
    * props and state
    */
-  const { songsheetInfo, keywordsMatcher } = props
+  const { songsheetInfo, kwMatcher } = props
 
   /**
    * redux hooks
@@ -44,11 +44,7 @@ export default memo(function SongsheetItem(props) {
           <div className="text text-nowrap">
             <NavLink className="link" to={`/songsheet?id=${songsheetInfo.id}`} title={songsheetInfo.name}>
               {
-                matchText(songsheetInfo.name, keywordsMatcher).map((item, index) => {
-                  return (
-                    <Fragment key={index}>{item}</Fragment>
-                  )
-                })
+                renderText(songsheetInfo.name, kwMatcher)
               }
             </NavLink>
           </div>
@@ -68,11 +64,7 @@ export default memo(function SongsheetItem(props) {
                 by
                 <NavLink className="link" to={`/user/home?id=${songsheetInfo.creator.userId}`} title={songsheetInfo.creator.nickname}>
                   {
-                    matchText(songsheetInfo.creator.nickname, keywordsMatcher).map((item, index) => {
-                      return (
-                        <Fragment key={index}>{item}</Fragment>
-                      )
-                    })
+                    renderText(songsheetInfo.creator.nickname, kwMatcher)
                   }
                 </NavLink>
               </span>

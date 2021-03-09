@@ -6,6 +6,8 @@ import * as songApi from '@/services/songApi'
 import * as songsheetApi from '@/services/songsheetApi'
 import axios from 'axios'
 
+import AppMessage from '@/components/app-message'
+
 /**
  * 操作state
  */
@@ -131,7 +133,7 @@ export const add_simpleSong_with_songObject = (songObject, isPlay = false) => {
     dispatch(set_messageConfig({ message: '加载中' }))
     const checkResult = await checkSimpleSong(songObject.id)
     if (!checkResult) {
-      alert('该歌曲暂时无法播放')
+      AppMessage.show('该歌曲暂时无法播放')
       dispatch(set_messageConfig({ message: '加载失败' }))
       return
     }

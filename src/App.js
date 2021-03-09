@@ -12,6 +12,7 @@ import '@/assets/css/base.css'
 
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
+import AppNote from '@/components/app-note'
 import BackTop from '@/components/back-top'
 import DocumentTitle from '@/components/document-title'
 
@@ -26,6 +27,7 @@ export default memo(function App() {
           {renderRoutes(routes)}
         </Suspense>
         <AppFooter />
+        <AppNote />
         <BackTop />
         <DocumentTitle />
         <Player />

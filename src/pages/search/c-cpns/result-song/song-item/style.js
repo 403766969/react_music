@@ -4,8 +4,6 @@ export const StyledWrapper = styled.li`
   display: flex;
   align-items: center;
   padding: 10px 18px;
-  height: 20px;
-  line-height: 20px;
   background-color: #fff;
   border: 1px solid #fff;
   box-sizing: content-box;
@@ -22,6 +20,11 @@ export const StyledWrapper = styled.li`
     .operation {
       display: flex;
     }
+  }
+
+  .name, .operation, .artist, .album, .duration {
+    height: 20px;
+    line-height: 20px;
   }
 
   .name {

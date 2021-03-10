@@ -12,12 +12,8 @@ export const StyledWrapper = styled.div`
       padding: 47px 30px 40px 40px;
       width: 709px;
 
-      .cpn-songsheet-detail {
-        margin-bottom: 27px;
-      }
-
       .cpn-song-area {
-        margin-bottom: 40px;
+        margin: 27px 0 40px 0;
       }
     }
 
@@ -27,11 +23,7 @@ export const StyledWrapper = styled.div`
       padding: 20px 40px 40px 30px;
       width: 0;
 
-      .cpn-simi-user {
-        margin-bottom: 25px;
-      }
-
-      .cpn-simi-songsheet {
+      .cpn-simi-album {
         margin-bottom: 25px;
       }
     }

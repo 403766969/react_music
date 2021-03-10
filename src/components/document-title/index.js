@@ -16,7 +16,8 @@ export default memo(function DocumentTitle() {
     discover_toplist_chartDetail,
     song_songDetail,
     songsheet_songsheetDetail,
-    artist_baseInfo
+    artist_baseInfo,
+    album_albumDetail
   } = useSelector(state => ({
     player_audioStatus: state.getIn(['player', 'audioStatus']),
     player_songList: state.getIn(['player', 'songList']),
@@ -24,7 +25,8 @@ export default memo(function DocumentTitle() {
     discover_toplist_chartDetail: state.getIn(['discover/toplist', 'chartDetail']),
     song_songDetail: state.getIn(['song', 'songDetail']),
     songsheet_songsheetDetail: state.getIn(['songsheet', 'songsheetDetail']),
-    artist_baseInfo: state.getIn(['artist', 'baseInfo'])
+    artist_baseInfo: state.getIn(['artist', 'baseInfo']),
+    album_albumDetail: state.getIn(['album', 'albumDetail'])
   }), shallowEqual)
 
   /**
@@ -74,6 +76,12 @@ export default memo(function DocumentTitle() {
         title = artist_baseInfo.name + ' - '
       }
       title = title + '歌手 - React Music'
+      break
+    case '/album':
+      if (album_albumDetail && album_albumDetail.name) {
+        title = album_albumDetail.name + ' - '
+      }
+      title = title + '专辑 - React Music'
       break
     default:
       title = 'React Music'

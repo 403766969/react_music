@@ -7,13 +7,17 @@ export default memo(function AreaHeader(props) {
   /**
    * props and state
    */
-  const { title, songCount = 0, playCount = 0, link } = props
+  const { title, songCount, playCount, link } = props
 
   return (
     <StyledWrapper className="cpn-area-header">
       <div className="left">
         <h3 className="title">{title}</h3>
-        <div className="count">{songCount}首歌</div>
+        {
+          songCount && (
+            <div className="count">{songCount}首歌</div>
+          )
+        }
       </div>
       <div className="right">
         {
@@ -24,7 +28,11 @@ export default memo(function AreaHeader(props) {
             </div>
           )
         }
-        <div className="count">播放：<span>{playCount}</span>次</div>
+        {
+          playCount && (
+            <div className="count">播放：<span>{playCount}</span>次</div>
+          )
+        }
       </div>
     </StyledWrapper>
   )

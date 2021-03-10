@@ -24,6 +24,9 @@ export default memo(function SongsheetDetail(props) {
    */
   const dispatch = useDispatch()
 
+  /**
+   * other logic
+   */
   const handlePlayClick = useCallback(() => {
     if (songList && songList.length > 0) {
       dispatch(playerActions.add_multipleSong_with_songList(songList, true))

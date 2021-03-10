@@ -68,8 +68,8 @@ export default memo(function Songsheet(props) {
   const commentRef = useRef()
 
   /**
- * other logic
- */
+   * other logic
+   */
   const handlePageChange = useCallback(page => {
     dispatch(actions.get_newCommentList(songsheetId, (page - 1) * 20, 20))
     setCurrentPage(page)
@@ -85,7 +85,7 @@ export default memo(function Songsheet(props) {
           <SongArea
             songCount={r_songList && r_songList.length}
             playCount={r_songsheetDetail && r_songsheetDetail.playCount}
-            link={r_songsheetDetail && `https://music.163.com/#/outchain/0/${r_songsheetDetail.id}`}
+            link={r_songsheetDetail && `https://music.163.com/#/outchain/0/${r_songsheetDetail && r_songsheetDetail.id}`}
             order name duration artist album
             songList={r_songList} />
           <div className="songsheet-comment" ref={commentRef}>

@@ -7,6 +7,7 @@ const Friend = lazy(() => import('@/pages/friend'))
 const Song = lazy(() => import('@/pages/song'))
 const Songsheet = lazy(() => import('@/pages/songsheet'))
 const Artist = lazy(() => import('@/pages/artist'))
+const Album = lazy(() => import('@/pages/album'))
 const Search = lazy(() => import('@/pages/search'))
 
 const DiscoverRecomd = lazy(() => import('@/pages/discover/c-pages/discover-recomd'))
@@ -80,6 +81,10 @@ const routes = [
   {
     path: '/artist',
     component: Artist
+  },
+  {
+    path: '/album',
+    component: Album
   },
   {
     path: '/search',

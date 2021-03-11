@@ -14,9 +14,11 @@ export default memo(function AreaHeader(props) {
       <div className="left">
         <h3 className="title">{title}</h3>
         {
-          songCount && (
-            <div className="count">{songCount}首歌</div>
-          )
+          songCount && songCount > 0
+            ? (
+              <div className="count">{songCount}首歌</div>
+            )
+            : null
         }
       </div>
       <div className="right">
@@ -29,9 +31,11 @@ export default memo(function AreaHeader(props) {
           )
         }
         {
-          playCount && (
-            <div className="count">播放：<span>{playCount}</span>次</div>
-          )
+          playCount && playCount > 0
+            ? (
+              <div className="count">播放：<span>{playCount}</span>次</div>
+            )
+            : null
         }
       </div>
     </StyledWrapper>

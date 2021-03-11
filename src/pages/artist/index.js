@@ -55,16 +55,7 @@ export default memo(function Artist(props) {
       dispatch(actions.get_artistDetail(artistId))
     }
     return () => {
-      dispatch(actions.merge_state({
-        baseInfo: null,
-        descInfo: null,
-        songList: [],
-        songCount: 0,
-        albumList: [],
-        albumCount: 0,
-        mvList: [],
-        mvCount: 0
-      }))
+      dispatch(actions.clear_state())
     }
   }, [dispatch, artistId])
 

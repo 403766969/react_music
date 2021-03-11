@@ -1,7 +1,10 @@
 import React, { memo } from 'react'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
+
+import * as playerAction from '@/pages/player/store/actionCreators'
 
 import { StyledWrapper } from './style'
 
@@ -19,15 +22,16 @@ export default memo(function AlbumCover(props) {
   const { posX = 0, posY = -570 } = props
 
   /**
-   * other hooks
+   * redux hooks
    */
-  const history = useHistory()
+  const dispatch = useDispatch()
 
   /**
    * other logic
    */
-  const pushRoute_album = () => {
-    history.push(`/album?id=${albumInfo.id}`)
+  const handlePlayClick = e => {
+    e.preventDefault()
+    dispatch(playerAction.add_multipleSong_with_albumId(albumInfo.id, true))
   }
 
   return albumInfo
@@ -37,10 +41,12 @@ export default memo(function AlbumCover(props) {
         imageWidth={imageWidth} imageHeight={imageHeight}
         maskWidth={maskWidth} maskHeight={maskHeight}
         posX={posX} posY={posY}>
-        <div className="top-cover" onClick={pushRoute_album}>
-          <img src={formatUrlWithSize(albumInfo.picUrl, imageWidth, imageHeight, 'y')} alt="" />
-          <div className="mask sprite_covor" title={albumInfo.name}></div>
-          <i className="play sprite_icon" title="播放"></i>
+        <div className="top-cover">
+          <NavLink to={`/album?id=${albumInfo.id}`} title={albumInfo.name}>
+            <img src={formatUrlWithSize(albumInfo.picUrl, imageWidth, imageHeight, 'y')} alt="" />
+            <div className="mask sprite_covor"></div>
+            <i className="play sprite_icon" title="播放" onClick={e => handlePlayClick(e)}></i>
+          </NavLink>
         </div>
         <div className="bottom-desc">
           {

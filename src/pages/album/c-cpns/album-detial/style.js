@@ -63,7 +63,7 @@ export const StyledWrapper = styled.div`
     }
 
     &>.artist {
-      .link {
+      a {
         color: #0c73c2;
       }
     }

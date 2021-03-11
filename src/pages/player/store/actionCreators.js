@@ -3,6 +3,7 @@ import { actionTypes } from './constants'
 import { parseLyric, mergeLyric } from '@/utils/parser'
 
 import * as songApi from '@/services/songApi'
+import * as albumApi from '@/services/albumApi'
 import * as songsheetApi from '@/services/songsheetApi'
 import axios from 'axios'
 
@@ -184,11 +185,15 @@ export const add_multipleSong_with_songList = (songList, isPlay = false) => {
         newSongList.push(songList[i])
       }
     }
-    dispatch(set_songList(newSongList))
-    if (isPlay && newSongList.length > 0) {
-      dispatch(toggle_song(0))
+    if (newSongList.length > 0) {
+      dispatch(set_songList(newSongList))
+      if (isPlay) {
+        dispatch(toggle_song(0))
+      }
+      dispatch(set_messageConfig({ message: '已添加到播放列表' }))
+    } else {
+      dispatch(set_messageConfig({ message: '加载失败' }))
     }
-    dispatch(set_messageConfig({ message: '已添加到播放列表' }))
   }
 }
 
@@ -204,13 +209,25 @@ export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
     const checkResult = await checkMultipleSong(ids)
     const idsString = checkResult.filter(item => item.availability).map(item => item.id).join(',')
     const res = await songApi.get_song_detail(idsString)
-    if (res && res.songs) {
-      const newSongList = res.songs
-      dispatch(set_songList(newSongList))
-      if (isPlay && newSongList.length > 0) {
+    if (res && res.songs && res.songs.length > 0) {
+      dispatch(set_songList(res.songs))
+      if (isPlay) {
         dispatch(toggle_song(0))
       }
       dispatch(set_messageConfig({ message: '已添加到播放列表' }))
+    } else {
+      dispatch(set_messageConfig({ message: '加载失败' }))
+    }
+  }
+}
+
+// 添加多条歌曲
+export const add_multipleSong_with_albumId = (albumId, isPlay = true) => {
+  return async dispatch => {
+    dispatch(set_messageConfig({ message: '加载中' }))
+    const res = await albumApi.get_album_detail(albumId)
+    if (res && res.songs) {
+      dispatch(add_multipleSong_with_songList(res.songs, isPlay))
     } else {
       dispatch(set_messageConfig({ message: '加载失败' }))
     }

@@ -24,16 +24,6 @@ export const set_songCount = songCount => ({
   songCount: songCount
 })
 
-export const set_songsheetList = songsheetList => ({
-  type: actionTypes.SET_SONGSHEET_LIST,
-  songsheetList: songsheetList
-})
-
-export const set_songsheetCount = songsheetCount => ({
-  type: actionTypes.SET_SONGSHEET_COUNT,
-  songsheetCount: songsheetCount
-})
-
 export const set_artistList = artistList => ({
   type: actionTypes.SET_ARTIST_LIST,
   artistList: artistList
@@ -42,6 +32,26 @@ export const set_artistList = artistList => ({
 export const set_artistCount = artistCount => ({
   type: actionTypes.SET_ARTIST_COUNT,
   artistCount: artistCount
+})
+
+export const set_albumList = albumList => ({
+  type: actionTypes.SET_ALBUM_LIST,
+  albumList: albumList
+})
+
+export const set_albumCount = albumCount => ({
+  type: actionTypes.SET_ALBUM_COUNT,
+  albumCount: albumCount
+})
+
+export const set_songsheetList = songsheetList => ({
+  type: actionTypes.SET_SONGSHEET_LIST,
+  songsheetList: songsheetList
+})
+
+export const set_songsheetCount = songsheetCount => ({
+  type: actionTypes.SET_SONGSHEET_COUNT,
+  songsheetCount: songsheetCount
 })
 
 export const set_searchSuggest = searchSuggest => ({
@@ -68,21 +78,6 @@ export const get_songList = (keywords, offset = 0, limit = 20) => {
   }
 }
 
-// 歌单列表
-export const get_songsheetList = (keywords, offset = 0, limit = 20) => {
-  return async dispatch => {
-    const res = await searchApi.get_search(keywords, 1000, offset, limit)
-    if (res && res.result) {
-      if (res.result.playlists) {
-        dispatch(set_songsheetList(res.result.playlists))
-      }
-      if (res.result.playlistCount) {
-        dispatch(set_songsheetCount(res.result.playlistCount))
-      }
-    }
-  }
-}
-
 // 歌手列表
 export const get_artistList = (keywords, offset = 0, limit = 24) => {
   return async dispatch => {
@@ -93,6 +88,36 @@ export const get_artistList = (keywords, offset = 0, limit = 24) => {
       }
       if (res.result.artistCount) {
         dispatch(set_artistCount(res.result.artistCount))
+      }
+    }
+  }
+}
+
+// 专辑列表
+export const get_albumList = (keywords, offset = 0, limit = 20) => {
+  return async dispatch => {
+    const res = await searchApi.get_search(keywords, 10, offset, limit)
+    if (res && res.result) {
+      if (res.result.albums) {
+        dispatch(set_albumList(res.result.albums))
+      }
+      if (res.result.albumCount) {
+        dispatch(set_albumCount(res.result.albumCount))
+      }
+    }
+  }
+}
+
+// 歌单列表
+export const get_songsheetList = (keywords, offset = 0, limit = 20) => {
+  return async dispatch => {
+    const res = await searchApi.get_search(keywords, 1000, offset, limit)
+    if (res && res.result) {
+      if (res.result.playlists) {
+        dispatch(set_songsheetList(res.result.playlists))
+      }
+      if (res.result.playlistCount) {
+        dispatch(set_songsheetCount(res.result.playlistCount))
       }
     }
   }

@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { useDispatch } from 'react-redux'
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize, formatCount } from '@/utils/formatter'
 
@@ -21,36 +21,30 @@ export default memo(function SongsheetCover(props) {
   const dispatch = useDispatch()
 
   /**
-   * other hooks
-   */
-  const history = useHistory()
-
-  /**
    * other logic
    */
-  const pushRoute = () => {
-    history.push(`/songsheet?id=${songsheetInfo.id}`)
-  }
-
-  const handleAddList = e => {
+  const handlePlayClick = e => {
+    e.preventDefault()
     dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetInfo.id, true))
   }
 
   return songsheetInfo
     ? (
       <StyledWrapper className="cpn-songsheet-cover">
-        <div className="songsheet-cover-image" onClick={pushRoute}>
-          <img className="image" src={formatUrlWithSize(songsheetInfo.picUrl || songsheetInfo.coverImgUrl, 140)} alt="" />
-          <div className="mask sprite_covor" title={songsheetInfo.name}></div>
-          <div className="heat sprite_covor" onClick={e => e.stopPropagation()}>
-            <div className="left">
-              <i className="sprite_icon count"></i>
-              <span>{formatCount(songsheetInfo.playCount)}</span>
+        <div className="songsheet-cover-image">
+          <NavLink to={`/songsheet?id=${songsheetInfo.id}`} title={songsheetInfo.name}>
+            <img className="image" src={formatUrlWithSize(songsheetInfo.picUrl || songsheetInfo.coverImgUrl, 140)} alt="" />
+            <div className="mask sprite_covor"></div>
+            <div className="heat sprite_covor" onClick={e => e.stopPropagation()}>
+              <div className="left">
+                <i className="sprite_icon count"></i>
+                <span>{formatCount(songsheetInfo.playCount)}</span>
+              </div>
+              <div className="right">
+                <i className="sprite_icon play" title="播放" onClick={e => handlePlayClick(e)}></i>
+              </div>
             </div>
-            <div className="right">
-              <i className="sprite_icon play" onClick={() => handleAddList()}></i>
-            </div>
-          </div>
+          </NavLink>
         </div>
         <div className="songsheet-cover-desc">
           <p className={'cover-name' + (creator ? ' text-nowrap' : '')}>

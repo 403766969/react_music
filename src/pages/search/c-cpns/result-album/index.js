@@ -7,16 +7,16 @@ import * as actions from '../../store/actionCreators'
 
 import Pagination from '@/components/pagination-bar'
 
-import ArtistItem from './artist-item'
+import AlbumItem from './album-item'
 
 import { StyledWrapper } from './style'
 
-export default memo(function ResultArtist(props) {
+export default memo(function ResultAlbum(props) {
 
   /**
    * props and state
    */
-  const { artistList, artistCount, keywords } = props
+  const { albumList, albumCount, keywords } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -30,7 +30,7 @@ export default memo(function ResultArtist(props) {
    */
   const handlePageChange = useCallback(page => {
     if (keywords) {
-      dispatch(actions.get_artistList(keywords, (page - 1) * 24, 24))
+      dispatch(actions.get_albumList(keywords, (page - 1) * 20, 20))
       setCurrentPage(page)
       window.scrollTo(0, 75)
     }
@@ -39,18 +39,18 @@ export default memo(function ResultArtist(props) {
   const kwMatcher = keywordsMatcher(keywords)
 
   return (
-    <StyledWrapper className="cpn-result-artist">
-      <ul className="artist-list">
+    <StyledWrapper className="cpn-result-album">
+      <ul className="album-list">
         {
-          artistList && artistList.map(item => {
+          albumList && albumList.map(item => {
             return (
-              <ArtistItem key={item.id} artistInfo={item} kwMatcher={kwMatcher} />
+              <AlbumItem key={item.id} albumInfo={item} kwMatcher={kwMatcher} />
             )
           })
         }
       </ul>
       <div className="footer">
-        <Pagination currentPage={currentPage} total={artistCount} pageSize={24} onPageChange={handlePageChange} />
+        <Pagination currentPage={currentPage} total={albumCount} pageSize={20} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

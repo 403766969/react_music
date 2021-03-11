@@ -27,47 +27,40 @@ export const StyledWrapper = styled.div`
     }
   }
 
+  .desc, .fold {
+    min-height: 18px;
+    line-height: 18px;
+    color: #666;
+  }
+
   .desc {
     overflow: hidden;
-
-    p {
-      min-height: 18px;
-      line-height: 18px;
-      color: #666;
-    }
   }
 
-  .ellipsis {
-      line-height: 18px;
-      color: #666;
-  }
+  .fold {
+    position: relative;
 
-  .control {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5px;
-
-    button {
-      position: relative;
-      margin-right: 15px;
-      padding: 0;
-      height: 23px;
-      line-height: 23px;
-      font-size: 12px;
+    .control {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin: 0;
+      padding: 0 13px 0 0;
+      font-size: inherit;
       color: #0c73c2;
       background-color: transparent;
+      transform: translateY(-50%);
       cursor: pointer;
-
 
       i {
         position: absolute;
-        right: -13px;
+        right: 0;
         top: 50%;
         width: 11px;
         height: 8px;
         background-position: ${props => props.isFold ? '-65px' : '-45px'} -520px;
         transform: translateY(-50%);
       }
-    }
+    }    
   }
 `

@@ -18,7 +18,10 @@ export default memo(function AlbumDesc(props) {
   const descRef = useCallback(node => {
     if (node && node.offsetHeight > 72) {
       setIsShowFold(true)
+    } else {
+      setIsShowFold(false)
     }
+    setIsFold(true)
   }, [])
 
   return albumDesc

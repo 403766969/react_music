@@ -10,7 +10,7 @@ export default memo(function SongsheetIntro(props) {
    */
   const { tags, description } = props
 
-  const [isShowControl, setIsShowControl] = useState(false)
+  const [isShowFold, setIsShowFold] = useState(false)
   const [isFold, setIsFold] = useState(true)
 
   /**
@@ -18,8 +18,11 @@ export default memo(function SongsheetIntro(props) {
    */
   const descRef = useCallback(node => {
     if (node && node.offsetHeight > 90) {
-      setIsShowControl(true)
+      setIsShowFold(true)
+    } else {
+      setIsShowFold(false)
     }
+    setIsFold(true)
   }, [])
 
   /**
@@ -47,7 +50,7 @@ export default memo(function SongsheetIntro(props) {
           })
         }
       </div>
-      <div className="desc" style={{ height: (isShowControl && isFold) ? '90px' : 'auto' }} ref={descRef}>
+      <div className="desc" style={{ height: (isShowFold && isFold) ? '90px' : 'auto' }} ref={descRef}>
         {
           descArr.map((item, index) => {
             return (
@@ -56,9 +59,9 @@ export default memo(function SongsheetIntro(props) {
           })
         }
       </div>
-      <p className="ellipsis" style={{ display: (isShowControl && isFold) ? 'block' : 'none' }}>...</p>
-      <div className="control" style={{ display: isShowControl ? 'flex' : 'none' }}>
-        <button onClick={() => setIsFold(!isFold)}>
+      <div className="fold" style={{ display: isShowFold ? 'block' : 'none' }}>
+        <p style={{ display: isFold ? 'block' : 'none' }}>...</p>
+        <button className="control" onClick={() => setIsFold(!isFold)}>
           {isFold ? '展开' : '收起'}
           <i className="sprite_icon2"></i>
         </button>

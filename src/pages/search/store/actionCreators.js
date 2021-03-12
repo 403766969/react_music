@@ -54,6 +54,16 @@ export const set_songsheetCount = songsheetCount => ({
   songsheetCount: songsheetCount
 })
 
+export const set_mvList = mvList => ({
+  type: actionTypes.SET_MV_LIST,
+  mvList: mvList
+})
+
+export const set_mvCount = mvCount => ({
+  type: actionTypes.SET_MV_COUNT,
+  mvCount: mvCount
+})
+
 export const set_searchSuggest = searchSuggest => ({
   type: actionTypes.SET_SEARCH_SUGGEST,
   searchSuggest: searchSuggest
@@ -118,6 +128,21 @@ export const get_songsheetList = (keywords, offset = 0, limit = 20) => {
       }
       if (res.result.playlistCount) {
         dispatch(set_songsheetCount(res.result.playlistCount))
+      }
+    }
+  }
+}
+
+// MV列表
+export const get_mvList = (keywords, offset = 0, limit = 20) => {
+  return async dispatch => {
+    const res = await searchApi.get_search(keywords, 1004, offset, limit)
+    if (res && res.result) {
+      if (res.result.mvs) {
+        dispatch(set_mvList(res.result.mvs))
+      }
+      if (res.result.mvCount) {
+        dispatch(set_mvCount(res.result.mvCount))
       }
     }
   }

@@ -25,7 +25,6 @@ export default memo(function Album(props) {
   /**
    * props and state
    */
-  // eslint-disable-next-line
   const [currentPage, setCurrentPage] = useState(1)
 
   /**

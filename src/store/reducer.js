@@ -6,9 +6,10 @@ import { reducer as DiscoverToplist_Reducer } from '@/pages/discover/c-pages/dis
 import { reducer as DiscoverSongsheet_Reducer } from '@/pages/discover/c-pages/discover-songsheet/store'
 
 import { reducer as Song_Reducer } from '@/pages/song/store'
-import { reducer as Songsheet_Reducer } from '@/pages/songsheet/store'
 import { reducer as Artist_Reducer } from '@/pages/artist/store'
 import { reducer as Album_Reducer } from '@/pages/album/store'
+import { reducer as Songsheet_Reducer } from '@/pages/songsheet/store'
+import { reducer as Mv_Reducer } from '@/pages/mv/store'
 import { reducer as Search_Reducer } from '@/pages/search/store'
 import { reducer as Player_Reducer } from '@/pages/player/store'
 
@@ -17,9 +18,10 @@ const reducer = combineReducers({
   'discover/toplist': DiscoverToplist_Reducer,
   'discover/songsheet': DiscoverSongsheet_Reducer,
   'song': Song_Reducer,
-  'songsheet': Songsheet_Reducer,
   'artist': Artist_Reducer,
   'album': Album_Reducer,
+  'songsheet': Songsheet_Reducer,
+  'mv': Mv_Reducer,
   'search': Search_Reducer,
   'player': Player_Reducer
 })

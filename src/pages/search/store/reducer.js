@@ -11,6 +11,8 @@ const initialState = Map({
   albumCount: 0,
   songsheetList: [],
   songsheetCount: 0,
+  mvList: [],
+  mvCount: 0,
   searchSuggest: null
 })
 
@@ -36,6 +38,10 @@ function reducer(state = initialState, action) {
       return state.set('songsheetList', action.songsheetList)
     case actionTypes.SET_SONGSHEET_COUNT:
       return state.set('songsheetCount', action.songsheetCount)
+    case actionTypes.SET_MV_LIST:
+      return state.set('mvList', action.mvList)
+    case actionTypes.SET_MV_COUNT:
+      return state.set('mvCount', action.mvCount)
     case actionTypes.SET_SEARCH_SUGGEST:
       return state.set('searchSuggest', action.searchSuggest)
     default:

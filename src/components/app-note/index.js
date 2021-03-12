@@ -38,7 +38,7 @@ export default memo(function BackTop() {
           <hr className="divide" />
           <p className="text">
             页面：
-             <span className="possess">推荐页、排行榜页、歌单页、歌曲详情页、歌手详情页、歌单详情页、专辑详情页、搜索页面</span>
+             <span className="possess">推荐页、排行榜页、歌单页、歌曲详情页、歌手详情页、专辑详情页、歌单详情页、MV详情页、搜索页面</span>
           </p>
           <p className="text">
             功能：

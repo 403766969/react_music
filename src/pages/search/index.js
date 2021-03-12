@@ -11,6 +11,7 @@ import ResultSong from './c-cpns/result-song'
 import ResultArtist from './c-cpns/result-artist'
 import ResultAlbum from './c-cpns/result-album'
 import ResultSongsheet from './c-cpns/result-songsheet'
+import ResultMv from './c-cpns/result-mv'
 
 import { StyledWrapper } from './style'
 
@@ -35,6 +36,8 @@ export default memo(function Search(props) {
     r_albumCount,
     r_songsheetList,
     r_songsheetCount,
+    r_mvList,
+    r_mvCount,
     r_searchSuggest
   } = useSelector(state => ({
     r_songList: state.getIn(['search', 'songList']),
@@ -45,6 +48,8 @@ export default memo(function Search(props) {
     r_albumCount: state.getIn(['search', 'albumCount']),
     r_songsheetList: state.getIn(['search', 'songsheetList']),
     r_songsheetCount: state.getIn(['search', 'songsheetCount']),
+    r_mvList: state.getIn(['search', 'mvList']),
+    r_mvCount: state.getIn(['search', 'mvCount']),
     r_searchSuggest: state.getIn(['search', 'searchSuggest'])
   }), shallowEqual)
 
@@ -67,6 +72,9 @@ export default memo(function Search(props) {
           break
         case 'songsheet':
           dispatch(actions.get_songsheetList(keywords, 0, 20))
+          break
+        case 'mv':
+          dispatch(actions.get_mvList(keywords, 0, 20))
           break
         default:
           break
@@ -102,7 +110,8 @@ export default memo(function Search(props) {
               songCount={r_songCount}
               artistCount={r_artistCount}
               albumCount={r_albumCount}
-              songsheetCount={r_songsheetCount} />
+              songsheetCount={r_songsheetCount}
+              mvCount={r_mvCount} />
           )
         }
         {
@@ -119,6 +128,9 @@ export default memo(function Search(props) {
               </div>
               <div tab="歌单" key="songsheet">
                 <ResultSongsheet songsheetList={r_songsheetList} songsheetCount={r_songsheetCount} keywords={keywords} />
+              </div>
+              <div tab="MV" key="mv">
+                <ResultMv mvList={r_mvList} mvCount={r_mvCount} keywords={keywords} />
               </div>
             </TabsArea>
           )

@@ -9,3 +9,5 @@ export const get_artist_album = (id, offset, limit) => http.get('/artist/album',
 export const get_artist_mv = (id, offset, limit) => http.get('/artist/mv', { params: { id, offset, limit } })
 
 export const get_top_artists = (offset, limit) => http.get('/top/artists', { params: { offset, limit } })
+
+export const get_artist_list = (area, type, initial, offset, limit) => http.get('/artist/list', { params: { area, type, initial, offset, limit } })

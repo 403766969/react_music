@@ -24,7 +24,7 @@ export default memo(function BackTop() {
         </div>
         <div className="content">
           <p className="text">
-            本网站为纯前端项目，使用
+            仿网易云音乐web版，使用
             <a className="link" href="https://react.docschina.org" target="_blank" rel="noreferrer"> react </a>
             框架开发
             </p>
@@ -34,15 +34,6 @@ export default memo(function BackTop() {
           </p>
           <p className="text">
             开发目的仅用于学习交流，切勿他用
-          </p>
-          <hr className="divide" />
-          <p className="text">
-            页面：
-             <span className="possess">推荐页、排行榜页、歌单页、歌曲详情页、歌手详情页、专辑详情页、歌单详情页、MV详情页、搜索页面</span>
-          </p>
-          <p className="text">
-            功能：
-             <span className="possess">歌曲播放、暂停、切换，播放模式切换，播放进度调节，音量调节</span>
           </p>
           <button className="confirm" onClick={handleConfirmClick}>知道了</button>
         </div>

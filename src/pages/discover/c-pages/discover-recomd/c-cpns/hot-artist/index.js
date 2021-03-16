@@ -22,7 +22,7 @@ export default memo(function HotArtist(props) {
           artistList && artistList.map(item => {
             return (
               <li className="item" key={item.id} >
-                <NavLink className="link" to={`/user/home?id=${item.id}`}>
+                <NavLink className="link" to={`/artist?id=${item.id}`}>
                   <img className="image" src={formatUrlWithSize(item.img1v1Url, 62)} alt={item.name} title={item.name} />
                   <div className="info">
                     <p className="name text-nowrap" title={item.name}>{item.name}</p>

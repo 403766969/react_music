@@ -44,10 +44,6 @@ export const StyledWrapper = styled.div`
         .link {
           color: #1890ff;
         }
-
-        .possess {
-          color: #999;
-        }
       }
 
       .confirm {

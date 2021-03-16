@@ -4,6 +4,7 @@ import { combineReducers } from 'redux-immutable'
 import { reducer as DiscoverRecomd_Reducer } from '@/pages/discover/c-pages/discover-recomd/store'
 import { reducer as DiscoverToplist_Reducer } from '@/pages/discover/c-pages/discover-toplist/store'
 import { reducer as DiscoverSongsheet_Reducer } from '@/pages/discover/c-pages/discover-songsheet/store'
+import { reducer as DiscoverArtist_Reducer } from '@/pages/discover/c-pages/discover-artist/store'
 
 import { reducer as Song_Reducer } from '@/pages/song/store'
 import { reducer as Artist_Reducer } from '@/pages/artist/store'
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   'discover/recomd': DiscoverRecomd_Reducer,
   'discover/toplist': DiscoverToplist_Reducer,
   'discover/songsheet': DiscoverSongsheet_Reducer,
+  'discover/artist': DiscoverArtist_Reducer,
   'song': Song_Reducer,
   'artist': Artist_Reducer,
   'album': Album_Reducer,

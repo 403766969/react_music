@@ -14,6 +14,7 @@ export default memo(function DocumentTitle() {
     player_songList,
     player_currentIndex,
     discover_toplist_chartDetail,
+    discover_artist_catTitle,
     song_songDetail,
     artist_baseInfo,
     album_albumDetail,
@@ -24,6 +25,7 @@ export default memo(function DocumentTitle() {
     player_songList: state.getIn(['player', 'songList']),
     player_currentIndex: state.getIn(['player', 'currentIndex']),
     discover_toplist_chartDetail: state.getIn(['discover/toplist', 'chartDetail']),
+    discover_artist_catTitle: state.getIn(['discover/artist', 'catTitle']),
     song_songDetail: state.getIn(['song', 'songDetail']),
     artist_baseInfo: state.getIn(['artist', 'baseInfo']),
     album_albumDetail: state.getIn(['album', 'albumDetail']),
@@ -57,6 +59,12 @@ export default memo(function DocumentTitle() {
       break
     case '/discover/songsheet':
       title = (new URLSearchParams(location.search).get('sub') || '全部') + ' - 歌单 - React Music'
+      break
+    case '/discover/artist':
+      if (discover_artist_catTitle) {
+        title = discover_artist_catTitle + ' - '
+      }
+      title = title + '歌手 - React Music'
       break
     case '/song':
       if (song_songDetail && song_songDetail.name) {

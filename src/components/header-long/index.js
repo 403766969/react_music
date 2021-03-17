@@ -30,7 +30,7 @@ const HeaderLongMemo = memo(function HeaderLong(props) {
       </div>
       <div className="right">
         {
-          more && (
+          more && more.link && (
             <Fragment>
               <NavLink to={more.link}>{more.text}</NavLink>
               <i className="icon sprite_02"></i>

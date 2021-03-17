@@ -68,11 +68,11 @@ export const get_hotRecomdList = (limit = 8) => {
 }
 
 // 新碟上架
-export const get_newAlbumList = (offset = 0, limit = 10) => {
+export const get_newAlbumList = () => {
   return async dispatch => {
-    const res = await albumApi.get_top_album(offset, limit)
+    const res = await albumApi.get_album_newest()
     if (res && res.albums) {
-      dispatch(set_newAlbumList(res.albums))
+      dispatch(set_newAlbumList(res.albums.slice(0, 10)))
     }
   }
 }

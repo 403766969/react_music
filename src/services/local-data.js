@@ -103,23 +103,23 @@ export const ChannelBar_Links = [
 export const HotRecomd_Links = [
   {
     title: '华语',
-    link: '/discover/songsheet/?sub=华语'
+    link: '/discover/songsheet?sub=华语'
   },
   {
     title: '流行',
-    link: '/discover/songsheet/?sub=流行'
+    link: '/discover/songsheet?sub=流行'
   },
   {
     title: '摇滚',
-    link: '/discover/songsheet/?sub=摇滚'
+    link: '/discover/songsheet?sub=摇滚'
   },
   {
     title: '民谣',
-    link: '/discover/songsheet/?sub=民谣'
+    link: '/discover/songsheet?sub=民谣'
   },
   {
     title: '电子',
-    link: '/discover/songsheet/?sub=电子'
+    link: '/discover/songsheet?sub=电子'
   }
 ]
 
@@ -158,6 +158,29 @@ export const HotAnchor_Links = [
     position: '独立DJ，CRI环球旅游广播特邀DJ',
     url: '/user/home?id=2313954',
     id: 2313954
+  }
+]
+
+export const allAlbumLinks = [
+  {
+    title: '全部',
+    link: '/discover/album?area=ALL'
+  },
+  {
+    title: '华语',
+    link: '/discover/album?area=ZH'
+  },
+  {
+    title: '欧美',
+    link: '/discover/album?area=EA'
+  },
+  {
+    title: '韩国',
+    link: '/discover/album?area=KR'
+  },
+  {
+    title: '日本',
+    link: '/discover/album?area=JP'
   }
 ]
 

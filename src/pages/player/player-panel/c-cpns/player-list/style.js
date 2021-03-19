@@ -86,12 +86,24 @@ export const StyledWrapper = styled.ul`
         color: #666;
       }
 
-      .link {
+      .source {
         margin-left: 20px;
         margin-right: 10px;
         width: 14px;
         height: 16px;
         background-position: -80px 0px;
+        cursor: pointer;
+
+        &:hover {
+          background-position: -80px -20px;
+        }
+
+        .link {
+          display: block;
+          width: 100%;
+          height: 100%;
+          text-indent: -9999px;
+        }
       }
     }
 

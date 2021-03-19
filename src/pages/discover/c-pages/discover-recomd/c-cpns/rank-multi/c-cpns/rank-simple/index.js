@@ -24,15 +24,18 @@ export default memo(function RankSimple(props) {
    * other logic
    */
   const handlePlay = item => {
-    dispatch(playerAction.add_simpleSong_with_songObject(item, true))
+    let sourceLink = `/discover/toplist?id=${item.id}`
+    dispatch(playerAction.add_simpleSong_with_songObject(item, sourceLink, true))
   }
 
   const handleAdd = item => {
-    dispatch(playerAction.add_simpleSong_with_songObject(item, false))
+    let sourceLink = `/discover/toplist?id=${item.id}`
+    dispatch(playerAction.add_simpleSong_with_songObject(item, sourceLink, false))
   }
 
   const handleAddList = () => {
-    dispatch(playerAction.add_multipleSong_with_trackIds(rankInfo.trackIds, true))
+    let sourceLink = `/discover/toplist?id=${rankInfo.id}`
+    dispatch(playerAction.add_multipleSong_with_trackIds(rankInfo.trackIds, sourceLink, true))
   }
 
   return rankInfo

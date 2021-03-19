@@ -44,6 +44,9 @@ export default memo(function DiscoverRecomd() {
     dispatch(actions.get_rankMultiList(3))
     dispatch(actions.get_hotArtistList(0, 5))
     window.scrollTo(0, 0)
+    return () => {
+      dispatch(actions.clear_state())
+    }
   }, [dispatch])
 
   return (

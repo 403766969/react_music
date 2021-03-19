@@ -15,7 +15,7 @@ export default memo(function AlbumDetail(props) {
   /**
    * props and state
    */
-  const { albumDetail, commentCount, songList } = props
+  const { albumDetail, commentCount, songList, sourceLink } = props
 
   /**
    * redux hooks
@@ -27,15 +27,15 @@ export default memo(function AlbumDetail(props) {
    */
   const handlePlayClick = useCallback(() => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, true))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, true))
     }
-  }, [dispatch, songList])
+  }, [dispatch, songList, sourceLink])
 
   const handleAddClick = useCallback(() => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, false))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, false))
     }
-  }, [dispatch, songList])
+  }, [dispatch, songList, sourceLink])
 
   return albumDetail
     ? (

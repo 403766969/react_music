@@ -129,7 +129,7 @@ export const toggle_song = index => {
 }
 
 // 添加单条歌曲
-export const add_simpleSong_with_songObject = (songObject, isPlay = false) => {
+export const add_simpleSong_with_songObject = (songObject, sourceLink, isPlay = false) => {
   return async (dispatch, getState) => {
     dispatch(set_messageConfig({ message: '加载中' }))
     const checkResult = await checkSimpleSong(songObject.id)
@@ -146,6 +146,7 @@ export const add_simpleSong_with_songObject = (songObject, isPlay = false) => {
       }
     } else {
       const newSongList = [...songList]
+      songObject.sourceLink = sourceLink
       newSongList.push(songObject)
       dispatch(set_songList(newSongList))
       if (isPlay) {
@@ -157,12 +158,12 @@ export const add_simpleSong_with_songObject = (songObject, isPlay = false) => {
 }
 
 // 添加单条歌曲
-export const add_simpleSong_with_songId = (songId, isPlay = false) => {
+export const add_simpleSong_with_songId = (songId, sourceLink, isPlay = false) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
     const res = await songApi.get_song_detail(songId)
     if (res && res.songs && res.songs[0]) {
-      dispatch(add_simpleSong_with_songObject(res.songs[0], isPlay))
+      dispatch(add_simpleSong_with_songObject(res.songs[0], sourceLink, isPlay))
     } else {
       dispatch(set_messageConfig({ message: '加载失败' }))
     }
@@ -170,7 +171,7 @@ export const add_simpleSong_with_songId = (songId, isPlay = false) => {
 }
 
 // 添加多条歌曲
-export const add_multipleSong_with_songList = (songList, isPlay = false) => {
+export const add_multipleSong_with_songList = (songList, sourceLink, isPlay = false) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
     dispatch(clear_List())
@@ -186,6 +187,7 @@ export const add_multipleSong_with_songList = (songList, isPlay = false) => {
       }
     }
     if (newSongList.length > 0) {
+      newSongList.forEach(item => item.sourceLink = sourceLink)
       dispatch(set_songList(newSongList))
       if (isPlay) {
         dispatch(toggle_song(0))
@@ -198,7 +200,7 @@ export const add_multipleSong_with_songList = (songList, isPlay = false) => {
 }
 
 // 添加多条歌曲
-export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
+export const add_multipleSong_with_trackIds = (trackIds, sourceLink, isPlay = false) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
     dispatch(clear_List())
@@ -210,6 +212,7 @@ export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
     const idsString = checkResult.filter(item => item.availability).map(item => item.id).join(',')
     const res = await songApi.get_song_detail(idsString)
     if (res && res.songs && res.songs.length > 0) {
+      res.songs.forEach(item => item.sourceLink = sourceLink)
       dispatch(set_songList(res.songs))
       if (isPlay) {
         dispatch(toggle_song(0))
@@ -222,12 +225,12 @@ export const add_multipleSong_with_trackIds = (trackIds, isPlay = false) => {
 }
 
 // 添加多条歌曲
-export const add_multipleSong_with_albumId = (albumId, isPlay = true) => {
+export const add_multipleSong_with_albumId = (albumId, sourceLink, isPlay = true) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
     const res = await albumApi.get_album_detail(albumId)
     if (res && res.songs) {
-      dispatch(add_multipleSong_with_songList(res.songs, isPlay))
+      dispatch(add_multipleSong_with_songList(res.songs, sourceLink, isPlay))
     } else {
       dispatch(set_messageConfig({ message: '加载失败' }))
     }
@@ -235,12 +238,12 @@ export const add_multipleSong_with_albumId = (albumId, isPlay = true) => {
 }
 
 // 添加多条歌曲
-export const add_multipleSong_with_songsheetId = (songsheetId, isPlay = true) => {
+export const add_multipleSong_with_songsheetId = (songsheetId, sourceLink, isPlay = true) => {
   return async dispatch => {
     dispatch(set_messageConfig({ message: '加载中' }))
     const res = await songsheetApi.get_playlist_detail(songsheetId)
     if (res && res.playlist && res.playlist.trackIds) {
-      dispatch(add_multipleSong_with_trackIds(res.playlist.trackIds, isPlay))
+      dispatch(add_multipleSong_with_trackIds(res.playlist.trackIds, sourceLink, isPlay))
     } else {
       dispatch(set_messageConfig({ message: '加载失败' }))
     }
@@ -300,7 +303,7 @@ const checkSimpleSong = async id => {
 const checkMultipleSong = async ids => {
   const req = []
   for (let id of ids) {
-    req.push(songApi.get_check_music(id))
+    req.push(songApi.get_check_music(id, true))
   }
   const res = await axios.all(req)
   const checkResult = []

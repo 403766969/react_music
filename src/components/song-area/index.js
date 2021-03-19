@@ -16,7 +16,7 @@ export default memo(function SongArea(props) {
 
   const { order, name, duration, artist, album } = props
 
-  const { songList } = props
+  const { songList, sourceLink } = props
 
   return (
     <StyledWrapper className="cpn-song-area">
@@ -29,7 +29,8 @@ export default memo(function SongArea(props) {
         duration={duration}
         artist={artist}
         album={album}
-        songList={songList} />
+        songList={songList}
+        sourceLink={sourceLink} />
     </StyledWrapper>
   )
 })

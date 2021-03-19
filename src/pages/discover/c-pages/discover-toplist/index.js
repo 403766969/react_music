@@ -52,10 +52,6 @@ export default memo(function DiscoverToplist(props) {
    * other hooks
    */
   useEffect(() => {
-    dispatch(actions.get_chartList())
-  }, [dispatch])
-
-  useEffect(() => {
     if (currentChartId) {
       dispatch(actions.get_chartDetail(currentChartId))
       dispatch(actions.get_hotCommentList(currentChartId, 0, 15))
@@ -74,6 +70,13 @@ export default memo(function DiscoverToplist(props) {
     }
   }, [dispatch, currentChartId])
 
+  useEffect(() => {
+    dispatch(actions.get_chartList())
+    return () => {
+      dispatch(actions.clear_state())
+    }
+  }, [dispatch])
+
   const commentRef = useRef()
 
   /**
@@ -85,21 +88,29 @@ export default memo(function DiscoverToplist(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, currentChartId])
 
+  let sourceLink = currentChartId && `/discover/toplist?id=${currentChartId}`
+
   return (
     <StyledWrapper className="page-discover-toplist wrap-v3">
       <div className="left">
-        <ChartList title="云音乐特色榜" chartList={r_chartList.slice(0, 4)} currentChartId={currentChartId} />
-        <ChartList title="全球媒体榜" chartList={r_chartList.slice(4, r_chartList.length)} currentChartId={currentChartId} />
+        <ChartList title="云音乐特色榜" chartList={r_chartList && r_chartList.slice(0, 4)} currentChartId={currentChartId} />
+        <ChartList title="全球媒体榜" chartList={r_chartList && r_chartList.slice(4, r_chartList.length)} currentChartId={currentChartId} />
       </div>
       <div className="right">
-        <ChartDetail chartDetail={r_chartDetail} chartList={r_chartList} currentChartId={currentChartId} songList={r_songList} />
+        <ChartDetail
+          chartDetail={r_chartDetail}
+          chartList={r_chartList}
+          currentChartId={currentChartId}
+          songList={r_songList}
+          sourceLink={sourceLink} />
         <SongArea
           songCount={r_songList && r_songList.length}
           playCount={r_chartDetail && r_chartDetail.playCount}
           link={r_chartDetail && `https://music.163.com/#/outchain/0/${r_chartDetail.id}`}
           showCoverCount={3}
           order name duration artist={{ width: '170px' }}
-          songList={r_songList} />
+          songList={r_songList}
+          sourceLink={sourceLink} />
         <div className="toplist-comment" ref={commentRef}>
           <CommentArea
             hotCommentList={r_hotCommentList}

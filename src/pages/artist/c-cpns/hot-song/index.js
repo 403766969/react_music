@@ -12,7 +12,7 @@ export default memo(function HotSong(props) {
   /**
    * props and state
    */
-  const { songList } = props
+  const { songList, sourceLink } = props
 
   /**
    * redux hooks
@@ -24,13 +24,13 @@ export default memo(function HotSong(props) {
    */
   const handlePlayClick = () => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, true))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, true))
     }
   }
 
   const handleAddClick = () => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, false))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, false))
     }
   }
 

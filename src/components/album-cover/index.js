@@ -31,7 +31,8 @@ export default memo(function AlbumCover(props) {
    */
   const handlePlayClick = e => {
     e.preventDefault()
-    dispatch(playerAction.add_multipleSong_with_albumId(albumInfo.id, true))
+    let sourceLink = `/album?id=${albumInfo.id}`
+    dispatch(playerAction.add_multipleSong_with_albumId(albumInfo.id, sourceLink, true))
   }
 
   return albumInfo

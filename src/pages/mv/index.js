@@ -3,7 +3,6 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
-import ChannelBar from '@/components/channel-bar'
 import CommentArea from '@/components/comment-area'
 import SimiMv from '@/components/simi-mv'
 import DownLoad from '@/components/down-load'
@@ -77,25 +76,22 @@ export default memo(function Mv(props) {
   }, [dispatch, mvId])
 
   return (
-    <StyledWrapper className="page-mv">
-      <ChannelBar />
-      <div className="content wrap-v3">
-        <div className="left">
-          <MvDetail mvDetail={r_mvDetail} mvUrl={r_mvUrl} />
-          <div className="mv-comment" ref={commentRef}>
-            <CommentArea
-              hotCommentList={r_hotCommentList}
-              newCommentList={r_newCommentList}
-              newCommentCount={r_newCommentCount}
-              currentPage={currentPage}
-              onPageChange={handlePageChange} />
-          </div>
+    <StyledWrapper className="page-mv wrap-v3">
+      <div className="left">
+        <MvDetail mvDetail={r_mvDetail} mvUrl={r_mvUrl} />
+        <div className="mv-comment" ref={commentRef}>
+          <CommentArea
+            hotCommentList={r_hotCommentList}
+            newCommentList={r_newCommentList}
+            newCommentCount={r_newCommentCount}
+            currentPage={currentPage}
+            onPageChange={handlePageChange} />
         </div>
-        <div className="right">
-          <MvDesc mvDetail={r_mvDetail} />
-          <SimiMv title="相关推荐" mvList={r_simiMvList} />
-          <DownLoad />
-        </div>
+      </div>
+      <div className="right">
+        <MvDesc mvDetail={r_mvDetail} />
+        <SimiMv title="相关推荐" mvList={r_simiMvList} />
+        <DownLoad />
       </div>
     </StyledWrapper>
   )

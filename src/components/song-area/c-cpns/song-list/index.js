@@ -15,7 +15,7 @@ export default memo(function AreaList(props) {
 
   const { order, name, duration, artist, album } = props
 
-  const { songList } = props
+  const { songList, sourceLink } = props
 
   /**
    * redux hooks
@@ -96,7 +96,11 @@ export default memo(function AreaList(props) {
           songList && songList.map((item, index) => {
             return (
               <ListItem
-                key={item.id} index={index} songInfo={item} active={item.id === currentSongId}
+                key={item.id}
+                index={index}
+                active={item.id === currentSongId}
+                songInfo={item}
+                sourceLink={sourceLink}
                 showCoverCount={showCoverCount}
                 orderConfig={orderConfig}
                 nameConfig={nameConfig}

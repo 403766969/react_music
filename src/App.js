@@ -13,6 +13,7 @@ import '@/assets/css/base.css'
 import AppHeader from '@/components/app-header'
 import AppFooter from '@/components/app-footer'
 import AppNote from '@/components/app-note'
+import ChannelBar from '@/components/channel-bar'
 import BackTop from '@/components/back-top'
 import DocumentTitle from '@/components/document-title'
 
@@ -23,6 +24,7 @@ export default memo(function App() {
     <HashRouter>
       <Provider store={store}>
         <AppHeader />
+        <ChannelBar />
         <Suspense fallback={<div>Loading...</div>}>
           {renderRoutes(routes)}
         </Suspense>

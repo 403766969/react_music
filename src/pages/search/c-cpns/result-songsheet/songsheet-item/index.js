@@ -25,7 +25,8 @@ export default memo(function SongsheetItem(props) {
    * other logic
    */
   const handlePlayClick = () => {
-    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetInfo.id, true))
+    let sourceLink = `/songsheet?id=${songsheetInfo.id}`
+    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetInfo.id, sourceLink, true))
   }
 
   return songsheetInfo

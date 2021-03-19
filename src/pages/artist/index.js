@@ -3,7 +3,6 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
-import ChannelBar from '@/components/channel-bar'
 import TabsArea from '@/components/tabs-area'
 import DownLoad from '@/components/down-load'
 
@@ -86,35 +85,30 @@ export default memo(function Artist(props) {
     }
   }, [props.history, artistId])
 
+  let sourceLink = artistId && `/artist?id=${artistId}&&type=${type}`
+
   return (
-    <StyledWrapper className="page-artist">
-      <ChannelBar />
-      {
-        artistId && (
-          <div className="content wrap-v3">
-            <div className="left">
-              <BaseInfo baseInfo={r_baseInfo} />
-              <TabsArea activeKey={type} onTabClick={handleTabClick}>
-                <div tab="热门歌曲" key="song">
-                  <HotSong songList={r_songList} />
-                </div>
-                <div tab="所有专辑" key="album">
-                  <AllAlbum artistId={artistId} albumList={r_albumList} albumCount={r_albumCount} />
-                </div>
-                <div tab="相关MV" key="mv">
-                  <RelatedMv artistId={artistId} mvList={r_mvList} mvCount={r_mvCount} />
-                </div>
-                <div tab="艺人介绍" key="desc">
-                  <DescInfo descInfo={r_descInfo} />
-                </div>
-              </TabsArea>
-            </div>
-            <div className="right">
-              <DownLoad />
-            </div>
+    <StyledWrapper className="page-artist wrap-v3">
+      <div className="left">
+        <BaseInfo baseInfo={r_baseInfo} />
+        <TabsArea activeKey={type} onTabClick={handleTabClick}>
+          <div tab="热门歌曲" key="song">
+            <HotSong songList={r_songList} sourceLink={sourceLink} />
           </div>
-        )
-      }
+          <div tab="所有专辑" key="album">
+            <AllAlbum artistId={artistId} albumList={r_albumList} albumCount={r_albumCount} />
+          </div>
+          <div tab="相关MV" key="mv">
+            <RelatedMv artistId={artistId} mvList={r_mvList} mvCount={r_mvCount} />
+          </div>
+          <div tab="艺人介绍" key="desc">
+            <DescInfo descInfo={r_descInfo} />
+          </div>
+        </TabsArea>
+      </div>
+      <div className="right">
+        <DownLoad />
+      </div>
     </StyledWrapper>
   )
 })

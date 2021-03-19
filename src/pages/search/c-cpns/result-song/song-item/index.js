@@ -14,7 +14,7 @@ export default memo(function SongItem(props) {
   /**
    * props and state
    */
-  const { songInfo, active, kwMatcher } = props
+  const { active, songInfo, sourceLink, kwMatcher } = props
 
   /**
    * redux hooks
@@ -25,11 +25,11 @@ export default memo(function SongItem(props) {
    * other logic
    */
   const handlePlayClick = () => {
-    dispatch(playerAction.add_simpleSong_with_songId(songInfo.id, true))
+    dispatch(playerAction.add_simpleSong_with_songId(songInfo.id, sourceLink, true))
   }
 
   const handleAddClick = () => {
-    dispatch(playerAction.add_simpleSong_with_songId(songInfo.id, false))
+    dispatch(playerAction.add_simpleSong_with_songId(songInfo.id, sourceLink, false))
   }
 
   /**

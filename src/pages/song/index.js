@@ -3,7 +3,6 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
-import ChannelBar from '@/components/channel-bar'
 import CommentArea from '@/components/comment-area'
 import SimiSongsheet from '@/components/simi-songsheet'
 import SimiSong from '@/components/simi-song'
@@ -77,26 +76,25 @@ export default memo(function Song(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, songId])
 
+  let sourceLink = songId && `/song?id=${songId}`
+
   return (
-    <StyleWrapper className="page-song">
-      <ChannelBar />
-      <div className="content wrap-v3">
-        <div className="left">
-          <SongDetail songDetail={r_songDetail} songLyric={r_songLyric} commentCount={r_newCommentCount} />
-          <div className="song-comment" ref={commentRef}>
-            <CommentArea
-              hotCommentList={r_hotCommentList}
-              newCommentList={r_newCommentList}
-              newCommentCount={r_newCommentCount}
-              currentPage={currentPage}
-              onPageChange={handlePageChange} />
-          </div>
+    <StyleWrapper className="page-song wrap-v3">
+      <div className="left">
+        <SongDetail songDetail={r_songDetail} songLyric={r_songLyric} commentCount={r_newCommentCount} />
+        <div className="song-comment" ref={commentRef}>
+          <CommentArea
+            hotCommentList={r_hotCommentList}
+            newCommentList={r_newCommentList}
+            newCommentCount={r_newCommentCount}
+            currentPage={currentPage}
+            onPageChange={handlePageChange} />
         </div>
-        <div className="right">
-          <SimiSongsheet title="包含这首歌的歌单" songsheetList={r_simiSongsheetList} />
-          <SimiSong title="相似歌曲" songList={r_simiSongList} />
-          <DownLoad />
-        </div>
+      </div>
+      <div className="right">
+        <SimiSongsheet title="包含这首歌的歌单" songsheetList={r_simiSongsheetList} />
+        <SimiSong title="相似歌曲" songList={r_simiSongList} sourceLink={sourceLink} />
+        <DownLoad />
       </div>
     </StyleWrapper>
   )

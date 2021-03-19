@@ -16,7 +16,7 @@ export default memo(function ResultSong(props) {
   /**
    * props and state
    */
-  const { songList, songCount, keywords } = props
+  const { songList, songCount, sourceLink, keywords } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -54,7 +54,12 @@ export default memo(function ResultSong(props) {
         {
           songList && songList.map(item => {
             return (
-              <SongItem key={item.id} songInfo={item} active={item.id === currentSongId} kwMatcher={kwMatcher} />
+              <SongItem
+                key={item.id}
+                active={item.id === currentSongId}
+                songInfo={item}
+                sourceLink={sourceLink}
+                kwMatcher={kwMatcher} />
             )
           })
         }

@@ -39,11 +39,11 @@ export default memo(function DiscoverAlbum(props) {
    * other hooks
    */
   useEffect(() => {
-    dispatch(actions.get_hotAlbumList())
     dispatch(actions.get_allAlbumList(area, (page - 1) * 35, 35))
   }, [dispatch, area, page])
 
   useEffect(() => {
+    dispatch(actions.get_hotAlbumList())
     window.scrollTo(0, 0)
     return () => {
       dispatch(actions.clear_state())

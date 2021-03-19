@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { formatDate } from '@/utils/formatter'
 
@@ -46,7 +47,17 @@ export default memo(function PlayerList(props) {
                   <ArtistDivide artistList={item.ar} />
                 </div>
                 <div className="duration">{formatDate(item.dt, 'mm:ss')}</div>
-                <div className="sprite_playlist link" title="来自榜单"></div>
+                <div className="sprite_playlist source" onClick={e => e.stopPropagation()}>
+                  {
+                    item.sourceLink
+                      ? (
+                        <NavLink className="link" to={item.sourceLink} title="来源">来源</NavLink>
+                      )
+                      : (
+                        <span className="link" title="暂无来源">暂无来源</span>
+                      )
+                  }
+                </div>
               </div>
             </li>
           )

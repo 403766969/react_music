@@ -98,44 +98,44 @@ export default memo(function Search(props) {
     }
   }, [props.history, keywords])
 
+  let sourceLink = keywords && `/search?keywords=${keywords}&type=${type}`
+
   return (
-    <StyledWrapper className="page-search">
-      <div className="content wrap-v3">
-        <SearchInput keywords={keywords} type={type} searchSuggest={r_searchSuggest} />
-        {
-          keywords && (
-            <SearchMessage
-              keywords={keywords}
-              type={type}
-              songCount={r_songCount}
-              artistCount={r_artistCount}
-              albumCount={r_albumCount}
-              songsheetCount={r_songsheetCount}
-              mvCount={r_mvCount} />
-          )
-        }
-        {
-          keywords && (
-            <TabsArea activeKey={type} onTabClick={handleTabClick}>
-              <div tab="单曲" key="song">
-                <ResultSong songList={r_songList} songCount={r_songCount} keywords={keywords} />
-              </div>
-              <div tab="歌手" key="artist">
-                <ResultArtist artistList={r_artistList} artistCount={r_artistCount} keywords={keywords} />
-              </div>
-              <div tab="专辑" key="album">
-                <ResultAlbum albumList={r_albumList} albumCount={r_albumCount} keywords={keywords} />
-              </div>
-              <div tab="歌单" key="songsheet">
-                <ResultSongsheet songsheetList={r_songsheetList} songsheetCount={r_songsheetCount} keywords={keywords} />
-              </div>
-              <div tab="MV" key="mv">
-                <ResultMv mvList={r_mvList} mvCount={r_mvCount} keywords={keywords} />
-              </div>
-            </TabsArea>
-          )
-        }
-      </div>
+    <StyledWrapper className="page-search wrap-v3">
+      <SearchInput keywords={keywords} type={type} searchSuggest={r_searchSuggest} />
+      {
+        keywords && (
+          <SearchMessage
+            keywords={keywords}
+            type={type}
+            songCount={r_songCount}
+            artistCount={r_artistCount}
+            albumCount={r_albumCount}
+            songsheetCount={r_songsheetCount}
+            mvCount={r_mvCount} />
+        )
+      }
+      {
+        keywords && (
+          <TabsArea activeKey={type} onTabClick={handleTabClick}>
+            <div tab="单曲" key="song">
+              <ResultSong songList={r_songList} songCount={r_songCount} sourceLink={sourceLink} keywords={keywords} />
+            </div>
+            <div tab="歌手" key="artist">
+              <ResultArtist artistList={r_artistList} artistCount={r_artistCount} keywords={keywords} />
+            </div>
+            <div tab="专辑" key="album">
+              <ResultAlbum albumList={r_albumList} albumCount={r_albumCount} keywords={keywords} />
+            </div>
+            <div tab="歌单" key="songsheet">
+              <ResultSongsheet songsheetList={r_songsheetList} songsheetCount={r_songsheetCount} keywords={keywords} />
+            </div>
+            <div tab="MV" key="mv">
+              <ResultMv mvList={r_mvList} mvCount={r_mvCount} keywords={keywords} />
+            </div>
+          </TabsArea>
+        )
+      }
     </StyledWrapper>
   )
 })

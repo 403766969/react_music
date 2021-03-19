@@ -15,7 +15,7 @@ export default memo(function ListItem(props) {
   /**
    * props and state
    */
-  const { index, songInfo, active } = props
+  const { index, active, songInfo, sourceLink } = props
 
   const { showCoverCount } = props
 
@@ -30,11 +30,11 @@ export default memo(function ListItem(props) {
    * other logic
    */
   const handlePlayClick = () => {
-    dispatch(playerAction.add_simpleSong_with_songObject(songInfo, true))
+    dispatch(playerAction.add_simpleSong_with_songObject(songInfo, sourceLink, true))
   }
 
   const handleAddClick = () => {
-    dispatch(playerAction.add_simpleSong_with_songObject(songInfo, false))
+    dispatch(playerAction.add_simpleSong_with_songObject(songInfo, sourceLink, false))
   }
 
   /**

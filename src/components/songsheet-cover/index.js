@@ -25,7 +25,8 @@ export default memo(function SongsheetCover(props) {
    */
   const handlePlayClick = e => {
     e.preventDefault()
-    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetInfo.id, true))
+    let sourceLink = `/songsheet?id=${songsheetInfo.id}`
+    dispatch(playerAction.add_multipleSong_with_songsheetId(songsheetInfo.id, sourceLink, true))
   }
 
   return songsheetInfo

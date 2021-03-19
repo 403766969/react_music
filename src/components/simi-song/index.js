@@ -14,7 +14,7 @@ export default memo(function SimiSong(props) {
   /**
    * props and state
    */
-  const { title, songList } = props
+  const { title, songList, sourceLink } = props
 
   /**
    * redux hooks
@@ -25,11 +25,11 @@ export default memo(function SimiSong(props) {
    * other logic
    */
   const handlePlay = item => {
-    dispatch(playerActions.add_simpleSong_with_songId(item.id, true))
+    dispatch(playerActions.add_simpleSong_with_songId(item.id, sourceLink, true))
   }
 
   const handleAdd = item => {
-    dispatch(playerActions.add_simpleSong_with_songId(item.id, false))
+    dispatch(playerActions.add_simpleSong_with_songId(item.id, sourceLink, false))
   }
 
   return (

@@ -17,7 +17,7 @@ export default memo(function SongsheetDetail(props) {
   /**
    * props and state
    */
-  const { songsheetDetail, songList } = props
+  const { songsheetDetail, songList, sourceLink } = props
 
   /**
    * redux hooks
@@ -29,19 +29,15 @@ export default memo(function SongsheetDetail(props) {
    */
   const handlePlayClick = useCallback(() => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, true))
-    } else if (songsheetDetail) {
-      dispatch(playerActions.add_multipleSong_with_trackIds(songsheetDetail.trackIds, true))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, true))
     }
-  }, [dispatch, songsheetDetail, songList])
+  }, [dispatch, songList, sourceLink])
 
   const handleAddClick = useCallback(() => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, false))
-    } else if (songsheetDetail) {
-      dispatch(playerActions.add_multipleSong_with_trackIds(songsheetDetail.trackIds, false))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, false))
     }
-  }, [dispatch, songsheetDetail, songList])
+  }, [dispatch, songList, sourceLink])
 
   return songsheetDetail
     ? (

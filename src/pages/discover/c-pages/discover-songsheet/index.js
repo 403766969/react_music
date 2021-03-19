@@ -42,10 +42,6 @@ export default memo(function Songsheet(props) {
   const history = useHistory()
 
   useEffect(() => {
-    dispatch(actions.get_catSubList())
-  }, [dispatch])
-
-  useEffect(() => {
     dispatch(actions.get_songsheetList(currentSub, currentOrder, (currentPage - 1) * 35, 35))
     window.scrollTo(0, 0)
     return () => {
@@ -55,6 +51,13 @@ export default memo(function Songsheet(props) {
       }))
     }
   }, [dispatch, currentSub, currentOrder, currentPage])
+
+  useEffect(() => {
+    dispatch(actions.get_catSubList())
+    return () => {
+      dispatch(actions.clear_state())
+    }
+  }, [dispatch])
 
   /**
    * other logic

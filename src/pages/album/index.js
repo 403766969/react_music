@@ -3,7 +3,6 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from './store/actionCreators'
 
-import ChannelBar from '@/components/channel-bar'
 import SongArea from '@/components/song-area'
 import CommentArea from '@/components/comment-area'
 import SimiAlbum from '@/components/simi-album'
@@ -75,31 +74,35 @@ export default memo(function Album(props) {
     window.scrollTo(0, commentRef.current.offsetTop + 100)
   }, [dispatch, albumId])
 
+  let sourceLink = albumId && `/album?id=${albumId}`
+
   return (
-    <StyledWrapper className="page-album">
-      <ChannelBar />
-      <div className="content wrap-v3">
-        <div className="left">
-          <AlbumDetail albumDetail={r_albumDetail} commentCount={r_newCommentCount} songList={r_songList} />
-          <AlbumDesc albumDesc={r_albumDetail && r_albumDetail.description} />
-          <SongArea
-            songCount={r_songList && r_songList.length}
-            songList={r_songList}
-            link={r_albumDetail && `https://music.163.com/#/outchain/1/${r_albumDetail && r_albumDetail.id}`}
-            order name duration artist={{ width: '130px' }} />
-          <div className="album-comment" ref={commentRef}>
-            <CommentArea
-              hotCommentList={r_hotCommentList}
-              newCommentList={r_newCommentList}
-              newCommentCount={r_newCommentCount}
-              currentPage={currentPage}
-              onPageChange={handlePageChange} />
-          </div>
+    <StyledWrapper className="page-album wrap-v3">
+      <div className="left">
+        <AlbumDetail
+          albumDetail={r_albumDetail}
+          commentCount={r_newCommentCount}
+          songList={r_songList}
+          sourceLink={sourceLink} />
+        <AlbumDesc albumDesc={r_albumDetail && r_albumDetail.description} />
+        <SongArea
+          songCount={r_songList && r_songList.length}
+          link={r_albumDetail && `https://music.163.com/#/outchain/1/${r_albumDetail && r_albumDetail.id}`}
+          order name duration artist={{ width: '130px' }}
+          songList={r_songList}
+          sourceLink={sourceLink} />
+        <div className="album-comment" ref={commentRef}>
+          <CommentArea
+            hotCommentList={r_hotCommentList}
+            newCommentList={r_newCommentList}
+            newCommentCount={r_newCommentCount}
+            currentPage={currentPage}
+            onPageChange={handlePageChange} />
         </div>
-        <div className="right">
-          <SimiAlbum title="Ta的其他热门专辑" albumList={r_relatedAlbumList} />
-          <DownLoad />
-        </div>
+      </div>
+      <div className="right">
+        <SimiAlbum title="Ta的其他热门专辑" albumList={r_relatedAlbumList} />
+        <DownLoad />
       </div>
     </StyledWrapper>
   )

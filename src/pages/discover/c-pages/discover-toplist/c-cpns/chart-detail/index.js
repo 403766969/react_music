@@ -14,7 +14,7 @@ export default memo(function ChartDetail(props) {
   /**
    * props and state
    */
-  const { chartDetail, chartList, currentChartId, songList } = props
+  const { chartDetail, chartList, currentChartId, songList, sourceLink } = props
 
   /**
    * redux hooks
@@ -26,19 +26,15 @@ export default memo(function ChartDetail(props) {
    */
   const handlePlayClick = useCallback(() => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, true))
-    } else if (chartDetail) {
-      dispatch(playerActions.add_multipleSong_with_trackIds(chartDetail.trackIds, true))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, true))
     }
-  }, [dispatch, chartDetail, songList])
+  }, [dispatch, songList, sourceLink])
 
   const handleAddClick = useCallback(() => {
     if (songList && songList.length > 0) {
-      dispatch(playerActions.add_multipleSong_with_songList(songList, false))
-    } else if (chartDetail) {
-      dispatch(playerActions.add_multipleSong_with_trackIds(chartDetail.trackIds, false))
+      dispatch(playerActions.add_multipleSong_with_songList(songList, sourceLink, false))
     }
-  }, [dispatch, chartDetail, songList])
+  }, [dispatch, songList, sourceLink])
 
   /**
    * render logic

@@ -35,7 +35,7 @@ export const StyledWrapper = styled.li`
       display: inline-block;
       position: relative;
       padding-left: 22px;
-      padding-right: 25px;
+      padding-right: 30px;
       max-width: 100%;
 
       .play-btn {
@@ -69,7 +69,7 @@ export const StyledWrapper = styled.li`
       .mv {
         display: block;
         position: absolute;
-        right: 0;
+        right: 5px;
         top: 50%;
         width: 23px;
         height: 17px;
@@ -93,7 +93,7 @@ export const StyledWrapper = styled.li`
     display: none;
     justify-content: center;
     align-items: center;
-    margin: 0 10px;
+    margin: 0 10px 0 5px;
 
     .btn {
       display: block;

@@ -89,7 +89,7 @@ export const get_rankMultiList = (rankCount = 3) => {
     const reqB = []
     const reqCount = (rankCount <= resA.list.length) ? rankCount : resA.list.length
     for (let i = 0; i < reqCount; i++) {
-      reqB.push(songsheetApi.get_playlist_detail(resA.list[i].id))
+      reqB.push(songsheetApi.get_playlist_detail(resA.list[i].id, true))
     }
     const resB = await axios.all(reqB)
 
@@ -107,7 +107,7 @@ export const get_rankMultiList = (rankCount = 3) => {
 
     const reqC = []
     for (let i = 0; i < rankList.length; i++) {
-      reqC.push(songApi.get_song_detail(rankList[i].trackIds.slice(0, 10).map(item => item.id).join(',')))
+      reqC.push(songApi.get_song_detail(rankList[i].trackIds.slice(0, 10).map(item => item.id).join(','), true))
     }
     const resC = await axios.all(reqC)
 

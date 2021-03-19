@@ -29,11 +29,13 @@ export default memo(function SongDetail(props) {
    * other logic
    */
   const handlePlayClick = useCallback(() => {
-    dispatch(playerActions.add_simpleSong_with_songObject(songDetail, true))
+    let sourceLink = `/song?id=${songDetail.id}`
+    dispatch(playerActions.add_simpleSong_with_songObject(songDetail, sourceLink, true))
   }, [dispatch, songDetail])
 
   const handleAddClick = useCallback(() => {
-    dispatch(playerActions.add_simpleSong_with_songObject(songDetail, false))
+    let sourceLink = `/song?id=${songDetail.id}`
+    dispatch(playerActions.add_simpleSong_with_songObject(songDetail, sourceLink, false))
   }, [dispatch, songDetail])
 
   /**

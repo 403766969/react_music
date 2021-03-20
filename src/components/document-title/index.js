@@ -66,6 +66,9 @@ export default memo(function DocumentTitle() {
       }
       title = title + '歌手 - React Music'
       break
+    case '/discover/djradio':
+      title = '主播电台 - React Music'
+      break
     case '/discover/album':
       title = '新碟上架 - React Music'
       break

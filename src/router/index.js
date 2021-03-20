@@ -15,7 +15,7 @@ const Errorp = lazy(() => import('@/pages/errorp'))
 const DiscoverRecomd = lazy(() => import('@/pages/discover/c-pages/discover-recomd'))
 const DiscoverToplist = lazy(() => import('@/pages/discover/c-pages/discover-toplist'))
 const DiscoverSongsheet = lazy(() => import('@/pages/discover/c-pages/discover-songsheet'))
-// const DiscoverDjradio = lazy(() => import('@/pages/discover/c-pages/discover-djradio'))
+const DiscoverDjradio = lazy(() => import('@/pages/discover/c-pages/discover-djradio'))
 const DiscoverArtist = lazy(() => import('@/pages/discover/c-pages/discover-artist'))
 const DiscoverAlbum = lazy(() => import('@/pages/discover/c-pages/discover-album'))
 
@@ -52,10 +52,7 @@ const routes = [
       },
       {
         path: '/discover/djradio',
-        // component: DiscoverDjradio,
-        render: () => (
-          <Redirect to='/errorp' />
-        )
+        component: DiscoverDjradio
       },
       {
         path: '/discover/artist',

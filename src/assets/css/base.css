@@ -8,6 +8,7 @@ body, html, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, header, menu, sectio
 
 body {
   min-width: 1100px;
+  overflow-y: scroll;
 }
 
 ul, ol, li {
@@ -56,6 +57,15 @@ body, textarea, select, input, button {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.text-nowrap-l2 {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .wrap-v1 {

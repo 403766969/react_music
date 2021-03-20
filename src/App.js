@@ -16,6 +16,7 @@ import AppNote from '@/components/app-note'
 import ChannelBar from '@/components/channel-bar'
 import BackTop from '@/components/back-top'
 import DocumentTitle from '@/components/document-title'
+import LoadingSpin from '@/components/loading-spin'
 
 import Player from '@/pages/player'
 
@@ -25,7 +26,7 @@ export default memo(function App() {
       <Provider store={store}>
         <AppHeader />
         <ChannelBar />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingSpin text="加载中..." />}>
           {renderRoutes(routes)}
         </Suspense>
         <AppFooter />

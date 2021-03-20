@@ -33,14 +33,16 @@ export default memo(function DiscoverToplist(props) {
     r_songList,
     r_hotCommentList,
     r_newCommentList,
-    r_newCommentCount
+    r_newCommentCount,
+    r_isLoading
   } = useSelector(state => ({
     r_chartList: state.getIn(['discover/toplist', 'chartList']),
     r_chartDetail: state.getIn(['discover/toplist', 'chartDetail']),
     r_songList: state.getIn(['discover/toplist', 'songList']),
     r_hotCommentList: state.getIn(['discover/toplist', 'hotCommentList']),
     r_newCommentList: state.getIn(['discover/toplist', 'newCommentList']),
-    r_newCommentCount: state.getIn(['discover/toplist', 'newCommentCount'])
+    r_newCommentCount: state.getIn(['discover/toplist', 'newCommentCount']),
+    r_isLoading: state.getIn(['discover/toplist', 'isLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -65,7 +67,8 @@ export default memo(function DiscoverToplist(props) {
         songList: [],
         hotCommentList: [],
         newCommentList: [],
-        newCommentCount: 0
+        newCommentCount: 0,
+        isLoading: false
       }))
     }
   }, [dispatch, currentChartId])
@@ -109,6 +112,7 @@ export default memo(function DiscoverToplist(props) {
           link={r_chartDetail && `https://music.163.com/#/outchain/0/${r_chartDetail.id}`}
           showCoverCount={3}
           order name duration artist={{ width: '170px' }}
+          isLoading={r_isLoading}
           songList={r_songList}
           sourceLink={sourceLink} />
         <div className="toplist-comment" ref={commentRef}>

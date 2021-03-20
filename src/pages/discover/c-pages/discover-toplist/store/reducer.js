@@ -8,7 +8,8 @@ const initialState = Map({
   songList: [],
   hotCommentList: [],
   newCommentList: [],
-  newCommentCount: 0
+  newCommentCount: 0,
+  isLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -29,6 +30,8 @@ function reducer(state = initialState, action) {
       return state.set('newCommentList', action.newCommentList)
     case actionTypes.SET_NEW_COMMENT_COUNT:
       return state.set('newCommentCount', action.newCommentCount)
+    case actionTypes.SET_IS_LOADING:
+      return state.set('isLoading', action.isLoading)
     default:
       return state
   }

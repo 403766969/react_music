@@ -45,16 +45,24 @@ export const set_relatedSongsheetList = relatedSongsheetList => ({
   relatedSongsheetList: relatedSongsheetList
 })
 
+export const set_isLoading = isLoading => ({
+  type: actionTypes.SET_IS_LOADING,
+  isLoading: isLoading
+})
+
 /**
  * 异步请求
  */
 // 歌单详情
 export const get_songsheetDetail = songsheetId => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await songsheetApi.get_playlist_detail(songsheetId)
     if (res && res.playlist) {
       dispatch(set_songsheetDetail(res.playlist))
       dispatch(get_songList(res.playlist.trackIds))
+    } else {
+      dispatch(set_isLoading(false))
     }
   }
 }
@@ -67,6 +75,7 @@ export const get_songList = trackIds => {
     if (res && res.songs) {
       dispatch(set_songList(res.songs))
     }
+    dispatch(set_isLoading(false))
   }
 }
 

@@ -16,6 +16,8 @@ export default memo(function SongArea(props) {
 
   const { order, name, duration, artist, album } = props
 
+  const { isLoading } = props
+
   const { songList, sourceLink } = props
 
   return (
@@ -29,6 +31,7 @@ export default memo(function SongArea(props) {
         duration={duration}
         artist={artist}
         album={album}
+        isLoading={isLoading}
         songList={songList}
         sourceLink={sourceLink} />
     </StyledWrapper>

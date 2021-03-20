@@ -1,6 +1,8 @@
 import React, { memo } from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
 
+import LoadingSpin from '@/components/loading-spin'
+
 import ListHeader from './c-cpn/list-header'
 import ListItem from './c-cpn/list-item'
 
@@ -14,6 +16,8 @@ export default memo(function AreaList(props) {
   const { isShowHeader = true, showCoverCount = 0 } = props
 
   const { order, name, duration, artist, album } = props
+
+  const { isLoading } = props
 
   const { songList, sourceLink } = props
 
@@ -89,6 +93,11 @@ export default memo(function AreaList(props) {
             durationConfig={durationConfig}
             artistConfig={artistConfig}
             albumConfig={albumConfig} />
+        )
+      }
+      {
+        isLoading && (
+          <LoadingSpin text="加载中..." />
         )
       }
       <ul className="list-content">

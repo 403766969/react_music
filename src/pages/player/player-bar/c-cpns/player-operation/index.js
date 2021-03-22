@@ -51,18 +51,18 @@ export default memo(function PlayerOperation(props) {
       </div>
       <div className="operation-right">
         <i className="divide sprite_playbar"></i>
-        <button className="sprite_playbar btn volume" title="音量" onClick={() => setIsShowVolume(!isShowVolume)}>
+        <button className="sprite_playbar btn volume" title="音量(Ctrl+↑/↓)" onClick={() => setIsShowVolume(!isShowVolume)}>
           <div className={`sprite_playbar volume-bar ${isShowVolume ? '' : 'hidden'}`} onClick={e => e.stopPropagation()}>
             <Slider vertical value={volume} onChange={handleVolumeChange} onAfterChange={handleVolumeAfterChange} />
           </div>
         </button>
         <button
           className={`sprite_playbar btn mode ${playerModeClass}`}
-          title={playerModeTitle}
+          title={`${playerModeTitle}(Ctrl+M)`}
           onClick={handlePlayerModeToggle}></button>
         <button
           className="sprite_playbar btn list"
-          title="播放列表"
+          title="播放列表(Ctrl+L)"
           onClick={handleListClick}>
           {songCount <= 99 ? songCount : '99+'}
         </button>

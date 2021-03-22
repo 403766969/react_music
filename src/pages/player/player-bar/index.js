@@ -1,7 +1,7 @@
 import React, { memo, useRef, useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-import { audioStatusTypes, playerModeTypes } from '@/common/constants'
+import { audioStatusTypes, playerModeTypes, keycodes, playerShortcuts } from '@/common/constants'
 
 import * as actions from '../store/actionCreators'
 
@@ -277,6 +277,60 @@ export default memo(function PlayerBar(props) {
       setDuration(0)
     }
   }, [dispatch, audioReset, audioPause, audioPlay, currentSong])
+
+  // 快捷键
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.ctrlKey && playerShortcuts.includes(e.keyCode)) {
+        e.preventDefault()
+      }
+    }
+    const handleKeyUp = e => {
+      if (e.ctrlKey && playerShortcuts.includes(e.keyCode)) {
+        switch (e.keyCode) {
+          case keycodes.KEYCODE_M:
+            handlePlayerModeToggle()
+            break
+          case keycodes.KEYCODE_L:
+            handleListClick()
+            break
+          case keycodes.KEYCODE_P:
+            handlePlayClick()
+            break
+          case keycodes.KEYCODE_LEFT:
+            handlePrevClick()
+            break
+          case keycodes.KEYCODE_RIGHT:
+            handleNextClick()
+            break
+          case keycodes.KEYCODE_UP:
+            setVolume(volume => {
+              let newVolume = ((volume + 10) <= 100) ? (volume + 10) : 100
+              audioRef.current.volume = newVolume / 100
+              window.localStorage.setItem('volume', newVolume)
+              return newVolume
+            })
+            break
+          case keycodes.KEYCODE_DOWN:
+            setVolume(volume => {
+              let newVolume = ((volume - 10) >= 0) ? (volume - 10) : 0
+              audioRef.current.volume = newVolume / 100
+              window.localStorage.setItem('volume', newVolume)
+              return newVolume
+            })
+            break
+          default:
+            break
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keyup', handleKeyUp)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [handlePlayerModeToggle, handleListClick, handlePlayClick, handlePrevClick, handleNextClick])
 
   return (
     <StyledWrapper className="cpn-player-bar">

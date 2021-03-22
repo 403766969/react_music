@@ -9,6 +9,26 @@ export const playerModeTypes = {
   RANDOM_PLAY: 'RANDOM_PLAY'
 }
 
+export const keycodes = {
+  KEYCODE_LEFT: 37,
+  KEYCODE_UP: 38,
+  KEYCODE_RIGHT: 39,
+  KEYCODE_DOWN: 40,
+  KEYCODE_L: 76,
+  KEYCODE_M: 77,
+  KEYCODE_P: 80
+}
+
+export const playerShortcuts = [
+  keycodes.KEYCODE_LEFT,
+  keycodes.KEYCODE_UP,
+  keycodes.KEYCODE_RIGHT,
+  keycodes.KEYCODE_DOWN,
+  keycodes.KEYCODE_L,
+  keycodes.KEYCODE_M,
+  keycodes.KEYCODE_P
+]
+
 export const emojiUrl = {
   '[大笑]': require('@/assets/img/emoji/emoji_大笑.png').default,
   '[可爱]': require('@/assets/img/emoji/emoji_可爱.png').default,

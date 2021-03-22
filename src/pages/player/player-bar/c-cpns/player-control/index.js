@@ -15,9 +15,9 @@ export default memo(function PlayerControl(props) {
 
   return (
     <StyledWrapper className="cpn-player-control" isPlaying={audioStatus === audioStatusTypes.AUDIO_PLAY}>
-      <button className="sprite_playbar btn prev" title="上一首(ctrl+←)" onClick={handlePrevClick}></button>
-      <button className="sprite_playbar btn play" title="播放/暂停(ctrl+p)" onClick={handlePlayClick}></button>
-      <button className="sprite_playbar btn next" title="下一首(ctrl+→)" onClick={handleNextClick}></button>
+      <button className="sprite_playbar btn prev" title="上一首(Ctrl+←)" onClick={handlePrevClick}></button>
+      <button className="sprite_playbar btn play" title="播放/暂停(Ctrl+P)" onClick={handlePlayClick}></button>
+      <button className="sprite_playbar btn next" title="下一首(Ctrl+→)" onClick={handleNextClick}></button>
     </StyledWrapper>
   )
 })

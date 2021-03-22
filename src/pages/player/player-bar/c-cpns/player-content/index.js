@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { formatUrlWithSize, formatDate } from '@/utils/formatter'
@@ -14,28 +14,9 @@ export default memo(function PlayerContent(props) {
   /**
    * props and state
    */
-  const { audio, currentSong, currentTime, setCurrentTime, progessValue, setProgessValue, setIsDragging } = props
+  const { currentSong, duration, currentTime, progessValue } = props
 
-  const duration = (currentSong && currentSong.dt) || 0
-
-  /**
-   * other logic
-   */
-  // 拖动进度条
-  const handleSliderChange = useCallback(value => {
-    setIsDragging(true)
-    setCurrentTime(duration * value / 100)
-    setProgessValue(value)
-  }, [setIsDragging, setCurrentTime, setProgessValue, duration])
-
-  // 拖动进度条完成
-  const handleAfterSliderChange = useCallback(value => {
-    if (audio) {
-      audio.currentTime = duration * value / 100 / 1000
-      setCurrentTime(duration * value / 100)
-      setIsDragging(false)
-    }
-  }, [setCurrentTime, setIsDragging, audio, duration])
+  const { handleSliderChange, handleSliderAfterChange } = props
 
   return (
     <StyledWrapper className="cpn-player-content">
@@ -82,7 +63,7 @@ export default memo(function PlayerContent(props) {
               tipFormatter={null}
               value={progessValue}
               onChange={handleSliderChange}
-              onAfterChange={handleAfterSliderChange}
+              onAfterChange={handleSliderAfterChange}
               disabled={currentSong === undefined || currentSong === null} />
           </div>
           <div className="song-time">

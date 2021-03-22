@@ -131,11 +131,11 @@ export const toggle_song = index => {
 // 添加单条歌曲
 export const add_simpleSong_with_songObject = (songObject, sourceLink, isPlay = false) => {
   return async (dispatch, getState) => {
-    dispatch(set_messageConfig({ message: '加载中' }))
+    dispatch(set_messageConfig({ message: '加载中', duration: 3000 }))
     const checkResult = await checkSimpleSong(songObject.id)
     if (!checkResult) {
       AppMessage.show('该歌曲暂时无法播放')
-      dispatch(set_messageConfig({ message: '加载失败' }))
+      dispatch(set_messageConfig({ message: '加载失败', duration: 3000 }))
       return
     }
     const songList = getState().getIn(['player', 'songList'])
@@ -153,19 +153,19 @@ export const add_simpleSong_with_songObject = (songObject, sourceLink, isPlay = 
         dispatch(toggle_song(newSongList.length - 1))
       }
     }
-    dispatch(set_messageConfig({ message: '已添加到播放列表' }))
+    dispatch(set_messageConfig({ message: '已添加到播放列表', duration: 3000 }))
   }
 }
 
 // 添加单条歌曲
 export const add_simpleSong_with_songId = (songId, sourceLink, isPlay = false) => {
   return async dispatch => {
-    dispatch(set_messageConfig({ message: '加载中' }))
+    dispatch(set_messageConfig({ message: '加载中', duration: 3000 }))
     const res = await songApi.get_song_detail(songId)
     if (res && res.songs && res.songs[0]) {
       dispatch(add_simpleSong_with_songObject(res.songs[0], sourceLink, isPlay))
     } else {
-      dispatch(set_messageConfig({ message: '加载失败' }))
+      dispatch(set_messageConfig({ message: '加载失败', duration: 3000 }))
     }
   }
 }
@@ -173,7 +173,7 @@ export const add_simpleSong_with_songId = (songId, sourceLink, isPlay = false) =
 // 添加多条歌曲
 export const add_multipleSong_with_songList = (songList, sourceLink, isPlay = false) => {
   return async dispatch => {
-    dispatch(set_messageConfig({ message: '加载中' }))
+    dispatch(set_messageConfig({ message: '加载中', duration: 3000 }))
     dispatch(clear_List())
     const ids = []
     for (let item of songList) {
@@ -192,9 +192,9 @@ export const add_multipleSong_with_songList = (songList, sourceLink, isPlay = fa
       if (isPlay) {
         dispatch(toggle_song(0))
       }
-      dispatch(set_messageConfig({ message: '已添加到播放列表' }))
+      dispatch(set_messageConfig({ message: '已添加到播放列表', duration: 3000 }))
     } else {
-      dispatch(set_messageConfig({ message: '加载失败' }))
+      dispatch(set_messageConfig({ message: '加载失败', duration: 3000 }))
     }
   }
 }
@@ -202,7 +202,7 @@ export const add_multipleSong_with_songList = (songList, sourceLink, isPlay = fa
 // 添加多条歌曲
 export const add_multipleSong_with_trackIds = (trackIds, sourceLink, isPlay = false) => {
   return async dispatch => {
-    dispatch(set_messageConfig({ message: '加载中' }))
+    dispatch(set_messageConfig({ message: '加载中', duration: 3000 }))
     dispatch(clear_List())
     const ids = []
     for (let item of trackIds) {
@@ -217,9 +217,9 @@ export const add_multipleSong_with_trackIds = (trackIds, sourceLink, isPlay = fa
       if (isPlay) {
         dispatch(toggle_song(0))
       }
-      dispatch(set_messageConfig({ message: '已添加到播放列表' }))
+      dispatch(set_messageConfig({ message: '已添加到播放列表', duration: 3000 }))
     } else {
-      dispatch(set_messageConfig({ message: '加载失败' }))
+      dispatch(set_messageConfig({ message: '加载失败', duration: 3000 }))
     }
   }
 }
@@ -227,12 +227,12 @@ export const add_multipleSong_with_trackIds = (trackIds, sourceLink, isPlay = fa
 // 添加多条歌曲
 export const add_multipleSong_with_albumId = (albumId, sourceLink, isPlay = true) => {
   return async dispatch => {
-    dispatch(set_messageConfig({ message: '加载中' }))
+    dispatch(set_messageConfig({ message: '加载中', duration: 3000 }))
     const res = await albumApi.get_album_detail(albumId)
     if (res && res.songs) {
       dispatch(add_multipleSong_with_songList(res.songs, sourceLink, isPlay))
     } else {
-      dispatch(set_messageConfig({ message: '加载失败' }))
+      dispatch(set_messageConfig({ message: '加载失败', duration: 3000 }))
     }
   }
 }
@@ -240,12 +240,12 @@ export const add_multipleSong_with_albumId = (albumId, sourceLink, isPlay = true
 // 添加多条歌曲
 export const add_multipleSong_with_songsheetId = (songsheetId, sourceLink, isPlay = true) => {
   return async dispatch => {
-    dispatch(set_messageConfig({ message: '加载中' }))
+    dispatch(set_messageConfig({ message: '加载中', duration: 3000 }))
     const res = await songsheetApi.get_playlist_detail(songsheetId)
     if (res && res.playlist && res.playlist.trackIds) {
       dispatch(add_multipleSong_with_trackIds(res.playlist.trackIds, sourceLink, isPlay))
     } else {
-      dispatch(set_messageConfig({ message: '加载失败' }))
+      dispatch(set_messageConfig({ message: '加载失败', duration: 3000 }))
     }
   }
 }
@@ -266,12 +266,11 @@ export const remove_song = targetIndex => {
     } else if (targetIndex === currentIndex && !newSongList[targetIndex]) {
       newIndex = targetIndex - 1
     }
-    const newState = {
+    dispatch(merge_state({
       songList: newSongList,
       lyricList: newLyricList,
       currentIndex: newIndex
-    }
-    dispatch(merge_state(newState))
+    }))
     dispatch(update_lyricList())
   }
 }
@@ -279,10 +278,12 @@ export const remove_song = targetIndex => {
 // 清空播放列表
 export const clear_List = () => {
   return dispatch => {
-    dispatch(set_songList([]))
-    dispatch(set_lyricList([]))
-    dispatch(set_currentIndex(-1))
-    dispatch(set_currentRow(-1))
+    dispatch(merge_state({
+      songList: [],
+      lyricList: [],
+      currentIndex: -1,
+      currentRow: -1
+    }))
   }
 }
 
@@ -315,20 +316,4 @@ const checkMultipleSong = async ids => {
     }
   }
   return checkResult
-}
-
-// 初始化播放列表
-export const init_store = () => {
-  return dispatch => {
-    const s_songList = window.localStorage.getItem('songList')
-    const s_currentIndex = window.localStorage.getItem('currentIndex')
-    const songList = s_songList ? JSON.parse(s_songList) : []
-    const currentIndex = s_currentIndex ? parseInt(JSON.parse(s_currentIndex)) : -1
-    if (songList.length > 0) {
-      dispatch(set_songList(songList))
-    }
-    if (songList[currentIndex]) {
-      dispatch(toggle_song(currentIndex))
-    }
-  }
 }

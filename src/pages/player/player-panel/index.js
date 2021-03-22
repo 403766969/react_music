@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect } from 'react'
+import React, { memo, useRef, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from '../store/actionCreators'
@@ -39,6 +39,32 @@ export default memo(function PlayerPanel(props) {
   const dispatch = useDispatch()
 
   /**
+   * player header
+   */
+  // 清除播放列表
+  const handleClearClick = useCallback(() => {
+    dispatch(actions.clear_List())
+  }, [dispatch])
+
+  // 隐藏播放列表
+  const handleCloseClick = useCallback(() => {
+    setIsShowPanel(false)
+  }, [setIsShowPanel])
+
+  /**
+   * player list
+   */
+  // 切换歌曲
+  const handleItemClick = useCallback(index => {
+    dispatch(actions.toggle_song(index))
+  }, [dispatch])
+
+  // 删除歌曲
+  const handleRemoveClick = useCallback(index => {
+    dispatch(actions.remove_song(index))
+  }, [dispatch])
+
+  /**
    * other hooks
    */
   const lyricRef = useRef()
@@ -58,11 +84,19 @@ export default memo(function PlayerPanel(props) {
 
   return (
     <StyledWrapper className="cpn-player-panel">
-      <PlayerHeader dispatch={dispatch} actions={actions} songList={r_songList} currentSong={currentSong} setIsShowPanel={setIsShowPanel} />
+      <PlayerHeader
+        songCount={(r_songList && r_songList.length) || 0}
+        currentSongName={currentSong && currentSong.name}
+        handleClearClick={handleClearClick}
+        handleCloseClick={handleCloseClick} />
       <div className="content">
         <div className="left">
           <ScrollArea wheelOffset={55} updateTrigger={r_songList}>
-            <PlayerList dispatch={dispatch} actions={actions} songList={r_songList} currentIndex={r_currentIndex} />
+            <PlayerList
+              songList={r_songList}
+              currentIndex={r_currentIndex}
+              handleItemClick={handleItemClick}
+              handleRemoveClick={handleRemoveClick} />
           </ScrollArea>
         </div>
         <div className="right">

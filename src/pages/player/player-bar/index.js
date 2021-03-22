@@ -19,14 +19,22 @@ export default memo(function PlayerBar(props) {
    */
   const { setIsShowPanel } = props
 
+  const [playerId, setPlayerId] = useState(() => {
+    const s_playerId = window.localStorage.getItem('playerId')
+    return s_playerId || ''
+  })
   const [playerMode, setPlayerMode] = useState(() => {
     const s_playerMode = window.localStorage.getItem('playerMode')
     return s_playerMode || playerModeTypes.LIST_LOOP
   })
+  const [volume, setVolume] = useState(() => {
+    const s_volume = window.localStorage.getItem('volume')
+    return s_volume ? Number(s_volume) : 50
+  })
+  const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [progessValue, setProgessValue] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
-  const [playerId, setPlayerId] = useState(null)
 
   /**
    * redux hooks
@@ -36,26 +44,31 @@ export default memo(function PlayerBar(props) {
     r_lyricList,
     r_currentIndex,
     r_currentRow,
-    r_audioStatus,
-    r_messageConfig
+    r_audioStatus
   } = useSelector(state => ({
     r_songList: state.getIn(['player', 'songList']),
     r_lyricList: state.getIn(['player', 'lyricList']),
     r_currentIndex: state.getIn(['player', 'currentIndex']),
     r_currentRow: state.getIn(['player', 'currentRow']),
-    r_audioStatus: state.getIn(['player', 'audioStatus']),
-    r_messageConfig: state.getIn(['player', 'messageConfig']),
+    r_audioStatus: state.getIn(['player', 'audioStatus'])
   }), shallowEqual)
+
+  const dispatch = useDispatch()
 
   const currentSong = r_songList && r_songList[r_currentIndex]
   const currentLyric = r_lyricList && r_lyricList[r_currentIndex]
 
-  const dispatch = useDispatch()
-
   /**
-   * audio logic
+   * audio
    */
   const audioRef = useRef()
+
+  // 重置
+  const audioReset = useCallback(() => {
+    audioRef.current.currentTime = 0
+    setCurrentTime(0)
+    setProgessValue(0)
+  }, [])
 
   // 暂停
   const audioPause = useCallback(() => {
@@ -67,67 +80,52 @@ export default memo(function PlayerBar(props) {
   const audioPlay = useCallback(() => {
     audioRef.current.play()
       .then(() => {
-        dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_PLAY))
-        const newPlayerId = new Date().getTime().toString()
-        window.localStorage.setItem('playerId', newPlayerId)
+        const newPlayerId = Date.now().toString()
         setPlayerId(newPlayerId)
+        window.localStorage.setItem('playerId', newPlayerId)
+        dispatch(actions.set_audioStatus(audioStatusTypes.AUDIO_PLAY))
       })
       .catch(() => {
         audioPause()
       })
   }, [dispatch, audioPause])
 
-  // 归零
-  const backZero = useCallback(() => {
-    audioRef.current.currentTime = 0
-    setCurrentTime(0)
-    setProgessValue(0)
-  }, [])
-
-  // 根据播放模式计算下一首歌曲
-  const getNextIndex = useCallback(offset => {
-    const songCount = r_songList.length
-    let nextIndex = r_currentIndex
-    switch (playerMode) {
-      case playerModeTypes.RANDOM_PLAY:
-        while (nextIndex === r_currentIndex) {
-          nextIndex = Math.floor(Math.random() * songCount)
-        }
-        break
-      default:
-        nextIndex = nextIndex + offset
-        if (nextIndex < 0) {
-          nextIndex = songCount - 1
-        } else if (nextIndex > songCount - 1) {
-          nextIndex = 0
-        }
-        break
-    }
-    return nextIndex
-  }, [playerMode, r_currentIndex, r_songList.length])
-
-  // 上一首/下一首
+  // 切换歌曲
   const songToggle = useCallback(offset => {
-    const songCount = r_songList.length
+    const songCount = (r_songList && r_songList.length) || 0
     if (songCount <= 0) {
       return
     } else if (songCount === 1) {
       dispatch(actions.toggle_song(0))
-    } else if (songCount > 1) {
-      const nextIndex = getNextIndex(offset)
+    } else {
+      let nextIndex = r_currentIndex
+      switch (playerMode) {
+        case playerModeTypes.RANDOM_PLAY:
+          while (nextIndex === r_currentIndex) {
+            nextIndex = Math.floor(Math.random() * songCount)
+          }
+          break
+        default:
+          nextIndex = nextIndex + offset
+          if (nextIndex < 0) {
+            nextIndex = songCount - 1
+          } else if (nextIndex > songCount - 1) {
+            nextIndex = 0
+          }
+          break
+      }
       dispatch(actions.toggle_song(nextIndex))
     }
-  }, [dispatch, getNextIndex, r_songList.length])
+  }, [dispatch, playerMode, r_songList, r_currentIndex])
 
-  // 随播放时间更新进度
+  // 播放进度
   const handleTimeUpdate = e => {
-    // 除当前页面之外所有页面停止播放
+    // 其他页面停止播放
     const s_playerId = window.localStorage.getItem('playerId')
     if (s_playerId && s_playerId !== playerId) {
       audioPause()
       return
     }
-    const duration = (currentSong && currentSong.dt) || 0
     const audio_currentTime = e.target.currentTime * 1000
     // 时间进度
     if (!isDragging) {
@@ -161,7 +159,7 @@ export default memo(function PlayerBar(props) {
   const handleEnded = () => {
     audioPause()
     if (playerMode === playerModeTypes.SINGLE_LOOP) {
-      backZero()
+      audioReset()
       audioPlay()
     } else {
       songToggle(1)
@@ -169,47 +167,140 @@ export default memo(function PlayerBar(props) {
   }
 
   /**
+   * player control
+   */
+  // 播放/暂停
+  const handlePlayClick = useCallback(() => {
+    if (audioRef.current.paused) {
+      audioPlay()
+    } else {
+      audioPause()
+    }
+  }, [audioPause, audioPlay])
+
+  // 上一首
+  const handlePrevClick = useCallback(() => {
+    songToggle(-1)
+  }, [songToggle])
+
+  // 下一首
+  const handleNextClick = useCallback(() => {
+    songToggle(1)
+  }, [songToggle])
+
+  /**
+   * player content
+   */
+  // 拖动进度条
+  const handleSliderChange = useCallback(value => {
+    setDuration(dt => {
+      setIsDragging(true)
+      setCurrentTime(dt * value / 100)
+      setProgessValue(value)
+      return dt
+    })
+  }, [])
+
+  // 释放进度条
+  const handleSliderAfterChange = useCallback(value => {
+    setDuration(dt => {
+      audioRef.current.currentTime = dt * value / 100 / 1000
+      setCurrentTime(dt * value / 100)
+      setIsDragging(false)
+      return dt
+    })
+  }, [])
+
+  /**
+   * player operation
+   */
+  // 切换播放模式
+  const handlePlayerModeToggle = useCallback(() => {
+    let newPlayerMode = ''
+    switch (playerMode) {
+      case playerModeTypes.LIST_LOOP:
+        newPlayerMode = playerModeTypes.SINGLE_LOOP
+        break
+      case playerModeTypes.SINGLE_LOOP:
+        newPlayerMode = playerModeTypes.RANDOM_PLAY
+        break
+      case playerModeTypes.RANDOM_PLAY:
+        newPlayerMode = playerModeTypes.LIST_LOOP
+        break
+      default:
+        newPlayerMode = playerModeTypes.LIST_LOOP
+        break
+    }
+    setPlayerMode(newPlayerMode)
+    window.localStorage.setItem('playerMode', newPlayerMode)
+  }, [playerMode])
+
+  // 拖动音量
+  const handleVolumeChange = useCallback(value => {
+    audioRef.current.volume = value / 100
+    setVolume(value)
+  }, [])
+
+  // 释放音量
+  const handleVolumeAfterChange = useCallback(value => {
+    window.localStorage.setItem('volume', value)
+  }, [])
+
+  // 显示/隐藏播放列表
+  const handleListClick = useCallback(() => {
+    setIsShowPanel(isShowPanel => {
+      return !isShowPanel
+    })
+  }, [setIsShowPanel])
+
+  /**
    * other hooks
    */
+  // 初始化音量
+  useEffect(() => {
+    setVolume(volume => {
+      audioRef.current.volume = volume / 100
+      return volume
+    })
+  }, [])
+
   // 当前歌曲改变时
   useEffect(() => {
-    setPlayerId(window.localStorage.getItem('playerId'))
     audioPause()
-    backZero()
+    audioReset()
     if (currentSong) {
       audioRef.current.src = `https://music.163.com/song/media/outer/url?id=${currentSong.id}.mp3`
+      setDuration(currentSong.dt)
       audioPlay()
     } else {
       audioRef.current.src = ''
+      setDuration(0)
     }
-  }, [dispatch, audioPause, audioPlay, backZero, currentSong])
+  }, [dispatch, audioReset, audioPause, audioPlay, currentSong])
 
   return (
     <StyledWrapper className="cpn-player-bar">
       <PlayerControl
-        audio={audioRef.current}
         audioStatus={r_audioStatus}
-        audioPause={audioPause}
-        audioPlay={audioPlay}
-        songToggle={songToggle} />
+        handlePlayClick={handlePlayClick}
+        handlePrevClick={handlePrevClick}
+        handleNextClick={handleNextClick} />
       <PlayerContent
-        audio={audioRef.current}
         currentSong={currentSong}
+        duration={duration}
         currentTime={currentTime}
-        setCurrentTime={setCurrentTime}
         progessValue={progessValue}
-        setProgessValue={setProgessValue}
-        setIsDragging={setIsDragging} />
+        handleSliderChange={handleSliderChange}
+        handleSliderAfterChange={handleSliderAfterChange} />
       <PlayerOperation
-        audio={audioRef.current}
-        songList={r_songList}
         playerMode={playerMode}
-        setPlayerMode={setPlayerMode}
-        setIsShowPanel={setIsShowPanel} />
-      <PlayerMessage
-        dispatch={dispatch}
-        actions={actions}
-        messageConfig={r_messageConfig} />
+        volume={volume}
+        songCount={(r_songList && r_songList.length) || 0}
+        handlePlayerModeToggle={handlePlayerModeToggle}
+        handleVolumeChange={handleVolumeChange}
+        handleVolumeAfterChange={handleVolumeAfterChange}
+        handleListClick={handleListClick} />
+      <PlayerMessage />
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleEnded}></audio>
     </StyledWrapper>
   )

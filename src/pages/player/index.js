@@ -8,7 +8,7 @@ import PlayerPanel from './player-panel'
 
 import { StyledWrapper } from './style'
 
-export default memo(function PlayerTest() {
+export default memo(function Player() {
 
   /**
    * props and state
@@ -29,7 +29,16 @@ export default memo(function PlayerTest() {
    */
   // 初始化播放列表
   useEffect(() => {
-    dispatch(actions.init_store())
+    const s_songList = window.localStorage.getItem('songList')
+    const s_currentIndex = window.localStorage.getItem('currentIndex')
+    const songList = s_songList ? JSON.parse(s_songList) : []
+    const currentIndex = s_currentIndex ? parseInt(JSON.parse(s_currentIndex)) : -1
+    if (songList.length > 0) {
+      dispatch(actions.set_songList(songList))
+    }
+    if (songList[currentIndex]) {
+      dispatch(actions.toggle_song(currentIndex))
+    }
   }, [dispatch])
 
   /**
@@ -46,7 +55,7 @@ export default memo(function PlayerTest() {
   }
 
   return (
-    <StyledWrapper className={`page-player-test sprite_playbar ${(isShowPanel || isLocked) ? 'show' : ''}`}>
+    <StyledWrapper className={`page-player sprite_playbar ${(isShowPanel || isLocked) ? 'show' : ''}`}>
       <PlayerBar setIsShowPanel={setIsShowPanel} />
       <div className="player-panel-wrapper" style={{ visibility: isShowPanel ? 'visible' : 'hidden' }}>
         <PlayerPanel setIsShowPanel={setIsShowPanel} />

@@ -12,15 +12,9 @@ export default memo(function PlayerList(props) {
   /**
    * props and state
    */
-  const { dispatch, actions, songList, currentIndex } = props
+  const { songList, currentIndex } = props
 
-  /**
-   * other logic
-   */
-  const hadleRemoveClick = (index, e) => {
-    e.stopPropagation()
-    dispatch(actions.remove_song(index))
-  }
+  const { handleItemClick, handleRemoveClick } = props
 
   return (
     <StyledWrapper className="cpn-player-list">
@@ -30,18 +24,18 @@ export default memo(function PlayerList(props) {
             <li
               key={item.id}
               className={`list-item ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => dispatch(actions.toggle_song(index))}>
+              onClick={() => handleItemClick(index)}>
               <div className="left">
                 <div className="song text-nowrap">
                   {item.name}
                 </div>
               </div>
               <div className="right">
-                <div className="operation">
+                <div className="operation" onClick={e => e.stopPropagation()}>
                   <i className="sprite_playlist favor" title="收藏"></i>
                   <i className="sprite_playlist share" title="分享"></i>
                   <i className="sprite_playlist download" title="下载"></i>
-                  <i className="sprite_playlist remove" title="删除" onClick={e => hadleRemoveClick(index, e)}></i>
+                  <i className="sprite_playlist remove" title="删除" onClick={() => handleRemoveClick(index)}></i>
                 </div>
                 <div className="artists text-nowrap" onClick={e => e.stopPropagation()}>
                   <ArtistDivide artistList={item.ar} />

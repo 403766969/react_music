@@ -3,7 +3,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 import * as actions from '../store/actionCreators'
 
-import ScrollArea from '@/components/scroll-area'
+import ScrollContainer from '@/components/scroll-container'
 
 import PlayerHeader from './c-cpns/player-header'
 import PlayerList from './c-cpns/player-list'
@@ -68,17 +68,17 @@ export default memo(function PlayerPanel(props) {
    * other hooks
    */
   const lyricRef = useRef()
-  const scrollAreaRef = useRef()
+  const scrollRef = useRef()
 
   useEffect(() => {
     if (r_currentRow < 0) {
-      scrollAreaRef.current.scrollToByPrecent(0, 0)
+      scrollRef.current.scrollToByPrecent(0, 0)
     } else {
       const lyricArray = lyricRef.current.children
       const itemHeight = lyricArray[r_currentRow].offsetHeight
       const itemTop = lyricArray[r_currentRow].offsetTop
-      const targetTop = (itemTop + itemHeight / 2 - 109) * -1
-      scrollAreaRef.current.scrollToByContentTop(targetTop, 0.6)
+      const targetTop = itemTop + itemHeight / 2 - 109
+      scrollRef.current.scrollToByContentPosition(targetTop, 0.6)
     }
   }, [r_currentRow])
 
@@ -91,18 +91,18 @@ export default memo(function PlayerPanel(props) {
         handleCloseClick={handleCloseClick} />
       <div className="content">
         <div className="left">
-          <ScrollArea wheelOffset={55} updateTrigger={r_songList}>
+          <ScrollContainer wheelOffset={55} updateTrigger={r_songList}>
             <PlayerList
               songList={r_songList}
               currentIndex={r_currentIndex}
               handleItemClick={handleItemClick}
               handleRemoveClick={handleRemoveClick} />
-          </ScrollArea>
+          </ScrollContainer>
         </div>
         <div className="right">
-          <ScrollArea wheelOffset={45} updateTrigger={currentLyric} ref={scrollAreaRef}>
+          <ScrollContainer wheelOffset={45} updateTrigger={currentLyric} ref={scrollRef}>
             <PlayerLyric currentLyric={currentLyric} currentRow={r_currentRow} ref={lyricRef} />
-          </ScrollArea>
+          </ScrollContainer>
         </div>
       </div>
     </StyledWrapper>

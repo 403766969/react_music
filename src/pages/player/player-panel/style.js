@@ -21,7 +21,7 @@ export const StyledWrapper = styled.div`
       width: 0;
       height: 100%;
 
-      &>.cpn-scroll-area {
+      &>.cpn-scroll-container {
         &>.scroll-main {
           padding: 21px 35px;
         }

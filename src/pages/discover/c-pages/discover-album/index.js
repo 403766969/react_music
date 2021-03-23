@@ -26,11 +26,13 @@ export default memo(function DiscoverAlbum(props) {
   const {
     r_hotAlbumList,
     r_allAlbumList,
-    r_allAlbumCount
+    r_allAlbumCount,
+    r_allAlbumListIsLoading
   } = useSelector(state => ({
     r_hotAlbumList: state.getIn(['discover/album', 'hotAlbumList']),
     r_allAlbumList: state.getIn(['discover/album', 'allAlbumList']),
-    r_allAlbumCount: state.getIn(['discover/album', 'allAlbumCount'])
+    r_allAlbumCount: state.getIn(['discover/album', 'allAlbumCount']),
+    r_allAlbumListIsLoading: state.getIn(['discover/album', 'allAlbumListIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -38,6 +40,10 @@ export default memo(function DiscoverAlbum(props) {
   /**
    * other hooks
    */
+  useEffect(() => {
+    dispatch(actions.set_allAlbumCount(0))
+  }, [dispatch, area])
+
   useEffect(() => {
     dispatch(actions.get_allAlbumList(area, (page - 1) * 35, 35))
   }, [dispatch, area, page])
@@ -66,7 +72,7 @@ export default memo(function DiscoverAlbum(props) {
     <StyledWrapper className="page-discover-album wrap-v3">
       <HotAlbum hotAlbumList={r_hotAlbumList} />
       <div ref={posRef}>
-        <AllAlbum allAlbumList={r_allAlbumList} allAlbumCount={r_allAlbumCount} />
+        <AllAlbum allAlbumList={r_allAlbumList} allAlbumCount={r_allAlbumCount} isLoading={r_allAlbumListIsLoading} />
       </div>
       <div className="footer">
         <Pagination currentPage={page} total={r_allAlbumCount} pageSize={35} onPageChange={handlePageChange} />

@@ -102,7 +102,7 @@ export default memo(function AreaList(props) {
       }
       <ul className="list-content">
         {
-          songList && songList.map((item, index) => {
+          !isLoading && songList && songList.map((item, index) => {
             return (
               <ListItem
                 key={item.id}

@@ -5,7 +5,8 @@ import { actionTypes } from './constants'
 const initialState = Map({
   hotAlbumList: [],
   allAlbumList: [],
-  allAlbumCount: 0
+  allAlbumCount: 0,
+  allAlbumListIsLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -20,6 +21,8 @@ function reducer(state = initialState, action) {
       return state.set('allAlbumList', action.allAlbumList)
     case actionTypes.SET_ALL_ALBUM_COUNT:
       return state.set('allAlbumCount', action.allAlbumCount)
+    case actionTypes.SET_ALL_ALBUM_LIST_IS_LOADING:
+      return state.set('allAlbumListIsLoading', action.allAlbumListIsLoading)
     default:
       return state
   }

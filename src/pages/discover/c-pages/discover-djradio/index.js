@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import * as actions from './store/actionCreators'
 
-import Pagination from '@/components/pagination-bar'
+import PaginationBar from '@/components/pagination-bar'
 
 import CateList from './c-cpns/cate-list'
 import RecomdRadio from './c-cpns/recomd-radio'
@@ -28,12 +28,14 @@ export default memo(function DiscoverDjradio(props) {
     r_cateList,
     r_recomdRadioList,
     r_hotRadioList,
-    r_hotRadioCount
+    r_hotRadioCount,
+    r_hotRadioListIsLoading
   } = useSelector(state => ({
     r_cateList: state.getIn(['discover/djradio', 'cateList']),
     r_recomdRadioList: state.getIn(['discover/djradio', 'recomdRadioList']),
     r_hotRadioList: state.getIn(['discover/djradio', 'hotRadioList']),
-    r_hotRadioCount: state.getIn(['discover/djradio', 'hotRadioCount'])
+    r_hotRadioCount: state.getIn(['discover/djradio', 'hotRadioCount']),
+    r_hotRadioListIsLoading: state.getIn(['discover/djradio', 'hotRadioListIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -42,10 +44,15 @@ export default memo(function DiscoverDjradio(props) {
    * other hooks
    */
   useEffect(() => {
-    if (category) {
-      dispatch(actions.get_recomdRadioList(category))
-      dispatch(actions.get_hotRadioList(category, (page - 1) * 20, 20))
+    dispatch(actions.get_recomdRadioList(category))
+    return () => {
+      dispatch(actions.set_recomdRadioList([]))
+      dispatch(actions.set_hotRadioCount(0))
     }
+  }, [dispatch, category])
+
+  useEffect(() => {
+    dispatch(actions.get_hotRadioList(category, (page - 1) * 20, 20))
   }, [dispatch, category, page])
 
   useEffect(() => {
@@ -73,10 +80,10 @@ export default memo(function DiscoverDjradio(props) {
       <CateList cateList={r_cateList} category={category} />
       <RecomdRadio recomdRadioList={r_recomdRadioList} />
       <div ref={posRef}>
-        <HotRadio hotRadioList={r_hotRadioList} hotRadioCount={r_hotRadioCount} />
+        <HotRadio hotRadioList={r_hotRadioList} hotRadioCount={r_hotRadioCount} isLoading={r_hotRadioListIsLoading} />
       </div>
       <div className="footer">
-        <Pagination currentPage={page} total={r_hotRadioCount} pageSize={20} onPageChange={handlePageChange} />
+        <PaginationBar currentPage={page} total={r_hotRadioCount} pageSize={20} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

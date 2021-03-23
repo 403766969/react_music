@@ -181,11 +181,11 @@ export const add_multipleSong_with_songList = (songList, sourceLink, isPlay = fa
     }
     const checkResult = await checkMultipleSong(ids)
     const newSongList = []
-    for (let i = 0; i < checkResult.length; i++) {
-      if (checkResult[i].availability) {
-        newSongList.push(songList[i])
+    checkResult.forEach((item, index) => {
+      if (item && item.success) {
+        newSongList.push(songList[index])
       }
-    }
+    })
     if (newSongList.length > 0) {
       newSongList.forEach(item => item.sourceLink = sourceLink)
       dispatch(set_songList(newSongList))
@@ -209,7 +209,13 @@ export const add_multipleSong_with_trackIds = (trackIds, sourceLink, isPlay = fa
       ids.push(item.id)
     }
     const checkResult = await checkMultipleSong(ids)
-    const idsString = checkResult.filter(item => item.availability).map(item => item.id).join(',')
+    const idsString = ids.filter((item, index) => {
+      if (checkResult[index] && checkResult[index].success) {
+        return true
+      } else {
+        return false
+      }
+    }).join(',')
     const res = await songApi.get_song_detail(idsString)
     if (res && res.songs && res.songs.length > 0) {
       res.songs.forEach(item => item.sourceLink = sourceLink)
@@ -292,10 +298,14 @@ export const clear_List = () => {
  */
 // 检查单条歌曲可用性
 const checkSimpleSong = async id => {
-  const res = await songApi.get_check_music(id)
-  if (res && res.success) {
-    return true
-  } else {
+  try {
+    const res = await songApi.get_check_music(id)
+    if (res && res.success) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
     return false
   }
 }
@@ -304,16 +314,9 @@ const checkSimpleSong = async id => {
 const checkMultipleSong = async ids => {
   const req = []
   for (let id of ids) {
-    req.push(songApi.get_check_music(id, true))
+    let p = songApi.get_check_music(id, true).catch(() => undefined)
+    req.push(p)
   }
   const res = await axios.all(req)
-  const checkResult = []
-  for (let i = 0; i < res.length; i++) {
-    if (res[i] && res[i].success) {
-      checkResult.push({ id: ids[i], availability: true })
-    } else {
-      checkResult.push({ id: ids[i], availability: false })
-    }
-  }
-  return checkResult
+  return res
 }

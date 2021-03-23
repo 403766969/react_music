@@ -29,6 +29,11 @@ export const set_allAlbumCount = allAlbumCount => ({
   allAlbumCount: allAlbumCount
 })
 
+export const set_allAlbumListIsLoading = allAlbumListIsLoading => ({
+  type: actionTypes.SET_ALL_ALBUM_LIST_IS_LOADING,
+  allAlbumListIsLoading: allAlbumListIsLoading
+})
+
 /**
  * 异步请求
  */
@@ -45,6 +50,7 @@ export const get_hotAlbumList = () => {
 // 全部新碟
 export const get_allAlbumList = (area = 'ALL', offset = 0, limit = 35) => {
   return async dispatch => {
+    dispatch(set_allAlbumListIsLoading(true))
     const res = await albumApi.get_top_album(area, offset, limit)
     if (res) {
       if (res.albums) {
@@ -54,5 +60,6 @@ export const get_allAlbumList = (area = 'ALL', offset = 0, limit = 35) => {
         dispatch(set_allAlbumCount(res.total))
       }
     }
+    dispatch(set_allAlbumListIsLoading(false))
   }
 }

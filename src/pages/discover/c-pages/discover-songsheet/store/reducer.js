@@ -5,7 +5,8 @@ import { actionTypes } from './constants'
 const initialState = Map({
   catSubList: [],
   songsheetList: [],
-  songsheetCount: 0
+  songsheetCount: 0,
+  songsheetListIsLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -20,6 +21,8 @@ function reducer(state = initialState, action) {
       return state.set('songsheetList', action.songsheetList)
     case actionTypes.SET_SONGSHEET_COUNT:
       return state.set('songsheetCount', action.songsheetCount)
+    case actionTypes.SET_SONGSHEET_LIST_IS_LOADING:
+      return state.set('songsheetListIsLoading', action.songsheetListIsLoading)
     default:
       return state
   }

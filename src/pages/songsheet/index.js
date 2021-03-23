@@ -36,7 +36,8 @@ export default memo(function Songsheet(props) {
     r_newCommentList,
     r_newCommentCount,
     r_relatedSongsheetList,
-    r_isLoading
+    r_songsheetDetailIsLoading,
+    r_songListIsLoading
   } = useSelector(state => ({
     r_songsheetDetail: state.getIn(['songsheet', 'songsheetDetail']),
     r_songList: state.getIn(['songsheet', 'songList']),
@@ -44,7 +45,8 @@ export default memo(function Songsheet(props) {
     r_newCommentList: state.getIn(['songsheet', 'newCommentList']),
     r_newCommentCount: state.getIn(['songsheet', 'newCommentCount']),
     r_relatedSongsheetList: state.getIn(['songsheet', 'relatedSongsheetList']),
-    r_isLoading: state.getIn(['songsheet', 'isLoading'])
+    r_songsheetDetailIsLoading: state.getIn(['songsheet', 'songsheetDetailIsLoading']),
+    r_songListIsLoading: state.getIn(['songsheet', 'songListIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -82,13 +84,17 @@ export default memo(function Songsheet(props) {
   return (
     <StyledWrapper className="page-songsheet wrap-v3">
       <div className="left">
-        <SongsheetDetail songsheetDetail={r_songsheetDetail} songList={r_songList} sourceLink={sourceLink} />
+        <SongsheetDetail
+          songsheetDetail={r_songsheetDetail}
+          songList={r_songList}
+          sourceLink={sourceLink}
+          isLoading={r_songsheetDetailIsLoading} />
         <SongArea
           songCount={r_songList && r_songList.length}
           playCount={r_songsheetDetail && r_songsheetDetail.playCount}
           link={r_songsheetDetail && `https://music.163.com/#/outchain/0/${r_songsheetDetail && r_songsheetDetail.id}`}
           order name duration artist album
-          isLoading={r_isLoading}
+          isLoading={r_songListIsLoading}
           songList={r_songList}
           sourceLink={sourceLink} />
         <div className="songsheet-comment" ref={commentRef}>

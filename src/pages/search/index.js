@@ -38,7 +38,8 @@ export default memo(function Search(props) {
     r_songsheetCount,
     r_mvList,
     r_mvCount,
-    r_searchSuggest
+    r_searchSuggest,
+    r_isLoading
   } = useSelector(state => ({
     r_songList: state.getIn(['search', 'songList']),
     r_songCount: state.getIn(['search', 'songCount']),
@@ -50,7 +51,8 @@ export default memo(function Search(props) {
     r_songsheetCount: state.getIn(['search', 'songsheetCount']),
     r_mvList: state.getIn(['search', 'mvList']),
     r_mvCount: state.getIn(['search', 'mvCount']),
-    r_searchSuggest: state.getIn(['search', 'searchSuggest'])
+    r_searchSuggest: state.getIn(['search', 'searchSuggest']),
+    r_isLoading: state.getIn(['search', 'isLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -119,19 +121,19 @@ export default memo(function Search(props) {
         keywords && (
           <TabsArea activeKey={type} onTabClick={handleTabClick}>
             <div tab="单曲" key="song">
-              <ResultSong songList={r_songList} songCount={r_songCount} sourceLink={sourceLink} keywords={keywords} />
+              <ResultSong songList={r_songList} songCount={r_songCount} sourceLink={sourceLink} keywords={keywords} isLoading={r_isLoading} />
             </div>
             <div tab="歌手" key="artist">
-              <ResultArtist artistList={r_artistList} artistCount={r_artistCount} keywords={keywords} />
+              <ResultArtist artistList={r_artistList} artistCount={r_artistCount} keywords={keywords} isLoading={r_isLoading} />
             </div>
             <div tab="专辑" key="album">
-              <ResultAlbum albumList={r_albumList} albumCount={r_albumCount} keywords={keywords} />
+              <ResultAlbum albumList={r_albumList} albumCount={r_albumCount} keywords={keywords} isLoading={r_isLoading} />
             </div>
             <div tab="歌单" key="songsheet">
-              <ResultSongsheet songsheetList={r_songsheetList} songsheetCount={r_songsheetCount} keywords={keywords} />
+              <ResultSongsheet songsheetList={r_songsheetList} songsheetCount={r_songsheetCount} keywords={keywords} isLoading={r_isLoading} />
             </div>
             <div tab="MV" key="mv">
-              <ResultMv mvList={r_mvList} mvCount={r_mvCount} keywords={keywords} />
+              <ResultMv mvList={r_mvList} mvCount={r_mvCount} keywords={keywords} isLoading={r_isLoading} />
             </div>
           </TabsArea>
         )

@@ -44,6 +44,11 @@ export const set_simiMvList = simiMvList => ({
   simiMvList: simiMvList
 })
 
+export const set_mvDetailIsLoading = mvDetailIsLoading => ({
+  type: actionTypes.SET_MV_DETAIL_IS_LOADING,
+  mvDetailIsLoading: mvDetailIsLoading
+})
+
 
 /**
  * 异步请求
@@ -51,10 +56,12 @@ export const set_simiMvList = simiMvList => ({
 // MV详情
 export const get_mvDetail = mvId => {
   return async dispatch => {
+    dispatch(set_mvDetailIsLoading(true))
     const res = await mvApi.get_mv_detail(mvId)
     if (res && res.data) {
       dispatch(set_mvDetail(res.data))
     }
+    dispatch(set_mvDetailIsLoading(false))
   }
 }
 

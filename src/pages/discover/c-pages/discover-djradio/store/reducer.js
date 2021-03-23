@@ -6,7 +6,8 @@ const initialState = Map({
   cateList: [],
   recomdRadioList: [],
   hotRadioList: [],
-  hotRadioCount: 0
+  hotRadioCount: 0,
+  hotRadioListIsLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -23,6 +24,8 @@ function reducer(state = initialState, action) {
       return state.set('hotRadioList', action.hotRadioList)
     case actionTypes.SET_HOT_RADIO_COUNT:
       return state.set('hotRadioCount', action.hotRadioCount)
+    case actionTypes.SET_HOT_RADIO_LIST_IS_LOADING:
+      return state.set('hotRadioListIsLoading', action.hotRadioListIsLoading)
     default:
       return state
   }

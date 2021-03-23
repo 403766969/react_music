@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import * as actions from './store/actionCreators'
 
-import Pagination from '@/components/pagination-bar'
+import PaginationBar from '@/components/pagination-bar'
 
 import CatSub from './c-cpns/cat-sub'
 import SongsheetList from './c-cpns/songsheet-list'
@@ -27,11 +27,13 @@ export default memo(function Songsheet(props) {
   const {
     r_catSubList,
     r_songsheetList,
-    r_songsheetCount
+    r_songsheetCount,
+    r_songsheetListIsLoading
   } = useSelector(state => ({
     r_catSubList: state.getIn(['discover/songsheet', 'catSubList']),
     r_songsheetList: state.getIn(['discover/songsheet', 'songsheetList']),
-    r_songsheetCount: state.getIn(['discover/songsheet', 'songsheetCount'])
+    r_songsheetCount: state.getIn(['discover/songsheet', 'songsheetCount']),
+    r_songsheetListIsLoading: state.getIn(['discover/songsheet', 'songsheetListIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -42,14 +44,12 @@ export default memo(function Songsheet(props) {
   const history = useHistory()
 
   useEffect(() => {
+    dispatch(actions.set_songsheetCount(0))
+  }, [dispatch, currentSub])
+
+  useEffect(() => {
     dispatch(actions.get_songsheetList(currentSub, currentOrder, (currentPage - 1) * 35, 35))
     window.scrollTo(0, 0)
-    return () => {
-      dispatch(actions.merge_state({
-        songsheetList: [],
-        songsheetCount: 0
-      }))
-    }
   }, [dispatch, currentSub, currentOrder, currentPage])
 
   useEffect(() => {
@@ -79,10 +79,10 @@ export default memo(function Songsheet(props) {
         </div>
       </div>
       <div className="content">
-        <SongsheetList songsheetList={r_songsheetList} />
+        <SongsheetList songsheetList={r_songsheetList} isLoading={r_songsheetListIsLoading} />
       </div>
       <div className="footer">
-        <Pagination currentPage={currentPage} total={r_songsheetCount} pageSize={35} onPageChange={handlePageChange} />
+        <PaginationBar currentPage={currentPage} total={r_songsheetCount} pageSize={35} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

@@ -51,16 +51,23 @@ export const set_simiSongList = simiSongList => ({
   simiSongList: simiSongList
 })
 
+export const set_songDetailIsLoading = songDetailIsLoading => ({
+  type: actionTypes.SET_SONG_DETAIL_IS_LOADING,
+  songDetailIsLoading: songDetailIsLoading
+})
+
 /**
  * 异步请求
  */
 // 歌曲详情
 export const get_songDetail = songId => {
   return async dispatch => {
+    dispatch(set_songDetailIsLoading(true))
     const res = await songApi.get_song_detail(songId)
     if (res && res.songs && res.songs[0]) {
       dispatch(set_songDetail(res.songs[0]))
     }
+    dispatch(set_songDetailIsLoading(false))
   }
 }
 

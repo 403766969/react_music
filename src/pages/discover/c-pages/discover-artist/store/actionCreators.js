@@ -24,15 +24,22 @@ export const set_artistList = artistList => ({
   artistList: artistList
 })
 
+export const set_artistListIsLoading = artistListIsLoading => ({
+  type: actionTypes.SET_ARTIST_LIST_IS_LOADING,
+  artistListIsLoading: artistListIsLoading
+})
+
 /**
  * 异步请求
  */
 // 歌手列表
 export const get_artistList = (area = '-1', type = '-1', initial = '-1', offset = 0, limit = 100) => {
   return async dispatch => {
+    dispatch(set_artistListIsLoading(true))
     const res = await artistApi.get_artist_list(area, type, initial, offset, limit)
     if (res && res.artists) {
       dispatch(set_artistList(res.artists))
     }
+    dispatch(set_artistListIsLoading(false))
   }
 }

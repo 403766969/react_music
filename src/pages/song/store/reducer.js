@@ -9,7 +9,8 @@ const initialState = Map({
   newCommentList: [],
   newCommentCount: 0,
   simiSongsheetList: [],
-  simiSongList: []
+  simiSongList: [],
+  songDetailIsLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -32,6 +33,8 @@ function reducer(state = initialState, action) {
       return state.set('simiSongsheetList', action.simiSongsheetList)
     case actionTypes.SET_SIMI_SONG_LIST:
       return state.set('simiSongList', action.simiSongList)
+    case actionTypes.SET_SONG_DETAIL_IS_LOADING:
+      return state.set('songDetailIsLoading', action.songDetailIsLoading)
     default:
       return state
   }

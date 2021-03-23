@@ -2,7 +2,9 @@ import React, { memo, useState, useCallback, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
 import * as actions from '../../store/actionCreators'
-import Pagination from '@/components/pagination-bar'
+
+import PaginationBar from '@/components/pagination-bar'
+import LoadingSpin from '@/components/loading-spin'
 
 import MvCover from '@/components/mv-cover'
 
@@ -13,7 +15,7 @@ export default memo(function RelatedMv(props) {
   /**
    * props and state
    */
-  const { artistId, mvList, mvCount } = props
+  const { artistId, mvList, mvCount, isLoading } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -40,19 +42,27 @@ export default memo(function RelatedMv(props) {
 
   return (
     <StyledWrapper className="cpn-related-mv">
-      <ul className="mv-list" ref={listRef}>
-        {
-          mvList && mvList.map(item => {
-            return (
-              <li className="mv-item" key={item.id}>
-                <MvCover mvInfo={item} name />
-              </li>
-            )
-          })
-        }
-      </ul>
+      {
+        isLoading
+          ? (
+            <LoadingSpin text="加载中..." />
+          )
+          : (
+            <ul className="mv-list" ref={listRef}>
+              {
+                mvList && mvList.map(item => {
+                  return (
+                    <li className="mv-item" key={item.id}>
+                      <MvCover mvInfo={item} name />
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          )
+      }
       <div className="footer">
-        <Pagination currentPage={currentPage} total={mvCount} pageSize={12} onPageChange={handlePageChange} />
+        <PaginationBar currentPage={currentPage} total={mvCount} pageSize={12} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

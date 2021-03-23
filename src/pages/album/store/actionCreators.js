@@ -45,12 +45,18 @@ export const set_relatedAlbumList = relatedAlbumList => ({
   relatedAlbumList: relatedAlbumList
 })
 
+export const set_albumDetailIsLoading = albumDetailIsLoading => ({
+  type: actionTypes.SET_ALBUM_DETAIL_IS_LOADING,
+  albumDetailIsLoading: albumDetailIsLoading
+})
+
 /**
  * 异步请求
  */
 // 专辑详情
 export const get_albumDetail = albumId => {
   return async dispatch => {
+    dispatch(set_albumDetailIsLoading(true))
     const res = await albumApi.get_album_detail(albumId)
     if (res) {
       if (res.album) {
@@ -63,6 +69,7 @@ export const get_albumDetail = albumId => {
         dispatch(set_songList(res.songs))
       }
     }
+    dispatch(set_albumDetailIsLoading(false))
   }
 }
 

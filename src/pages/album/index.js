@@ -35,14 +35,16 @@ export default memo(function Album(props) {
     r_hotCommentList,
     r_newCommentList,
     r_newCommentCount,
-    r_relatedAlbumList
+    r_relatedAlbumList,
+    r_albumDetailIsLoading
   } = useSelector(state => ({
     r_albumDetail: state.getIn(['album', 'albumDetail']),
     r_songList: state.getIn(['album', 'songList']),
     r_hotCommentList: state.getIn(['album', 'hotCommentList']),
     r_newCommentList: state.getIn(['album', 'newCommentList']),
     r_newCommentCount: state.getIn(['album', 'newCommentCount']),
-    r_relatedAlbumList: state.getIn(['album', 'relatedAlbumList'])
+    r_relatedAlbumList: state.getIn(['album', 'relatedAlbumList']),
+    r_albumDetailIsLoading: state.getIn(['album', 'albumDetailIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -83,12 +85,14 @@ export default memo(function Album(props) {
           albumDetail={r_albumDetail}
           commentCount={r_newCommentCount}
           songList={r_songList}
-          sourceLink={sourceLink} />
+          sourceLink={sourceLink}
+          isLoading={r_albumDetailIsLoading} />
         <AlbumDesc albumDesc={r_albumDetail && r_albumDetail.description} />
         <SongArea
           songCount={r_songList && r_songList.length}
           link={r_albumDetail && `https://music.163.com/#/outchain/1/${r_albumDetail && r_albumDetail.id}`}
           order name duration artist={{ width: '130px' }}
+          isLoading={r_albumDetailIsLoading}
           songList={r_songList}
           sourceLink={sourceLink} />
         <div className="album-comment" ref={commentRef}>

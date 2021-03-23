@@ -34,6 +34,11 @@ export const set_hotRadioCount = hotRadioCount => ({
   hotRadioCount: hotRadioCount
 })
 
+export const set_hotRadioListIsLoading = hotRadioListIsLoading => ({
+  type: actionTypes.SET_HOT_RADIO_LIST_IS_LOADING,
+  hotRadioListIsLoading: hotRadioListIsLoading
+})
+
 /**
  * 异步请求
  */
@@ -60,6 +65,7 @@ export const get_recomdRadioList = type => {
 // 热门电台
 export const get_hotRadioList = (cateId, offset = 0, limit = 20) => {
   return async dispatch => {
+    dispatch(set_hotRadioListIsLoading(true))
     const res = await djradioApi.get_dj_radio_hot(cateId, offset, limit)
     if (res) {
       if (res.djRadios) {
@@ -69,5 +75,6 @@ export const get_hotRadioList = (cateId, offset = 0, limit = 20) => {
         dispatch(set_hotRadioCount(res.count))
       }
     }
+    dispatch(set_hotRadioListIsLoading(false))
   }
 }

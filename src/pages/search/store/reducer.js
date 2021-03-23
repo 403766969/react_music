@@ -13,7 +13,8 @@ const initialState = Map({
   songsheetCount: 0,
   mvList: [],
   mvCount: 0,
-  searchSuggest: null
+  searchSuggest: null,
+  isLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -44,6 +45,8 @@ function reducer(state = initialState, action) {
       return state.set('mvCount', action.mvCount)
     case actionTypes.SET_SEARCH_SUGGEST:
       return state.set('searchSuggest', action.searchSuggest)
+    case actionTypes.SET_IS_LOADING:
+      return state.set('isLoading', action.isLoading)
     default:
       return state
   }

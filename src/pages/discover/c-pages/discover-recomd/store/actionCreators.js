@@ -2,7 +2,6 @@ import { actionTypes } from './constants'
 
 import * as otherApi from '@/services/otherApi'
 import * as songsheetApi from '@/services/songsheetApi'
-import * as songApi from '@/services/songApi'
 import * as albumApi from '@/services/albumApi'
 import * as artistApi from '@/services/artistApi'
 import axios from 'axios'
@@ -44,6 +43,11 @@ export const set_hotArtistList = hotArtistList => ({
   hotArtistList: hotArtistList
 })
 
+export const set_rankMultiListIsLoading = rankMultiListIsLoading => ({
+  type: actionTypes.SET_RANK_MULTI_LIST_IS_LOADING,
+  rankMultiListIsLoading: rankMultiListIsLoading
+})
+
 /**
  * 异步请求
  */
@@ -80,42 +84,30 @@ export const get_newAlbumList = () => {
 // 榜单
 export const get_rankMultiList = (rankCount = 3) => {
   return async dispatch => {
+    dispatch(set_rankMultiListIsLoading(true))
     const resA = await songsheetApi.get_toplist()
-
     if (!resA || !resA.list || resA.list.length <= 0) {
+      dispatch(set_rankMultiListIsLoading(false))
       return
     }
-
     const reqB = []
     const reqCount = (rankCount <= resA.list.length) ? rankCount : resA.list.length
     for (let i = 0; i < reqCount; i++) {
-      reqB.push(songsheetApi.get_playlist_detail(resA.list[i].id, true))
+      let p = songsheetApi.get_playlist_detail(resA.list[i].id, true).catch(() => undefined)
+      reqB.push(p)
     }
     const resB = await axios.all(reqB)
-
     const rankList = resB.filter(item => {
-      if (item.playlist) {
+      if (item && item.playlist) {
         return true
       } else {
         return false
       }
     }).map(item => item.playlist)
-
-    if (rankList.length <= 0) {
-      return
+    if (rankList.length > 0) {
+      dispatch(set_rankMultiList(rankList))
     }
-
-    const reqC = []
-    for (let i = 0; i < rankList.length; i++) {
-      reqC.push(songApi.get_song_detail(rankList[i].trackIds.slice(0, 10).map(item => item.id).join(','), true))
-    }
-    const resC = await axios.all(reqC)
-
-    for (let i = 0; i < rankList.length; i++) {
-      rankList[i].tracks = resC[i].songs || []
-    }
-
-    dispatch(set_rankMultiList(rankList))
+    dispatch(set_rankMultiListIsLoading(false))
   }
 }
 

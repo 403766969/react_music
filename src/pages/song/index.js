@@ -35,7 +35,8 @@ export default memo(function Song(props) {
     r_newCommentList,
     r_newCommentCount,
     r_simiSongsheetList,
-    r_simiSongList
+    r_simiSongList,
+    r_songDetailIsLoading
   } = useSelector(state => ({
     r_songDetail: state.getIn(['song', 'songDetail']),
     r_songLyric: state.getIn(['song', 'songLyric']),
@@ -43,7 +44,8 @@ export default memo(function Song(props) {
     r_newCommentList: state.getIn(['song', 'newCommentList']),
     r_newCommentCount: state.getIn(['song', 'newCommentCount']),
     r_simiSongsheetList: state.getIn(['song', 'simiSongsheetList']),
-    r_simiSongList: state.getIn(['song', 'simiSongList'])
+    r_simiSongList: state.getIn(['song', 'simiSongList']),
+    r_songDetailIsLoading: state.getIn(['song', 'songDetailIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -81,7 +83,7 @@ export default memo(function Song(props) {
   return (
     <StyleWrapper className="page-song wrap-v3">
       <div className="left">
-        <SongDetail songDetail={r_songDetail} songLyric={r_songLyric} commentCount={r_newCommentCount} />
+        <SongDetail songDetail={r_songDetail} songLyric={r_songLyric} commentCount={r_newCommentCount} isLoading={r_songDetailIsLoading} />
         <div className="song-comment" ref={commentRef}>
           <CommentArea
             hotCommentList={r_hotCommentList}

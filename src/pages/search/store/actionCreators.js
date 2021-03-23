@@ -69,6 +69,11 @@ export const set_searchSuggest = searchSuggest => ({
   searchSuggest: searchSuggest
 })
 
+export const set_isLoading = isLoading => ({
+  type: actionTypes.SET_IS_LOADING,
+  isLoading: isLoading
+})
+
 /**
  * 异步请求
  */
@@ -76,6 +81,7 @@ export const set_searchSuggest = searchSuggest => ({
 // 歌曲列表
 export const get_songList = (keywords, offset = 0, limit = 20) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await searchApi.get_search(keywords, 1, offset, limit)
     if (res && res.result) {
       if (res.result.songs) {
@@ -85,12 +91,14 @@ export const get_songList = (keywords, offset = 0, limit = 20) => {
         dispatch(set_songCount(res.result.songCount))
       }
     }
+    dispatch(set_isLoading(false))
   }
 }
 
 // 歌手列表
 export const get_artistList = (keywords, offset = 0, limit = 24) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await searchApi.get_search(keywords, 100, offset, limit)
     if (res && res.result) {
       if (res.result.artists) {
@@ -100,12 +108,14 @@ export const get_artistList = (keywords, offset = 0, limit = 24) => {
         dispatch(set_artistCount(res.result.artistCount))
       }
     }
+    dispatch(set_isLoading(false))
   }
 }
 
 // 专辑列表
 export const get_albumList = (keywords, offset = 0, limit = 20) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await searchApi.get_search(keywords, 10, offset, limit)
     if (res && res.result) {
       if (res.result.albums) {
@@ -115,12 +125,14 @@ export const get_albumList = (keywords, offset = 0, limit = 20) => {
         dispatch(set_albumCount(res.result.albumCount))
       }
     }
+    dispatch(set_isLoading(false))
   }
 }
 
 // 歌单列表
 export const get_songsheetList = (keywords, offset = 0, limit = 20) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await searchApi.get_search(keywords, 1000, offset, limit)
     if (res && res.result) {
       if (res.result.playlists) {
@@ -130,12 +142,14 @@ export const get_songsheetList = (keywords, offset = 0, limit = 20) => {
         dispatch(set_songsheetCount(res.result.playlistCount))
       }
     }
+    dispatch(set_isLoading(false))
   }
 }
 
 // MV列表
 export const get_mvList = (keywords, offset = 0, limit = 20) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await searchApi.get_search(keywords, 1004, offset, limit)
     if (res && res.result) {
       if (res.result.mvs) {
@@ -145,6 +159,7 @@ export const get_mvList = (keywords, offset = 0, limit = 20) => {
         dispatch(set_mvCount(res.result.mvCount))
       }
     }
+    dispatch(set_isLoading(false))
   }
 }
 

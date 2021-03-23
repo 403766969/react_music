@@ -54,12 +54,18 @@ export const set_mvCount = mvCount => ({
   mvCount: mvCount
 })
 
+export const set_isLoading = isLoading => ({
+  type: actionTypes.SET_IS_LOADING,
+  isLoading: isLoading
+})
+
 /**
  * 异步请求
  */
 // 歌手信息、歌曲列表
 export const get_artistDetail = artistId => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await artistApi.get_artists(artistId)
     if (res) {
       if (res.artist) {
@@ -72,34 +78,42 @@ export const get_artistDetail = artistId => {
         dispatch(set_songList(res.hotSongs))
       }
     }
-  }
-}
-
-export const get_descInfo = artistId => {
-  return async dispatch => {
-    const res = await artistApi.get_artist_desc(artistId)
-    if (res) {
-      dispatch(set_descInfo(res))
-    }
+    dispatch(set_isLoading(false))
   }
 }
 
 // 专辑列表
 export const get_albumList = (artistId, offset = 0, limit = 12) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await artistApi.get_artist_album(artistId, offset, limit)
     if (res && res.hotAlbums) {
       dispatch(set_albumList(res.hotAlbums))
     }
+    dispatch(set_isLoading(false))
   }
 }
 
 // MV列表
 export const get_mvList = (artistId, offset = 0, limit = 12) => {
   return async dispatch => {
+    dispatch(set_isLoading(true))
     const res = await artistApi.get_artist_mv(artistId, offset, limit)
     if (res && res.mvs) {
       dispatch(set_mvList(res.mvs))
     }
+    dispatch(set_isLoading(false))
+  }
+}
+
+// 歌手简介
+export const get_descInfo = artistId => {
+  return async dispatch => {
+    dispatch(set_isLoading(true))
+    const res = await artistApi.get_artist_desc(artistId)
+    if (res) {
+      dispatch(set_descInfo(res))
+    }
+    dispatch(set_isLoading(false))
   }
 }

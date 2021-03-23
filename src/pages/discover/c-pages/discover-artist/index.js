@@ -33,9 +33,11 @@ export default memo(function DiscoverArtist(props) {
    * redux hooks
    */
   const {
-    r_artistList
+    r_artistList,
+    r_artistListIsLoading
   } = useSelector(state => ({
-    r_artistList: state.getIn(['discover/artist', 'artistList'])
+    r_artistList: state.getIn(['discover/artist', 'artistList']),
+    r_artistListIsLoading: state.getIn(['discover/artist', 'artistListIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -45,8 +47,12 @@ export default memo(function DiscoverArtist(props) {
    */
   const history = useHistory()
 
+
   useEffect(() => {
     dispatch(actions.set_catTitle(title))
+  }, [dispatch, title])
+
+  useEffect(() => {
     dispatch(actions.get_artistList(area, type, initial, 0, 100))
     switch (initial) {
       case '-1':
@@ -60,10 +66,13 @@ export default memo(function DiscoverArtist(props) {
         break
     }
     window.scrollTo(0, 0)
+  }, [dispatch, area, type, initial])
+
+  useEffect(() => {
     return () => {
       dispatch(actions.clear_state())
     }
-  }, [dispatch, area, type, initial, title])
+  }, [dispatch])
 
   /**
    * other logic
@@ -91,7 +100,7 @@ export default memo(function DiscoverArtist(props) {
       <div className="right">
         <h3 className="title">{title}</h3>
         <InitialSelector current={currentInitial} onClick={handleClick} />
-        <ArtistList artistList={r_artistList} />
+        <ArtistList artistList={r_artistList} isLoading={r_artistListIsLoading} />
       </div>
     </StyledWrapper>
   )

@@ -33,7 +33,8 @@ export default memo(function Artist(props) {
     r_albumList,
     r_albumCount,
     r_mvList,
-    r_mvCount
+    r_mvCount,
+    r_isLoading
   } = useSelector(state => ({
     r_baseInfo: state.getIn(['artist', 'baseInfo']),
     r_descInfo: state.getIn(['artist', 'descInfo']),
@@ -41,7 +42,8 @@ export default memo(function Artist(props) {
     r_albumList: state.getIn(['artist', 'albumList']),
     r_albumCount: state.getIn(['artist', 'albumCount']),
     r_mvList: state.getIn(['artist', 'mvList']),
-    r_mvCount: state.getIn(['artist', 'mvCount'])
+    r_mvCount: state.getIn(['artist', 'mvCount']),
+    r_isLoading: state.getIn(['artist', 'isLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -93,16 +95,16 @@ export default memo(function Artist(props) {
         <BaseInfo baseInfo={r_baseInfo} />
         <TabsArea activeKey={type} onTabClick={handleTabClick}>
           <div tab="热门歌曲" key="song">
-            <HotSong songList={r_songList} sourceLink={sourceLink} />
+            <HotSong songList={r_songList} sourceLink={sourceLink} isLoading={r_isLoading} />
           </div>
           <div tab="所有专辑" key="album">
-            <AllAlbum artistId={artistId} albumList={r_albumList} albumCount={r_albumCount} />
+            <AllAlbum artistId={artistId} albumList={r_albumList} albumCount={r_albumCount} isLoading={r_isLoading} />
           </div>
           <div tab="相关MV" key="mv">
-            <RelatedMv artistId={artistId} mvList={r_mvList} mvCount={r_mvCount} />
+            <RelatedMv artistId={artistId} mvList={r_mvList} mvCount={r_mvCount} isLoading={r_isLoading} />
           </div>
           <div tab="艺人介绍" key="desc">
-            <DescInfo descInfo={r_descInfo} />
+            <DescInfo descInfo={r_descInfo} isLoading={r_isLoading} />
           </div>
         </TabsArea>
       </div>

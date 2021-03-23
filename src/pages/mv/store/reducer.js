@@ -8,7 +8,8 @@ const initialState = Map({
   hotCommentList: [],
   newCommentList: [],
   newCommentCount: 0,
-  simiMvList: []
+  simiMvList: [],
+  mvDetailIsLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -29,6 +30,8 @@ function reducer(state = initialState, action) {
       return state.set('newCommentCount', action.newCommentCount)
     case actionTypes.SET_SIMI_MV_LIST:
       return state.set('simiMvList', action.simiMvList)
+    case actionTypes.SET_MV_DETAIL_IS_LOADING:
+      return state.set('mvDetailIsLoading', action.mvDetailIsLoading)
     default:
       return state
   }

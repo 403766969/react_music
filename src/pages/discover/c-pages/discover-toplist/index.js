@@ -34,7 +34,8 @@ export default memo(function DiscoverToplist(props) {
     r_hotCommentList,
     r_newCommentList,
     r_newCommentCount,
-    r_isLoading
+    r_chartDetailIsLoading,
+    r_songListIsLoading
   } = useSelector(state => ({
     r_chartList: state.getIn(['discover/toplist', 'chartList']),
     r_chartDetail: state.getIn(['discover/toplist', 'chartDetail']),
@@ -42,8 +43,10 @@ export default memo(function DiscoverToplist(props) {
     r_hotCommentList: state.getIn(['discover/toplist', 'hotCommentList']),
     r_newCommentList: state.getIn(['discover/toplist', 'newCommentList']),
     r_newCommentCount: state.getIn(['discover/toplist', 'newCommentCount']),
-    r_isLoading: state.getIn(['discover/toplist', 'isLoading'])
+    r_chartDetailIsLoading: state.getIn(['discover/toplist', 'chartDetailIsLoading']),
+    r_songListIsLoading: state.getIn(['discover/toplist', 'songListIsLoading'])
   }), shallowEqual)
+
 
   const dispatch = useDispatch()
 
@@ -63,12 +66,9 @@ export default memo(function DiscoverToplist(props) {
     window.scrollTo(0, 0)
     return () => {
       dispatch(actions.merge_state({
-        chartDetail: null,
-        songList: [],
         hotCommentList: [],
         newCommentList: [],
-        newCommentCount: 0,
-        isLoading: false
+        newCommentCount: 0
       }))
     }
   }, [dispatch, currentChartId])
@@ -105,14 +105,15 @@ export default memo(function DiscoverToplist(props) {
           chartList={r_chartList}
           currentChartId={currentChartId}
           songList={r_songList}
-          sourceLink={sourceLink} />
+          sourceLink={sourceLink}
+          isLoading={r_chartDetailIsLoading} />
         <SongArea
           songCount={r_songList && r_songList.length}
           playCount={r_chartDetail && r_chartDetail.playCount}
           link={r_chartDetail && `https://music.163.com/#/outchain/0/${r_chartDetail.id}`}
           showCoverCount={3}
           order name duration artist={{ width: '170px' }}
-          isLoading={r_isLoading}
+          isLoading={r_songListIsLoading}
           songList={r_songList}
           sourceLink={sourceLink} />
         <div className="toplist-comment" ref={commentRef}>

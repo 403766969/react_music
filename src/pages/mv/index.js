@@ -34,14 +34,16 @@ export default memo(function Mv(props) {
     r_hotCommentList,
     r_newCommentList,
     r_newCommentCount,
-    r_simiMvList
+    r_simiMvList,
+    r_mvDetailIsLoading
   } = useSelector(state => ({
     r_mvDetail: state.getIn(['mv', 'mvDetail']),
     r_mvUrl: state.getIn(['mv', 'mvUrl']),
     r_hotCommentList: state.getIn(['mv', 'hotCommentList']),
     r_newCommentList: state.getIn(['mv', 'newCommentList']),
     r_newCommentCount: state.getIn(['mv', 'newCommentCount']),
-    r_simiMvList: state.getIn(['mv', 'simiMvList'])
+    r_simiMvList: state.getIn(['mv', 'simiMvList']),
+    r_mvDetailIsLoading: state.getIn(['mv', 'mvDetailIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -78,7 +80,7 @@ export default memo(function Mv(props) {
   return (
     <StyledWrapper className="page-mv wrap-v3">
       <div className="left">
-        <MvDetail mvDetail={r_mvDetail} mvUrl={r_mvUrl} />
+        <MvDetail mvDetail={r_mvDetail} mvUrl={r_mvUrl} isLoading={r_mvDetailIsLoading} />
         <div className="mv-comment" ref={commentRef}>
           <CommentArea
             hotCommentList={r_hotCommentList}

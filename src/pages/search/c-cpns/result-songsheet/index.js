@@ -5,7 +5,8 @@ import { keywordsMatcher } from '@/utils/parser'
 
 import * as actions from '../../store/actionCreators'
 
-import Pagination from '@/components/pagination-bar'
+import PaginationBar from '@/components/pagination-bar'
+import LoadingSpin from '@/components/loading-spin'
 
 import SongsheetItem from './songsheet-item'
 
@@ -16,7 +17,7 @@ export default memo(function ResultSongsheet(props) {
   /**
    * props and state
    */
-  const { songsheetList, songsheetCount, keywords } = props
+  const { songsheetList, songsheetCount, keywords, isLoading } = props
 
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -32,7 +33,6 @@ export default memo(function ResultSongsheet(props) {
     if (keywords) {
       dispatch(actions.get_songsheetList(keywords, (page - 1) * 20, 20))
       setCurrentPage(page)
-      window.scrollTo(0, 75)
     }
   }, [dispatch, keywords])
 
@@ -40,17 +40,25 @@ export default memo(function ResultSongsheet(props) {
 
   return (
     <StyledWrapper className="cpn-result-songsheet">
-      <ul className="songsheet-list">
-        {
-          songsheetList && songsheetList.map(item => {
-            return (
-              <SongsheetItem key={item.id} songsheetInfo={item} kwMatcher={kwMatcher} />
-            )
-          })
-        }
-      </ul>
+      {
+        isLoading
+          ? (
+            <LoadingSpin text="加载中..." />
+          )
+          : (
+            <ul className="songsheet-list">
+              {
+                songsheetList && songsheetList.map(item => {
+                  return (
+                    <SongsheetItem key={item.id} songsheetInfo={item} kwMatcher={kwMatcher} />
+                  )
+                })
+              }
+            </ul>
+          )
+      }
       <div className="footer">
-        <Pagination currentPage={currentPage} total={songsheetCount} pageSize={20} onPageChange={handlePageChange} />
+        <PaginationBar currentPage={currentPage} total={songsheetCount} pageSize={20} onPageChange={handlePageChange} />
       </div>
     </StyledWrapper>
   )

@@ -29,6 +29,11 @@ export const set_songsheetCount = songsheetCount => ({
   songsheetCount: songsheetCount
 })
 
+export const set_songsheetListIsLoading = songsheetListIsLoading => ({
+  type: actionTypes.SET_SONGSHEET_LIST_IS_LOADING,
+  songsheetListIsLoading: songsheetListIsLoading
+})
+
 /**
  * 异步请求
  */
@@ -55,6 +60,7 @@ export const get_catSubList = () => {
 // 歌单列表
 export const get_songsheetList = (sub = '全部', order = 'hot', offset = 0, limit = 35) => {
   return async dispatch => {
+    dispatch(set_songsheetListIsLoading(true))
     const res = await songsheetApi.get_top_playlist(sub, order, offset, limit)
     if (res && res.playlists) {
       dispatch(set_songsheetList(res.playlists))
@@ -62,5 +68,6 @@ export const get_songsheetList = (sub = '全部', order = 'hot', offset = 0, lim
     if (res && res.total) {
       dispatch(set_songsheetCount(res.total))
     }
+    dispatch(set_songsheetListIsLoading(false))
   }
 }

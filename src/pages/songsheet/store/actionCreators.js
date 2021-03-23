@@ -45,9 +45,14 @@ export const set_relatedSongsheetList = relatedSongsheetList => ({
   relatedSongsheetList: relatedSongsheetList
 })
 
-export const set_isLoading = isLoading => ({
-  type: actionTypes.SET_IS_LOADING,
-  isLoading: isLoading
+export const set_songsheetDetailIsLoading = songsheetDetailIsLoading => ({
+  type: actionTypes.SET_SONGSHEET_DETAIL_IS_LOADING,
+  songsheetDetailIsLoading: songsheetDetailIsLoading
+})
+
+export const set_songListIsLoading = songListIsLoading => ({
+  type: actionTypes.SET_SONG_LIST_IS_LOADING,
+  songListIsLoading: songListIsLoading
 })
 
 /**
@@ -56,14 +61,16 @@ export const set_isLoading = isLoading => ({
 // 歌单详情
 export const get_songsheetDetail = songsheetId => {
   return async dispatch => {
-    dispatch(set_isLoading(true))
+    dispatch(set_songsheetDetailIsLoading(true))
+    dispatch(set_songListIsLoading(true))
     const res = await songsheetApi.get_playlist_detail(songsheetId)
     if (res && res.playlist) {
       dispatch(set_songsheetDetail(res.playlist))
       dispatch(get_songList(res.playlist.trackIds))
     } else {
-      dispatch(set_isLoading(false))
+      dispatch(set_songListIsLoading(false))
     }
+    dispatch(set_songsheetDetailIsLoading(false))
   }
 }
 
@@ -75,7 +82,7 @@ export const get_songList = trackIds => {
     if (res && res.songs) {
       dispatch(set_songList(res.songs))
     }
-    dispatch(set_isLoading(false))
+    dispatch(set_songListIsLoading(false))
   }
 }
 

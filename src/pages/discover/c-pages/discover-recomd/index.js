@@ -23,13 +23,15 @@ export default memo(function DiscoverRecomd() {
     r_hotRecomdList,
     r_newAlbumList,
     r_rankMultiList,
-    r_hotArtistList
+    r_hotArtistList,
+    r_rankMultiListIsLoading
   } = useSelector(state => ({
     r_topBannerList: state.getIn(['discover/recomd', 'topBannerList']),
     r_hotRecomdList: state.getIn(['discover/recomd', 'hotRecomdList']),
     r_newAlbumList: state.getIn(['discover/recomd', 'newAlbumList']),
     r_rankMultiList: state.getIn(['discover/recomd', 'rankMultiList']),
-    r_hotArtistList: state.getIn(['discover/recomd', 'hotArtistList'])
+    r_hotArtistList: state.getIn(['discover/recomd', 'hotArtistList']),
+    r_rankMultiListIsLoading: state.getIn(['discover/recomd', 'rankMultiListIsLoading'])
   }), shallowEqual)
 
   const dispatch = useDispatch()
@@ -56,7 +58,7 @@ export default memo(function DiscoverRecomd() {
         <div className="left">
           <HotRecomd recomdList={r_hotRecomdList} />
           <NewAlbum albumList={r_newAlbumList} />
-          <RankMulti rankList={r_rankMultiList} />
+          <RankMulti rankList={r_rankMultiList} isLoading={r_rankMultiListIsLoading} />
         </div>
         <div className="right">
           <UserLogin />

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { allAlbumLinks } from '@/services/local-data'
 
 import AlbumCover from '@/components/album-cover'
+import LoadingSpin from '@/components/loading-spin'
 
 import { StyledWrapper } from './style'
 
@@ -12,7 +13,7 @@ export default memo(function AllAlbum(props) {
   /**
    * props and state
    */
-  const { allAlbumList } = props
+  const { allAlbumList, isLoading } = props
 
   return (
     <StyledWrapper className="cpn-all-album">
@@ -31,26 +32,34 @@ export default memo(function AllAlbum(props) {
           }
         </ul>
       </div>
-      <ul className="list">
-        {
-          allAlbumList && allAlbumList.map(item => {
-            return (
-              <li className="item" key={item.id}>
-                <AlbumCover
-                  albumInfo={item}
-                  imageWidth={130}
-                  imageHeight={130}
-                  maskWidth={153}
-                  maskHeight={130}
-                  posX={0}
-                  posY={-845}
-                  name
-                  artist />
-              </li>
-            )
-          })
-        }
-      </ul>
+      {
+        isLoading
+          ? (
+            <LoadingSpin text="加载中..." />
+          )
+          : (
+            <ul className="list">
+              {
+                allAlbumList && allAlbumList.map(item => {
+                  return (
+                    <li className="item" key={item.id}>
+                      <AlbumCover
+                        albumInfo={item}
+                        imageWidth={130}
+                        imageHeight={130}
+                        maskWidth={153}
+                        maskHeight={130}
+                        posX={0}
+                        posY={-845}
+                        name
+                        artist />
+                    </li>
+                  )
+                })
+              }
+            </ul>
+          )
+      }
     </StyledWrapper>
   )
 })

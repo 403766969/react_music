@@ -10,7 +10,8 @@ const initialState = Map({
   albumList: [],
   albumCount: 0,
   mvList: [],
-  mvCount: 0
+  mvCount: 0,
+  isLoading: false
 })
 
 function reducer(state = initialState, action) {
@@ -35,6 +36,8 @@ function reducer(state = initialState, action) {
       return state.set('mvList', action.mvList)
     case actionTypes.SET_MV_COUNT:
       return state.set('mvCount', action.mvCount)
+    case actionTypes.SET_IS_LOADING:
+      return state.set('isLoading', action.isLoading)
     default:
       return state
   }

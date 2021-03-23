@@ -55,18 +55,9 @@ instance.interceptors.response.use(res => {
 }, err => {
   if (!axios.isCancel(err) && !err.config.ignore) {
     stopRepeatRequest(err.config.url, err.config.method)
-  }
-  if (err && err.response) {
-    switch (err.response.status) {
-      case 400:
-        console.warn('请求错误')
-        break
-      case 401:
-        console.warn('未授权访问')
-        break
-      default:
-        console.warn('其他错误信息')
-    }
+  } else {
+    // handling errors
+    // console.warn(err.response)
   }
   return Promise.reject(err)
 })

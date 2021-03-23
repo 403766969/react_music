@@ -12,7 +12,7 @@ export default memo(function HotSong(props) {
   /**
    * props and state
    */
-  const { songList, sourceLink } = props
+  const { songList, sourceLink, isLoading } = props
 
   /**
    * redux hooks
@@ -51,10 +51,9 @@ export default memo(function HotSong(props) {
       <SongList
         songList={songList}
         isShowHeader={false}
-        order
-        name
-        duration
-        album={{ width: '140px' }} />
+        order name duration
+        album={{ width: '140px' }}
+        isLoading={isLoading} />
     </StyledWrapper>
   )
 })
